@@ -53,12 +53,38 @@ Do not introduce abstraction layers without a clear need.
 - Never expose secrets or protected student resources.
 - Treat payment and enrollment operations as critical.
 
-## Design
-- Follow docs/design/design-system.md when present.
-- Use shared tokens and components.
-- Prefer Server Components by default.
-- Support mobile and desktop.
-- Maintain accessible, semantic UI.
+# Frontend Design Instructions
+
+This project is a Russian-first beauty education LMS.
+
+## Before modifying frontend UI
+
+1. Read docs/design/DIRECTION.md.
+2. Read docs/design/SYSTEM.md.
+3. Read docs/design/COMPONENTS.md.
+4. Read the relevant page section in SCREENS.md.
+5. Inspect relevant approved and rejected visual references.
+
+## Implementation rules
+
+- Use the established design tokens.
+- Do not introduce new fonts or brand colors.
+- Do not invent product features, prices, testimonials, or statistics.
+- Reuse existing components before creating new ones.
+- Keep business logic separate from visual changes.
+- Design and test Russian layouts first.
+
+## Visual verification
+
+For user-facing UI changes:
+- Render the page in a real browser when possible.
+- Check desktop and mobile screenshots.
+- Compare against approved references.
+- Apply the checklist in docs/design/QA.md.
+- Report remaining visual mismatches.
+
+When documentation conflicts, identify the conflict
+rather than silently inventing a new design direction.
 
 ## Workflow
 - Inspect relevant existing code before editing.
