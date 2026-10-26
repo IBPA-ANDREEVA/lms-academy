@@ -4,7 +4,7 @@
 - Confirm docs read and relevant references inspected.
 - Verify requirements and actual app state, not inferred features.
 - Identify applicable signatures; none is a valid choice.
-- If installed and available, invoke `uncodixfy` as a supporting anti-generic-UI review skill; never override approved design identity.
+- For substantial design tasks, attempt to invoke `uncodixfy` if installed; report unavailable skill honestly. The project design direction and system override generic aesthetic advice.
 
 ## Visual test matrix
 - Desktop 1440×900; tablet 768×1024; mobile 390×844 (also examine content-dependent breakpoints).

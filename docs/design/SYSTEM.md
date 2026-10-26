@@ -1,6 +1,6 @@
 # Design System
 
-> Proposed implementation-ready token baseline. Align names with the actual framework before adopting. `DIRECTION.md` governs aesthetic intent.
+> Agreed design values, not yet fully implemented in the current Next.js starter. Align token names with the framework when implementing. `DIRECTION.md` governs aesthetic intent.
 
 ## Palette
 
@@ -53,6 +53,12 @@ Single brand accent means one brand hue, not the removal of semantic feedback co
 - Touch targets should be comfortably usable; don't rely on hover.
 - Honor `prefers-reduced-motion`.
 - Proper localized dates, currencies, labels, validation and error states.
+
+## Approved icon collection and existing app status
+
+- The existing `public/icons/` collection is our functional SVG source. Its current indigo `#292556` differs from the agreed accent palette; this is an **unresolved asset-token integration choice**, not permission to introduce indigo as a second brand accent.
+- Retain original SVGs until the canonical variant and recoloring policy are approved. See [icon usage](./icons/USAGE.md).
+- Current Next.js starter uses Geist, Arial, `lang="en"` and default colors. It does not yet implement these tokens; update application code during a dedicated frontend foundation task, not by assuming the design is already live.
 
 ## Ownership
 This document owns exact global design values. Other docs should refer to token names, not duplicate HEX values.
