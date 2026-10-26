@@ -46,7 +46,7 @@ Status vocabulary:
 | OQ-018 | Blocking feature | How is eligibility for an advanced course limited to licensed practitioners: declaration, document upload, manual approval, or informational labeling only? |
 | OQ-019 | Clarify | Does the Start in the USA module issue a certificate, contribute to a package certificate, contain homework, or have a distinct access duration? |
 | OQ-020 | Clarify | Can a lesson have multiple assignments, optional assignments, quizzes, or only the single homework pattern shown in the wireframe? |
-| OQ-021 | Clarify | What event marks a video or lesson as viewed: opening it, reaching a percentage, watching a duration, or manually completing it? How are seeking and rewatching handled? |
+| OQ-021 | Blocking MVP | What event marks a video or lesson as viewed: opening it, reaching a percentage, watching a duration, or manually completing it? How are seeking and rewatching handled? **Implementation dependency:** MVP ordered unlocking, progress calculation, mini-course certificate eligibility, and end-to-end acceptance tests require one authoritative completion rule. |
 | OQ-022 | Clarify | May administrators change mandatory assignments or lesson order after students enroll? If so, which version governs existing students and certificate eligibility? |
 | OQ-023 | Clarify | Is trainer content editing versioned, and what approval or rollback process applies to changes to a published course? |
 | OQ-024 | Blocking feature | Who supplies and approves RU/EN translations, audio, subtitles, trainer credentials, and legal text? What happens when only one language exists? |
@@ -88,8 +88,8 @@ Status vocabulary:
 | OQ-045 | Clarify | May a student replace or delete a pending submission? Can they submit another revision before the curator acts? |
 | OQ-046 | Clarify | Are there assignment due dates distinct from the two-week support expiry, and who configures them? |
 | OQ-047 | Blocking feature | Does message history become read-only after support expires, and may administrators reopen or extend support? |
-| OQ-048 | Clarify | What happens to an in-review submission when support expires? Must the curator finish it, may the student revise, or does the flow close immediately? |
-| OQ-049 | Clarify | Are curator-support periods tracked per course, package component, cohort, or student? |
+| OQ-048 | Blocking MVP | What happens to an in-review submission when support expires? Must the curator finish it, may the student revise, or does the flow close immediately? **Implementation dependency:** the MVP homework state machine, certificate eligibility, server-side expiry enforcement, and acceptance tests must preserve every submitted assignment in a valid state with an unambiguous next permitted action. |
+| OQ-049 | Blocking MVP | Are curator-support periods tracked per course, package component, cohort, or student? **Implementation dependency:** the MVP entitlement data model and authorization checks must know which enrollment or support record owns the clock before expiry can be enforced consistently. Package-specific behavior may remain later scope, but the MVP course-and-student rule cannot. |
 | OQ-050 | Clarify | Are lesson recordings and materials equally available after support expiry, or do materials have different access rules? |
 
 ## Certificates

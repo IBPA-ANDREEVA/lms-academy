@@ -6,7 +6,7 @@ This document divides the product into MVP, Phase 2, and Phase 3 while preservin
 
 The phases describe intended scope boundaries, not a claim that every underlying business decision is complete. All dates in this document are planning targets from the Vault records, contingent on the stated capacity, dependencies, approvals, and content readiness. They are not guaranteed delivery commitments. Unresolved prerequisites remain in [open-questions.md](./open-questions.md), and detailed behavior remains in [requirements.md](./requirements.md).
 
-Source references: S1 is `ТЗ_онлайн_академия_и_личные_кабинеты.docx`; S2 is `Онлайн_академия_дизайн_платформы.pdf`; P1 is the LMS Vault's `Full Project Plan.md`, phase plans, and `Roadmap.md`; P2 is the LMS Vault's epic task maps and linked task records. S1 defines feature priority, S2 supplies interface evidence, and P1/P2 supply delivery planning and engineering slices. The original attachments were not present as repository copies in `docs/references/` during this review. The MVP placement of server-side support expiration and immediate auditable access revocation after a confirmed refund are approved scope corrections from this review; they override the broader deferral implied by P1/P2 without changing the original business rules in S1.
+Source references: S1 is `ТЗ_онлайн_академия_и_личные_кабинеты.docx`; S2 is `Онлайн_академия_дизайн_платформы.pdf`; P1 is the LMS Vault's `Full Project Plan.md`, phase plans, and `Roadmap.md`; P2 is the LMS Vault's epic task maps and linked task records. S1 defines feature priority, S2 supplies interface evidence, and P1/P2 supply delivery planning and engineering slices. The original attachments were not present as repository copies in `docs/references/` during this review. The MVP placement of server-side support expiration and immediate auditable access revocation after a confirmed refund are scope corrections pending product-owner approval because the reviewed source set contains no explicit approval evidence. If approved, they narrow the broader deferral implied by P1/P2 without changing the original business rules in S1.
 
 ## Planning model and source reconciliation
 
@@ -82,6 +82,7 @@ For MVP, the monetary refund may be performed manually through the payment provi
 - Private media storage and normalization or compression pipeline within approved limits.
 - Homework statuses, revisions, and history.
 - Server-side enforcement of the configured curator-support expiration for homework and any enabled course-scoped communication; expired actions must not remain available through direct requests.
+- A defined post-expiry state for every previously submitted assignment, preserving its explicit status and history. OQ-048 must be decided before the MVP state machine and acceptance tests can be completed.
 - Automatic certificate eligibility for main courses and mini-courses according to their completion rules.
 - PDF certificate generation with a unique number and required disclaimer.
 
@@ -142,11 +143,13 @@ MVP is complete only when:
 3. Access is granted only after confirmed payment and cannot be obtained through direct unauthorized requests.
 4. A student can complete the full lesson, homework, revision, acceptance, and certificate flow on a phone and desktop.
 5. A curator can review private media and return text feedback without seeing prohibited student contact data.
-6. Expired curator support blocks the protected submission, revision, review, and enabled messaging actions defined by the approved launch policy, including through direct requests.
-7. A confirmed refund immediately revokes affected access and leaves auditable evidence even when the monetary refund was processed manually.
-8. Launch staff can support users, correct access safely, record refund decisions, and inspect audit evidence.
-9. Backups, logging, legal evidence, and the critical email path are operational.
-10. MVP acceptance and production smoke tests pass, with known limitations recorded.
+6. OQ-021, OQ-048, and OQ-049 are decided before their dependent progress, certificate, support-expiry, and authorization tests are accepted.
+7. Expired curator support blocks the protected submission, revision, review, and enabled messaging actions defined by the approved launch policy, including through direct requests.
+8. Every assignment submitted before expiry retains an explicit lifecycle status and follows the approved post-expiry transition policy; no submitted assignment is stranded in an undefined state.
+9. A confirmed refund immediately revokes affected access and leaves auditable evidence even when the monetary refund was processed manually.
+10. Launch staff can support users, correct access safely, record refund decisions, and inspect audit evidence.
+11. Backups, logging, legal evidence, and the critical email path are operational.
+12. MVP acceptance and production smoke tests pass, with known limitations recorded.
 
 ## Phase 2
 

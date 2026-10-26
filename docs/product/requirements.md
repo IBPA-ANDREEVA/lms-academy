@@ -24,7 +24,7 @@ Source precedence for interpreting this document:
 
 Release allocation is maintained in [mvp.md](./mvp.md). A requirement appearing here does not imply that it belongs in the first release.
 
-Unless labeled otherwise, normative product behavior in this document comes from S1, with interface evidence from S2. A **planning refinement** comes from P1 or P2 and narrows delivery or acceptance without changing the underlying business rule. An **approved scope correction** records an explicit correction requested during product-document review. An **engineering recommendation** is additional implementation guidance inferred to make a source requirement secure, reliable, or testable; it is not an original business decision and must not be used to resolve an open product question.
+Unless labeled otherwise, normative product behavior in this document comes from S1, with interface evidence from S2. A **planning refinement** comes from P1 or P2 and narrows delivery or acceptance without changing the underlying business rule. A **scope correction pending product-owner approval** records a requested documentation correction for which no explicit approval evidence is present in the source set. An **engineering recommendation** is additional implementation guidance inferred to make a source requirement secure, reliable, or testable; it is not an original business decision and must not be used to resolve an open product question.
 
 ## Product goals and operating model
 
@@ -279,7 +279,7 @@ Stacking, per-customer limits, minimum spend, currency behavior, and treatment o
 
 - Only an administrator may record or approve a refund in the platform.
 
-**Approved scope correction:**
+**Scope correction pending product-owner approval:**
 
 - Once a monetary refund is confirmed, the affected course access must be revoked immediately, including in MVP.
 - The revocation must be server-enforced and recorded with the order, refund confirmation, actor, timestamp, affected enrollment, and resulting access state so it is auditable.
@@ -353,9 +353,11 @@ The system must preserve submission and review history across revisions. A curat
 - The student must see the remaining curator-support time.
 - The specification proposes two weeks of support and states that homework review and messaging close after expiry.
 
-**Approved scope correction:**
+**Scope correction pending product-owner approval:**
 
 - From MVP, the server must enforce the configured support expiration when authorizing new homework submissions, homework revisions, curator review actions that the approved expiry policy disallows, and new course-scoped messages if messaging is enabled in that release. A hidden or deferred countdown must not leave expired operations accessible.
+- Every assignment submitted before support expires must retain a valid, explicit lifecycle status and its history after expiry. Expiration must not silently discard it, move it to an undefined state, or make its next permitted action ambiguous.
+- The product owner must approve whether a curator may finish an in-review assignment and whether a student may revise it after expiry. Until OQ-048 is decided, the expiry state machine and its MVP acceptance tests are blocked.
 - Recorded lessons remain available for a separate access period, provisionally shown as three months.
 - Start point, pauses, extensions, reassignment, and timezone rules are unresolved.
 
