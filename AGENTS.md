@@ -8,131 +8,52 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 
 <!-- END:nextjs-agent-rules -->
 
-
 # LMS Agent Instructions
 
-## Project
-A Next.js learning management system for beauty education.
+## Project and approved scope
 
-Users can purchase courses, complete lessons, submit
-assignments, communicate with trainers, and earn certificates.
+This repository is a Russian-first beauty education LMS built as a Next.js App Router, TypeScript, Tailwind CSS, pnpm **feature-based modular monolith**.
+Read [product requirements](docs/product/requirements.md), [delivery scope](docs/product/mvp.md), [open questions](docs/product/open-questions.md), and [architecture](docs/architecture/overview.md) when your task touches them.
+Roles: guest, student, **trainer-curator**, manager, administrator. Accounts may have multiple roles. Trainer/curator role separation is unresolved (OQ-011).
 
-Core roles: guest, student, trainer, manager, administrator.
-Users may have multiple roles.
+Do not invent business policies, product features, actual courses, prices, statistics, testimonials, provider selections, accreditation or approvals. Unresolved questions remain unresolved until the product owner records a decision.
 
-## Stack
-- Next.js App Router
-- TypeScript (strict)
-- Tailwind CSS
-- pnpm
-- Feature-based modular monolith
+## Architecture and security
 
-Do not introduce new infrastructure or dependencies
-without a concrete feature requirement.
+- `src/app`: thin routing, layouts, Server Actions and Route Handlers.
+- `src/features`: domain-owned application logic; cross-feature imports use public interfaces only.
+- `src/components/ui`: reusable visual primitives; feature-specific components remain within their feature.
+- `src/db`: shared database infrastructure, not cross-domain repositories.
+- `src/lib`: small technical utilities, not a global domain layer.
+- Keep React components focused; divide large components by responsibility, not arbitrary line counts.
+- Authenticate and authorize on the server for each protected resource. Validate untrusted inputs; never trust client-supplied roles, prices, completion or ownership.
+- Treat payment, enrollment, support expiration, certificates, media and refund workflows as critical, auditable and replay-safe.
+- Do not introduce infrastructure, dependencies or broad abstractions without a justified requirement and decision.
 
-## Architecture
-- src/app: routing and request entry points.
-- src/features: domain-owned business functionality.
-- src/components/ui: generic UI primitives.
-- src/db: shared database infrastructure.
-- src/lib: shared technical utilities.
+## Required frontend workflow
 
-Keep route handlers thin.
-Keep business rules outside React components.
-Keep database access server-side.
-Avoid cross-feature access to internal implementation.
-Use explicit feature interfaces for cross-module operations.
-Keep modularity and divide each major feature into small chunks. Dont create large components(Divide into small chunks then import each of them), dont put different tasks into one file.
+For UI implementation or redesign:
+1. Read `docs/design/DIRECTION.md` and `docs/design/SYSTEM.md`.
+2. Read `docs/design/COMPONENTS.md` and the relevant sections of `docs/design/SCREENS.md`. Observe phase tags: **MVP**, **later**, or **proposed**.
+3. Inspect `docs/design/references/INDEX.md` and any **actual** approved or rejected assets present; never assume a sample filename exists or is approved.
+4. Follow `docs/design/icons/USAGE.md` and reuse approved files under `public/icons/` before seeking any icon library or generating artwork.
+5. For substantial styling/design tasks, attempt to load the installed `uncodixfy` skill (explicit `$uncodixfy` when supported). If it is missing, say so and continue with the repository's rules. **The approved design documents override generic skill aesthetics.**
+6. Use Russian as the reference locale and test English when relevant. Headlines: Unbounded; functional UI: Manrope; approved single-accent palette.
+7. Apply the three design signatures **selectively**; they are not required on every screen. Keep student, trainer-curator and administration workspaces primarily functional.
+8. Build real accessible interaction states. Demo experiences must use isolated sample data and cannot alter actual learning records.
+9. Inspect browser screenshots where tooling is available; check desktop/mobile, Cyrillic wrapping, contrast, keyboard focus, and `docs/design/QA.md`. Report limitations rather than claiming unverified success.
 
-Do not introduce abstraction layers without a clear need.
+## General development workflow
 
-## Security
-- Validate untrusted inputs at server boundaries.
-- Enforce authentication and resource-level authorization.
-- Never trust client-provided roles, prices, or ownership.
-- Never expose secrets or protected student resources.
-- Treat payment and enrollment operations as critical.
+- Inspect existing code, requirements, decision register and current diff before editing.
+- Make focused changes. Preserve unrelated work and avoid speculative refactoring.
+- For complex tasks, state the approach; update the relevant source-of-truth docs when behavior or approved design choices change.
+- Run relevant validation when supported: `pnpm lint`, `pnpm exec tsc --noEmit`, `pnpm build`, plus appropriate tests.
+- Report exactly what was run and which checks could not be performed.
+- Do not remove the auto-generated Next.js agent block above. Consult installed `node_modules/next/dist/docs/` before using new Next.js APIs.
 
-# Frontend Design Instructions
+## Git safety
 
-This project is a Russian-first beauty education LMS.
-
-## Before modifying frontend UI
-
-1. Read docs/design/DIRECTION.md.
-2. Read docs/design/SYSTEM.md.
-3. Read docs/design/COMPONENTS.md.
-4. Read the relevant page section in SCREENS.md.
-5. Inspect relevant approved and rejected visual references.
-6. Load and follow the installed uncodixfy skill.
-7. Identify and avoid generic AI-generated UI patterns.
-
-## Implementation rules
-
-- Use the established design tokens.
-- Do not introduce new fonts or brand colors.
-- Do not invent product features, prices, testimonials, or statistics.
-- Reuse existing components before creating new ones.
-- Keep business logic separate from visual changes.
-- Design and test Russian layouts first.
-
-## Visual verification
-
-For user-facing UI changes:
-- Render the page in a real browser when possible.
-- Check desktop and mobile screenshots.
-- Compare against approved references.
-- Apply the checklist in docs/design/QA.md.
-- Report remaining visual mismatches.
-
-When documentation conflicts, identify the conflict
-rather than silently inventing a new design direction.
-
-## Workflow
-- Inspect relevant existing code before editing.
-- Keep changes focused on the requested task.
-- Avoid unrelated refactoring.
-- For complex changes, outline the approach first.
-- Update relevant documentation when behavior changes.
-- Add meaningful tests for business rules.
-- Report verification results and known limitations.
-- After major change -> update the docs for references and future instructions.
-
-## Verification
-Run the checks relevant to changed code:
-- pnpm lint
-- pnpm exec tsc --noEmit
-- pnpm build
-
-Run feature tests when available.
-Never claim checks passed without running them.
-
-## Git
-- Do not overwrite unrelated changes.
-- Never force-push or commit secrets.
-- Commit each major change with description, dont push and deploy
-- Prefer small, reviewable changes.
-
-# Codex Agent Instructions
-
-## Before UI changes
-1. Read `docs/design/DIRECTION.md` (existing source of truth).
-2. Read `docs/design/SYSTEM.md`, `COMPONENTS.md`, and the relevant section of `SCREENS.md`.
-3. Review `docs/design/references/INDEX.md` and actual approved/rejected reference images, when present.
-4. Inspect current code and preserve existing working behavior.
-
-## Design execution
-- Russian is the reference language; English is a supported locale.
-- Use Unbounded for short display headings and Manrope for functional UI.
-- Use established semantic tokens, not hardcoded colors in arbitrary components.
-- Apply the three signatures selectively, never as a checklist for every section.
-- Prefer minimal, visual-first communication without hiding necessary instructional, legal, pricing or accessibility text.
-- Never invent real courses, trainers, prices, success rates, testimonials, accreditation, or student records.
-- When available, load the installed `uncodixfy` skill for substantial visual implementation. Treat `DIRECTION.md` and `SYSTEM.md` as higher priority where aesthetics conflict. Report when the skill is unavailable.
-- Use approved SVGs for branded icons; do not improvise a new icon family.
-
-## Completion
-- Validate responsive layouts and full-length Russian copy.
-- Capture and inspect screenshots for desktop and mobile if browser tooling is available.
-- Check `docs/design/QA.md` and report deviations honestly.
-- Do not claim visual approval without a human-approved reference or review.
+- Do not overwrite unrelated changes or commit secrets.
+- Commit only when explicitly requested or permitted by the task workflow. Keep commits focused and reviewable.
+- Do not merge, deploy, or force-push without explicit authorization.

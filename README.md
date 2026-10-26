@@ -1,36 +1,54 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Beauty Academy LMS
 
-## Getting Started
+Russian-first online beauty education platform supporting course discovery and purchase, protected learning, practical assignments, curator review, certificates and administration. English is a planned supported interface language; the [release plan](docs/product/mvp.md) defines when features ship.
 
-First, run the development server:
+> **Status:** early Next.js scaffold. The repository has product/architecture/design documentation, but most domain features, providers, and the approved visual identity have **not** been implemented. Do not mistake design specifications or placeholders for working features.
+
+## Stack
+
+- Next.js 16.4.3 App Router / React 19 / TypeScript
+- Tailwind CSS 4
+- pnpm
+- Accepted architecture: [feature-based modular monolith](docs/decisions/0001-modular-monolith.md)
+
+Database, authentication, payment, media, notification and hosting providers remain subject to recorded decisions.
+
+## Local setup
+
+Install the package manager version declared in `package.json` (Corepack if available), then:
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
+pnpm install
 pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Development server: http://localhost:3000
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Check quality with `pnpm lint`, `pnpm exec tsc --noEmit`, and `pnpm build` once dependencies are installed.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Documentation
 
-## Learn More
+| Topic | Source of truth |
+| --- | --- |
+| Product behavior | [Requirements](docs/product/requirements.md) |
+| Release phases and MVP | [MVP / phases](docs/product/mvp.md) |
+| Unresolved product decisions | [Open questions](docs/product/open-questions.md) |
+| Architecture and ownership | [Overview](docs/architecture/overview.md), [Modules](docs/architecture/modules.md), [ADR-0001](docs/decisions/0001-modular-monolith.md) |
+| Visual identity and signatures | [Design direction](docs/design/DIRECTION.md) |
+| Design tokens and components | [System](docs/design/SYSTEM.md), [Components](docs/design/COMPONENTS.md) |
+| Screens and visual verification | [Screens](docs/design/SCREENS.md), [QA](docs/design/QA.md) |
+| Icon asset rules | [Icons](docs/design/icons/USAGE.md) |
+| Visual references (pending curation) | [Reference register](docs/design/references/INDEX.md) |
+| Agent workflow | [AGENTS.md](AGENTS.md) |
 
-To learn more about Next.js, take a look at the following resources:
+The original technical specification and wireframe PDF are stored in `docs/references/`; their example course details and prices are not production catalog data.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Language and design
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- Russian-first with English support as specified by the release scope.
+- **Unbounded** for short display headings; **Manrope** for UI text.
+- Single plum brand accent (`#782858`) with neutrals and distinct semantic status colors.
+- Reuse the icon assets already present under `public/icons/`; do not invent alternate icon families.
+- Visual references must be explicitly approved before being treated as implementation targets.
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Read `AGENTS.md` before agent-driven frontend work.
