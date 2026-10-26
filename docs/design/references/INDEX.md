@@ -1,6 +1,6 @@
 # Visual Reference Register
 
-The reference folders are intentionally empty until screenshots/approved assets are supplied. Do not treat example names as existing files.
+No approved or rejected screenshot references are committed yet. The existing `public/icons/` SVG asset library is separate from screenshot references. Do not treat suggested reference filenames as existing or human-approved.
 
 ## How to document a reference
 - ID and local screenshot path or Figma frame URL
