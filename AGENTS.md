@@ -42,7 +42,7 @@ Keep business rules outside React components.
 Keep database access server-side.
 Avoid cross-feature access to internal implementation.
 Use explicit feature interfaces for cross-module operations.
-Keep modularity and divide each major feature into small chunks. Dont create large components(Divide into small chunks then import each of them), dont put different tasks into one file. 
+Keep modularity and divide each major feature into small chunks. Dont create large components(Divide into small chunks then import each of them), dont put different tasks into one file.
 
 Do not introduce abstraction layers without a clear need.
 
@@ -68,7 +68,7 @@ Do not introduce abstraction layers without a clear need.
 - Update relevant documentation when behavior changes.
 - Add meaningful tests for business rules.
 - Report verification results and known limitations.
-- After major change -> update the docs for references and future instructions. 
+- After major change -> update the docs for references and future instructions.
 
 ## Verification
 Run the checks relevant to changed code:
