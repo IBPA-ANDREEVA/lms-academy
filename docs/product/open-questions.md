@@ -4,7 +4,7 @@
 
 This file records unresolved business decisions, ambiguous requirements, and missing acceptance rules found in the original technical specification, wireframes, and Vault plans. Future agents must not silently select answers. Record an approved decision here, link its evidence, and then update [requirements.md](./requirements.md) and [mvp.md](./mvp.md) where behavior or scope changes.
 
-Source references: S1 is `ТЗ_онлайн_академия_и_личные_кабинеты.docx`; S2 is `Онлайн_академия_дизайн_платформы.pdf`; P1 is the LMS Vault's `Full Project Plan.md`, phase plans, and `Roadmap.md`; P2 is the LMS Vault's epic task maps and linked task records. Questions derived from an engineering gap rather than an explicit S1 ambiguity are still unresolved recommendations, not approved business decisions. The original attachments were not present as repository copies in `docs/references/` during this review.
+Source references: S1 is `ТЗ_онлайн_академия_и_личные_кабинеты.docx`; S2 is `Онлайн_академия_дизайн_платформы.pdf`; P1 is the LMS Vault's `Full Project Plan.md`, phase plans, and `Roadmap.md`; P2 is the LMS Vault's epic task maps and linked task records. Questions derived from an engineering gap rather than an explicit S1 ambiguity are still unresolved recommendations, not approved business decisions. The original attachments are now committed under `docs/references/`; earlier review versions preceded that addition. Vault planning source files are not committed here.
 
 Status vocabulary:
 

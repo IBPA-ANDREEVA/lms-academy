@@ -13,7 +13,7 @@ Source references used in this document:
 | P1 | LMS Vault: `Full Project Plan.md`, `MVP Plan.md`, `Phase 2 Plan.md`, `Phase 3 Plan.md`, and `Roadmap.md` | Delivery sequencing, target dates, launch assumptions, and manual MVP operations |
 | P2 | LMS Vault: `Epic Task Maps/*.md` and linked task records | Implementation slices, quality gates, and engineering refinements |
 
-The two original attachments were supplied with the documentation request; repository copies were not present in `docs/references/` during this review. Vault references are relative to the LMS project folder in the user's Vault.
+The original technical specification and wireframe PDF are now available under `docs/references/`. Earlier versions of this document were prepared before repository copies were added. Vault references remain external to this repository and must be validated separately when historical schedule estimates are relied upon.
 
 Source precedence for interpreting this document:
 

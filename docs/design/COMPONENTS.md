@@ -26,12 +26,14 @@ For each implemented component record: purpose, anatomy, variants, states, sizes
 - Functional icon set at 20–24px, labels for non-obvious meanings.
 - Trainer/admin: flat tables or lists, readable density, sorting/filter controls; avoid cards inside cards.
 
-## Signature iconography
-- **Branded category illustrations:** custom approved SVGs, about 40–64px, geometrically related, limited plum and neutrals.
-- **Functional icons:** simplified consistent SVG family; an existing utility library is acceptable for conventional controls if visual language remains coherent.
-- Initial proposed custom assets: nails, lash extensions, lash lamination, brows, makeup, cosmetology; lessons, assignments, curator, progress, certificate, achievement.
-- Generate explorations separately, refine vector geometry in Figma, and approve the actual SVG source before treating as canonical.
-- Never improvise inconsistent icon sets or substitute emoji as final artwork.
+## Approved functional icon library
+
+- The existing SVGs under `public/icons/` are the chosen **functional icon collection**. Do not generate replacements, mix in Lucide variants, or silently substitute generic icons.
+- Each base name has six filenames (unsuffixed plus `.1`–`.5`); those suffixes are alternate artworks **not automatically interchangeable states**. See [icon usage rules](./icons/USAGE.md).
+- Icons currently use a 24×24 viewBox, primarily 1.5px rounded strokes, and often hardcode indigo `#292556`. Recoloring to `currentColor`, charcoal or plum requires a separately approved migration; do not overwrite source assets.
+- Use semantic, named icon mappings rather than guessing filenames by array index or suffix.
+- Branded category illustrations (nails, lashes, lamination, brows, makeup, cosmetology) are **not approved or present as a separate documented collection**; design them later as a distinct visual asset task.
+- Keep accessible labels where an action is not obvious; purely decorative SVGs can have an empty alt.
 
 ## Interactive preview
 - Use reusable LMS primitives with isolated sample state and explicit demo labels.
