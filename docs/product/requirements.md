@@ -4,6 +4,17 @@
 
 This document defines the intended behavior of the online academy for future product and engineering work. It consolidates the original Russian technical specification, the five-page wireframe PDF, and the LMS planning notes. It describes required behavior without selecting technologies or resolving decisions that the sources leave open.
 
+Source references used in this document:
+
+| Reference | Source | Use |
+| --- | --- | --- |
+| S1 | `ТЗ_онлайн_академия_и_личные_кабинеты.docx` | Original business rules, roles, workflows, constraints, phases, and explicit open questions |
+| S2 | `Онлайн_академия_дизайн_платформы.pdf` | Five-page wireframe evidence for the public catalog, student mobile dashboard and lesson, and trainer review queue |
+| P1 | LMS Vault: `Full Project Plan.md`, `MVP Plan.md`, `Phase 2 Plan.md`, `Phase 3 Plan.md`, and `Roadmap.md` | Delivery sequencing, target dates, launch assumptions, and manual MVP operations |
+| P2 | LMS Vault: `Epic Task Maps/*.md` and linked task records | Implementation slices, quality gates, and engineering refinements |
+
+The two original attachments were supplied with the documentation request; repository copies were not present in `docs/references/` during this review. Vault references are relative to the LMS project folder in the user's Vault.
+
 Source precedence for interpreting this document:
 
 1. The original technical specification is authoritative for business rules and feature intent.
@@ -12,6 +23,8 @@ Source precedence for interpreting this document:
 4. Any unresolved conflict or placeholder is recorded in [open-questions.md](./open-questions.md).
 
 Release allocation is maintained in [mvp.md](./mvp.md). A requirement appearing here does not imply that it belongs in the first release.
+
+Unless labeled otherwise, normative product behavior in this document comes from S1, with interface evidence from S2. A **planning refinement** comes from P1 or P2 and narrows delivery or acceptance without changing the underlying business rule. An **approved scope correction** records an explicit correction requested during product-document review. An **engineering recommendation** is additional implementation guidance inferred to make a source requirement secure, reliable, or testable; it is not an original business decision and must not be used to resolve an open product question.
 
 ## Product goals and operating model
 
@@ -41,9 +54,10 @@ The operating model distinguishes instructor-created content from curator-suppor
 - Supported roles are guest, student, trainer-curator, manager, and administrator.
 - One account may hold multiple roles at the same time.
 - An administrator assigns and removes roles.
-- Authorization must be enforced on the server and at resource level, not only through hidden navigation.
 - A user must be able to operate in the appropriate role context without creating duplicate accounts. The exact role-switching experience is not specified.
 - Protected course content, homework, messages, financial information, and administrative actions must only be available to authorized users.
+
+**Engineering recommendation:** enforce the source's role-access requirement on the server and at resource level, not only through hidden navigation.
 
 ### Guest
 
@@ -182,9 +196,11 @@ The public product experience must distinguish full courses, packages, mini-cour
 - The platform must support email-and-password registration, sign-in, session handling, email verification, password reset, and password change.
 - Checkout may create an account when the buyer does not already have one.
 - After successful payment, the buyer must receive a receipt and an access or sign-in link.
-- Google and Apple sign-in are desired later features and must link safely to existing accounts rather than creating unintended duplicates.
+- Google and Apple sign-in are desired later features.
 - Administrators may create and block accounts.
 - Blocking an account must prevent protected access without deleting legally or operationally required records.
+
+**Planning refinement (P2):** social sign-in should link safely to existing accounts rather than create unintended duplicates; the matching policy remains open.
 
 The student profile must support:
 
@@ -201,10 +217,10 @@ The student profile must support:
 ### Cart and pricing
 
 - Guests and signed-in students may add courses, packages, and mini-courses to a cart.
-- Cart state should persist through authentication and reasonable navigation; the exact lifetime is unresolved.
-- All authoritative pricing, discounts, eligibility, and totals must be calculated server-side.
 - The checkout must show the final payable amount before payment.
 - If separately selected courses qualify for a package, the system must suggest the package and disclose savings.
+
+**Planning refinements (P2):** cart state should persist through authentication and reasonable navigation, and authoritative pricing, discounts, eligibility, and totals should be calculated server-side. The persistence lifetime remains unresolved.
 
 ### Price cap
 
@@ -223,7 +239,7 @@ Before payment, the buyer must explicitly accept:
 - the refund policy;
 - the license disclaimer stating that a certificate does not authorize professional practice.
 
-The platform must retain evidence of the accepted document versions, timestamp, user or checkout identity, and relevant order. Final retention and evidentiary requirements require legal approval.
+**Engineering recommendation:** retain evidence of the accepted document versions, timestamp, user or checkout identity, and relevant order. Final retention and evidentiary requirements require legal approval.
 
 ### Payment processing
 
@@ -231,8 +247,9 @@ The platform must retain evidence of the accepted document versions, timestamp, 
 - Card payment is required.
 - Apple Pay and Google Pay are requested where supported by the chosen provider and environment.
 - Fulfillment occurs only after authoritative payment confirmation.
-- Payment callbacks must be idempotent so duplicates do not create duplicate orders, enrollments, or accruals.
 - Failed, cancelled, or incomplete payment must not grant access.
+
+**Planning refinement (P2):** payment callbacks must be idempotent so duplicates do not create duplicate orders, enrollments, or accruals.
 
 ### Order fulfillment and attribution
 
@@ -261,9 +278,14 @@ Stacking, per-customer limits, minimum spend, currency behavior, and treatment o
 ### Refunds and access reversal
 
 - Only an administrator may record or approve a refund in the platform.
-- A refund must revoke the affected course access and reverse trainer and manager accruals for the refunded sale.
-- Refund processing must be auditable and idempotent.
-- The MVP delivery plan allows the monetary refund to be performed manually in the payment provider, with the decision recorded in the LMS; later phases automate the resulting platform effects.
+
+**Approved scope correction:**
+
+- Once a monetary refund is confirmed, the affected course access must be revoked immediately, including in MVP.
+- The revocation must be server-enforced and recorded with the order, refund confirmation, actor, timestamp, affected enrollment, and resulting access state so it is auditable.
+- Trainer and manager accruals must be reversed for the refunded sale when those financial modules exist.
+- The MVP delivery plan allows the monetary refund to be performed manually in the payment provider, but confirmed refund recording and the resulting access revocation are MVP requirements. Later phases automate provider-side refund integration and financial reversals.
+- Refund handling must be idempotent so repeated confirmation cannot create inconsistent access or financial effects.
 - Partial-refund and multi-product order behavior is unresolved.
 
 ### Manual enrollments
@@ -308,10 +330,11 @@ The precise threshold for considering a video or lesson viewed is unresolved.
 
 - A homework submission may contain photos, video, and a text comment.
 - The user must see previews of uploaded media before submission.
-- The upload flow must be resilient on mobile networks.
 - The original source asks the platform to accept arbitrary incoming media sizes and formats and compress or normalize them automatically, while also saying maximum sizes are undecided. The implementation must therefore define supported formats, practical service limits, and user-facing validation before launch.
 - The allowed file count is not specified.
 - Submission files must be stored privately and made available only to authorized student, assigned curator, and authorized administrators.
+
+**Engineering recommendation:** make the upload flow recoverable on mobile networks and enforce private delivery through authorized storage paths. Exact resumability and service limits remain open.
 
 ### Homework lifecycle
 
@@ -329,6 +352,10 @@ The system must preserve submission and review history across revisions. A curat
 - A student may ask questions and receive curator responses while support is active.
 - The student must see the remaining curator-support time.
 - The specification proposes two weeks of support and states that homework review and messaging close after expiry.
+
+**Approved scope correction:**
+
+- From MVP, the server must enforce the configured support expiration when authorizing new homework submissions, homework revisions, curator review actions that the approved expiry policy disallows, and new course-scoped messages if messaging is enabled in that release. A hidden or deferred countdown must not leave expired operations accessible.
 - Recorded lessons remain available for a separate access period, provisionally shown as three months.
 - Start point, pauses, extensions, reassignment, and timezone rules are unresolved.
 
@@ -551,20 +578,32 @@ The platform must minimize role access to personal data and keep protected stude
 
 ## Security, reliability, and operational requirements
 
+**Business requirements (S1):**
+
 - The application must use HTTPS.
-- Role and resource authorization must protect pages, APIs, files, playback, messages, and administrative actions.
+- Role-based access must protect platform functions and data.
+- Administrative actions require an audit trail.
+- Protected records must survive course closure according to the approved retention policy.
+
+**Planning refinements (P1/P2):**
+
+- Role and resource authorization must cover pages, APIs, files, playback, messages, and administrative actions.
 - Payment and enrollment operations must be idempotent and auditable.
 - Private uploads must use secure storage and authorized delivery paths.
 - Durable event processing, retries, and scheduled jobs must support payment, email, reminders, support expiry, and certificate workflows.
-- Administrative actions require an audit trail.
 - Database backups, restoration procedures, logging, and a release rollback runbook are required before the full release.
-- Seed or fixture data must not expose real student information.
-- Protected records must survive course unpublication and normal account-state changes.
+
+**Engineering recommendation:** seed or fixture data must not expose real student information.
 
 ## Accessibility, responsiveness, and quality
 
+**Business requirement (S1):**
+
 - The public site and role dashboards must support mobile and desktop.
 - Mobile is a primary learning and homework-submission environment, not a reduced fallback.
+
+**Planning refinements and engineering recommendations (P2):**
+
 - Core flows must be keyboard operable and use semantic, accessible controls.
 - Motion must respect accessibility fallbacks when introduced.
 - Media and upload experiences must handle constrained mobile bandwidth with clear progress and recoverable errors.
@@ -600,8 +639,8 @@ The platform must minimize role access to personal data and keep protected stude
 
 1. An administrator records or initiates the refund.
 2. The monetary refund is confirmed according to the release's provider integration.
-3. Affected access is revoked.
-4. Related trainer and manager accruals are reversed.
+3. Affected access is revoked immediately and the revocation evidence is recorded, including when the monetary refund was processed manually for MVP.
+4. Related trainer and manager accruals are reversed when those modules exist.
 5. The event and actor remain auditable and reports reflect the correction.
 
 ### Homework review escalation

@@ -4,6 +4,8 @@
 
 This file records unresolved business decisions, ambiguous requirements, and missing acceptance rules found in the original technical specification, wireframes, and Vault plans. Future agents must not silently select answers. Record an approved decision here, link its evidence, and then update [requirements.md](./requirements.md) and [mvp.md](./mvp.md) where behavior or scope changes.
 
+Source references: S1 is `ТЗ_онлайн_академия_и_личные_кабинеты.docx`; S2 is `Онлайн_академия_дизайн_платформы.pdf`; P1 is the LMS Vault's `Full Project Plan.md`, phase plans, and `Roadmap.md`; P2 is the LMS Vault's epic task maps and linked task records. Questions derived from an engineering gap rather than an explicit S1 ambiguity are still unresolved recommendations, not approved business decisions. The original attachments were not present as repository copies in `docs/references/` during this review.
+
 Status vocabulary:
 
 - **Blocking MVP:** a decision is needed for a safe or legally valid first launch.
@@ -12,18 +14,18 @@ Status vocabulary:
 
 ## Highest-priority decisions
 
-| ID | Status | Decision needed | Why it matters |
-| --- | --- | --- | --- |
-| OQ-001 | Blocking MVP | Which payment provider will be used, which merchant account and legal entity receives funds, and which countries/currencies must checkout support? | Determines checkout, webhooks, receipts, wallets, refunds, compliance, and testing. |
-| OQ-002 | Blocking MVP | Which protected video host will be used and which playback, audio-track, subtitle, signed-link, and watermark capabilities are contracted? | Determines lesson delivery, localization, authorization, cost, and Phase 3 protection feasibility. |
-| OQ-003 | Blocking MVP | When do the curator-support clock and recorded-content access clock start, pause, expire, or extend? Is recorded access actually three months? | Controls entitlements, submissions, messaging, reminders, refunds, and support workload. |
-| OQ-004 | Blocking MVP | What homework photo and video formats, maximum item count, per-file limits, total submission limit, and normalization targets are supported? | The source asks for arbitrary uploads and compression but separately leaves maximum size open; unlimited input is not operationally well-defined. |
-| OQ-005 | Blocking MVP | What is the curator response SLA, which timezone and business calendar apply, and what happens when work is overdue? | Needed for queue ordering, notifications, escalation, reporting, and staffing. The 48-hour value is only an example. |
-| OQ-006 | Blocking MVP | What is the academy's approved name, domain, sender identities, and certificate issuer identity? | Required for branding, email, legal pages, URLs, and certificates. |
-| OQ-007 | Blocking MVP | What final offer, privacy, refund, and license-disclaimer texts are approved, in which languages, and how are versions retained? | Production checkout cannot collect valid consent against placeholders. |
-| OQ-008 | Blocking MVP | What record-retention period and deletion exceptions apply to users, payments, consents, homework, messages, audit events, and certificates? | The source says at least a lawyer-defined number of years but supplies no duration. |
-| OQ-009 | Blocking MVP | Which prepared courses, lessons, media, prices, trainers, and certificate templates form the launch catalog, and who signs off their readiness? | The MVP plan depends on preloaded content rather than full catalog administration. |
-| OQ-010 | Blocking MVP | What operational tools or documented procedures replace the deferred full admin screens at launch? | Staff must be able to support accounts, access, content, certificates, and manual refund decisions safely. |
+| ID | Status | Decision owner | Needed by milestone | Decision needed | Why it matters |
+| --- | --- | --- | --- | --- | --- |
+| OQ-001 | Blocking MVP | Unassigned | Before payment-provider integration (PM04); no later than MVP acceptance (QA06) | Which payment provider will be used, which merchant account and legal entity receives funds, and which countries/currencies must checkout support? | Determines checkout, webhooks, receipts, wallets, refunds, compliance, and testing. |
+| OQ-002 | Blocking MVP | Unassigned | Before protected-video integration (INF06); no later than end-to-end QA (QA04) | Which protected video host will be used and which playback, audio-track, subtitle, signed-link, and watermark capabilities are contracted? | Determines lesson delivery, localization, authorization, cost, and Phase 3 protection feasibility. |
+| OQ-003 | Blocking MVP | Unassigned | Before support-expiration implementation and end-to-end QA (QA04) | When do the curator-support clock and recorded-content access clock start, pause, expire, or extend? Is recorded access actually three months? | Controls entitlements, submissions, messaging, reminders, refunds, and support workload. Server-side expiration enforcement is MVP even though the visible countdown remains Phase 2. |
+| OQ-004 | Blocking MVP | Unassigned | Before homework media processing (INF08); no later than end-to-end QA (QA04) | What homework photo and video formats, maximum item count, per-file limits, total submission limit, and normalization targets are supported? | The source asks for arbitrary uploads and compression but separately leaves maximum size open; unlimited input is not operationally well-defined. |
+| OQ-005 | Blocking MVP | Unassigned | Before trainer review acceptance and end-to-end QA (QA04) | What is the curator response SLA, which timezone and business calendar apply, and what happens when work is overdue? | Needed for queue ordering, notifications, escalation, reporting, and staffing. The 48-hour value is only an example. |
+| OQ-006 | Blocking MVP | Unassigned | Before legal pages, production email, and certificate templates; no later than MVP acceptance (QA06) | What is the academy's approved name, domain, sender identities, and certificate issuer identity? | Required for branding, email, legal pages, URLs, and certificates. |
+| OQ-007 | Blocking MVP | Unassigned | Before legal sign-off (QA05) and production checkout | What final offer, privacy, refund, and license-disclaimer texts are approved, in which languages, and how are versions retained? | Production checkout cannot collect valid consent against placeholders. |
+| OQ-008 | Blocking MVP | Unassigned | Before retention safeguards (INF13); no later than MVP acceptance (QA06) | What record-retention period and deletion exceptions apply to users, payments, consents, homework, messages, audit events, and certificates? | The source says at least a lawyer-defined number of years but supplies no duration. |
+| OQ-009 | Blocking MVP | Unassigned | Before end-to-end QA (QA04) | Which prepared courses, lessons, media, prices, trainers, and certificate templates form the launch catalog, and who signs off their readiness? | The MVP plan depends on preloaded content rather than full catalog administration. |
+| OQ-010 | Blocking MVP | Unassigned | Before MVP acceptance (QA06) | What operational tools or documented procedures replace the deferred full admin screens at launch? | Staff must be able to support accounts, access, content, certificates, immediate auditable access revocation after confirmed refunds, and manual refund decisions safely. |
 
 ## Roles, ownership, and authorization
 
@@ -155,7 +157,7 @@ Status vocabulary:
 | --- | --- | --- |
 | OQ-085 | Blocking MVP | Does the minimal MVP administration slice have approved operational substitutes for course updates, pricing, access correction, certificate support, and refunds? The original specification asks for basic admin, while the Vault defers most CRUD. |
 | OQ-086 | Clarify | Should product reporting continue to use the original feature phases, or should Phase 2 and Phase 3 be renamed to match the Vault's single `post-MVP` implementation window? This documentation preserves the original feature distinction. |
-| OQ-087 | Clarify | Are December 7, 2026 and January 26, 2027 committed launch dates or planning targets contingent on eight productive hours per working day and timely content/legal inputs? |
+| OQ-087 | Clarify | The December 7, 2026 and January 26, 2027 dates are planning targets, not guaranteed commitments. Are these targets still current, who owns reforecasting, and which dependency or capacity changes trigger a revised plan? |
 | OQ-088 | Clarify | The original MVP says Russian only, while the catalog requirements mention language visibility and filtering. For MVP, should cards show only Russian availability, or must mixed-language inventory already be supported? |
 | OQ-089 | Clarify | The original specification includes the student dashboard's upcoming deadlines and curator responses, but the Vault defers messaging and support countdown. Which reduced MVP dashboard states are required? |
 

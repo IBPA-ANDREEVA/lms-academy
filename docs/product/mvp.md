@@ -4,7 +4,9 @@
 
 This document divides the product into MVP, Phase 2, and Phase 3 while preserving the priority order in the original technical specification. It also records the dated delivery overlay from the Vault plans.
 
-The phases describe committed scope boundaries, not a claim that every underlying business decision is complete. Unresolved prerequisites remain in [open-questions.md](./open-questions.md), and detailed behavior remains in [requirements.md](./requirements.md).
+The phases describe intended scope boundaries, not a claim that every underlying business decision is complete. All dates in this document are planning targets from the Vault records, contingent on the stated capacity, dependencies, approvals, and content readiness. They are not guaranteed delivery commitments. Unresolved prerequisites remain in [open-questions.md](./open-questions.md), and detailed behavior remains in [requirements.md](./requirements.md).
+
+Source references: S1 is `ТЗ_онлайн_академия_и_личные_кабинеты.docx`; S2 is `Онлайн_академия_дизайн_платформы.pdf`; P1 is the LMS Vault's `Full Project Plan.md`, phase plans, and `Roadmap.md`; P2 is the LMS Vault's epic task maps and linked task records. S1 defines feature priority, S2 supplies interface evidence, and P1/P2 supply delivery planning and engineering slices. The original attachments were not present as repository copies in `docs/references/` during this review. The MVP placement of server-side support expiration and immediate auditable access revocation after a confirmed refund are approved scope corrections from this review; they override the broader deferral implied by P1/P2 without changing the original business rules in S1.
 
 ## Planning model and source reconciliation
 
@@ -14,15 +16,15 @@ The original specification defines:
 - **Phase 2:** packages and sales operations, manager and trainer finance, reports, and English;
 - **Phase 3:** growth and protection features such as QR verification, watermarking, push, social login, recommendations, and reviews.
 
-The later Vault plan keeps the MVP feature cut, schedules an MVP production launch for **December 7, 2026**, then schedules both original Phase 2 and original Phase 3 feature work between **December 8, 2026 and January 20, 2027**. It reserves **January 21–26, 2027** for fixes, regression, recovery checks, release preparation, and the full production release on **January 26, 2027**.
+The later Vault plan keeps the MVP feature cut and targets an MVP production launch for **December 7, 2026**. It targets both original Phase 2 and original Phase 3 feature work for **December 8, 2026 through January 20, 2027**, then reserves **January 21–26, 2027** for fixes, regression, recovery checks, and release preparation, with a target full production release on **January 26, 2027**. These are planning targets, not guaranteed commitments.
 
 To avoid losing either intent, this document uses the original feature phases below and treats the Vault dates as a delivery overlay:
 
-| Product phase | Feature priority | Delivery milestone from Vault |
+| Product phase | Feature priority | Planning target from Vault |
 | --- | --- | --- |
-| MVP | Launch-critical learning and commerce loop | Production MVP on December 7, 2026 |
-| Phase 2 | Commercial operations, packages, localization, and full administration | Built during the post-MVP window; part of full-release candidate by January 20, 2027 |
-| Phase 3 | Growth, trust, protection, and release hardening | Growth features built in the post-MVP window; final hardening and full production release on January 26, 2027 |
+| MVP | Launch-critical learning and commerce loop | Target production MVP: December 7, 2026 |
+| Phase 2 | Commercial operations, packages, localization, and full administration | Target post-MVP build window; part of the full-release candidate by January 20, 2027 |
+| Phase 3 | Growth, trust, protection, and release hardening | Target post-MVP build window; final hardening and target full release on January 26, 2027 |
 
 This differs from the Vault labels, which call all work after December 7 `После MVP`. The distinction here is intentional: it preserves the original specification's priority boundaries.
 
@@ -32,7 +34,7 @@ This differs from the Vault labels, which call all work after December 7 `Пос
 
 The MVP proves the complete paid-learning loop in production: a user can find a course, create an account, pay, receive access, watch lessons, submit homework, receive trainer feedback, complete the course, and obtain a PDF certificate.
 
-The MVP launch target in the Vault plan is **December 7, 2026**. The plan estimates 49 tasks and 227.5 hours, based on assumptions documented in the Vault rather than guaranteed delivery capacity.
+The MVP planning target in the Vault is **December 7, 2026**. The plan estimates 49 tasks and 227.5 hours, based on assumptions documented in the Vault rather than guaranteed delivery capacity or a delivery commitment.
 
 ### Public site and catalog
 
@@ -68,7 +70,7 @@ Google and Apple login are not MVP.
 - Payment confirmation, receipt, enrollment invitation, and sign-in instructions by email.
 - Initial manager attribution fields may exist in the data model, but manager tools and commission calculations are not MVP.
 
-For MVP, refunds are performed manually through the payment provider and the decision is recorded. Automated access revocation and financial reversals are Phase 2. Apple Pay and Google Pay require provider verification and are not launch blockers unless explicitly approved as such.
+For MVP, the monetary refund may be performed manually through the payment provider. Once the refund is confirmed, the LMS must immediately revoke the affected access and record an auditable link between the refund confirmation, actor, order, enrollment, timestamp, and resulting access state. Automated provider-side refund initiation and trainer or manager financial reversals remain Phase 2 because those financial modules are not part of MVP. Apple Pay and Google Pay require provider verification and are not launch blockers unless explicitly approved as such.
 
 ### Student learning
 
@@ -79,10 +81,11 @@ For MVP, refunds are performed manually through the payment provider and the dec
 - Mobile-first homework submission with photo and video upload, text comment, and upload previews.
 - Private media storage and normalization or compression pipeline within approved limits.
 - Homework statuses, revisions, and history.
+- Server-side enforcement of the configured curator-support expiration for homework and any enabled course-scoped communication; expired actions must not remain available through direct requests.
 - Automatic certificate eligibility for main courses and mini-courses according to their completion rules.
 - PDF certificate generation with a unique number and required disclaimer.
 
-Course-scoped messaging, visible 14-day support countdown, recommendations, reviews, full student profile and purchase history, and RU/EN course media controls are Phase 2 or Phase 3 as listed below.
+The visible 14-day support countdown, full course-scoped messaging experience, recommendations, reviews, full student profile and purchase history, and RU/EN course media controls are Phase 2 or Phase 3 as listed below. Deferring the countdown does not defer server-side support-expiration enforcement.
 
 ### Trainer-curator workflow
 
@@ -99,6 +102,7 @@ Trainer course authoring, SLA clocks and overdue alerts, voice feedback, accrual
 - Minimal user and role administration.
 - Initial course, lesson, media, pricing, and enrollment data loaded through prepared seed or controlled operational processes.
 - Minimal operational access required to support the launch cohort.
+- Minimal refund record and immediate access-revocation operation with an audit trail.
 - Administrative audit trail, logging, and backups.
 
 The Vault plan deliberately moves complete direction/course/lesson CRUD, publication controls, full order tools, package management, certificate registry, quality dashboards, payout exports, and reports after MVP. This is narrower than the original specification's phrase `basic admin`; it remains acceptable only if launch staff can safely perform every required MVP operation through documented controlled processes.
@@ -124,6 +128,7 @@ Assignment reminders, support-expiry warning, SLA warnings, administrator overdu
 - HTTPS, server-side authorization, audit trail, logging, and database backups.
 - Automated test framework and CI quality gates.
 - Tests for multi-role authorization, payment callbacks, duplicate delivery, failed checkout, and the end-to-end purchase-to-certificate path.
+- Tests proving that expired curator support blocks protected actions server-side and that a confirmed refund immediately revokes access with audit evidence.
 - Desktop and mobile acceptance testing.
 - Final legal sign-off before production payment.
 - Production smoke test and documented acceptance decision.
@@ -137,9 +142,11 @@ MVP is complete only when:
 3. Access is granted only after confirmed payment and cannot be obtained through direct unauthorized requests.
 4. A student can complete the full lesson, homework, revision, acceptance, and certificate flow on a phone and desktop.
 5. A curator can review private media and return text feedback without seeing prohibited student contact data.
-6. Launch staff can support users, correct access safely, record refund decisions, and inspect audit evidence.
-7. Backups, logging, legal evidence, and the critical email path are operational.
-8. MVP acceptance and production smoke tests pass, with known limitations recorded.
+6. Expired curator support blocks the protected submission, revision, review, and enabled messaging actions defined by the approved launch policy, including through direct requests.
+7. A confirmed refund immediately revokes affected access and leaves auditable evidence even when the monetary refund was processed manually.
+8. Launch staff can support users, correct access safely, record refund decisions, and inspect audit evidence.
+9. Backups, logging, legal evidence, and the critical email path are operational.
+10. MVP acceptance and production smoke tests pass, with known limitations recorded.
 
 ## Phase 2
 
@@ -147,7 +154,7 @@ MVP is complete only when:
 
 Phase 2 makes the academy commercially operable beyond the launch cohort: packages and discounts work, managers and trainers can see attributable money, administrators manage the catalog and operations directly, curator communication is complete, and the product supports Russian and English.
 
-In the Vault schedule, Phase 2 work is interleaved with Phase 3 growth work between December 8, 2026 and January 20, 2027. The feature boundary below follows the original specification, not the interleaved calendar order.
+In the Vault planning schedule, Phase 2 work is interleaved with Phase 3 growth work in the target window from December 8, 2026 through January 20, 2027. The feature boundary below follows the original specification, not the interleaved calendar order. The window is not a guaranteed commitment.
 
 ### Packages, promotions, and payment operations
 
@@ -158,12 +165,12 @@ In the Vault schedule, Phase 2 work is interleaved with Phase 3 growth work betw
 - Manager attribution through promo code, referral link, and manual enrollment.
 - Recoverable abandoned-cart tracking under approved consent rules.
 - Apple Pay, Google Pay, and mobile checkout where supported by the selected provider.
-- Automated refund effects, including access revocation and trainer or manager accrual corrections.
+- Automated provider-side refund operations and trainer or manager accrual corrections. Immediate access revocation after a confirmed refund is already required in MVP.
 
 ### Student account completion
 
 - Course-scoped student-curator messaging.
-- Visible 14-day support countdown and enforcement of expiry restrictions.
+- Visible 14-day support countdown and richer expiry-state presentation. Server-side expiration enforcement is already required in MVP.
 - Student profile with Cyrillic and Latin certificate names, phone, locale, purchase history, and receipts.
 - RU/EN interface and course controls, including available audio tracks and subtitles.
 - Support-expiry reminders and other complete operational email templates.
@@ -216,7 +223,7 @@ Phase 2 is complete when package and promotion totals are correct on the server;
 
 Phase 3 adds growth, trust, and deterrence features, then hardens the complete platform for the full production release.
 
-The original specification assigns QR verification, watermarking, push, social login, recommendations, and reviews to Phase 3. The Vault plan implements most of these during the broader post-MVP window and uses the final days for full regression and release.
+The original specification assigns QR verification, watermarking, push, social login, recommendations, and reviews to Phase 3. The Vault plan targets most of these during the broader post-MVP window and uses the final target days for full regression and release preparation.
 
 ### Growth and engagement
 
