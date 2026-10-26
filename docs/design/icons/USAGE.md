@@ -24,15 +24,26 @@
 5. Because `#292556` is **not** in the agreed palette, do not assume it is approved as a UI color. Confirm the intent before any systematic recoloring. If approved, preserve originals and create documented `currentColor` variants or an explicit styling pipeline.
 6. Do not mix icon sets unless a documented exception is approved.
 
-## Approval work still needed
+## Icon Style Usage
 
-- [ ] Identify the original asset source, license and commercial redistribution terms; this repo alone does not prove those permissions.
-- [ ] Review outline, filled, tinted and other variants in an icon contact sheet.
-- [ ] Select canonical files for primary navigation, controls and status symbols.
-- [ ] Decide indigo/original versus charcoal/plum recoloring strategy.
-- [ ] Confirm that every needed icon meaning exists; design bespoke beauty-category illustrations separately if necessary.
-- [ ] Record semantic mapping and selected files in this document or a maintained `icons.ts` registry.
+### Default
+Use Outline icons for standard functional UI.
 
-## Reference workflow
+### Selected / Active
+Use Solid icons selectively when the design requires
+stronger emphasis.
 
-Once approved, create a visual reference sheet in `docs/design/references/` showing actual selected SVGs, semantic names, preferred sizes and active/disabled treatments. The reference sheet is not approved until reviewed by a person.
+### Duotone
+Use for selected visual highlights and branded areas.
+
+### Mixed / Broken
+Use only when explicitly supported by an approved
+visual reference.
+
+### Rules
+- Prefer Outline as the functional default.
+- Do not randomly mix variants in one navigation group.
+- Do not automatically use Solid for every active state.
+- Never select icon styles randomly.
+- Reuse approved icons instead of generating replacements.
+- Icon color must follow approved design decisions.
