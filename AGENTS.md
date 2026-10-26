@@ -64,6 +64,8 @@ This project is a Russian-first beauty education LMS.
 3. Read docs/design/COMPONENTS.md.
 4. Read the relevant page section in SCREENS.md.
 5. Inspect relevant approved and rejected visual references.
+6. Load and follow the installed uncodixfy skill.
+7. Identify and avoid generic AI-generated UI patterns.
 
 ## Implementation rules
 
@@ -111,13 +113,26 @@ Never claim checks passed without running them.
 - Commit each major change with description, dont push and deploy
 - Prefer small, reviewable changes.
 
-## Documentation
-Read relevant documentation as needed:
-- Product: docs/product/
-- Architecture: docs/architecture/
-- Design: docs/design/
-- Decisions: docs/decisions/
+# Codex Agent Instructions
 
-Documentation describes intent; code and tests reveal
-current implementation. Report contradictions instead
-of silently choosing one.
+## Before UI changes
+1. Read `docs/design/DIRECTION.md` (existing source of truth).
+2. Read `docs/design/SYSTEM.md`, `COMPONENTS.md`, and the relevant section of `SCREENS.md`.
+3. Review `docs/design/references/INDEX.md` and actual approved/rejected reference images, when present.
+4. Inspect current code and preserve existing working behavior.
+
+## Design execution
+- Russian is the reference language; English is a supported locale.
+- Use Unbounded for short display headings and Manrope for functional UI.
+- Use established semantic tokens, not hardcoded colors in arbitrary components.
+- Apply the three signatures selectively, never as a checklist for every section.
+- Prefer minimal, visual-first communication without hiding necessary instructional, legal, pricing or accessibility text.
+- Never invent real courses, trainers, prices, success rates, testimonials, accreditation, or student records.
+- When available, load the installed `uncodixfy` skill for substantial visual implementation. Treat `DIRECTION.md` and `SYSTEM.md` as higher priority where aesthetics conflict. Report when the skill is unavailable.
+- Use approved SVGs for branded icons; do not improvise a new icon family.
+
+## Completion
+- Validate responsive layouts and full-length Russian copy.
+- Capture and inspect screenshots for desktop and mobile if browser tooling is available.
+- Check `docs/design/QA.md` and report deviations honestly.
+- Do not claim visual approval without a human-approved reference or review.
