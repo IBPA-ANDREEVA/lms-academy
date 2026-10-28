@@ -1,0 +1,101 @@
+{
+  "schemaVersion": 1,
+  "id": "manager-sales",
+  "name": "Продажи менеджера",
+  "group": "Manager",
+  "route": null,
+  "routeStatus": "unresolved",
+  "roles": [
+    "manager"
+  ],
+  "phase": "Phase 2",
+  "purpose": "Увидеть свои продажи за период.",
+  "primaryAction": "Открыть или сохранить разрешённую операцию",
+  "requiredContent": "Название страницы; текущий контекст; возврат; доступные для роли и фазы направления.\nВыбранный период, атрибутированные продажи после возвратов.\nСобственные order lines, status, attribution, correction.",
+  "dependencies": "Commerce/Identity: только назначенные лиды, продажи и правила финансов; consent/audit.",
+  "issues": [
+    "OQ-040",
+    "OQ-041",
+    "OQ-060",
+    "OQ-076"
+  ],
+  "sources": [
+    "docs/product/requirements.md#sales-and-commission",
+    "docs/product/mvp.md"
+  ],
+  "implementation": "Not implemented. Screen composition is a proposal; a required capability does not mandate a separate route.",
+  "notes": "",
+  "revision": 1,
+  "status": "draft",
+  "approval": null,
+  "history": [],
+  "deletedSections": [],
+  "sections": [
+    {
+      "id": "manager-sales--navigation",
+      "name": "Навигация и контекст",
+      "position": 1,
+      "purpose": "Показать текущий раздел и разрешённые переходы.",
+      "content": "Название страницы; текущий контекст; возврат; доступные для роли и фазы направления.",
+      "primaryAction": "Перейти в нужный раздел",
+      "interactions": "Перейти в нужный раздел. Поддержать клавиатуру; сохранить контекст при возврате и ошибке.",
+      "dependencies": "Commerce/Identity: только назначенные лиды, продажи и правила финансов; consent/audit.",
+      "sources": [
+        "docs/product/requirements.md#sales-and-commission",
+        "docs/product/mvp.md"
+      ],
+      "phase": "Phase 2",
+      "inclusion": "included",
+      "required": true,
+      "reviewed": false,
+      "desktop": "Ясная иерархия; связанные данные рядом; основной сценарий без декоративных отвлечений.",
+      "mobile": "Одна колонка в порядке чтения; перенос длинных названий; действия от 44px; без горизонтальной прокрутки.",
+      "states": "Текущий маршрут; гость/разрешённая роль; меню открыто/закрыто при необходимости; видимый focus; неопубликованные направления отсутствуют. Без искусственной загрузки статических ссылок.",
+      "notes": "Структурное предложение, визуальная композиция не утверждена. Не добавлять новые продуктовые правила."
+    },
+    {
+      "id": "manager-sales--period",
+      "name": "Период и итоги",
+      "position": 2,
+      "purpose": "Сопоставить личные продажи.",
+      "content": "Выбранный период, атрибутированные продажи после возвратов.",
+      "primaryAction": "",
+      "interactions": "Чтение в логическом порядке; доступные переходы при наличии.",
+      "dependencies": "Commerce/Identity: только назначенные лиды, продажи и правила финансов; consent/audit.",
+      "sources": [
+        "docs/product/requirements.md#sales-and-commission",
+        "docs/product/mvp.md"
+      ],
+      "phase": "Phase 2",
+      "inclusion": "included",
+      "required": true,
+      "reviewed": false,
+      "desktop": "Ясная иерархия; связанные данные рядом; основной сценарий без декоративных отвлечений.",
+      "mobile": "Одна колонка в порядке чтения; перенос длинных названий; действия от 44px; без горизонтальной прокрутки.",
+      "states": "Загрузка разрешённых данных; пустой список/нет совпадений; нет прав или назначение изменилось; ошибка с повтором; некорректный ввод; операция выполняется; конфликт устаревшей версии; подтверждённый результат и audit. Финансовые значения не выдумывать.",
+      "notes": "Структурное предложение, визуальная композиция не утверждена. Не добавлять новые продуктовые правила."
+    },
+    {
+      "id": "manager-sales--orders",
+      "name": "Заказы и детали",
+      "position": 3,
+      "purpose": "Проверить результат.",
+      "content": "Собственные order lines, status, attribution, correction.",
+      "primaryAction": "Открыть заказ",
+      "interactions": "Открыть заказ. Поддержать клавиатуру; сохранить контекст при возврате и ошибке.",
+      "dependencies": "Commerce/Identity: только назначенные лиды, продажи и правила финансов; consent/audit.",
+      "sources": [
+        "docs/product/requirements.md#sales-and-commission",
+        "docs/product/mvp.md"
+      ],
+      "phase": "Phase 2",
+      "inclusion": "included",
+      "required": true,
+      "reviewed": false,
+      "desktop": "Ясная иерархия; связанные данные рядом; основной сценарий без декоративных отвлечений.",
+      "mobile": "Одна колонка в порядке чтения; перенос длинных названий; действия от 44px; без горизонтальной прокрутки.",
+      "states": "Загрузка разрешённых данных; пустой список/нет совпадений; нет прав или назначение изменилось; ошибка с повтором; некорректный ввод; операция выполняется; конфликт устаревшей версии; подтверждённый результат и audit. Финансовые значения не выдумывать.",
+      "notes": "Структурное предложение, визуальная композиция не утверждена. Не добавлять новые продуктовые правила."
+    }
+  ]
+}

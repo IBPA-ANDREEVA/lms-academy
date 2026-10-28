@@ -1,0 +1,58 @@
+{
+  "schemaVersion": 1,
+  "id": "legal-identity",
+  "revision": 1,
+  "definition": {
+    "name": "LegalDocumentIdentity",
+    "description": "Identify approved issuer, version and date.",
+    "purpose": "Identify approved issuer, version and date.",
+    "ownership": "legal-content",
+    "implementationPath": "src/features/legal-content/legal-identity.tsx",
+    "requiredData": "Название, issuer, дата и версия; содержание для длинного текста.",
+    "interactions": "Чтение в логическом порядке; доступные переходы при наличии.",
+    "states": "Утверждённый текст доступен; загрузка при динамическом получении; ошибка с повтором; отсутствие или неутверждённая версия явно обозначены и блокируют оплату. Чтение статического текста не требует искусственной загрузки.",
+    "responsive": "Desktop: Ясная иерархия; связанные данные рядом; основной сценарий без декоративных отвлечений.\n\nMobile: Одна колонка в порядке чтения; перенос длинных названий; действия от 44px; без горизонтальной прокрутки.\n\nExact component-level composition is unapproved.",
+    "variants": "",
+    "openQuestions": "OQ-006, OQ-007, OQ-008, OQ-037, OQ-083, PA-07\nMISSING REFERENCE: component-level visual direction requires human review. Structure approval does not resolve product policy, source text placeholders or release gates.",
+    "implementationNotes": "Planning candidate only. No production implementation or visual approval. Read exact approved source records and their unresolved policy IDs before implementation. Variants share presentation only; authorization stays in owning domains.",
+    "notes": "",
+    "category": "shared",
+    "priority": "P1",
+    "usages": [
+      {
+        "pageId": "license-disclaimer",
+        "sectionId": "license-disclaimer--identity",
+        "sourceRevision": 3,
+        "reason": "Identify approved issuer, version and date."
+      },
+      {
+        "pageId": "offer",
+        "sectionId": "offer--identity",
+        "sourceRevision": 3,
+        "reason": "Identify approved issuer, version and date."
+      },
+      {
+        "pageId": "privacy",
+        "sectionId": "privacy--identity",
+        "sourceRevision": 3,
+        "reason": "Identify approved issuer, version and date."
+      },
+      {
+        "pageId": "refunds",
+        "sectionId": "refunds--identity",
+        "sourceRevision": 3,
+        "reason": "Identify approved issuer, version and date."
+      }
+    ],
+    "dependencies": []
+  },
+  "definitionStatus": "draft",
+  "definitionApproval": null,
+  "visualStatus": "no-reference",
+  "visualApproval": null,
+  "implementationStatus": "not-started",
+  "primaryReferenceId": null,
+  "references": [],
+  "archived": false,
+  "history": []
+}

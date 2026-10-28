@@ -1,0 +1,103 @@
+{
+  "schemaVersion": 1,
+  "id": "admin-access",
+  "name": "Операционная поддержка доступа",
+  "group": "Administration",
+  "route": null,
+  "routeStatus": "unresolved",
+  "roles": [
+    "administrator"
+  ],
+  "phase": "Conditional",
+  "purpose": "Обеспечить безопасную поддержку запуска.",
+  "primaryAction": "Выполнить разрешённую операцию с аудитом",
+  "requiredContent": "Название страницы; текущий контекст; возврат; доступные для роли и фазы направления.\nПользователь, order/enrollment и фактический access state.\nОбоснование, подтверждение, actor, история. MVP capability required; отдельный экран зависит от operational substitutes.",
+  "dependencies": "Владельцы доменов: Identity/Catalog/Commerce/Learning/Assignments/Certificates; server authorization, audit.",
+  "issues": [
+    "OQ-010",
+    "OQ-003",
+    "OQ-048",
+    "OQ-049",
+    "OQ-079",
+    "OQ-085"
+  ],
+  "sources": [
+    "docs/product/requirements.md#user-and-access-administration",
+    "docs/product/mvp.md"
+  ],
+  "implementation": "Not implemented. Screen composition is a proposal; a required capability does not mandate a separate route.",
+  "notes": "",
+  "revision": 1,
+  "status": "draft",
+  "approval": null,
+  "history": [],
+  "deletedSections": [],
+  "sections": [
+    {
+      "id": "admin-access--navigation",
+      "name": "Навигация и контекст",
+      "position": 1,
+      "purpose": "Показать текущий раздел и разрешённые переходы.",
+      "content": "Название страницы; текущий контекст; возврат; доступные для роли и фазы направления.",
+      "primaryAction": "Перейти в нужный раздел",
+      "interactions": "Перейти в нужный раздел. Поддержать клавиатуру; сохранить контекст при возврате и ошибке.",
+      "dependencies": "Владельцы доменов: Identity/Catalog/Commerce/Learning/Assignments/Certificates; server authorization, audit.",
+      "sources": [
+        "docs/product/requirements.md#user-and-access-administration",
+        "docs/product/mvp.md"
+      ],
+      "phase": "Conditional",
+      "inclusion": "included",
+      "required": true,
+      "reviewed": false,
+      "desktop": "Ясная иерархия; связанные данные рядом; основной сценарий без декоративных отвлечений.",
+      "mobile": "Одна колонка в порядке чтения; перенос длинных названий; действия от 44px; без горизонтальной прокрутки.",
+      "states": "Текущий маршрут; гость/разрешённая роль; меню открыто/закрыто при необходимости; видимый focus; неопубликованные направления отсутствуют. Без искусственной загрузки статических ссылок.",
+      "notes": "Структурное предложение, визуальная композиция не утверждена. Не добавлять новые продуктовые правила."
+    },
+    {
+      "id": "admin-access--lookup",
+      "name": "Контекст доступа",
+      "position": 2,
+      "purpose": "Проверить основание.",
+      "content": "Пользователь, order/enrollment и фактический access state.",
+      "primaryAction": "",
+      "interactions": "Чтение в логическом порядке; доступные переходы при наличии.",
+      "dependencies": "Владельцы доменов: Identity/Catalog/Commerce/Learning/Assignments/Certificates; server authorization, audit.",
+      "sources": [
+        "docs/product/requirements.md#user-and-access-administration",
+        "docs/product/mvp.md"
+      ],
+      "phase": "Conditional",
+      "inclusion": "included",
+      "required": true,
+      "reviewed": false,
+      "desktop": "Ясная иерархия; связанные данные рядом; основной сценарий без декоративных отвлечений.",
+      "mobile": "Одна колонка в порядке чтения; перенос длинных названий; действия от 44px; без горизонтальной прокрутки.",
+      "states": "Загрузка разрешённых данных; пустой список/нет совпадений; нет прав или назначение изменилось; ошибка с повтором; некорректный ввод; операция выполняется; конфликт устаревшей версии; подтверждённый результат и audit. Финансовые значения не выдумывать.",
+      "notes": "Структурное предложение, визуальная композиция не утверждена. Не добавлять новые продуктовые правила."
+    },
+    {
+      "id": "admin-access--correction",
+      "name": "Коррекция и основание",
+      "position": 3,
+      "purpose": "Изменить только разрешённое состояние.",
+      "content": "Обоснование, подтверждение, actor, история. MVP capability required; отдельный экран зависит от operational substitutes.",
+      "primaryAction": "Записать коррекцию",
+      "interactions": "Записать коррекцию. Поддержать клавиатуру; сохранить контекст при возврате и ошибке.",
+      "dependencies": "Владельцы доменов: Identity/Catalog/Commerce/Learning/Assignments/Certificates; server authorization, audit.",
+      "sources": [
+        "docs/product/requirements.md#user-and-access-administration",
+        "docs/product/mvp.md"
+      ],
+      "phase": "Conditional",
+      "inclusion": "included",
+      "required": true,
+      "reviewed": false,
+      "desktop": "Ясная иерархия; связанные данные рядом; основной сценарий без декоративных отвлечений.",
+      "mobile": "Одна колонка в порядке чтения; перенос длинных названий; действия от 44px; без горизонтальной прокрутки.",
+      "states": "Загрузка разрешённых данных; пустой список/нет совпадений; нет прав или назначение изменилось; ошибка с повтором; некорректный ввод; операция выполняется; конфликт устаревшей версии; подтверждённый результат и audit. Финансовые значения не выдумывать.",
+      "notes": "Структурное предложение, визуальная композиция не утверждена. Не добавлять новые продуктовые правила."
+    }
+  ]
+}

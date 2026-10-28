@@ -24,7 +24,22 @@ pnpm dev
 
 Development server: http://localhost:3000
 
+For the development-only page-structure review workspace, run `pnpm dev:sections`
+and open http://127.0.0.1:3000/dev/sections. See the
+[review guide](docs/design/section-planning/README.md) and
+[page inventory](docs/design/section-planning/INVENTORY.md). This tool edits
+repository-backed structure proposals; it does not implement LMS pages or approve
+product policies. All initial structures require explicit human review.
+
 Check quality with `pnpm lint`, `pnpm exec tsc --noEmit`, and `pnpm build` once dependencies are installed.
+
+For the local component-definition and visual-reference manager, run
+`pnpm dev:components` and open `/dev/components` on its loopback URL. If the section
+editor already uses port 3000, use `pnpm dev:components --port 3001`. See the
+[registry guide](docs/design/components/README.md), [component index](docs/design/components/INDEX.md)
+and [source coverage](docs/design/components/COVERAGE.md). Records and reference
+explanations persist in repository JSON with generated Markdown. This is a planning
+tool, not production components or a component gallery.
 
 ## Documentation
 

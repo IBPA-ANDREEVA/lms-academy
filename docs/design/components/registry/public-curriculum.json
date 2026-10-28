@@ -1,0 +1,46 @@
+{
+  "schemaVersion": 1,
+  "id": "public-curriculum",
+  "revision": 1,
+  "definition": {
+    "name": "PublicCurriculum",
+    "description": "Показать последовательность обучения.",
+    "purpose": "Показать последовательность обучения.",
+    "ownership": "catalog",
+    "implementationPath": "src/features/catalog/public-curriculum.tsx",
+    "requiredData": "Открытые названия и описания уроков; никаких платных материалов по публичной ссылке.",
+    "interactions": "Раскрыть описание урока. Поддержать клавиатуру; сохранить контекст при возврате и ошибке.",
+    "states": "Загрузка опубликованного содержания; нет предложений с переходом в доступный каталог; неизвестный или снятый продукт; неверная конфигурация; нет утверждённой цены/условий; ошибка preview с повтором; already-owned/in-cart; добавление подтверждено или отклонено без потери контекста.",
+    "responsive": "Desktop: Ясная иерархия; связанные данные рядом; основной сценарий без декоративных отвлечений.\n\nMobile: Одна колонка в порядке чтения; перенос длинных названий; действия от 44px; без горизонтальной прокрутки.\n\nExact component-level composition is unapproved.",
+    "variants": "Supported course: distinguish teacher from assigned curator and access from support.",
+    "openQuestions": "OQ-003, OQ-009, OQ-018, OQ-021, OQ-024, OQ-029, OQ-050, PA-10\nMISSING REFERENCE: component-level visual direction requires human review. Structure approval does not resolve product policy, source text placeholders or release gates.",
+    "implementationNotes": "Planning candidate only. No production implementation or visual approval. Read exact approved source records and their unresolved policy IDs before implementation. Variants share presentation only; authorization stays in owning domains.",
+    "notes": "",
+    "category": "feature",
+    "priority": "P1",
+    "usages": [
+      {
+        "pageId": "course-detail",
+        "sectionId": "course-detail--curriculum",
+        "sourceRevision": 3,
+        "reason": "Показать последовательность обучения."
+      },
+      {
+        "pageId": "mini-detail",
+        "sectionId": "mini-detail--curriculum",
+        "sourceRevision": 3,
+        "reason": "Показать последовательность обучения."
+      }
+    ],
+    "dependencies": []
+  },
+  "definitionStatus": "draft",
+  "definitionApproval": null,
+  "visualStatus": "no-reference",
+  "visualApproval": null,
+  "implementationStatus": "not-started",
+  "primaryReferenceId": null,
+  "references": [],
+  "archived": false,
+  "history": []
+}

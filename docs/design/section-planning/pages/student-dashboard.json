@@ -1,0 +1,174 @@
+{
+  "schemaVersion": 1,
+  "id": "student-dashboard",
+  "name": "Кабинет ученика",
+  "group": "Student",
+  "route": "/account",
+  "routeStatus": "proposed",
+  "roles": [
+    "student"
+  ],
+  "phase": "MVP",
+  "purpose": "Продолжить обучение и увидеть состояние работ.",
+  "primaryAction": "Продолжить курс",
+  "requiredContent": "Название страницы; текущий контекст; возврат; доступные для роли и фазы направления.\nКупленные курсы, прогресс и доступность.\nСтатусы работ и отзывы; точный reduced MVP состав OQ-089.\nEligibility и ссылка на доступный PDF.\nCountdown и course-scoped messages, не часть MVP.\nТолько разрешённая политика рекомендаций.",
+  "dependencies": "Learning: enrollment/progress; Assignments: статусы; Certificates: eligibility.",
+  "issues": [
+    "PA-03",
+    "OQ-013",
+    "OQ-021",
+    "OQ-089"
+  ],
+  "sources": [
+    "docs/product/requirements.md#student-learning-experience",
+    "docs/product/mvp.md",
+    "docs/architecture/public-sitemap.md"
+  ],
+  "implementation": "Not implemented. Screen composition is a proposal; a required capability does not mandate a separate route.",
+  "notes": "",
+  "revision": 1,
+  "status": "draft",
+  "approval": null,
+  "history": [],
+  "deletedSections": [],
+  "sections": [
+    {
+      "id": "student-dashboard--navigation",
+      "name": "Навигация и контекст",
+      "position": 1,
+      "purpose": "Показать текущий раздел и разрешённые переходы.",
+      "content": "Название страницы; текущий контекст; возврат; доступные для роли и фазы направления.",
+      "primaryAction": "Перейти в нужный раздел",
+      "interactions": "Перейти в нужный раздел. Поддержать клавиатуру; сохранить контекст при возврате и ошибке.",
+      "dependencies": "Learning: enrollment/progress; Assignments: статусы; Certificates: eligibility.",
+      "sources": [
+        "docs/product/requirements.md#student-learning-experience",
+        "docs/product/mvp.md",
+        "docs/architecture/public-sitemap.md"
+      ],
+      "phase": "MVP",
+      "inclusion": "included",
+      "required": true,
+      "reviewed": false,
+      "desktop": "Ясная иерархия; связанные данные рядом; основной сценарий без декоративных отвлечений.",
+      "mobile": "Одна колонка в порядке чтения; перенос длинных названий; действия от 44px; без горизонтальной прокрутки.",
+      "states": "Текущий маршрут; гость/разрешённая роль; меню открыто/закрыто при необходимости; видимый focus; неопубликованные направления отсутствуют. Без искусственной загрузки статических ссылок.",
+      "notes": "Структурное предложение, визуальная композиция не утверждена. Не добавлять новые продуктовые правила."
+    },
+    {
+      "id": "student-dashboard--courses",
+      "name": "Мои курсы",
+      "position": 2,
+      "purpose": "Найти следующее обучение.",
+      "content": "Купленные курсы, прогресс и доступность.",
+      "primaryAction": "Продолжить",
+      "interactions": "Продолжить. Поддержать клавиатуру; сохранить контекст при возврате и ошибке.",
+      "dependencies": "Learning: enrollment/progress; Assignments: статусы; Certificates: eligibility.",
+      "sources": [
+        "docs/product/requirements.md#student-learning-experience",
+        "docs/product/mvp.md",
+        "docs/architecture/public-sitemap.md"
+      ],
+      "phase": "MVP",
+      "inclusion": "included",
+      "required": true,
+      "reviewed": false,
+      "desktop": "Ясная иерархия; связанные данные рядом; основной сценарий без декоративных отвлечений.",
+      "mobile": "Одна колонка в порядке чтения; перенос длинных названий; действия от 44px; без горизонтальной прокрутки.",
+      "states": "Загрузка авторизованных данных; нет покупок/работ/истории; доступ заблокирован, истёк или отозван с причиной; ошибка и повтор; активное, завершённое или ожидающее действие по фактическим данным. Не придумывать сроки.",
+      "notes": "Структурное предложение, визуальная композиция не утверждена. Не добавлять новые продуктовые правила."
+    },
+    {
+      "id": "student-dashboard--work",
+      "name": "Домашние работы и ответы",
+      "position": 3,
+      "purpose": "Увидеть необходимое действие.",
+      "content": "Статусы работ и отзывы; точный reduced MVP состав OQ-089.",
+      "primaryAction": "Открыть работу",
+      "interactions": "Открыть работу. Поддержать клавиатуру; сохранить контекст при возврате и ошибке.",
+      "dependencies": "Learning: enrollment/progress; Assignments: статусы; Certificates: eligibility.",
+      "sources": [
+        "docs/product/requirements.md#student-learning-experience",
+        "docs/product/mvp.md",
+        "docs/architecture/public-sitemap.md"
+      ],
+      "phase": "MVP",
+      "inclusion": "included",
+      "required": true,
+      "reviewed": false,
+      "desktop": "Ясная иерархия; связанные данные рядом; основной сценарий без декоративных отвлечений.",
+      "mobile": "Одна колонка в порядке чтения; перенос длинных названий; действия от 44px; без горизонтальной прокрутки.",
+      "states": "Загрузка авторизованных данных; нет покупок/работ/истории; доступ заблокирован, истёк или отозван с причиной; ошибка и повтор; активное, завершённое или ожидающее действие по фактическим данным. Не придумывать сроки.",
+      "notes": "Структурное предложение, визуальная композиция не утверждена. Не добавлять новые продуктовые правила."
+    },
+    {
+      "id": "student-dashboard--certificates",
+      "name": "Сертификаты",
+      "position": 4,
+      "purpose": "Найти доступный документ.",
+      "content": "Eligibility и ссылка на доступный PDF.",
+      "primaryAction": "Открыть сертификат",
+      "interactions": "Открыть сертификат. Поддержать клавиатуру; сохранить контекст при возврате и ошибке.",
+      "dependencies": "Learning: enrollment/progress; Assignments: статусы; Certificates: eligibility.",
+      "sources": [
+        "docs/product/requirements.md#student-learning-experience",
+        "docs/product/mvp.md",
+        "docs/architecture/public-sitemap.md"
+      ],
+      "phase": "MVP",
+      "inclusion": "included",
+      "required": true,
+      "reviewed": false,
+      "desktop": "Ясная иерархия; связанные данные рядом; основной сценарий без декоративных отвлечений.",
+      "mobile": "Одна колонка в порядке чтения; перенос длинных названий; действия от 44px; без горизонтальной прокрутки.",
+      "states": "Загрузка авторизованных данных; нет покупок/работ/истории; доступ заблокирован, истёк или отозван с причиной; ошибка и повтор; активное, завершённое или ожидающее действие по фактическим данным. Не придумывать сроки.",
+      "notes": "Структурное предложение, визуальная композиция не утверждена. Не добавлять новые продуктовые правила."
+    },
+    {
+      "id": "student-dashboard--support",
+      "name": "Срок поддержки и сообщения",
+      "position": 5,
+      "purpose": "Показать утверждённые сроки.",
+      "content": "Countdown и course-scoped messages, не часть MVP.",
+      "primaryAction": "Открыть сообщения",
+      "interactions": "Открыть сообщения. Поддержать клавиатуру; сохранить контекст при возврате и ошибке.",
+      "dependencies": "Learning: enrollment/progress; Assignments: статусы; Certificates: eligibility.",
+      "sources": [
+        "docs/product/requirements.md#student-learning-experience",
+        "docs/product/mvp.md",
+        "docs/architecture/public-sitemap.md"
+      ],
+      "phase": "Phase 2",
+      "inclusion": "included",
+      "required": false,
+      "reviewed": false,
+      "desktop": "Ясная иерархия; связанные данные рядом; основной сценарий без декоративных отвлечений.",
+      "mobile": "Одна колонка в порядке чтения; перенос длинных названий; действия от 44px; без горизонтальной прокрутки.",
+      "states": "Загрузка авторизованных данных; нет покупок/работ/истории; доступ заблокирован, истёк или отозван с причиной; ошибка и повтор; активное, завершённое или ожидающее действие по фактическим данным. Не придумывать сроки.",
+      "notes": "Структурное предложение, визуальная композиция не утверждена. Не добавлять новые продуктовые правила."
+    },
+    {
+      "id": "student-dashboard--recommendations",
+      "name": "Рекомендации",
+      "position": 6,
+      "purpose": "Найти релевантные предложения.",
+      "content": "Только разрешённая политика рекомендаций.",
+      "primaryAction": "Открыть предложение",
+      "interactions": "Открыть предложение. Поддержать клавиатуру; сохранить контекст при возврате и ошибке.",
+      "dependencies": "Learning: enrollment/progress; Assignments: статусы; Certificates: eligibility.",
+      "sources": [
+        "docs/product/requirements.md#student-learning-experience",
+        "docs/product/mvp.md",
+        "docs/architecture/public-sitemap.md"
+      ],
+      "phase": "Phase 3",
+      "inclusion": "included",
+      "required": false,
+      "reviewed": false,
+      "desktop": "Ясная иерархия; связанные данные рядом; основной сценарий без декоративных отвлечений.",
+      "mobile": "Одна колонка в порядке чтения; перенос длинных названий; действия от 44px; без горизонтальной прокрутки.",
+      "states": "Загрузка авторизованных данных; нет покупок/работ/истории; доступ заблокирован, истёк или отозван с причиной; ошибка и повтор; активное, завершённое или ожидающее действие по фактическим данным. Не придумывать сроки.",
+      "notes": "Структурное предложение, визуальная композиция не утверждена. Не добавлять новые продуктовые правила."
+    }
+  ]
+}

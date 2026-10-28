@@ -1,0 +1,43 @@
+{
+  "schemaVersion": 1,
+  "id": "login-form",
+  "revision": 1,
+  "definition": {
+    "name": "LoginForm",
+    "description": "Войти и продолжить разрешённый сценарий.",
+    "purpose": "Войти и продолжить разрешённый сценарий.",
+    "ownership": "identity",
+    "implementationPath": "src/features/identity/login-form.tsx",
+    "requiredData": "Email, пароль, ошибки; checkout continuation; blocked/unverified состояния.",
+    "interactions": "Войти. Поддержать клавиатуру; сохранить контекст при возврате и ошибке.",
+    "states": "Исходное состояние; ввод/проверка; отправка без повторов; успех с безопасным продолжением; неверные учётные данные; блокировка; proof отсутствует, истёк или использован; ограничение повторов; сбой доставки. Применять только состояния текущего auth-сценария.",
+    "responsive": "Desktop: Ясная иерархия; связанные данные рядом; основной сценарий без декоративных отвлечений.\n\nMobile: Одна колонка в порядке чтения; перенос длинных названий; действия от 44px; без горизонтальной прокрутки.\n\nExact component-level composition is unapproved.",
+    "variants": "Independent workflow; do not merge verification, reset and registration policies into one generic form.",
+    "openQuestions": "OQ-013, OQ-016, OQ-032\nMISSING REFERENCE: component-level visual direction requires human review. Structure approval does not resolve product policy, source text placeholders or release gates.",
+    "implementationNotes": "Planning candidate only. No production implementation or visual approval. Read exact approved source records and their unresolved policy IDs before implementation. Variants share presentation only; authorization stays in owning domains.",
+    "notes": "",
+    "category": "feature",
+    "priority": "P1",
+    "usages": [
+      {
+        "pageId": "login",
+        "sectionId": "login--form-status",
+        "sourceRevision": 3,
+        "reason": "Войти и продолжить разрешённый сценарий."
+      }
+    ],
+    "dependencies": [
+      "form-controls",
+      "button"
+    ]
+  },
+  "definitionStatus": "draft",
+  "definitionApproval": null,
+  "visualStatus": "no-reference",
+  "visualApproval": null,
+  "implementationStatus": "not-started",
+  "primaryReferenceId": null,
+  "references": [],
+  "archived": false,
+  "history": []
+}

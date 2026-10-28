@@ -1,0 +1,101 @@
+{
+  "schemaVersion": 1,
+  "id": "admin-promos",
+  "name": "Управление промокодами",
+  "group": "Administration",
+  "route": null,
+  "routeStatus": "unresolved",
+  "roles": [
+    "administrator"
+  ],
+  "phase": "Phase 2",
+  "purpose": "Настроить разрешённые скидки.",
+  "primaryAction": "Выполнить разрешённую операцию с аудитом",
+  "requiredContent": "Название страницы; текущий контекст; возврат; доступные для роли и фазы направления.\nКод, состояние, сроки и usage.\nПроцент/фиксированная сумма, срок, usage limit, manager, restriction course/package.",
+  "dependencies": "Владельцы доменов: Identity/Catalog/Commerce/Learning/Assignments/Certificates; server authorization, audit.",
+  "issues": [
+    "OQ-034",
+    "OQ-035",
+    "OQ-040",
+    "OQ-041"
+  ],
+  "sources": [
+    "docs/product/requirements.md#promo-codes",
+    "docs/product/mvp.md"
+  ],
+  "implementation": "Not implemented. Screen composition is a proposal; a required capability does not mandate a separate route.",
+  "notes": "",
+  "revision": 1,
+  "status": "draft",
+  "approval": null,
+  "history": [],
+  "deletedSections": [],
+  "sections": [
+    {
+      "id": "admin-promos--navigation",
+      "name": "Навигация и контекст",
+      "position": 1,
+      "purpose": "Показать текущий раздел и разрешённые переходы.",
+      "content": "Название страницы; текущий контекст; возврат; доступные для роли и фазы направления.",
+      "primaryAction": "Перейти в нужный раздел",
+      "interactions": "Перейти в нужный раздел. Поддержать клавиатуру; сохранить контекст при возврате и ошибке.",
+      "dependencies": "Владельцы доменов: Identity/Catalog/Commerce/Learning/Assignments/Certificates; server authorization, audit.",
+      "sources": [
+        "docs/product/requirements.md#promo-codes",
+        "docs/product/mvp.md"
+      ],
+      "phase": "Phase 2",
+      "inclusion": "included",
+      "required": true,
+      "reviewed": false,
+      "desktop": "Ясная иерархия; связанные данные рядом; основной сценарий без декоративных отвлечений.",
+      "mobile": "Одна колонка в порядке чтения; перенос длинных названий; действия от 44px; без горизонтальной прокрутки.",
+      "states": "Текущий маршрут; гость/разрешённая роль; меню открыто/закрыто при необходимости; видимый focus; неопубликованные направления отсутствуют. Без искусственной загрузки статических ссылок.",
+      "notes": "Структурное предложение, визуальная композиция не утверждена. Не добавлять новые продуктовые правила."
+    },
+    {
+      "id": "admin-promos--list",
+      "name": "Промокоды",
+      "position": 2,
+      "purpose": "Найти действующее правило.",
+      "content": "Код, состояние, сроки и usage.",
+      "primaryAction": "",
+      "interactions": "Чтение в логическом порядке; доступные переходы при наличии.",
+      "dependencies": "Владельцы доменов: Identity/Catalog/Commerce/Learning/Assignments/Certificates; server authorization, audit.",
+      "sources": [
+        "docs/product/requirements.md#promo-codes",
+        "docs/product/mvp.md"
+      ],
+      "phase": "Phase 2",
+      "inclusion": "included",
+      "required": true,
+      "reviewed": false,
+      "desktop": "Ясная иерархия; связанные данные рядом; основной сценарий без декоративных отвлечений.",
+      "mobile": "Одна колонка в порядке чтения; перенос длинных названий; действия от 44px; без горизонтальной прокрутки.",
+      "states": "Загрузка разрешённых данных; пустой список/нет совпадений; нет прав или назначение изменилось; ошибка с повтором; некорректный ввод; операция выполняется; конфликт устаревшей версии; подтверждённый результат и audit. Финансовые значения не выдумывать.",
+      "notes": "Структурное предложение, визуальная композиция не утверждена. Не добавлять новые продуктовые правила."
+    },
+    {
+      "id": "admin-promos--rule",
+      "name": "Правило скидки",
+      "position": 3,
+      "purpose": "Изменить параметры.",
+      "content": "Процент/фиксированная сумма, срок, usage limit, manager, restriction course/package.",
+      "primaryAction": "Сохранить",
+      "interactions": "Сохранить. Поддержать клавиатуру; сохранить контекст при возврате и ошибке.",
+      "dependencies": "Владельцы доменов: Identity/Catalog/Commerce/Learning/Assignments/Certificates; server authorization, audit.",
+      "sources": [
+        "docs/product/requirements.md#promo-codes",
+        "docs/product/mvp.md"
+      ],
+      "phase": "Phase 2",
+      "inclusion": "included",
+      "required": true,
+      "reviewed": false,
+      "desktop": "Ясная иерархия; связанные данные рядом; основной сценарий без декоративных отвлечений.",
+      "mobile": "Одна колонка в порядке чтения; перенос длинных названий; действия от 44px; без горизонтальной прокрутки.",
+      "states": "Загрузка разрешённых данных; пустой список/нет совпадений; нет прав или назначение изменилось; ошибка с повтором; некорректный ввод; операция выполняется; конфликт устаревшей версии; подтверждённый результат и audit. Финансовые значения не выдумывать.",
+      "notes": "Структурное предложение, визуальная композиция не утверждена. Не добавлять новые продуктовые правила."
+    }
+  ]
+}

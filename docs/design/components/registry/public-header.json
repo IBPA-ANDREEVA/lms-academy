@@ -1,0 +1,130 @@
+{
+  "schemaVersion": 1,
+  "id": "public-header",
+  "revision": 1,
+  "definition": {
+    "name": "PublicHeader",
+    "description": "Expose only phase-valid public navigation and current context.",
+    "purpose": "Expose only phase-valid public navigation and current context.",
+    "ownership": "public-shell",
+    "implementationPath": "src/features/public-shell/public-header.tsx",
+    "requiredData": "Название страницы; текущий контекст; возврат; доступные для роли и фазы направления.",
+    "interactions": "Перейти в нужный раздел. Поддержать клавиатуру; сохранить контекст при возврате и ошибке.",
+    "states": "Текущий маршрут; гость/разрешённая роль; меню открыто/закрыто при необходимости; видимый focus; неопубликованные направления отсутствуют. Без искусственной загрузки статических ссылок.",
+    "responsive": "Desktop: Ясная иерархия; связанные данные рядом; основной сценарий без декоративных отвлечений.\n\nMobile: Одна колонка в порядке чтения; перенос длинных названий; действия от 44px; без горизонтальной прокрутки.\n\nExact component-level composition is unapproved.",
+    "variants": "Public discovery; focused commerce/legal context. Confirm actual shared anatomy before extracting variants.",
+    "openQuestions": "OQ-029, OQ-030, OQ-033, PA-06, PA-10, OQ-055, OQ-056, OQ-054, PA-15, OQ-031, OQ-032, OQ-069, OQ-080, PA-08, PA-12, OQ-001, OQ-007, OQ-082, OQ-083, PA-05, PA-07, OQ-003, OQ-009, OQ-018, OQ-021, OQ-024, OQ-050, OQ-017, OQ-088, PA-01, OQ-006, PA-04, PA-13, OD-003, OD-004, OD-005, OQ-008, OQ-037, OQ-025, OQ-026, OQ-028, OQ-053, OQ-027, PA-09, OQ-019\nMISSING REFERENCE: component-level visual direction requires human review. Structure approval does not resolve product policy, source text placeholders or release gates.",
+    "implementationNotes": "Planning candidate only. No production implementation or visual approval. Read exact approved source records and their unresolved policy IDs before implementation. Variants share presentation only; authorization stays in owning domains.",
+    "notes": "",
+    "category": "shared",
+    "priority": "P0",
+    "usages": [
+      {
+        "pageId": "cart",
+        "sectionId": "cart--navigation",
+        "sourceRevision": 3,
+        "reason": "Expose only phase-valid public navigation and current context."
+      },
+      {
+        "pageId": "certificate-verification",
+        "sectionId": "certificate-verification--navigation",
+        "sourceRevision": 3,
+        "reason": "Expose only phase-valid public navigation and current context."
+      },
+      {
+        "pageId": "checkout-result",
+        "sectionId": "checkout-result--navigation",
+        "sourceRevision": 3,
+        "reason": "Expose only phase-valid public navigation and current context."
+      },
+      {
+        "pageId": "checkout",
+        "sectionId": "checkout--navigation",
+        "sourceRevision": 3,
+        "reason": "Expose only phase-valid public navigation and current context."
+      },
+      {
+        "pageId": "course-detail",
+        "sectionId": "course-detail--navigation",
+        "sourceRevision": 3,
+        "reason": "Expose only phase-valid public navigation and current context."
+      },
+      {
+        "pageId": "courses",
+        "sectionId": "courses--navigation",
+        "sourceRevision": 3,
+        "reason": "Expose only phase-valid public navigation and current context."
+      },
+      {
+        "pageId": "home",
+        "sectionId": "home--navigation",
+        "sourceRevision": 8,
+        "reason": "Expose only phase-valid public navigation and current context."
+      },
+      {
+        "pageId": "license-disclaimer",
+        "sectionId": "license-disclaimer--navigation",
+        "sourceRevision": 3,
+        "reason": "Expose only phase-valid public navigation and current context."
+      },
+      {
+        "pageId": "mini-courses",
+        "sectionId": "mini-courses--navigation",
+        "sourceRevision": 3,
+        "reason": "Expose only phase-valid public navigation and current context."
+      },
+      {
+        "pageId": "mini-detail",
+        "sectionId": "mini-detail--navigation",
+        "sourceRevision": 3,
+        "reason": "Expose only phase-valid public navigation and current context."
+      },
+      {
+        "pageId": "offer",
+        "sectionId": "offer--navigation",
+        "sourceRevision": 3,
+        "reason": "Expose only phase-valid public navigation and current context."
+      },
+      {
+        "pageId": "package-detail",
+        "sectionId": "package-detail--navigation",
+        "sourceRevision": 3,
+        "reason": "Expose only phase-valid public navigation and current context."
+      },
+      {
+        "pageId": "packages",
+        "sectionId": "packages--navigation",
+        "sourceRevision": 3,
+        "reason": "Expose only phase-valid public navigation and current context."
+      },
+      {
+        "pageId": "privacy",
+        "sectionId": "privacy--navigation",
+        "sourceRevision": 3,
+        "reason": "Expose only phase-valid public navigation and current context."
+      },
+      {
+        "pageId": "refunds",
+        "sectionId": "refunds--navigation",
+        "sourceRevision": 3,
+        "reason": "Expose only phase-valid public navigation and current context."
+      },
+      {
+        "pageId": "start-usa",
+        "sectionId": "start-usa--navigation",
+        "sourceRevision": 3,
+        "reason": "Expose only phase-valid public navigation and current context."
+      }
+    ],
+    "dependencies": []
+  },
+  "definitionStatus": "draft",
+  "definitionApproval": null,
+  "visualStatus": "no-reference",
+  "visualApproval": null,
+  "implementationStatus": "not-started",
+  "primaryReferenceId": null,
+  "references": [],
+  "archived": false,
+  "history": []
+}

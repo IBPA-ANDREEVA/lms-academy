@@ -1,0 +1,129 @@
+{
+  "schemaVersion": 1,
+  "id": "student-course",
+  "name": "Обучение: обзор курса",
+  "group": "Student",
+  "route": "/account/courses/[enrollmentId]",
+  "routeStatus": "proposed",
+  "roles": [
+    "student"
+  ],
+  "phase": "MVP",
+  "purpose": "Понять прогресс и перейти к доступному уроку.",
+  "primaryAction": "Продолжить урок",
+  "requiredContent": "Название страницы; текущий контекст; возврат; доступные для роли и фазы направления.\nКурс, состояние enrollment, прогресс, следующий разрешённый урок.\nПорядок, viewed/completion, lock с причиной.\nСтатусы обязательных работ и путь к сертификату.",
+  "dependencies": "Learning/Catalog: enrollment, порядок уроков, unlock; Assignments; Certificates.",
+  "issues": [
+    "PA-03",
+    "OQ-003",
+    "OQ-021",
+    "OQ-042",
+    "OQ-049"
+  ],
+  "sources": [
+    "docs/product/requirements.md#lesson-playback-and-progress",
+    "docs/product/mvp.md",
+    "docs/architecture/public-sitemap.md"
+  ],
+  "implementation": "Not implemented. Screen composition is a proposal; a required capability does not mandate a separate route.",
+  "notes": "",
+  "revision": 1,
+  "status": "draft",
+  "approval": null,
+  "history": [],
+  "deletedSections": [],
+  "sections": [
+    {
+      "id": "student-course--navigation",
+      "name": "Навигация и контекст",
+      "position": 1,
+      "purpose": "Показать текущий раздел и разрешённые переходы.",
+      "content": "Название страницы; текущий контекст; возврат; доступные для роли и фазы направления.",
+      "primaryAction": "Перейти в нужный раздел",
+      "interactions": "Перейти в нужный раздел. Поддержать клавиатуру; сохранить контекст при возврате и ошибке.",
+      "dependencies": "Learning/Catalog: enrollment, порядок уроков, unlock; Assignments; Certificates.",
+      "sources": [
+        "docs/product/requirements.md#lesson-playback-and-progress",
+        "docs/product/mvp.md",
+        "docs/architecture/public-sitemap.md"
+      ],
+      "phase": "MVP",
+      "inclusion": "included",
+      "required": true,
+      "reviewed": false,
+      "desktop": "Ясная иерархия; связанные данные рядом; основной сценарий без декоративных отвлечений.",
+      "mobile": "Одна колонка в порядке чтения; перенос длинных названий; действия от 44px; без горизонтальной прокрутки.",
+      "states": "Текущий маршрут; гость/разрешённая роль; меню открыто/закрыто при необходимости; видимый focus; неопубликованные направления отсутствуют. Без искусственной загрузки статических ссылок.",
+      "notes": "Структурное предложение, визуальная композиция не утверждена. Не добавлять новые продуктовые правила."
+    },
+    {
+      "id": "student-course--progress",
+      "name": "Контекст и прогресс",
+      "position": 2,
+      "purpose": "Показать реальный доступ.",
+      "content": "Курс, состояние enrollment, прогресс, следующий разрешённый урок.",
+      "primaryAction": "",
+      "interactions": "Чтение в логическом порядке; доступные переходы при наличии.",
+      "dependencies": "Learning/Catalog: enrollment, порядок уроков, unlock; Assignments; Certificates.",
+      "sources": [
+        "docs/product/requirements.md#lesson-playback-and-progress",
+        "docs/product/mvp.md",
+        "docs/architecture/public-sitemap.md"
+      ],
+      "phase": "MVP",
+      "inclusion": "included",
+      "required": true,
+      "reviewed": false,
+      "desktop": "Ясная иерархия; связанные данные рядом; основной сценарий без декоративных отвлечений.",
+      "mobile": "Одна колонка в порядке чтения; перенос длинных названий; действия от 44px; без горизонтальной прокрутки.",
+      "states": "Загрузка авторизованных данных; нет покупок/работ/истории; доступ заблокирован, истёк или отозван с причиной; ошибка и повтор; активное, завершённое или ожидающее действие по фактическим данным. Не придумывать сроки.",
+      "notes": "Структурное предложение, визуальная композиция не утверждена. Не добавлять новые продуктовые правила."
+    },
+    {
+      "id": "student-course--syllabus",
+      "name": "Уроки и доступность",
+      "position": 3,
+      "purpose": "Следовать последовательности.",
+      "content": "Порядок, viewed/completion, lock с причиной.",
+      "primaryAction": "Открыть урок",
+      "interactions": "Открыть урок. Поддержать клавиатуру; сохранить контекст при возврате и ошибке.",
+      "dependencies": "Learning/Catalog: enrollment, порядок уроков, unlock; Assignments; Certificates.",
+      "sources": [
+        "docs/product/requirements.md#lesson-playback-and-progress",
+        "docs/product/mvp.md",
+        "docs/architecture/public-sitemap.md"
+      ],
+      "phase": "MVP",
+      "inclusion": "included",
+      "required": true,
+      "reviewed": false,
+      "desktop": "Ясная иерархия; связанные данные рядом; основной сценарий без декоративных отвлечений.",
+      "mobile": "Одна колонка в порядке чтения; перенос длинных названий; действия от 44px; без горизонтальной прокрутки.",
+      "states": "Загрузка авторизованных данных; нет покупок/работ/истории; доступ заблокирован, истёк или отозван с причиной; ошибка и повтор; активное, завершённое или ожидающее действие по фактическим данным. Не придумывать сроки.",
+      "notes": "Структурное предложение, визуальная композиция не утверждена. Не добавлять новые продуктовые правила."
+    },
+    {
+      "id": "student-course--completion",
+      "name": "Практика и завершение",
+      "position": 4,
+      "purpose": "Показать оставшиеся обязательства.",
+      "content": "Статусы обязательных работ и путь к сертификату.",
+      "primaryAction": "Открыть работу или сертификат",
+      "interactions": "Открыть работу или сертификат. Поддержать клавиатуру; сохранить контекст при возврате и ошибке.",
+      "dependencies": "Learning/Catalog: enrollment, порядок уроков, unlock; Assignments; Certificates.",
+      "sources": [
+        "docs/product/requirements.md#lesson-playback-and-progress",
+        "docs/product/mvp.md",
+        "docs/architecture/public-sitemap.md"
+      ],
+      "phase": "MVP",
+      "inclusion": "included",
+      "required": true,
+      "reviewed": false,
+      "desktop": "Ясная иерархия; связанные данные рядом; основной сценарий без декоративных отвлечений.",
+      "mobile": "Одна колонка в порядке чтения; перенос длинных названий; действия от 44px; без горизонтальной прокрутки.",
+      "states": "Загрузка авторизованных данных; нет покупок/работ/истории; доступ заблокирован, истёк или отозван с причиной; ошибка и повтор; активное, завершённое или ожидающее действие по фактическим данным. Не придумывать сроки.",
+      "notes": "Структурное предложение, визуальная композиция не утверждена. Не добавлять новые продуктовые правила."
+    }
+  ]
+}

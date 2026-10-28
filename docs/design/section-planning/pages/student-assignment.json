@@ -1,0 +1,127 @@
+{
+  "schemaVersion": 1,
+  "id": "student-assignment",
+  "name": "Практическая работа и история",
+  "group": "Student",
+  "route": null,
+  "routeStatus": "unresolved",
+  "roles": [
+    "student"
+  ],
+  "phase": "MVP",
+  "purpose": "Отправить или исправить работу и прочесть отзыв.",
+  "primaryAction": "Отправить работу",
+  "requiredContent": "Название страницы; текущий контекст; возврат; доступные для роли и фазы направления.\nИнструкция и server-authorized состояние поддержки; сроки только если определены.\nPhoto/video preview, text; форматы и лимиты после решения; upload progress/error/retry.\nНа проверке / принято / на доработку; версии, текстовый отзыв; post-expiry политика открыта.",
+  "dependencies": "Assignments: requirement/submissions/history/private media; Learning: support access.",
+  "issues": [
+    "OQ-003",
+    "OQ-004",
+    "OQ-020",
+    "OQ-043",
+    "OQ-044",
+    "OQ-045",
+    "OQ-048",
+    "OQ-049"
+  ],
+  "sources": [
+    "docs/product/requirements.md#homework-submission",
+    "docs/product/mvp.md"
+  ],
+  "implementation": "Not implemented. Screen composition is a proposal; a required capability does not mandate a separate route.",
+  "notes": "",
+  "revision": 1,
+  "status": "draft",
+  "approval": null,
+  "history": [],
+  "deletedSections": [],
+  "sections": [
+    {
+      "id": "student-assignment--navigation",
+      "name": "Навигация и контекст",
+      "position": 1,
+      "purpose": "Показать текущий раздел и разрешённые переходы.",
+      "content": "Название страницы; текущий контекст; возврат; доступные для роли и фазы направления.",
+      "primaryAction": "Перейти в нужный раздел",
+      "interactions": "Перейти в нужный раздел. Поддержать клавиатуру; сохранить контекст при возврате и ошибке.",
+      "dependencies": "Assignments: requirement/submissions/history/private media; Learning: support access.",
+      "sources": [
+        "docs/product/requirements.md#homework-submission",
+        "docs/product/mvp.md"
+      ],
+      "phase": "MVP",
+      "inclusion": "included",
+      "required": true,
+      "reviewed": false,
+      "desktop": "Ясная иерархия; связанные данные рядом; основной сценарий без декоративных отвлечений.",
+      "mobile": "Одна колонка в порядке чтения; перенос длинных названий; действия от 44px; без горизонтальной прокрутки.",
+      "states": "Текущий маршрут; гость/разрешённая роль; меню открыто/закрыто при необходимости; видимый focus; неопубликованные направления отсутствуют. Без искусственной загрузки статических ссылок.",
+      "notes": "Структурное предложение, визуальная композиция не утверждена. Не добавлять новые продуктовые правила."
+    },
+    {
+      "id": "student-assignment--brief",
+      "name": "Задание и доступность",
+      "position": 2,
+      "purpose": "Объяснить требуемую практику.",
+      "content": "Инструкция и server-authorized состояние поддержки; сроки только если определены.",
+      "primaryAction": "",
+      "interactions": "Чтение в логическом порядке; доступные переходы при наличии.",
+      "dependencies": "Assignments: requirement/submissions/history/private media; Learning: support access.",
+      "sources": [
+        "docs/product/requirements.md#homework-submission",
+        "docs/product/mvp.md"
+      ],
+      "phase": "MVP",
+      "inclusion": "included",
+      "required": true,
+      "reviewed": false,
+      "desktop": "Ясная иерархия; связанные данные рядом; основной сценарий без декоративных отвлечений.",
+      "mobile": "Одна колонка в порядке чтения; перенос длинных названий; действия от 44px; без горизонтальной прокрутки.",
+      "states": "Доступно к отправке; загрузка медиа и preview; ошибка обработки/повтор; отправляется; на проверке; принято; на доработку; поддержка истекла. Судьба pending/revision после expiry требует OQ-048; история всегда сохранена.",
+      "notes": "Структурное предложение, визуальная композиция не утверждена. Не добавлять новые продуктовые правила."
+    },
+    {
+      "id": "student-assignment--submission",
+      "name": "Медиа и комментарий",
+      "position": 3,
+      "purpose": "Подготовить работу.",
+      "content": "Photo/video preview, text; форматы и лимиты после решения; upload progress/error/retry.",
+      "primaryAction": "Отправить на проверку",
+      "interactions": "Отправить на проверку. Поддержать клавиатуру; сохранить контекст при возврате и ошибке.",
+      "dependencies": "Assignments: requirement/submissions/history/private media; Learning: support access.",
+      "sources": [
+        "docs/product/requirements.md#homework-submission",
+        "docs/product/mvp.md"
+      ],
+      "phase": "MVP",
+      "inclusion": "included",
+      "required": true,
+      "reviewed": false,
+      "desktop": "Ясная иерархия; связанные данные рядом; основной сценарий без декоративных отвлечений.",
+      "mobile": "Одна колонка в порядке чтения; перенос длинных названий; действия от 44px; без горизонтальной прокрутки.",
+      "states": "Доступно к отправке; загрузка медиа и preview; ошибка обработки/повтор; отправляется; на проверке; принято; на доработку; поддержка истекла. Судьба pending/revision после expiry требует OQ-048; история всегда сохранена.",
+      "notes": "Структурное предложение, визуальная композиция не утверждена. Не добавлять новые продуктовые правила."
+    },
+    {
+      "id": "student-assignment--feedback",
+      "name": "Статус, отзыв и история",
+      "position": 4,
+      "purpose": "Понять результат и следующий шаг.",
+      "content": "На проверке / принято / на доработку; версии, текстовый отзыв; post-expiry политика открыта.",
+      "primaryAction": "Исправить после разрешения",
+      "interactions": "Исправить после разрешения. Поддержать клавиатуру; сохранить контекст при возврате и ошибке.",
+      "dependencies": "Assignments: requirement/submissions/history/private media; Learning: support access.",
+      "sources": [
+        "docs/product/requirements.md#homework-submission",
+        "docs/product/mvp.md"
+      ],
+      "phase": "MVP",
+      "inclusion": "included",
+      "required": true,
+      "reviewed": false,
+      "desktop": "Ясная иерархия; связанные данные рядом; основной сценарий без декоративных отвлечений.",
+      "mobile": "Одна колонка в порядке чтения; перенос длинных названий; действия от 44px; без горизонтальной прокрутки.",
+      "states": "Доступно к отправке; загрузка медиа и preview; ошибка обработки/повтор; отправляется; на проверке; принято; на доработку; поддержка истекла. Судьба pending/revision после expiry требует OQ-048; история всегда сохранена.",
+      "notes": "Структурное предложение, визуальная композиция не утверждена. Не добавлять новые продуктовые правила."
+    }
+  ]
+}

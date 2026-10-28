@@ -1,0 +1,43 @@
+{
+  "schemaVersion": 1,
+  "id": "contact-request",
+  "revision": 1,
+  "definition": {
+    "name": "ContactRequest",
+    "description": "Plan the locally approved contact section; destination, fields, privacy, delivery and abuse policy remain unresolved.",
+    "purpose": "Plan the locally approved contact section; destination, fields, privacy, delivery and abuse policy remain unresolved.",
+    "ownership": "public-home",
+    "implementationPath": "src/features/public-home/contact-request.tsx",
+    "requiredData": "Форма для отправки на почту",
+    "interactions": "определить",
+    "states": "определить",
+    "responsive": "Desktop: определить\n\nMobile: определить\n\nExact component-level composition is unapproved.",
+    "variants": "",
+    "openQuestions": "OQ-006, OQ-009, OQ-017, PA-04, PA-13, OD-003, OD-004, OD-005\nMISSING REFERENCE: component-level visual direction requires human review. Structure approval does not resolve product policy, source text placeholders or release gates.\nContact fields, recipient, consent, retention and anti-abuse behavior are unspecified by the local structure and must not be invented.",
+    "implementationNotes": "Planning candidate only. No production implementation or visual approval. Read exact approved source records and their unresolved policy IDs before implementation. Variants share presentation only; authorization stays in owning domains.",
+    "notes": "",
+    "category": "section",
+    "priority": "P1",
+    "usages": [
+      {
+        "pageId": "home",
+        "sectionId": "home--d75962b8-69c3-4010-92d2-6e7f8d7806f9",
+        "sourceRevision": 8,
+        "reason": "Plan the locally approved contact section; destination, fields, privacy, delivery and abuse policy remain unresolved."
+      }
+    ],
+    "dependencies": [
+      "form-controls",
+      "button"
+    ]
+  },
+  "definitionStatus": "draft",
+  "definitionApproval": null,
+  "visualStatus": "no-reference",
+  "visualApproval": null,
+  "implementationStatus": "not-started",
+  "primaryReferenceId": null,
+  "references": [],
+  "archived": false,
+  "history": []
+}

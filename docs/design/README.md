@@ -41,3 +41,4 @@ FILES:
 - `references/pages/home/HOME-HERO-001.md`: first section-specific visual direction.
 - `QA.md`: visual, functional, responsive tests.
 - `WORKFLOW.md`: how to extend the reference system without document drift.
+- `components/README.md` and `components/INDEX.md`: local `/dev/components` definition/reference manager. Canonical JSON generates specs and reference records; the old component inventory remains historical suggestions. Component approval does not override product, release, page-structure or visual-reference authority.

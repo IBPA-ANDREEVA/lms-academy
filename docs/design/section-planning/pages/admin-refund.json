@@ -1,0 +1,124 @@
+{
+  "schemaVersion": 1,
+  "id": "admin-refund",
+  "name": "Возврат и отзыв доступа",
+  "group": "Administration",
+  "route": null,
+  "routeStatus": "unresolved",
+  "roles": [
+    "administrator"
+  ],
+  "phase": "Conditional",
+  "purpose": "Зафиксировать подтверждённый возврат с audit и access reversal.",
+  "primaryAction": "Выполнить разрешённую операцию с аудитом",
+  "requiredContent": "Название страницы; текущий контекст; возврат; доступные для роли и фазы направления.\nOrder, affected enrollment, refund evidence, actor/time. MVP scope correction pending approval.\nIdempotent immediate revocation после подтверждения; история сохраняется.\nProvider integration и финансовые reversals после решения.",
+  "dependencies": "Владельцы доменов: Identity/Catalog/Commerce/Learning/Assignments/Certificates; server authorization, audit.",
+  "issues": [
+    "OQ-010",
+    "OQ-036",
+    "OQ-037",
+    "OQ-079",
+    "OQ-085"
+  ],
+  "sources": [
+    "docs/product/requirements.md#refunds-and-access-reversal",
+    "docs/product/mvp.md"
+  ],
+  "implementation": "Not implemented. Screen composition is a proposal; a required capability does not mandate a separate route.",
+  "notes": "",
+  "revision": 1,
+  "status": "draft",
+  "approval": null,
+  "history": [],
+  "deletedSections": [],
+  "sections": [
+    {
+      "id": "admin-refund--navigation",
+      "name": "Навигация и контекст",
+      "position": 1,
+      "purpose": "Показать текущий раздел и разрешённые переходы.",
+      "content": "Название страницы; текущий контекст; возврат; доступные для роли и фазы направления.",
+      "primaryAction": "Перейти в нужный раздел",
+      "interactions": "Перейти в нужный раздел. Поддержать клавиатуру; сохранить контекст при возврате и ошибке.",
+      "dependencies": "Владельцы доменов: Identity/Catalog/Commerce/Learning/Assignments/Certificates; server authorization, audit.",
+      "sources": [
+        "docs/product/requirements.md#refunds-and-access-reversal",
+        "docs/product/mvp.md"
+      ],
+      "phase": "Conditional",
+      "inclusion": "included",
+      "required": true,
+      "reviewed": false,
+      "desktop": "Ясная иерархия; связанные данные рядом; основной сценарий без декоративных отвлечений.",
+      "mobile": "Одна колонка в порядке чтения; перенос длинных названий; действия от 44px; без горизонтальной прокрутки.",
+      "states": "Текущий маршрут; гость/разрешённая роль; меню открыто/закрыто при необходимости; видимый focus; неопубликованные направления отсутствуют. Без искусственной загрузки статических ссылок.",
+      "notes": "Структурное предложение, визуальная композиция не утверждена. Не добавлять новые продуктовые правила."
+    },
+    {
+      "id": "admin-refund--order",
+      "name": "Заказ и подтверждение возврата",
+      "position": 2,
+      "purpose": "Установить авторитетное основание.",
+      "content": "Order, affected enrollment, refund evidence, actor/time. MVP scope correction pending approval.",
+      "primaryAction": "",
+      "interactions": "Чтение в логическом порядке; доступные переходы при наличии.",
+      "dependencies": "Владельцы доменов: Identity/Catalog/Commerce/Learning/Assignments/Certificates; server authorization, audit.",
+      "sources": [
+        "docs/product/requirements.md#refunds-and-access-reversal",
+        "docs/product/mvp.md"
+      ],
+      "phase": "Conditional",
+      "inclusion": "included",
+      "required": true,
+      "reviewed": false,
+      "desktop": "Ясная иерархия; связанные данные рядом; основной сценарий без декоративных отвлечений.",
+      "mobile": "Одна колонка в порядке чтения; перенос длинных названий; действия от 44px; без горизонтальной прокрутки.",
+      "states": "Загрузка разрешённых данных; пустой список/нет совпадений; нет прав или назначение изменилось; ошибка с повтором; некорректный ввод; операция выполняется; конфликт устаревшей версии; подтверждённый результат и audit. Финансовые значения не выдумывать.",
+      "notes": "Структурное предложение, визуальная композиция не утверждена. Не добавлять новые продуктовые правила."
+    },
+    {
+      "id": "admin-refund--revocation",
+      "name": "Результат отзыва доступа",
+      "position": 3,
+      "purpose": "Проверить безопасное исполнение.",
+      "content": "Idempotent immediate revocation после подтверждения; история сохраняется.",
+      "primaryAction": "Записать подтверждённый возврат",
+      "interactions": "Записать подтверждённый возврат. Поддержать клавиатуру; сохранить контекст при возврате и ошибке.",
+      "dependencies": "Владельцы доменов: Identity/Catalog/Commerce/Learning/Assignments/Certificates; server authorization, audit.",
+      "sources": [
+        "docs/product/requirements.md#refunds-and-access-reversal",
+        "docs/product/mvp.md"
+      ],
+      "phase": "Conditional",
+      "inclusion": "included",
+      "required": true,
+      "reviewed": false,
+      "desktop": "Ясная иерархия; связанные данные рядом; основной сценарий без декоративных отвлечений.",
+      "mobile": "Одна колонка в порядке чтения; перенос длинных названий; действия от 44px; без горизонтальной прокрутки.",
+      "states": "Загрузка разрешённых данных; пустой список/нет совпадений; нет прав или назначение изменилось; ошибка с повтором; некорректный ввод; операция выполняется; конфликт устаревшей версии; подтверждённый результат и audit. Финансовые значения не выдумывать.",
+      "notes": "Структурное предложение, визуальная композиция не утверждена. Не добавлять новые продуктовые правила."
+    },
+    {
+      "id": "admin-refund--provider",
+      "name": "Возврат через провайдера",
+      "position": 4,
+      "purpose": "Автоматизировать денежную операцию.",
+      "content": "Provider integration и финансовые reversals после решения.",
+      "primaryAction": "Инициировать возврат",
+      "interactions": "Инициировать возврат. Поддержать клавиатуру; сохранить контекст при возврате и ошибке.",
+      "dependencies": "Владельцы доменов: Identity/Catalog/Commerce/Learning/Assignments/Certificates; server authorization, audit.",
+      "sources": [
+        "docs/product/requirements.md#refunds-and-access-reversal",
+        "docs/product/mvp.md"
+      ],
+      "phase": "Phase 2",
+      "inclusion": "included",
+      "required": false,
+      "reviewed": false,
+      "desktop": "Ясная иерархия; связанные данные рядом; основной сценарий без декоративных отвлечений.",
+      "mobile": "Одна колонка в порядке чтения; перенос длинных названий; действия от 44px; без горизонтальной прокрутки.",
+      "states": "Загрузка разрешённых данных; пустой список/нет совпадений; нет прав или назначение изменилось; ошибка с повтором; некорректный ввод; операция выполняется; конфликт устаревшей версии; подтверждённый результат и audit. Финансовые значения не выдумывать.",
+      "notes": "Структурное предложение, визуальная композиция не утверждена. Не добавлять новые продуктовые правила."
+    }
+  ]
+}

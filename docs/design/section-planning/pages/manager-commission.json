@@ -1,0 +1,124 @@
+{
+  "schemaVersion": 1,
+  "id": "manager-commission",
+  "name": "Комиссии и сверка",
+  "group": "Manager",
+  "route": null,
+  "routeStatus": "unresolved",
+  "roles": [
+    "manager"
+  ],
+  "phase": "Phase 2",
+  "purpose": "Проверить личную ведомость.",
+  "primaryAction": "Открыть или сохранить разрешённую операцию",
+  "requiredContent": "Название страницы; текущий контекст; возврат; доступные для роли и фазы направления.\nConfigured rate и период; не использовать 10% как действующее значение.\nSales, refunds, commission basis, reconciliation totals.\nPaid/accrued, даты и approved corrections.",
+  "dependencies": "Commerce/Identity: только назначенные лиды, продажи и правила финансов; consent/audit.",
+  "issues": [
+    "OQ-060",
+    "OQ-061",
+    "OQ-062",
+    "OQ-063",
+    "OQ-064"
+  ],
+  "sources": [
+    "docs/product/requirements.md#sales-and-commission",
+    "docs/product/mvp.md"
+  ],
+  "implementation": "Not implemented. Screen composition is a proposal; a required capability does not mandate a separate route.",
+  "notes": "",
+  "revision": 1,
+  "status": "draft",
+  "approval": null,
+  "history": [],
+  "deletedSections": [],
+  "sections": [
+    {
+      "id": "manager-commission--navigation",
+      "name": "Навигация и контекст",
+      "position": 1,
+      "purpose": "Показать текущий раздел и разрешённые переходы.",
+      "content": "Название страницы; текущий контекст; возврат; доступные для роли и фазы направления.",
+      "primaryAction": "Перейти в нужный раздел",
+      "interactions": "Перейти в нужный раздел. Поддержать клавиатуру; сохранить контекст при возврате и ошибке.",
+      "dependencies": "Commerce/Identity: только назначенные лиды, продажи и правила финансов; consent/audit.",
+      "sources": [
+        "docs/product/requirements.md#sales-and-commission",
+        "docs/product/mvp.md"
+      ],
+      "phase": "Phase 2",
+      "inclusion": "included",
+      "required": true,
+      "reviewed": false,
+      "desktop": "Ясная иерархия; связанные данные рядом; основной сценарий без декоративных отвлечений.",
+      "mobile": "Одна колонка в порядке чтения; перенос длинных названий; действия от 44px; без горизонтальной прокрутки.",
+      "states": "Текущий маршрут; гость/разрешённая роль; меню открыто/закрыто при необходимости; видимый focus; неопубликованные направления отсутствуют. Без искусственной загрузки статических ссылок.",
+      "notes": "Структурное предложение, визуальная композиция не утверждена. Не добавлять новые продуктовые правила."
+    },
+    {
+      "id": "manager-commission--period",
+      "name": "Период и итог",
+      "position": 2,
+      "purpose": "Уточнить расчёт.",
+      "content": "Configured rate и период; не использовать 10% как действующее значение.",
+      "primaryAction": "",
+      "interactions": "Чтение в логическом порядке; доступные переходы при наличии.",
+      "dependencies": "Commerce/Identity: только назначенные лиды, продажи и правила финансов; consent/audit.",
+      "sources": [
+        "docs/product/requirements.md#sales-and-commission",
+        "docs/product/mvp.md"
+      ],
+      "phase": "Phase 2",
+      "inclusion": "included",
+      "required": true,
+      "reviewed": false,
+      "desktop": "Ясная иерархия; связанные данные рядом; основной сценарий без декоративных отвлечений.",
+      "mobile": "Одна колонка в порядке чтения; перенос длинных названий; действия от 44px; без горизонтальной прокрутки.",
+      "states": "Загрузка разрешённых данных; пустой список/нет совпадений; нет прав или назначение изменилось; ошибка с повтором; некорректный ввод; операция выполняется; конфликт устаревшей версии; подтверждённый результат и audit. Финансовые значения не выдумывать.",
+      "notes": "Структурное предложение, визуальная композиция не утверждена. Не добавлять новые продуктовые правила."
+    },
+    {
+      "id": "manager-commission--statement",
+      "name": "Ведомость",
+      "position": 3,
+      "purpose": "Проверить продажи и корректировки.",
+      "content": "Sales, refunds, commission basis, reconciliation totals.",
+      "primaryAction": "",
+      "interactions": "Чтение в логическом порядке; доступные переходы при наличии.",
+      "dependencies": "Commerce/Identity: только назначенные лиды, продажи и правила финансов; consent/audit.",
+      "sources": [
+        "docs/product/requirements.md#sales-and-commission",
+        "docs/product/mvp.md"
+      ],
+      "phase": "Phase 2",
+      "inclusion": "included",
+      "required": true,
+      "reviewed": false,
+      "desktop": "Ясная иерархия; связанные данные рядом; основной сценарий без декоративных отвлечений.",
+      "mobile": "Одна колонка в порядке чтения; перенос длинных названий; действия от 44px; без горизонтальной прокрутки.",
+      "states": "Загрузка разрешённых данных; пустой список/нет совпадений; нет прав или назначение изменилось; ошибка с повтором; некорректный ввод; операция выполняется; конфликт устаревшей версии; подтверждённый результат и audit. Финансовые значения не выдумывать.",
+      "notes": "Структурное предложение, визуальная композиция не утверждена. Не добавлять новые продуктовые правила."
+    },
+    {
+      "id": "manager-commission--payouts",
+      "name": "Выплаты",
+      "position": 4,
+      "purpose": "Прочесть оплату и исправления.",
+      "content": "Paid/accrued, даты и approved corrections.",
+      "primaryAction": "",
+      "interactions": "Чтение в логическом порядке; доступные переходы при наличии.",
+      "dependencies": "Commerce/Identity: только назначенные лиды, продажи и правила финансов; consent/audit.",
+      "sources": [
+        "docs/product/requirements.md#sales-and-commission",
+        "docs/product/mvp.md"
+      ],
+      "phase": "Phase 2",
+      "inclusion": "included",
+      "required": true,
+      "reviewed": false,
+      "desktop": "Ясная иерархия; связанные данные рядом; основной сценарий без декоративных отвлечений.",
+      "mobile": "Одна колонка в порядке чтения; перенос длинных названий; действия от 44px; без горизонтальной прокрутки.",
+      "states": "Загрузка разрешённых данных; пустой список/нет совпадений; нет прав или назначение изменилось; ошибка с повтором; некорректный ввод; операция выполняется; конфликт устаревшей версии; подтверждённый результат и audit. Финансовые значения не выдумывать.",
+      "notes": "Структурное предложение, визуальная композиция не утверждена. Не добавлять новые продуктовые правила."
+    }
+  ]
+}
