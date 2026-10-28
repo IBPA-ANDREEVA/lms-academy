@@ -1,0 +1,335 @@
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  padding-block: 16px;
+}
+.bar {
+  display: flex;
+  align-items: center;
+  gap: clamp(20px, 3vw, 56px);
+  min-height: 80px;
+  padding: 12px 24px;
+  background: var(--surface);
+  border-radius: 16px;
+  box-shadow: var(--header-shadow);
+}
+.brand {
+  flex-shrink: 0;
+  font-size: 24px;
+  font-weight: 800;
+  letter-spacing: -0.8px;
+  line-height: 1.2;
+  text-decoration: none;
+}
+.brand:hover {
+  color: var(--brand);
+}
+.desktopLinks {
+  flex: 1;
+  min-width: 0;
+}
+.desktopLinks ul,
+.mobileLinks ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.desktopLinks > ul {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.desktopLinks li {
+  position: relative;
+}
+.desktopLinks a,
+.desktopLinks summary {
+  display: flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 10px 12px;
+  gap: 8px;
+  border-radius: 8px;
+  text-decoration: none;
+  cursor: pointer;
+  font-weight: 500;
+}
+.desktopLinks a:hover,
+.desktopLinks summary:hover,
+.desktopLinks details[open] > summary {
+  background: var(--soft);
+}
+.desktopLinks a[aria-current],
+.mobileLinks a[aria-current] {
+  text-decoration: underline;
+  text-underline-offset: 5px;
+}
+.desktopLinks summary,
+.mobileLinks summary {
+  list-style: none;
+}
+.desktopLinks summary::-webkit-details-marker,
+.mobileLinks summary::-webkit-details-marker {
+  display: none;
+}
+.dropdown {
+  position: absolute;
+  inset-block-start: calc(100% + 4px);
+  inset-inline-start: 0;
+  width: min(300px, 80vw);
+  padding: 12px !important;
+  border-radius: 12px;
+  background: var(--surface);
+  box-shadow: var(--header-shadow);
+}
+.dropdown a {
+  overflow-wrap: anywhere;
+}
+.actions {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  margin-inline-start: auto;
+  flex-shrink: 0;
+}
+.locales {
+  display: flex;
+  border: 1px solid var(--border);
+  border-radius: 32px;
+  width: fit-content;
+}
+.locales a {
+  display: grid;
+  place-items: center;
+  min-width: 44px;
+  min-height: 44px;
+  padding: 8px;
+  border-radius: inherit;
+  text-decoration: none;
+  font-size: 14px;
+}
+.locales a[aria-current] {
+  background: var(--text);
+  color: var(--surface);
+}
+.locales a:hover {
+  box-shadow: inset 0 0 0 1px var(--brand);
+}
+.cart {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+}
+.cart:hover {
+  background: var(--soft);
+}
+.count {
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  background: var(--text);
+  color: var(--surface);
+  padding: 0 4px;
+  font-size: 12px;
+  border-radius: 12px;
+}
+.signIn,
+.mobileSignIn {
+  border-radius: 32px;
+  min-width: 120px;
+}
+.menuButton,
+.closeButton {
+  width: 44px;
+  min-height: 44px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: var(--soft);
+  color: var(--text);
+}
+.menuButton {
+  display: none;
+}
+.menuIcon,
+.closeIcon,
+.cartIcon,
+.chevron {
+  display: inline-block;
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+  background: currentColor;
+  mask: var(--icon) center / contain no-repeat;
+}
+.menuIcon {
+  --icon: url("/icons/line/bars.svg");
+}
+.closeIcon {
+  --icon: url("/icons/line/cancel.svg");
+}
+.cartIcon {
+  --icon: url("/icons/line/cart.svg");
+}
+.chevron {
+  --icon: url("/icons/line/chevron-down.svg");
+  width: 18px;
+  height: 18px;
+}
+.dialog {
+  position: fixed;
+  inset: 16px 16px auto auto;
+  width: min(360px, calc(100% - 32px));
+  max-height: calc(100dvh - 32px);
+  border: 0;
+  padding: 0;
+  margin: 0;
+  border-radius: 16px;
+  background: var(--surface);
+  color: var(--text);
+  box-shadow: var(--header-shadow);
+  overflow: auto;
+}
+.dialog::backdrop {
+  background: var(--overlay);
+}
+.dialogHeading {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--border);
+  padding: 16px 20px;
+}
+.dialogHeading .brand {
+  font-size: 20px;
+}
+.closeButton {
+  background: transparent;
+}
+.mobileLinks {
+  padding: 12px 20px;
+}
+.mobileLinks a,
+.mobileLinks summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 44px;
+  gap: 8px;
+  padding-block: 10px;
+  text-decoration: none;
+  overflow-wrap: anywhere;
+  cursor: pointer;
+}
+.mobileLinks a:hover,
+.mobileLinks summary:hover {
+  color: var(--brand);
+}
+.mobileLinks .dropdown {
+  position: static;
+  width: auto;
+  box-shadow: none;
+  padding: 0 0 8px 16px !important;
+  border-left: 1px solid var(--border);
+  border-radius: 0;
+}
+.mobileActions {
+  display: grid;
+  gap: 24px;
+  margin-inline: 20px;
+  padding-block: 24px;
+  border-top: 1px solid var(--border);
+}
+.mobileCart {
+  min-height: 44px;
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  text-decoration: none;
+}
+.mobileCart .chevron {
+  margin-left: auto;
+  rotate: -90deg;
+}
+@media (max-width: 1200px) {
+  .bar {
+    gap: 20px;
+    padding-inline: 20px;
+  }
+  .brand {
+    font-size: 21px;
+  }
+  .actions {
+    gap: 8px;
+  }
+  .desktopLinks a,
+  .desktopLinks summary {
+    padding-inline: 8px;
+  }
+}
+@media (max-width: 1024px) {
+  .menuButton {
+    display: inline-flex;
+  }
+  .signIn {
+    display: none;
+  }
+  .desktopLinks > ul > li:nth-child(n + 4) {
+    display: none;
+  }
+  .bar {
+    gap: 12px;
+    min-height: 72px;
+  }
+  .brand {
+    font-size: 19px;
+  }
+  .desktopLinks {
+    font-size: 14px;
+  }
+}
+@media (max-width: 768px) {
+  .header {
+    padding-block: 12px;
+  }
+  .desktopLinks,
+  .desktopLocale {
+    display: none;
+  }
+  .bar {
+    padding: 12px 16px;
+  }
+  .actions {
+    gap: 8px;
+  }
+}
+@media (max-width: 360px) {
+  .bar {
+    padding-inline: 12px;
+    gap: 8px;
+  }
+  .brand {
+    font-size: 17px;
+  }
+  .actions {
+    gap: 4px;
+  }
+}
+
+@media (min-width: 769px) and (max-width: 920px) {
+  .desktopLinks > ul > li:nth-child(n + 3) {
+    display: none;
+  }
+}
+.mobileLinks summary .chevron {
+  rotate: -90deg;
+}
+.mobileLinks details[open] > summary .chevron {
+  rotate: 0deg;
+}

@@ -23,7 +23,7 @@ AUTHORITATIVE SOURCES. Read only the ones relevant to the task:
 - `docs/design/DIRECTION.md`: art-direction behavior.
 - `docs/design/SYSTEM.md`: visual tokens and typography rules.
 - `docs/design/SCREENS.md`, `COMPONENTS.md`: screen and component specifications.
-- `docs/design/references/INDEX.md`: reference approval and sourcing.
+- `docs/architecture/frontend-{pages,sections,components,backlog}.md`: maintained frontend registry and reuse audit.
 - `docs/design/QA.md`: required visual verification.
 
 PRODUCT SAFETY:
@@ -41,10 +41,10 @@ ARCHITECTURE:
 
 DESIGN IMPLEMENTATION PROTOCOL (MANDATORY FOR UI TASKS):
 1. Identify target route, user goal, release phase, states and product data. Verify against sitemap and requirements.
-2. Open `docs/design/README.md`, `DECISIONS.md`, `DIRECTION.md`, `SYSTEM.md`, the relevant screen/section/component spec, and the EXACT reference image(s). Do not design from prose alone when an image exists.
-3. Read each reference's `Borrow`, `Reject`, `Scope`, `Status` and viewport notes. A reference for a hero is NOT a reference for the catalog, checkout or dashboard. A generated raster is NOT a pixel-accurate font, real content or shippable photograph.
+2. Read the frontend registry and inspect existing code first. Open `docs/design/README.md`, `DECISIONS.md`, `DIRECTION.md`, `SYSTEM.md`, relevant specifications, and the exact visual reference supplied by the user for this implementation.
+3. Record the supplied reference’s target, borrowed relationships, rejected content and viewport limits in the registry or verification note. A hero reference does not apply to unrelated screens. Generated raster text is not product data or licensed photography.
 4. If screen/section/component reference is missing or is `exploratory`, propose a bounded solution. Do not present an invented aesthetic as approved. Ask for human review of materially new visual direction.
-5. Use Unbounded for short display typography, Manrope for functional text; do NOT use Angry, Geist or Arial as chosen brand typography. Current starter has only `Angry.otf`; first verify legal Unbounded font sourcing/installation before claiming exact typography.
+5. Use Unbounded for short display typography, Manrope for functional text; do NOT use Angry, Geist or Arial as chosen brand typography. Manrope and Unbounded are self-hosted in `src/assets/fonts` with their OFL licenses; preserve them and verify real Cyrillic rendering.
 6. Prefer editorial restraint: dramatic type + one strong photographic image + whitespace, with purpose-built overlap. Never add random geometric blobs, repetitive oversized section numbers, gradients, default card grids, fake sliders or decorative controls.
 7. Implement desktop and mobile, Russian first, accessible controls and all applicable loading, empty, error, disabled, success, focus and reduced-motion states. Preserve product facts and legal content.
 8. Render screenshots at 1440×900 and 390×844 at minimum; compare against approved composition and record differences. Check a second mobile width and tablet/content breakpoint when appropriate.
@@ -58,3 +58,13 @@ GENERAL WORKFLOW:
 - Run appropriate `pnpm lint`, `pnpm exec tsc --noEmit`, `pnpm build`, and feature tests where possible; disclose skipped checks.
 - Do not delete source documentation, artwork, student data or unrelated files on your own.
 - Do not commit, merge, deploy or force-push without explicit authorization.
+
+FRONTEND WORKFLOW (MANDATORY):
+1. Before implementing UI, inspect `docs/architecture/frontend-pages.md`, `frontend-sections.md`, `frontend-components.md`, `frontend-backlog.md` and the existing implementations.
+2. Always reuse an existing shared component when it fits.
+3. Never duplicate shared functionality or styling patterns unnecessarily. Extend the canonical owner when appropriate.
+4. Create a new shared component only when reuse is justified by actual consumers or explicitly requested shared scope; record that evidence.
+5. Keep page-specific components local to their owning feature/section.
+6. Follow the visual reference supplied by the user for each implementation, within product/release constraints. Do not infer approval for unrelated components or invent unavailable content.
+7. Update the registry after every page, section or shared-component change: route/owner, purpose, actual implementation path, props, consumers, status and missing work.
+8. Do not recreate `/dev/components`, `/dev/sections` or reference-gallery/editor infrastructure. The user-authorized `/preview/components` route is the single lightweight preview of actual shared components. Keep it updated when shared components change; reuse their implementations and clearly label demonstration data. Other UI work stays in the actual application.

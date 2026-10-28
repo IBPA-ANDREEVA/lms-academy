@@ -14,13 +14,13 @@ COMPOSITION RULES:
 - Every visual cue that resembles a control must have a real action; no fake carousel counters or fake play buttons.
 
 HERO RULES (HOME-HERO-001):
-- Emulate relationships from `references/global/TONI-GUY-01.png` and `references/pages/home/HOME-HERO-001.png` without duplicating copyrighted artwork.
+- Historical hero direction remains in DECISIONS.md. Inspect the user-supplied reference again when implementing this section; do not recreate the retired image gallery.
 - Editorial photo left, off-white statement field right, asymmetric ratio around 40/60 on desktop. One photographic subject, one strong headline, one CTA.
 - Photo represents real professional technique, such as brows, nails or lashes, not a generic glamour model. Crop can be dramatic while preserving recognizability of the craft.
 - Headline is short and massive. A cross-boundary overlap is permitted only where contrast remains sufficient and no functional text is obscured.
 - Translucent plum band is an optional single compositional layer, never required on other pages. Keep opacity/contrast tested over real image.
 - Remove the crowded prior mockup's top-level category strip, stats row, feature icons, repetitive tagline, and 6-item slider unless separately approved as working functionality.
-- Exact text, art usage rights, hero heights and mobile order are not finalized. See `references/pages/home/HOME-HERO-001.md`.
+- Exact text, art usage rights, hero heights and mobile order are not finalized. See `DECISIONS.md` and the frontend section registry.
 
 COLOR ROLES:
 - Off-white `#FAF9FA` = Explore: discovery and breathing space.

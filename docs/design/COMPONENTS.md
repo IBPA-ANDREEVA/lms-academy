@@ -27,7 +27,7 @@ VISUAL GUIDANCE:
 STATE CONTRACT (when relevant): default, hover, focus-visible, active/selected, disabled with explanation, submitting/loading, success, empty, error/retry, stale offer, already owned, unavailable, validation, mobile overflow, long copy, keyboard, reduced motion. Do not render disabled buttons with no explanation.
 
 REFERENCE SCOPE:
-- A component may inherit global tokens, but only an approved component-level record may define distinctive global treatments (borders, offsets, image masks, hover reveals).
+- A component may inherit global tokens, but only an explicitly scoped user reference or approved decision may define distinctive global treatments (borders, offsets, image masks, hover reveals).
 - The current H-001 reference approves no course-card, navbar or form design. Do not infer their appearance from the hero mockup.
 
-VISUAL REVIEW: capture component examples with states and constraints before changing every route. See `components/INVENTORY.md` and `QA.md`.
+VISUAL REVIEW: capture component examples with states and constraints before changing every route. See `../architecture/frontend-components.md` and `QA.md`.

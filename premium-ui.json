@@ -1,27 +1,16 @@
 {
   "profile": "product-admin",
   "sourceRoots": [
-    "src/features/section-planning",
-    "src/app/dev/sections",
-    "src/features/component-registry",
-    "src/app/dev/components"
+    "src"
   ],
   "locale": "ru-RU",
   "canonicalMap": "UX-CONTRACT.md",
   "requiredCapabilities": [
     "Select/Listbox",
     "Form",
-    "Scrollbar",
-    "Toast",
-    "CRUD"
+    "Scrollbar"
   ],
   "ownership": {
     "Select/Listbox": "native"
-  },
-  "evidence": {
-    "crudFullFlow": "tests/section-planning.browser.mjs",
-    "failurePaths": "tests/section-planning.test.mjs",
-    "componentCrudFullFlow": "tests/component-registry.browser.mjs",
-    "componentFailurePaths": "tests/component-registry.test.mjs"
   }
 }

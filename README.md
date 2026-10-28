@@ -2,7 +2,7 @@
 
 Russian-first online beauty education platform supporting course discovery and purchase, protected learning, practical assignments, curator review, certificates and administration. English is a planned supported interface language; the [release plan](docs/product/mvp.md) defines when features ship.
 
-> **Status:** early Next.js scaffold. The repository has product/architecture/design documentation, but most domain features, providers, and the approved visual identity have **not** been implemented. Do not mistake design specifications or placeholders for working features.
+> **Status:** shared frontend foundation. The homepage uses the public shell and an unavailable-catalog state. Eight shared component groups are implemented; domain features, providers and final content have **not** been implemented. Do not mistake design specifications or placeholders for working features.
 
 ## Stack
 
@@ -24,22 +24,9 @@ pnpm dev
 
 Development server: http://localhost:3000
 
-For the development-only page-structure review workspace, run `pnpm dev:sections`
-and open http://127.0.0.1:3000/dev/sections. See the
-[review guide](docs/design/section-planning/README.md) and
-[page inventory](docs/design/section-planning/INVENTORY.md). This tool edits
-repository-backed structure proposals; it does not implement LMS pages or approve
-product policies. All initial structures require explicit human review.
+Frontend work happens directly in the application. Start with the [frontend registry](docs/architecture/frontend-pages.md), reuse [shared components](docs/architecture/frontend-components.md), and update the registry after every UI change. The development planning routes and reference gallery have been retired. Inspect live shared components at [Component previews](http://localhost:3000/preview/components) while running `pnpm dev`.
 
-Check quality with `pnpm lint`, `pnpm exec tsc --noEmit`, and `pnpm build` once dependencies are installed.
-
-For the local component-definition and visual-reference manager, run
-`pnpm dev:components` and open `/dev/components` on its loopback URL. If the section
-editor already uses port 3000, use `pnpm dev:components --port 3001`. See the
-[registry guide](docs/design/components/README.md), [component index](docs/design/components/INDEX.md)
-and [source coverage](docs/design/components/COVERAGE.md). Records and reference
-explanations persist in repository JSON with generated Markdown. This is a planning
-tool, not production components or a component gallery.
+Check quality with `pnpm lint`, `pnpm exec next typegen`, `pnpm exec tsc --noEmit`, and `pnpm build`. Component and browser checks are documented in `docs/architecture/frontend-verification.md`.
 
 ## Documentation
 
@@ -53,7 +40,7 @@ tool, not production components or a component gallery.
 | Design tokens and components | [System](docs/design/SYSTEM.md), [Components](docs/design/COMPONENTS.md) |
 | Screens and visual verification | [Screens](docs/design/SCREENS.md), [QA](docs/design/QA.md) |
 | Icon asset rules | [Icons](docs/design/icons/USAGE.md) |
-| Visual references (pending curation) | [Reference register](docs/design/references/INDEX.md) |
+| Frontend implementation | [Pages](docs/architecture/frontend-pages.md), [Sections](docs/architecture/frontend-sections.md), [Shared components](docs/architecture/frontend-components.md), [Backlog](docs/architecture/frontend-backlog.md) |
 | Agent workflow | [AGENTS.md](AGENTS.md) |
 
 The original technical specification and wireframe PDF are stored in `docs/references/`; their example course details and prices are not production catalog data.

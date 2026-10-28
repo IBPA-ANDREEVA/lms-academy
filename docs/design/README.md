@@ -1,44 +1,19 @@
 # Design instruction entry point
 
-USE THIS FILE FIRST for any visual or UI task. This is a practical instruction set for designers and coding agents, not an inspiration essay.
+Before UI work, inspect the [frontend pages](../architecture/frontend-pages.md), [sections](../architecture/frontend-sections.md), [shared components](../architecture/frontend-components.md) and [backlog](../architecture/frontend-backlog.md), then the existing implementation.
 
-SOURCE PRECEDENCE:
-1. Product requirements, phase plan and unresolved product questions determine WHAT may exist and how it behaves.
-2. Public architecture docs determine route proposals, page content obligations and navigation contracts. A visual design cannot create routes or approve product decisions.
-3. `DECISIONS.md` records the exact visual decisions accepted in this conversation and the limits of each approval.
-4. `SYSTEM.md` owns global typography/color/geometry tokens. `DIRECTION.md` owns art direction and composition principles.
-5. A screen specification owns the screen hierarchy; a section specification owns a section; a component specification owns a reusable component.
-6. `references/INDEX.md` and per-reference records own visual evidence. An IMAGE only applies to its stated target. If the source conflicts with accepted tokens, adapt its relationship, not its original brand identity.
-7. Later unapproved sketches, old files and AI-generated mockups cannot override the above.
+Source precedence:
+1. Product requirements, release scope and unresolved policies determine behavior.
+2. Public sitemap and architecture determine route ownership; proposed URLs are not published pages.
+3. `DECISIONS.md` records selected visual decisions and exact approval limits.
+4. `SYSTEM.md` owns tokens; `DIRECTION.md` owns composition. Runtime mappings are in root `DESIGN.md`.
+5. The user supplies the reference for the specific page, section or component being implemented. Inspect the image itself; record scope and differences in the registry/verification note. A reference does not supply real prices, legal text or publication approval.
+6. `SCREENS.md`, `COMPONENTS.md` and the frontend registry describe hierarchy, ownership and implementation state.
 
-READING ORDER FOR FRONTEND TASKS:
-- `DECISIONS.md` -> `DIRECTION.md` -> `SYSTEM.md`.
-- `SCREENS.md` + architecture's `public-page-structure.md` for route scope.
-- `COMPONENTS.md` and `components/INVENTORY.md` for reuse and ownership.
-- Exact section and component references, if registered.
-- `QA.md` before and after implementation.
+Read `QA.md` before and after implementation. User references are delivered in the task; the old reference gallery and planning editors are retired. Do not rebuild their storage, generated specs or UI. Implement directly in the requested application route/feature and update the lightweight Markdown registry.
 
-CURRENT STATE:
-- The owner chose a bold reinterpretation of the original wireframe, while preserving all product logic.
-- Final style: minimal, editorial, experimental brutalism. Typography + photo outrank decorative geometry.
-- A preferred user-provided Toni&Guy layout reference and a liked minimal generated concept are present in `references/`.
-- `HOME-HERO-001` has a decided conceptual direction, NOT a browser-tested implementation or approved final component.
-- All other sections and shared-component aesthetics are `unreviewed` until separately approved.
-- No universal mandatory design signatures. Do not recreate the retired modular-geometry / interactive-preview / custom-icons signatures as global obligations.
+Current scope: the header follows the supplied 2026-10-28 multi-viewport reference. Container/button/footer definitions were preserved from the edited planning records. Other shared styles are bounded proposals using existing tokens. No complete page or browser implementation has human visual approval yet. Home hero composition decisions remain historical direction; request the exact reference and approved media when that section is implemented.
 
-STOP/ASK RULE:
-If you lack an approved product policy, content, font licensing/asset, image usage right, or page-level reference required for an irreversible choice, flag the issue; implement a clearly labeled reversible proposal only if the task allows. Never invent approval. In normal incremental design work, propose one choice at a time.
+Missing product policy, licensed media or approved legal content must be flagged rather than invented. Missing visual approval does not prevent implementing a reversible, clearly documented proposal within the user's request.
 
-FILES:
-- `DECISIONS.md`: agreed vs proposed vs blocked.
-- `OPEN-DECISIONS.md`: unresolved styling/content questions.
-- `DIRECTION.md`: composition / imagery / restraint.
-- `SYSTEM.md`: tokens and provisional sizing rules.
-- `SCREENS.md`: route-to-section requirements, phases and states.
-- `COMPONENTS.md`: component ownership, state contract.
-- `components/INVENTORY.md`: planned shared component map (NOT approval to implement all).
-- `references/INDEX.md`: assets, reference statuses and record template.
-- `references/pages/home/HOME-HERO-001.md`: first section-specific visual direction.
-- `QA.md`: visual, functional, responsive tests.
-- `WORKFLOW.md`: how to extend the reference system without document drift.
-- `components/README.md` and `components/INDEX.md`: local `/dev/components` definition/reference manager. Canonical JSON generates specs and reference records; the old component inventory remains historical suggestions. Component approval does not override product, release, page-structure or visual-reference authority.
+User-authorized exception (2026-10-28): `/preview/components` provides interactive examples of the existing shared components. It does not restore planning records, reference storage or approval tools. Keep previews synchronized with shared APIs.

@@ -26,8 +26,8 @@ FONTS:
 - Display: Unbounded, confirmed selected by owner on 2026-10-27. Short hero, statement and expressive section headings only.
 - Functional: Manrope 400, 500, 600, 700. Navigation, cards, body, CTA, forms, headings in task-heavy workspaces, prices, schedules and metadata.
 - DO NOT USE Angry as brand font. `src/app/fonts/Angry.otf` is a legacy asset, not evidence the font decision changed. Keep asset untouched until a separately authorized asset cleanup.
-- Unbounded is NOT currently installed in repo snapshot. Confirm webfont source and commercial rights, acquire an authorized asset or verified supported font integration, and test Cyrillic. Do not fabricate a font file, repurpose Angry, or claim the raster mockup uses authentic Unbounded.
-- Load fonts through supported Next.js integration; update `src/app/layout.tsx`, global tokens and Russian default language when implementing frontend, not in this documentation-only task.
+- Manrope and Unbounded variable fonts are now self-hosted in `src/assets/fonts`, with unmodified Google Fonts OFL assets and licenses. Verify Cyrillic glyphs in browser; raster mockups are not evidence of exact typography.
+- `src/app/layout.tsx` uses `next/font/local` with a Russian default document language.
 - Never use synthetic font weights or arbitrary CSS deformation to imitate the generated image. Keep meaningful semantic headings in DOM; decorative duplicates must be aria-hidden and must not introduce duplicate reading order.
 
 CANDIDATE TYPE SCALE (tune after screenshots):
@@ -40,7 +40,7 @@ CANDIDATE TYPE SCALE (tune after screenshots):
 
 LAYOUT AND GEOMETRY:
 - Grid: 4px base, useful steps 8/12/16/24/32/48/64/96; no fixed spacer quota.
-- Desktop content maximum candidate 1320px; allow intentional full-bleed hero/photo and structured inner grid. Mobile side padding candidate 16–20px. Responsive breakpoints follow content, not device names alone.
+- PageContainer owner-edited definition supersedes the earlier 1320px candidate: wide/content/reading inner maximums 1920/1440/760px; gutters clamp(20px, 4.1667vw, 96px). Allow intentional full-bleed hero/photo and structured inner grid. Responsive breakpoints follow content, not device names alone.
 - Editorial hero left photo width candidate 40–45%, right content candidate 55–60%, with controlled cross-boundary overlap. This is a design start, not a CSS constant for every viewport.
 - Major editorial surfaces: square/sharp corners by default, selective cut corner; no systemwide randomized polygon shapes.
 - Functional controls: rectangular, accessible, modest radius candidate 0–6px; consistently sized. Minimum touch target 44×44px (prefer 48px for primary actions). Focus visible.

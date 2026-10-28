@@ -16,8 +16,6 @@
 # next.js
 /.next/
 /out/
-/.next-components/
-/.next-components-production/
 
 # production
 /build
@@ -41,11 +39,3 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
-
-# Transient local section-editor locks / atomic-write staging
-/docs/design/section-planning/pages/*.json.lock/
-/docs/design/section-planning/pages/*.tmp
-/docs/design/components/.registry-lock/
-/docs/design/components/.sync-pending
-/docs/design/components/**/*.tmp
-/docs/design/references/components/**/*.tmp
