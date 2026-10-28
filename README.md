@@ -33,6 +33,14 @@ product policies. All initial structures require explicit human review.
 
 Check quality with `pnpm lint`, `pnpm exec tsc --noEmit`, and `pnpm build` once dependencies are installed.
 
+For the local component-definition and visual-reference manager, run
+`pnpm dev:components` and open `/dev/components` on its loopback URL. If the section
+editor already uses port 3000, use `pnpm dev:components --port 3001`. See the
+[registry guide](docs/design/components/README.md), [component index](docs/design/components/INDEX.md)
+and [source coverage](docs/design/components/COVERAGE.md). Records and reference
+explanations persist in repository JSON with generated Markdown. This is a planning
+tool, not production components or a component gallery.
+
 ## Documentation
 
 | Topic | Source of truth |

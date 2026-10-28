@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "id": "payment-attempt",
+  "revision": 1,
+  "definition": {
+    "name": "PaymentAttempt",
+    "description": "Present authoritative processing/error/cancel states without duplicate payment on unknown outcomes.",
+    "purpose": "Present authoritative processing/error/cancel states without duplicate payment on unknown outcomes.",
+    "ownership": "commerce",
+    "implementationPath": "src/features/commerce/payment-attempt.tsx",
+    "requiredData": "Провайдер не выбран; сумма до действия; processing/error/cancel; запрет повторной оплаты при неизвестном статусе.",
+    "interactions": "Оплатить / проверить текущую попытку. Поддержать клавиатуру; сохранить контекст при возврате и ошибке.",
+    "states": "Пустая корзина; неверные поля или непринятые соглашения; новая цена/версия условий; cap/eligibility rejection; сессия истекла; провайдер недоступен; отправка/повторный клик; processing/failure/cancel; безопасное продолжение без потери выбора.",
+    "responsive": "Desktop: Ясная иерархия; связанные данные рядом; основной сценарий без декоративных отвлечений.\n\nMobile: Одна колонка в порядке чтения; перенос длинных названий; действия от 44px; без горизонтальной прокрутки.\n\nExact component-level composition is unapproved.",
+    "variants": "",
+    "openQuestions": "OQ-001, OQ-007, OQ-029, OQ-030, OQ-031, OQ-032, OQ-082, OQ-083, PA-05, PA-07\nMISSING REFERENCE: component-level visual direction requires human review. Structure approval does not resolve product policy, source text placeholders or release gates.",
+    "implementationNotes": "Planning candidate only. No production implementation or visual approval. Read exact approved source records and their unresolved policy IDs before implementation. Variants share presentation only; authorization stays in owning domains.",
+    "notes": "",
+    "category": "section",
+    "priority": "P1",
+    "usages": [
+      {
+        "pageId": "checkout",
+        "sectionId": "checkout--payment",
+        "sourceRevision": 3,
+        "reason": "Present authoritative processing/error/cancel states without duplicate payment on unknown outcomes."
+      }
+    ],
+    "dependencies": []
+  },
+  "definitionStatus": "draft",
+  "definitionApproval": null,
+  "visualStatus": "no-reference",
+  "visualApproval": null,
+  "implementationStatus": "not-started",
+  "primaryReferenceId": null,
+  "references": [],
+  "archived": false,
+  "history": []
+}

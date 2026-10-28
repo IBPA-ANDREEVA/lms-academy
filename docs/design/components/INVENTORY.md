@@ -1,5 +1,7 @@
 # Shared UI component candidate inventory
 
+Historical candidate list retained. The repository-backed [component registry](INDEX.md) and its [workflow](README.md) now own active component definitions and approvals derived from current local approved sections. Entries below remain suggestions, not approved definitions; no historical decision is overwritten.
+
 Status: IDENTIFICATION ONLY. No visual variant in this list is approved by the hero mockup.
 
 C01 — PublicHeader. Pages `/`, `/courses`, details, mini-course pages. Job: current valid routes, logo, cart count, login. Owner: public shell. Reference: MISSING. States: menu open/closed, active route, guest/signed-in, mobile.

@@ -13,3 +13,9 @@ Layout: desktop navigation rail and natural-height editor; below 700px, bounded 
 References inspected: `GLOBAL-001` and `HOME-HERO-001`. Their photo/type split and overlap apply only to the home hero, so they are intentionally absent here. No editor-specific reference or human approval exists. Review screenshots under `docs/design/section-planning/qa` before treating this layout as accepted.
 
 Behavior and ownership: [UX-CONTRACT.md](UX-CONTRACT.md). No Japanese locale/market scope; Russian tool labels, English engineering documentation. Source requirements remain in their original language. No English product localization is introduced.
+
+## Component registry extension
+
+`/dev/components` is the second internal planning workflow. It uses the same restrained functional Manrope typography, plum/off-white/charcoal/blush palette and semantic feedback values, scoped in `src/features/component-registry/workspace.module.css`. It adds a grouped component rail, progressive detail disclosures, three distinct approval dimensions and reference-image management. This is a reversible management-interface proposal, not a new public LMS visual direction or component showcase. No expressive display typography is needed, so Unbounded is not installed or simulated here.
+
+Desktop uses a 300px navigation rail and natural-height document editor. Below 700px navigation becomes a bounded list above the editor; reference layouts stack below 1000px. Default details are concise; source relationships and long architecture fields expand explicitly. Native selects retain OS popup behavior. Reference images use contained thumbnails and native modal enlargement; no motion is introduced. Exact global/hero reference images were inspected; neither approves the editor or unrelated component aesthetics. Screenshots and deviations are recorded in `docs/design/components/qa/REPORT.md`. Human visual approval is pending.

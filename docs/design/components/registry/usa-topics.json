@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "id": "usa-topics",
+  "revision": 1,
+  "definition": {
+    "name": "UsaTopics",
+    "description": "Раскрыть содержание без обещаний лицензирования.",
+    "purpose": "Раскрыть содержание без обещаний лицензирования.",
+    "ownership": "catalog",
+    "implementationPath": "src/features/catalog/usa-topics.tsx",
+    "requiredData": "Санитария, безопасность, продвижение, клиентская база.",
+    "interactions": "Чтение в логическом порядке; доступные переходы при наличии.",
+    "states": "Загрузка опубликованного содержания; нет предложений с переходом в доступный каталог; неизвестный или снятый продукт; неверная конфигурация; нет утверждённой цены/условий; ошибка preview с повтором; already-owned/in-cart; добавление подтверждено или отклонено без потери контекста.",
+    "responsive": "Desktop: Ясная иерархия; связанные данные рядом; основной сценарий без декоративных отвлечений.\n\nMobile: Одна колонка в порядке чтения; перенос длинных названий; действия от 44px; без горизонтальной прокрутки.\n\nExact component-level composition is unapproved.",
+    "variants": "",
+    "openQuestions": "PA-04, OQ-019, OQ-053\nMISSING REFERENCE: component-level visual direction requires human review. Structure approval does not resolve product policy, source text placeholders or release gates.",
+    "implementationNotes": "Planning candidate only. No production implementation or visual approval. Read exact approved source records and their unresolved policy IDs before implementation. Variants share presentation only; authorization stays in owning domains.",
+    "notes": "",
+    "category": "section",
+    "priority": "P3",
+    "usages": [
+      {
+        "pageId": "start-usa",
+        "sectionId": "start-usa--topics",
+        "sourceRevision": 3,
+        "reason": "Раскрыть содержание без обещаний лицензирования."
+      }
+    ],
+    "dependencies": []
+  },
+  "definitionStatus": "draft",
+  "definitionApproval": null,
+  "visualStatus": "no-reference",
+  "visualApproval": null,
+  "implementationStatus": "not-started",
+  "primaryReferenceId": null,
+  "references": [],
+  "archived": false,
+  "history": []
+}

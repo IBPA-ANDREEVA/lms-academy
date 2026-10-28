@@ -1,0 +1,46 @@
+{
+  "schemaVersion": 1,
+  "id": "package-terms",
+  "revision": 1,
+  "definition": {
+    "name": "PackageTerms",
+    "description": "Разделить условия продуктов.",
+    "purpose": "Разделить условия продуктов.",
+    "ownership": "catalog",
+    "implementationPath": "src/features/catalog/package-terms.tsx",
+    "requiredData": "Поддержка и доступ по курсам, требования; не обещать общий сертификат.\n\nДоступ, поддержка, критерии завершения, правовые ссылки.",
+    "interactions": "Чтение в логическом порядке; доступные переходы при наличии.",
+    "states": "Загрузка опубликованного содержания; нет предложений с переходом в доступный каталог; неизвестный или снятый продукт; неверная конфигурация; нет утверждённой цены/условий; ошибка preview с повтором; already-owned/in-cart; добавление подтверждено или отклонено без потери контекста.",
+    "responsive": "Desktop: Ясная иерархия; связанные данные рядом; основной сценарий без декоративных отвлечений.\n\nMobile: Одна колонка в порядке чтения; перенос длинных названий; действия от 44px; без горизонтальной прокрутки.\n\nExact component-level composition is unapproved.",
+    "variants": "",
+    "openQuestions": "OQ-025, OQ-026, OQ-028, OQ-029, OQ-053, OQ-027, PA-09\nMISSING REFERENCE: component-level visual direction requires human review. Structure approval does not resolve product policy, source text placeholders or release gates.",
+    "implementationNotes": "Planning candidate only. No production implementation or visual approval. Read exact approved source records and their unresolved policy IDs before implementation. Variants share presentation only; authorization stays in owning domains.",
+    "notes": "",
+    "category": "feature",
+    "priority": "P2",
+    "usages": [
+      {
+        "pageId": "package-detail",
+        "sectionId": "package-detail--terms",
+        "sourceRevision": 3,
+        "reason": "Разделить условия продуктов."
+      },
+      {
+        "pageId": "packages",
+        "sectionId": "packages--terms",
+        "sourceRevision": 3,
+        "reason": "Не смешивать поддержку и сертификаты разных курсов."
+      }
+    ],
+    "dependencies": []
+  },
+  "definitionStatus": "draft",
+  "definitionApproval": null,
+  "visualStatus": "no-reference",
+  "visualApproval": null,
+  "implementationStatus": "not-started",
+  "primaryReferenceId": null,
+  "references": [],
+  "archived": false,
+  "history": []
+}

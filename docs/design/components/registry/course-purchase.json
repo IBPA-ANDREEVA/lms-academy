@@ -1,0 +1,46 @@
+{
+  "schemaVersion": 1,
+  "id": "course-purchase",
+  "revision": 1,
+  "definition": {
+    "name": "CoursePurchase",
+    "description": "Показать полную цену и условия.",
+    "purpose": "Показать полную цену и условия.",
+    "ownership": "commerce",
+    "implementationPath": "src/features/commerce/course-purchase.tsx",
+    "requiredData": "Серверная цена и валюта; доступность; состав; условия доступа; оферта, возврат и disclaimer; фактический статус владения.",
+    "interactions": "Добавить в корзину, затем /cart. Поддержать клавиатуру; сохранить контекст при возврате и ошибке.",
+    "states": "Загрузка опубликованного содержания; нет предложений с переходом в доступный каталог; неизвестный или снятый продукт; неверная конфигурация; нет утверждённой цены/условий; ошибка preview с повтором; already-owned/in-cart; добавление подтверждено или отклонено без потери контекста.",
+    "responsive": "Desktop: Ясная иерархия; связанные данные рядом; основной сценарий без декоративных отвлечений.\n\nMobile: Одна колонка в порядке чтения; перенос длинных названий; действия от 44px; без горизонтальной прокрутки.\n\nExact component-level composition is unapproved.",
+    "variants": "Supported course: distinguish teacher from assigned curator and access from support.",
+    "openQuestions": "OQ-003, OQ-009, OQ-018, OQ-021, OQ-024, OQ-029, OQ-050, PA-10\nMISSING REFERENCE: component-level visual direction requires human review. Structure approval does not resolve product policy, source text placeholders or release gates.",
+    "implementationNotes": "Planning candidate only. No production implementation or visual approval. Read exact approved source records and their unresolved policy IDs before implementation. Variants share presentation only; authorization stays in owning domains.",
+    "notes": "",
+    "category": "feature",
+    "priority": "P1",
+    "usages": [
+      {
+        "pageId": "course-detail",
+        "sectionId": "course-detail--purchase",
+        "sourceRevision": 3,
+        "reason": "Показать полную цену и условия."
+      },
+      {
+        "pageId": "mini-detail",
+        "sectionId": "mini-detail--purchase",
+        "sourceRevision": 3,
+        "reason": "Показать полную цену и условия."
+      }
+    ],
+    "dependencies": []
+  },
+  "definitionStatus": "draft",
+  "definitionApproval": null,
+  "visualStatus": "no-reference",
+  "visualApproval": null,
+  "implementationStatus": "not-started",
+  "primaryReferenceId": null,
+  "references": [],
+  "archived": false,
+  "history": []
+}

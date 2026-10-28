@@ -1,0 +1,58 @@
+{
+  "schemaVersion": 1,
+  "id": "legal-article",
+  "revision": 1,
+  "definition": {
+    "name": "LegalArticle",
+    "description": "Render approved legal content without inventing policy or consent.",
+    "purpose": "Render approved legal content without inventing policy or consent.",
+    "ownership": "legal-content",
+    "implementationPath": "src/features/legal-content/legal-article.tsx",
+    "requiredData": "Утверждённое разграничение обучения и права профессиональной деятельности.\n\nУтверждённые условия продажи и доступа.\n\nУтверждённые правила обработки, хранения и прав субъектов.\n\nУтверждённые условия и реальный канал запроса; без выдуманной формы.",
+    "interactions": "Читать / перейти к разделу. Поддержать клавиатуру; сохранить контекст при возврате и ошибке.",
+    "states": "Утверждённый текст доступен; загрузка при динамическом получении; ошибка с повтором; отсутствие или неутверждённая версия явно обозначены и блокируют оплату. Чтение статического текста не требует искусственной загрузки.",
+    "responsive": "Desktop: Ясная иерархия; связанные данные рядом; основной сценарий без декоративных отвлечений.\n\nMobile: Одна колонка в порядке чтения; перенос длинных названий; действия от 44px; без горизонтальной прокрутки.\n\nExact component-level composition is unapproved.",
+    "variants": "",
+    "openQuestions": "OQ-006, OQ-007, OQ-008, OQ-037, OQ-083, PA-07\nMISSING REFERENCE: component-level visual direction requires human review. Structure approval does not resolve product policy, source text placeholders or release gates.",
+    "implementationNotes": "Planning candidate only. No production implementation or visual approval. Read exact approved source records and their unresolved policy IDs before implementation. Variants share presentation only; authorization stays in owning domains.",
+    "notes": "",
+    "category": "shared",
+    "priority": "P1",
+    "usages": [
+      {
+        "pageId": "license-disclaimer",
+        "sectionId": "license-disclaimer--article",
+        "sourceRevision": 3,
+        "reason": "Render approved legal content without inventing policy or consent."
+      },
+      {
+        "pageId": "offer",
+        "sectionId": "offer--article",
+        "sourceRevision": 3,
+        "reason": "Render approved legal content without inventing policy or consent."
+      },
+      {
+        "pageId": "privacy",
+        "sectionId": "privacy--article",
+        "sourceRevision": 3,
+        "reason": "Render approved legal content without inventing policy or consent."
+      },
+      {
+        "pageId": "refunds",
+        "sectionId": "refunds--article",
+        "sourceRevision": 3,
+        "reason": "Render approved legal content without inventing policy or consent."
+      }
+    ],
+    "dependencies": []
+  },
+  "definitionStatus": "draft",
+  "definitionApproval": null,
+  "visualStatus": "no-reference",
+  "visualApproval": null,
+  "implementationStatus": "not-started",
+  "primaryReferenceId": null,
+  "references": [],
+  "archived": false,
+  "history": []
+}

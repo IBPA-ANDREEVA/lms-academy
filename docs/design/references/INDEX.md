@@ -20,3 +20,11 @@ APPROVAL IS TARGET-SPECIFIC. A beautiful hero reference is not an approved check
 TEMPLATES: `templates/REFERENCE.md`, `templates/SECTION.md`, `templates/COMPONENT.md`.
 
 REFERENCE COLLECTION GOAL: for every visually distinct route section and frequently reused component, create a bounded record. Do not collect twenty general websites and expect the developer to interpolate a design. Use references to resolve an actual element-level decision.
+
+<!-- COMPONENT-REGISTRY:START -->
+## Component references (generated)
+
+Canonical explanations live in component registry JSON; adjacent Markdown is generated. Assets are private design evidence, never licensed production assets by implication.
+
+
+<!-- COMPONENT-REGISTRY:END -->

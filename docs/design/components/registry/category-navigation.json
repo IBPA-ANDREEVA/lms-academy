@@ -1,0 +1,48 @@
+{
+  "schemaVersion": 1,
+  "id": "category-navigation",
+  "revision": 1,
+  "definition": {
+    "name": "CategoryNavigation",
+    "description": "Сузить подборку по реальной таксономии.",
+    "purpose": "Сузить подборку по реальной таксономии.",
+    "ownership": "catalog",
+    "implementationPath": "src/features/catalog/category-navigation.tsx",
+    "requiredData": "Опубликованные направления и сброс выбора.",
+    "interactions": "Выбрать направление. Поддержать клавиатуру; сохранить контекст при возврате и ошибке.",
+    "states": "Первичная загрузка; обновление фильтра; нет совпадений со сбросом; нет опубликованного каталога; ошибка с повтором; неверный query; offer устарел; продукт уже в корзине или принадлежит пользователю.",
+    "responsive": "Desktop: Ясная иерархия; связанные данные рядом; основной сценарий без декоративных отвлечений.\n\nMobile: Одна колонка в порядке чтения; перенос длинных названий; действия от 44px; без горизонтальной прокрутки.\n\nExact component-level composition is unapproved.",
+    "variants": "Course / mini-course context; do not imply curator support for mini-courses.",
+    "openQuestions": "OQ-009, OQ-017, OQ-018, OQ-088, PA-01\nMISSING REFERENCE: component-level visual direction requires human review. Structure approval does not resolve product policy, source text placeholders or release gates.",
+    "implementationNotes": "Planning candidate only. No production implementation or visual approval. Read exact approved source records and their unresolved policy IDs before implementation. Variants share presentation only; authorization stays in owning domains.",
+    "notes": "",
+    "category": "feature",
+    "priority": "P0",
+    "usages": [
+      {
+        "pageId": "courses",
+        "sectionId": "courses--directions",
+        "sourceRevision": 3,
+        "reason": "Сузить подборку по реальной таксономии."
+      },
+      {
+        "pageId": "mini-courses",
+        "sectionId": "mini-courses--directions",
+        "sourceRevision": 3,
+        "reason": "Сузить подборку по реальной таксономии."
+      }
+    ],
+    "dependencies": [
+      "filter-controls"
+    ]
+  },
+  "definitionStatus": "draft",
+  "definitionApproval": null,
+  "visualStatus": "no-reference",
+  "visualApproval": null,
+  "implementationStatus": "not-started",
+  "primaryReferenceId": null,
+  "references": [],
+  "archived": false,
+  "history": []
+}

@@ -1,0 +1,43 @@
+{
+  "schemaVersion": 1,
+  "id": "register-form",
+  "revision": 1,
+  "definition": {
+    "name": "RegisterForm",
+    "description": "Создать аккаунт без автоматического платного доступа.",
+    "purpose": "Создать аккаунт без автоматического платного доступа.",
+    "ownership": "identity",
+    "implementationPath": "src/features/identity/register-form.tsx",
+    "requiredData": "Email, пароль, утверждённые обязательные поля и legal links; политика существующего email.",
+    "interactions": "Создать аккаунт. Поддержать клавиатуру; сохранить контекст при возврате и ошибке.",
+    "states": "Исходное состояние; ввод/проверка; отправка без повторов; успех с безопасным продолжением; неверные учётные данные; блокировка; proof отсутствует, истёк или использован; ограничение повторов; сбой доставки. Применять только состояния текущего auth-сценария.",
+    "responsive": "Desktop: Ясная иерархия; связанные данные рядом; основной сценарий без декоративных отвлечений.\n\nMobile: Одна колонка в порядке чтения; перенос длинных названий; действия от 44px; без горизонтальной прокрутки.\n\nExact component-level composition is unapproved.",
+    "variants": "Independent workflow; do not merge verification, reset and registration policies into one generic form.",
+    "openQuestions": "OQ-032, OQ-051\nMISSING REFERENCE: component-level visual direction requires human review. Structure approval does not resolve product policy, source text placeholders or release gates.",
+    "implementationNotes": "Planning candidate only. No production implementation or visual approval. Read exact approved source records and their unresolved policy IDs before implementation. Variants share presentation only; authorization stays in owning domains.",
+    "notes": "",
+    "category": "feature",
+    "priority": "P1",
+    "usages": [
+      {
+        "pageId": "register",
+        "sectionId": "register--form-status",
+        "sourceRevision": 3,
+        "reason": "Создать аккаунт без автоматического платного доступа."
+      }
+    ],
+    "dependencies": [
+      "form-controls",
+      "button"
+    ]
+  },
+  "definitionStatus": "draft",
+  "definitionApproval": null,
+  "visualStatus": "no-reference",
+  "visualApproval": null,
+  "implementationStatus": "not-started",
+  "primaryReferenceId": null,
+  "references": [],
+  "archived": false,
+  "history": []
+}
