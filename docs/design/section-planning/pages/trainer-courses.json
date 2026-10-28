@@ -1,0 +1,99 @@
+{
+  "schemaVersion": 1,
+  "id": "trainer-courses",
+  "name": "Курсы тренера",
+  "group": "Trainer",
+  "route": null,
+  "routeStatus": "unresolved",
+  "roles": [
+    "trainer-curator"
+  ],
+  "phase": "Phase 2",
+  "purpose": "Управлять своими черновиками.",
+  "primaryAction": "Открыть курс",
+  "requiredContent": "Название страницы; текущий контекст; возврат; доступные для роли и фазы направления.\nНазначенные/собственные курсы, активные ученики, статус черновика.\nТолько администратор публикует; approved/rejected process pending.",
+  "dependencies": "Catalog: owned/assigned courses, students count, draft/publication.",
+  "issues": [
+    "OQ-011",
+    "OQ-023"
+  ],
+  "sources": [
+    "docs/product/requirements.md#course-workspace",
+    "docs/product/mvp.md"
+  ],
+  "implementation": "Not implemented. Screen composition is a proposal; a required capability does not mandate a separate route.",
+  "notes": "",
+  "revision": 1,
+  "status": "draft",
+  "approval": null,
+  "history": [],
+  "deletedSections": [],
+  "sections": [
+    {
+      "id": "trainer-courses--navigation",
+      "name": "Навигация и контекст",
+      "position": 1,
+      "purpose": "Показать текущий раздел и разрешённые переходы.",
+      "content": "Название страницы; текущий контекст; возврат; доступные для роли и фазы направления.",
+      "primaryAction": "Перейти в нужный раздел",
+      "interactions": "Перейти в нужный раздел. Поддержать клавиатуру; сохранить контекст при возврате и ошибке.",
+      "dependencies": "Catalog: owned/assigned courses, students count, draft/publication.",
+      "sources": [
+        "docs/product/requirements.md#course-workspace",
+        "docs/product/mvp.md"
+      ],
+      "phase": "Phase 2",
+      "inclusion": "included",
+      "required": true,
+      "reviewed": false,
+      "desktop": "Ясная иерархия; связанные данные рядом; основной сценарий без декоративных отвлечений.",
+      "mobile": "Одна колонка в порядке чтения; перенос длинных названий; действия от 44px; без горизонтальной прокрутки.",
+      "states": "Текущий маршрут; гость/разрешённая роль; меню открыто/закрыто при необходимости; видимый focus; неопубликованные направления отсутствуют. Без искусственной загрузки статических ссылок.",
+      "notes": "Структурное предложение, визуальная композиция не утверждена. Не добавлять новые продуктовые правила."
+    },
+    {
+      "id": "trainer-courses--courses",
+      "name": "Свои курсы",
+      "position": 2,
+      "purpose": "Найти доступное содержание.",
+      "content": "Назначенные/собственные курсы, активные ученики, статус черновика.",
+      "primaryAction": "",
+      "interactions": "Чтение в логическом порядке; доступные переходы при наличии.",
+      "dependencies": "Catalog: owned/assigned courses, students count, draft/publication.",
+      "sources": [
+        "docs/product/requirements.md#course-workspace",
+        "docs/product/mvp.md"
+      ],
+      "phase": "Phase 2",
+      "inclusion": "included",
+      "required": true,
+      "reviewed": false,
+      "desktop": "Ясная иерархия; связанные данные рядом; основной сценарий без декоративных отвлечений.",
+      "mobile": "Одна колонка в порядке чтения; перенос длинных названий; действия от 44px; без горизонтальной прокрутки.",
+      "states": "Загрузка разрешённых данных; пустой список/нет совпадений; нет прав или назначение изменилось; ошибка с повтором; некорректный ввод; операция выполняется; конфликт устаревшей версии; подтверждённый результат и audit. Финансовые значения не выдумывать.",
+      "notes": "Структурное предложение, визуальная композиция не утверждена. Не добавлять новые продуктовые правила."
+    },
+    {
+      "id": "trainer-courses--publication",
+      "name": "Статус согласования",
+      "position": 3,
+      "purpose": "Понять следующий разрешённый шаг.",
+      "content": "Только администратор публикует; approved/rejected process pending.",
+      "primaryAction": "Открыть редактирование",
+      "interactions": "Открыть редактирование. Поддержать клавиатуру; сохранить контекст при возврате и ошибке.",
+      "dependencies": "Catalog: owned/assigned courses, students count, draft/publication.",
+      "sources": [
+        "docs/product/requirements.md#course-workspace",
+        "docs/product/mvp.md"
+      ],
+      "phase": "Phase 2",
+      "inclusion": "included",
+      "required": true,
+      "reviewed": false,
+      "desktop": "Ясная иерархия; связанные данные рядом; основной сценарий без декоративных отвлечений.",
+      "mobile": "Одна колонка в порядке чтения; перенос длинных названий; действия от 44px; без горизонтальной прокрутки.",
+      "states": "Загрузка разрешённых данных; пустой список/нет совпадений; нет прав или назначение изменилось; ошибка с повтором; некорректный ввод; операция выполняется; конфликт устаревшей версии; подтверждённый результат и audit. Финансовые значения не выдумывать.",
+      "notes": "Структурное предложение, визуальная композиция не утверждена. Не добавлять новые продуктовые правила."
+    }
+  ]
+}

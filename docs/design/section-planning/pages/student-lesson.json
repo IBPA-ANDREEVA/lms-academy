@@ -1,0 +1,169 @@
+{
+  "schemaVersion": 1,
+  "id": "student-lesson",
+  "name": "Урок",
+  "group": "Student",
+  "route": null,
+  "routeStatus": "unresolved",
+  "roles": [
+    "student"
+  ],
+  "phase": "MVP",
+  "purpose": "Посмотреть разрешённый урок и выполнить практику.",
+  "primaryAction": "Продолжить просмотр / открыть задание",
+  "requiredContent": "Название страницы; текущий контекст; возврат; доступные для роли и фазы направления.\nАвторизованное видео, resume, скорость; ошибки доступа и воспроизведения.\nУроки, locked/reason; никакого обхода прямой ссылкой.\nPrivate downloads; описание практики и ссылка на submission screen.\nRU/EN audio/subtitles только при наличии.\nПерсональный watermark; не самостоятельный пользовательский инструмент.",
+  "dependencies": "Learning: private playback, resume; Catalog: материалы; Assignments: homework.",
+  "issues": [
+    "OQ-002",
+    "OQ-003",
+    "OQ-020",
+    "OQ-021",
+    "OQ-042",
+    "OQ-050"
+  ],
+  "sources": [
+    "docs/product/requirements.md#lesson-playback-and-progress",
+    "docs/product/mvp.md"
+  ],
+  "implementation": "Not implemented. Screen composition is a proposal; a required capability does not mandate a separate route.",
+  "notes": "",
+  "revision": 1,
+  "status": "draft",
+  "approval": null,
+  "history": [],
+  "deletedSections": [],
+  "sections": [
+    {
+      "id": "student-lesson--navigation",
+      "name": "Навигация и контекст",
+      "position": 1,
+      "purpose": "Показать текущий раздел и разрешённые переходы.",
+      "content": "Название страницы; текущий контекст; возврат; доступные для роли и фазы направления.",
+      "primaryAction": "Перейти в нужный раздел",
+      "interactions": "Перейти в нужный раздел. Поддержать клавиатуру; сохранить контекст при возврате и ошибке.",
+      "dependencies": "Learning: private playback, resume; Catalog: материалы; Assignments: homework.",
+      "sources": [
+        "docs/product/requirements.md#lesson-playback-and-progress",
+        "docs/product/mvp.md"
+      ],
+      "phase": "MVP",
+      "inclusion": "included",
+      "required": true,
+      "reviewed": false,
+      "desktop": "Ясная иерархия; связанные данные рядом; основной сценарий без декоративных отвлечений.",
+      "mobile": "Одна колонка в порядке чтения; перенос длинных названий; действия от 44px; без горизонтальной прокрутки.",
+      "states": "Текущий маршрут; гость/разрешённая роль; меню открыто/закрыто при необходимости; видимый focus; неопубликованные направления отсутствуют. Без искусственной загрузки статических ссылок.",
+      "notes": "Структурное предложение, визуальная композиция не утверждена. Не добавлять новые продуктовые правила."
+    },
+    {
+      "id": "student-lesson--video",
+      "name": "Видео урока",
+      "position": 2,
+      "purpose": "Сосредоточиться на обучении.",
+      "content": "Авторизованное видео, resume, скорость; ошибки доступа и воспроизведения.",
+      "primaryAction": "Смотреть",
+      "interactions": "Смотреть. Поддержать клавиатуру; сохранить контекст при возврате и ошибке.",
+      "dependencies": "Learning: private playback, resume; Catalog: материалы; Assignments: homework.",
+      "sources": [
+        "docs/product/requirements.md#lesson-playback-and-progress",
+        "docs/product/mvp.md"
+      ],
+      "phase": "MVP",
+      "inclusion": "included",
+      "required": true,
+      "reviewed": false,
+      "desktop": "Видео — основной фокус. Программа может располагаться рядом без ограничения высоты остальных материалов.",
+      "mobile": "Видео на ширину контента, управление доступно касанием; программа и материалы ниже без перекрывающих панелей.",
+      "states": "Загрузка видео; playback error/retry; resume; сохранение позиции; completed по утверждённой политике; урок заблокирован с причиной; доступ истёк/отозван; материал недоступен; повтор авторизации без публичной ссылки.",
+      "notes": "Структурное предложение, визуальная композиция не утверждена. Не добавлять новые продуктовые правила."
+    },
+    {
+      "id": "student-lesson--sequence",
+      "name": "Порядок и прогресс",
+      "position": 3,
+      "purpose": "Показать следующий разрешённый шаг.",
+      "content": "Уроки, locked/reason; никакого обхода прямой ссылкой.",
+      "primaryAction": "Открыть доступный урок",
+      "interactions": "Открыть доступный урок. Поддержать клавиатуру; сохранить контекст при возврате и ошибке.",
+      "dependencies": "Learning: private playback, resume; Catalog: материалы; Assignments: homework.",
+      "sources": [
+        "docs/product/requirements.md#lesson-playback-and-progress",
+        "docs/product/mvp.md"
+      ],
+      "phase": "MVP",
+      "inclusion": "included",
+      "required": true,
+      "reviewed": false,
+      "desktop": "Ясная иерархия; связанные данные рядом; основной сценарий без декоративных отвлечений.",
+      "mobile": "Одна колонка в порядке чтения; перенос длинных названий; действия от 44px; без горизонтальной прокрутки.",
+      "states": "Загрузка видео; playback error/retry; resume; сохранение позиции; completed по утверждённой политике; урок заблокирован с причиной; доступ истёк/отозван; материал недоступен; повтор авторизации без публичной ссылки.",
+      "notes": "Структурное предложение, визуальная композиция не утверждена. Не добавлять новые продуктовые правила."
+    },
+    {
+      "id": "student-lesson--materials",
+      "name": "Материалы и практика",
+      "position": 4,
+      "purpose": "Дать разрешённые материалы и задачу.",
+      "content": "Private downloads; описание практики и ссылка на submission screen.",
+      "primaryAction": "Скачать материал / открыть задание",
+      "interactions": "Скачать материал / открыть задание. Поддержать клавиатуру; сохранить контекст при возврате и ошибке.",
+      "dependencies": "Learning: private playback, resume; Catalog: материалы; Assignments: homework.",
+      "sources": [
+        "docs/product/requirements.md#lesson-playback-and-progress",
+        "docs/product/mvp.md"
+      ],
+      "phase": "MVP",
+      "inclusion": "included",
+      "required": true,
+      "reviewed": false,
+      "desktop": "Ясная иерархия; связанные данные рядом; основной сценарий без декоративных отвлечений.",
+      "mobile": "Одна колонка в порядке чтения; перенос длинных названий; действия от 44px; без горизонтальной прокрутки.",
+      "states": "Загрузка видео; playback error/retry; resume; сохранение позиции; completed по утверждённой политике; урок заблокирован с причиной; доступ истёк/отозван; материал недоступен; повтор авторизации без публичной ссылки.",
+      "notes": "Структурное предложение, визуальная композиция не утверждена. Не добавлять новые продуктовые правила."
+    },
+    {
+      "id": "student-lesson--language",
+      "name": "Язык медиа",
+      "position": 5,
+      "purpose": "Выбрать предоставленную дорожку.",
+      "content": "RU/EN audio/subtitles только при наличии.",
+      "primaryAction": "Изменить язык",
+      "interactions": "Изменить язык. Поддержать клавиатуру; сохранить контекст при возврате и ошибке.",
+      "dependencies": "Learning: private playback, resume; Catalog: материалы; Assignments: homework.",
+      "sources": [
+        "docs/product/requirements.md#lesson-playback-and-progress",
+        "docs/product/mvp.md"
+      ],
+      "phase": "Phase 2",
+      "inclusion": "included",
+      "required": false,
+      "reviewed": false,
+      "desktop": "Ясная иерархия; связанные данные рядом; основной сценарий без декоративных отвлечений.",
+      "mobile": "Одна колонка в порядке чтения; перенос длинных названий; действия от 44px; без горизонтальной прокрутки.",
+      "states": "Загрузка видео; playback error/retry; resume; сохранение позиции; completed по утверждённой политике; урок заблокирован с причиной; доступ истёк/отозван; материал недоступен; повтор авторизации без публичной ссылки.",
+      "notes": "Структурное предложение, визуальная композиция не утверждена. Не добавлять новые продуктовые правила."
+    },
+    {
+      "id": "student-lesson--protection",
+      "name": "Защита воспроизведения",
+      "position": 6,
+      "purpose": "Обозначить поздний protection слой.",
+      "content": "Персональный watermark; не самостоятельный пользовательский инструмент.",
+      "primaryAction": "",
+      "interactions": "Чтение в логическом порядке; доступные переходы при наличии.",
+      "dependencies": "Learning: private playback, resume; Catalog: материалы; Assignments: homework.",
+      "sources": [
+        "docs/product/requirements.md#lesson-playback-and-progress",
+        "docs/product/mvp.md"
+      ],
+      "phase": "Phase 3",
+      "inclusion": "included",
+      "required": false,
+      "reviewed": false,
+      "desktop": "Ясная иерархия; связанные данные рядом; основной сценарий без декоративных отвлечений.",
+      "mobile": "Одна колонка в порядке чтения; перенос длинных названий; действия от 44px; без горизонтальной прокрутки.",
+      "states": "Загрузка видео; playback error/retry; resume; сохранение позиции; completed по утверждённой политике; урок заблокирован с причиной; доступ истёк/отозван; материал недоступен; повтор авторизации без публичной ссылки.",
+      "notes": "Структурное предложение, визуальная композиция не утверждена. Не добавлять новые продуктовые правила."
+    }
+  ]
+}

@@ -4,6 +4,8 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
+    "dev:sections": "node scripts/dev-sections.mjs",
+    "test:sections": "node --test tests/section-planning.test.mjs",
     "build": "next build",
     "start": "next start",
     "lint": "eslint"

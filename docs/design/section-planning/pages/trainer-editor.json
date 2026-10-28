@@ -1,0 +1,122 @@
+{
+  "schemaVersion": 1,
+  "id": "trainer-editor",
+  "name": "Черновик курса и уроков",
+  "group": "Trainer",
+  "route": null,
+  "routeStatus": "unresolved",
+  "roles": [
+    "trainer-curator"
+  ],
+  "phase": "Phase 2",
+  "purpose": "Подготовить материалы к согласованию.",
+  "primaryAction": "Сохранить черновик / передать на утверждение",
+  "requiredContent": "Название страницы; текущий контекст; возврат; доступные для роли и фазы направления.\nЛокализованные заголовки и описания в рамках полномочий.\nВидео и материалы; загрузка и статус обработки; version policy.\nСтатус черновика, validation, review result.",
+  "dependencies": "Catalog: draft, lesson order, private media, admin approval.",
+  "issues": [
+    "OQ-022",
+    "OQ-023",
+    "OQ-024"
+  ],
+  "sources": [
+    "docs/product/mvp.md#trainer-curator-account-completion",
+    "docs/product/mvp.md"
+  ],
+  "implementation": "Not implemented. Screen composition is a proposal; a required capability does not mandate a separate route.",
+  "notes": "",
+  "revision": 1,
+  "status": "draft",
+  "approval": null,
+  "history": [],
+  "deletedSections": [],
+  "sections": [
+    {
+      "id": "trainer-editor--navigation",
+      "name": "Навигация и контекст",
+      "position": 1,
+      "purpose": "Показать текущий раздел и разрешённые переходы.",
+      "content": "Название страницы; текущий контекст; возврат; доступные для роли и фазы направления.",
+      "primaryAction": "Перейти в нужный раздел",
+      "interactions": "Перейти в нужный раздел. Поддержать клавиатуру; сохранить контекст при возврате и ошибке.",
+      "dependencies": "Catalog: draft, lesson order, private media, admin approval.",
+      "sources": [
+        "docs/product/mvp.md#trainer-curator-account-completion",
+        "docs/product/mvp.md"
+      ],
+      "phase": "Phase 2",
+      "inclusion": "included",
+      "required": true,
+      "reviewed": false,
+      "desktop": "Ясная иерархия; связанные данные рядом; основной сценарий без декоративных отвлечений.",
+      "mobile": "Одна колонка в порядке чтения; перенос длинных названий; действия от 44px; без горизонтальной прокрутки.",
+      "states": "Текущий маршрут; гость/разрешённая роль; меню открыто/закрыто при необходимости; видимый focus; неопубликованные направления отсутствуют. Без искусственной загрузки статических ссылок.",
+      "notes": "Структурное предложение, визуальная композиция не утверждена. Не добавлять новые продуктовые правила."
+    },
+    {
+      "id": "trainer-editor--metadata",
+      "name": "Данные курса",
+      "position": 2,
+      "purpose": "Описать содержание.",
+      "content": "Локализованные заголовки и описания в рамках полномочий.",
+      "primaryAction": "",
+      "interactions": "Чтение в логическом порядке; доступные переходы при наличии.",
+      "dependencies": "Catalog: draft, lesson order, private media, admin approval.",
+      "sources": [
+        "docs/product/mvp.md#trainer-curator-account-completion",
+        "docs/product/mvp.md"
+      ],
+      "phase": "Phase 2",
+      "inclusion": "included",
+      "required": true,
+      "reviewed": false,
+      "desktop": "Ясная иерархия; связанные данные рядом; основной сценарий без декоративных отвлечений.",
+      "mobile": "Одна колонка в порядке чтения; перенос длинных названий; действия от 44px; без горизонтальной прокрутки.",
+      "states": "Загрузка разрешённых данных; пустой список/нет совпадений; нет прав или назначение изменилось; ошибка с повтором; некорректный ввод; операция выполняется; конфликт устаревшей версии; подтверждённый результат и audit. Финансовые значения не выдумывать.",
+      "notes": "Структурное предложение, визуальная композиция не утверждена. Не добавлять новые продуктовые правила."
+    },
+    {
+      "id": "trainer-editor--lessons",
+      "name": "Уроки и материалы",
+      "position": 3,
+      "purpose": "Подготовить последовательность.",
+      "content": "Видео и материалы; загрузка и статус обработки; version policy.",
+      "primaryAction": "",
+      "interactions": "Чтение в логическом порядке; доступные переходы при наличии.",
+      "dependencies": "Catalog: draft, lesson order, private media, admin approval.",
+      "sources": [
+        "docs/product/mvp.md#trainer-curator-account-completion",
+        "docs/product/mvp.md"
+      ],
+      "phase": "Phase 2",
+      "inclusion": "included",
+      "required": true,
+      "reviewed": false,
+      "desktop": "Ясная иерархия; связанные данные рядом; основной сценарий без декоративных отвлечений.",
+      "mobile": "Одна колонка в порядке чтения; перенос длинных названий; действия от 44px; без горизонтальной прокрутки.",
+      "states": "Загрузка разрешённых данных; пустой список/нет совпадений; нет прав или назначение изменилось; ошибка с повтором; некорректный ввод; операция выполняется; конфликт устаревшей версии; подтверждённый результат и audit. Финансовые значения не выдумывать.",
+      "notes": "Структурное предложение, визуальная композиция не утверждена. Не добавлять новые продуктовые правила."
+    },
+    {
+      "id": "trainer-editor--approval",
+      "name": "Проверка и передача",
+      "position": 4,
+      "purpose": "Передать администратору без самопубликации.",
+      "content": "Статус черновика, validation, review result.",
+      "primaryAction": "Передать на утверждение",
+      "interactions": "Передать на утверждение. Поддержать клавиатуру; сохранить контекст при возврате и ошибке.",
+      "dependencies": "Catalog: draft, lesson order, private media, admin approval.",
+      "sources": [
+        "docs/product/mvp.md#trainer-curator-account-completion",
+        "docs/product/mvp.md"
+      ],
+      "phase": "Phase 2",
+      "inclusion": "included",
+      "required": true,
+      "reviewed": false,
+      "desktop": "Ясная иерархия; связанные данные рядом; основной сценарий без декоративных отвлечений.",
+      "mobile": "Одна колонка в порядке чтения; перенос длинных названий; действия от 44px; без горизонтальной прокрутки.",
+      "states": "Загрузка разрешённых данных; пустой список/нет совпадений; нет прав или назначение изменилось; ошибка с повтором; некорректный ввод; операция выполняется; конфликт устаревшей версии; подтверждённый результат и audit. Финансовые значения не выдумывать.",
+      "notes": "Структурное предложение, визуальная композиция не утверждена. Не добавлять новые продуктовые правила."
+    }
+  ]
+}

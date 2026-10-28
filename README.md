@@ -24,6 +24,13 @@ pnpm dev
 
 Development server: http://localhost:3000
 
+For the development-only page-structure review workspace, run `pnpm dev:sections`
+and open http://127.0.0.1:3000/dev/sections. See the
+[review guide](docs/design/section-planning/README.md) and
+[page inventory](docs/design/section-planning/INVENTORY.md). This tool edits
+repository-backed structure proposals; it does not implement LMS pages or approve
+product policies. All initial structures require explicit human review.
+
 Check quality with `pnpm lint`, `pnpm exec tsc --noEmit`, and `pnpm build` once dependencies are installed.
 
 ## Documentation

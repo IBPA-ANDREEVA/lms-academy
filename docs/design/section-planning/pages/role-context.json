@@ -1,0 +1,103 @@
+{
+  "schemaVersion": 1,
+  "id": "role-context",
+  "name": "Контекст роли",
+  "group": "Authentication",
+  "route": null,
+  "routeStatus": "unresolved",
+  "roles": [
+    "student",
+    "trainer-curator",
+    "manager",
+    "administrator"
+  ],
+  "phase": "MVP",
+  "purpose": "Выбрать разрешённый рабочий контекст без нового аккаунта.",
+  "primaryAction": "Переключить роль",
+  "requiredContent": "Текущий контекст и разрешённые назначения.\nТолько роли аккаунта; default/activation policy не решена. Рекомендуется встроенная поверхность, не публичная страница.",
+  "dependencies": "Identity: разрешённые роли и safe continuation.",
+  "issues": [
+    "OQ-011",
+    "OQ-013",
+    "OQ-014",
+    "PA-03"
+  ],
+  "sources": [
+    "docs/product/requirements.md#shared-rules",
+    "docs/product/mvp.md"
+  ],
+  "implementation": "Not implemented. Screen composition is a proposal; a required capability does not mandate a separate route.",
+  "notes": "",
+  "revision": 3,
+  "status": "approved",
+  "approval": {
+    "reviewer": "Ivan Makovetskyi",
+    "date": "2026-10-28T01:02:53.945Z",
+    "revision": 3
+  },
+  "history": [
+    {
+      "revision": 2,
+      "date": "2026-10-28T01:02:52.800Z",
+      "action": "save",
+      "reviewer": "Ivan Makovetskyi",
+      "previousApproval": null,
+      "status": "draft"
+    },
+    {
+      "revision": 3,
+      "date": "2026-10-28T01:02:53.945Z",
+      "action": "approve",
+      "reviewer": "Ivan Makovetskyi",
+      "previousApproval": null,
+      "status": "approved"
+    }
+  ],
+  "deletedSections": [],
+  "sections": [
+    {
+      "id": "role-context--context",
+      "name": "Текущая задача и роль",
+      "position": 1,
+      "purpose": "Сохранить безопасное продолжение.",
+      "content": "Текущий контекст и разрешённые назначения.",
+      "primaryAction": "",
+      "interactions": "Чтение в логическом порядке; доступные переходы при наличии.",
+      "dependencies": "Identity: разрешённые роли и safe continuation.",
+      "sources": [
+        "docs/product/requirements.md#shared-rules",
+        "docs/product/mvp.md"
+      ],
+      "phase": "MVP",
+      "inclusion": "included",
+      "required": true,
+      "reviewed": true,
+      "desktop": "Ясная иерархия; связанные данные рядом; основной сценарий без декоративных отвлечений.",
+      "mobile": "Одна колонка в порядке чтения; перенос длинных названий; действия от 44px; без горизонтальной прокрутки.",
+      "states": "Исходное состояние; ввод/проверка; отправка без повторов; успех с безопасным продолжением; неверные учётные данные; блокировка; proof отсутствует, истёк или использован; ограничение повторов; сбой доставки. Применять только состояния текущего auth-сценария.",
+      "notes": "Структурное предложение, визуальная композиция не утверждена. Не добавлять новые продуктовые правила."
+    },
+    {
+      "id": "role-context--choice",
+      "name": "Разрешённые роли",
+      "position": 2,
+      "purpose": "Перейти к соответствующей работе.",
+      "content": "Только роли аккаунта; default/activation policy не решена. Рекомендуется встроенная поверхность, не публичная страница.",
+      "primaryAction": "Выбрать роль",
+      "interactions": "Выбрать роль. Поддержать клавиатуру; сохранить контекст при возврате и ошибке.",
+      "dependencies": "Identity: разрешённые роли и safe continuation.",
+      "sources": [
+        "docs/product/requirements.md#shared-rules",
+        "docs/product/mvp.md"
+      ],
+      "phase": "MVP",
+      "inclusion": "included",
+      "required": true,
+      "reviewed": true,
+      "desktop": "Ясная иерархия; связанные данные рядом; основной сценарий без декоративных отвлечений.",
+      "mobile": "Одна колонка в порядке чтения; перенос длинных названий; действия от 44px; без горизонтальной прокрутки.",
+      "states": "Исходное состояние; ввод/проверка; отправка без повторов; успех с безопасным продолжением; неверные учётные данные; блокировка; proof отсутствует, истёк или использован; ограничение повторов; сбой доставки. Применять только состояния текущего auth-сценария.",
+      "notes": "Структурное предложение, визуальная композиция не утверждена. Не добавлять новые продуктовые правила."
+    }
+  ]
+}

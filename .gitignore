@@ -39,3 +39,7 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Transient local section-editor locks / atomic-write staging
+/docs/design/section-planning/pages/*.json.lock/
+/docs/design/section-planning/pages/*.tmp

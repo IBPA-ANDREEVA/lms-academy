@@ -1,0 +1,23 @@
+{
+  "profile": "product-admin",
+  "sourceRoots": [
+    "src/features/section-planning",
+    "src/app/dev/sections"
+  ],
+  "locale": "ru-RU",
+  "canonicalMap": "UX-CONTRACT.md",
+  "requiredCapabilities": [
+    "Select/Listbox",
+    "Form",
+    "Scrollbar",
+    "Toast",
+    "CRUD"
+  ],
+  "ownership": {
+    "Select/Listbox": "native"
+  },
+  "evidence": {
+    "crudFullFlow": "tests/section-planning.browser.mjs",
+    "failurePaths": "tests/section-planning.test.mjs"
+  }
+}

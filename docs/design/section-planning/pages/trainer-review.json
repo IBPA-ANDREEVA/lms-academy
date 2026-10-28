@@ -1,0 +1,124 @@
+{
+  "schemaVersion": 1,
+  "id": "trainer-review",
+  "name": "Проверка работы",
+  "group": "Trainer",
+  "route": null,
+  "routeStatus": "unresolved",
+  "roles": [
+    "trainer-curator"
+  ],
+  "phase": "MVP",
+  "purpose": "Изучить работу и дать безопасное решение.",
+  "primaryAction": "Принять / запросить доработку",
+  "requiredContent": "Название страницы; текущий контекст; возврат; доступные для роли и фазы направления.\nPrivate photos/video, комментарий, прошлые версии и отзывы.\nТекст, принять/доработать, результат для ученика; concurrent/expired checks.\nЗапись/прикрепление и воспроизведение; limits pending.",
+  "dependencies": "Assignments: assigned media/history/review; Learning: support state.",
+  "issues": [
+    "OQ-005",
+    "OQ-012",
+    "OQ-015",
+    "OQ-045",
+    "OQ-048"
+  ],
+  "sources": [
+    "docs/product/requirements.md#review-detail",
+    "docs/product/mvp.md"
+  ],
+  "implementation": "Not implemented. Screen composition is a proposal; a required capability does not mandate a separate route.",
+  "notes": "",
+  "revision": 1,
+  "status": "draft",
+  "approval": null,
+  "history": [],
+  "deletedSections": [],
+  "sections": [
+    {
+      "id": "trainer-review--navigation",
+      "name": "Навигация и контекст",
+      "position": 1,
+      "purpose": "Показать текущий раздел и разрешённые переходы.",
+      "content": "Название страницы; текущий контекст; возврат; доступные для роли и фазы направления.",
+      "primaryAction": "Перейти в нужный раздел",
+      "interactions": "Перейти в нужный раздел. Поддержать клавиатуру; сохранить контекст при возврате и ошибке.",
+      "dependencies": "Assignments: assigned media/history/review; Learning: support state.",
+      "sources": [
+        "docs/product/requirements.md#review-detail",
+        "docs/product/mvp.md"
+      ],
+      "phase": "MVP",
+      "inclusion": "included",
+      "required": true,
+      "reviewed": false,
+      "desktop": "Ясная иерархия; связанные данные рядом; основной сценарий без декоративных отвлечений.",
+      "mobile": "Одна колонка в порядке чтения; перенос длинных названий; действия от 44px; без горизонтальной прокрутки.",
+      "states": "Текущий маршрут; гость/разрешённая роль; меню открыто/закрыто при необходимости; видимый focus; неопубликованные направления отсутствуют. Без искусственной загрузки статических ссылок.",
+      "notes": "Структурное предложение, визуальная композиция не утверждена. Не добавлять новые продуктовые правила."
+    },
+    {
+      "id": "trainer-review--work",
+      "name": "Работа и история",
+      "position": 2,
+      "purpose": "Оценить материалы в контексте.",
+      "content": "Private photos/video, комментарий, прошлые версии и отзывы.",
+      "primaryAction": "",
+      "interactions": "Чтение в логическом порядке; доступные переходы при наличии.",
+      "dependencies": "Assignments: assigned media/history/review; Learning: support state.",
+      "sources": [
+        "docs/product/requirements.md#review-detail",
+        "docs/product/mvp.md"
+      ],
+      "phase": "MVP",
+      "inclusion": "included",
+      "required": true,
+      "reviewed": false,
+      "desktop": "Ясная иерархия; связанные данные рядом; основной сценарий без декоративных отвлечений.",
+      "mobile": "Одна колонка в порядке чтения; перенос длинных названий; действия от 44px; без горизонтальной прокрутки.",
+      "states": "Загрузка защищённых материалов; очередь/материал недоступны; черновик отзыва; отправка решения; принято/доработка; конфликт другого решения; назначение или поддержка изменились; ошибка с сохранением текста.",
+      "notes": "Структурное предложение, визуальная композиция не утверждена. Не добавлять новые продуктовые правила."
+    },
+    {
+      "id": "trainer-review--decision",
+      "name": "Текстовый отзыв и решение",
+      "position": 3,
+      "purpose": "Сообщить понятный результат.",
+      "content": "Текст, принять/доработать, результат для ученика; concurrent/expired checks.",
+      "primaryAction": "Принять / запросить доработку",
+      "interactions": "Принять / запросить доработку. Поддержать клавиатуру; сохранить контекст при возврате и ошибке.",
+      "dependencies": "Assignments: assigned media/history/review; Learning: support state.",
+      "sources": [
+        "docs/product/requirements.md#review-detail",
+        "docs/product/mvp.md"
+      ],
+      "phase": "MVP",
+      "inclusion": "included",
+      "required": true,
+      "reviewed": false,
+      "desktop": "Ясная иерархия; связанные данные рядом; основной сценарий без декоративных отвлечений.",
+      "mobile": "Одна колонка в порядке чтения; перенос длинных названий; действия от 44px; без горизонтальной прокрутки.",
+      "states": "Загрузка защищённых материалов; очередь/материал недоступны; черновик отзыва; отправка решения; принято/доработка; конфликт другого решения; назначение или поддержка изменились; ошибка с сохранением текста.",
+      "notes": "Структурное предложение, визуальная композиция не утверждена. Не добавлять новые продуктовые правила."
+    },
+    {
+      "id": "trainer-review--voice",
+      "name": "Голосовой отзыв",
+      "position": 4,
+      "purpose": "Добавить голос при включённой функции.",
+      "content": "Запись/прикрепление и воспроизведение; limits pending.",
+      "primaryAction": "Прикрепить отзыв",
+      "interactions": "Прикрепить отзыв. Поддержать клавиатуру; сохранить контекст при возврате и ошибке.",
+      "dependencies": "Assignments: assigned media/history/review; Learning: support state.",
+      "sources": [
+        "docs/product/requirements.md#review-detail",
+        "docs/product/mvp.md"
+      ],
+      "phase": "Phase 2",
+      "inclusion": "included",
+      "required": false,
+      "reviewed": false,
+      "desktop": "Ясная иерархия; связанные данные рядом; основной сценарий без декоративных отвлечений.",
+      "mobile": "Одна колонка в порядке чтения; перенос длинных названий; действия от 44px; без горизонтальной прокрутки.",
+      "states": "Загрузка защищённых материалов; очередь/материал недоступны; черновик отзыва; отправка решения; принято/доработка; конфликт другого решения; назначение или поддержка изменились; ошибка с сохранением текста.",
+      "notes": "Структурное предложение, визуальная композиция не утверждена. Не добавлять новые продуктовые правила."
+    }
+  ]
+}

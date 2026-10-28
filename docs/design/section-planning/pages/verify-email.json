@@ -1,0 +1,172 @@
+{
+  "schemaVersion": 1,
+  "id": "verify-email",
+  "name": "Подтверждение email",
+  "group": "Authentication",
+  "route": "/verify-email",
+  "routeStatus": "proposed",
+  "roles": [
+    "guest",
+    "student"
+  ],
+  "phase": "MVP",
+  "purpose": "Подтвердить владение адресом.",
+  "primaryAction": "Подтвердить / отправить повторно",
+  "requiredContent": "Название страницы; текущий контекст; возврат; доступные для роли и фазы направления.\nПодтвердить владение адресом.\nSent, token processing, valid/invalid/expired/used; resend и лимиты.\nВход, регистрация или восстановление по контексту; сохранить только разрешённый внутренний переход.\nСсылки на четыре правовых документа; утверждённый контакт, если предоставлен; только опубликованные направления.",
+  "dependencies": "Identity: purpose-bound proof/session; Notifications: доставка; безопасное продолжение.",
+  "issues": [
+    "OQ-032",
+    "OQ-069",
+    "PA-05"
+  ],
+  "sources": [
+    "docs/architecture/public-page-structure.md",
+    "docs/product/mvp.md",
+    "docs/architecture/public-sitemap.md"
+  ],
+  "implementation": "Not implemented. Screen composition is a proposal; a required capability does not mandate a separate route.",
+  "notes": "",
+  "revision": 3,
+  "status": "approved",
+  "approval": {
+    "reviewer": "Ivan Makovetskyi",
+    "date": "2026-10-28T01:01:55.356Z",
+    "revision": 3
+  },
+  "history": [
+    {
+      "revision": 2,
+      "date": "2026-10-28T01:01:54.340Z",
+      "action": "save",
+      "reviewer": "Ivan Makovetskyi",
+      "previousApproval": null,
+      "status": "draft"
+    },
+    {
+      "revision": 3,
+      "date": "2026-10-28T01:01:55.356Z",
+      "action": "approve",
+      "reviewer": "Ivan Makovetskyi",
+      "previousApproval": null,
+      "status": "approved"
+    }
+  ],
+  "deletedSections": [],
+  "sections": [
+    {
+      "id": "verify-email--navigation",
+      "name": "Навигация и контекст",
+      "position": 1,
+      "purpose": "Показать текущий раздел и разрешённые переходы.",
+      "content": "Название страницы; текущий контекст; возврат; доступные для роли и фазы направления.",
+      "primaryAction": "Перейти в нужный раздел",
+      "interactions": "Перейти в нужный раздел. Поддержать клавиатуру; сохранить контекст при возврате и ошибке.",
+      "dependencies": "Identity: purpose-bound proof/session; Notifications: доставка; безопасное продолжение.",
+      "sources": [
+        "docs/architecture/public-page-structure.md",
+        "docs/product/mvp.md",
+        "docs/architecture/public-sitemap.md"
+      ],
+      "phase": "MVP",
+      "inclusion": "included",
+      "required": true,
+      "reviewed": true,
+      "desktop": "Ясная иерархия; связанные данные рядом; основной сценарий без декоративных отвлечений.",
+      "mobile": "Одна колонка в порядке чтения; перенос длинных названий; действия от 44px; без горизонтальной прокрутки.",
+      "states": "Текущий маршрут; гость/разрешённая роль; меню открыто/закрыто при необходимости; видимый focus; неопубликованные направления отсутствуют. Без искусственной загрузки статических ссылок.",
+      "notes": "Структурное предложение, визуальная композиция не утверждена. Не добавлять новые продуктовые правила."
+    },
+    {
+      "id": "verify-email--instruction",
+      "name": "Задача и инструкция",
+      "position": 2,
+      "purpose": "Объяснить текущий шаг.",
+      "content": "Подтвердить владение адресом.",
+      "primaryAction": "",
+      "interactions": "Чтение в логическом порядке; доступные переходы при наличии.",
+      "dependencies": "Identity: purpose-bound proof/session; Notifications: доставка; безопасное продолжение.",
+      "sources": [
+        "docs/architecture/public-page-structure.md",
+        "docs/product/mvp.md",
+        "docs/architecture/public-sitemap.md"
+      ],
+      "phase": "MVP",
+      "inclusion": "included",
+      "required": true,
+      "reviewed": true,
+      "desktop": "Ясная иерархия; связанные данные рядом; основной сценарий без декоративных отвлечений.",
+      "mobile": "Одна колонка в порядке чтения; перенос длинных названий; действия от 44px; без горизонтальной прокрутки.",
+      "states": "Исходное состояние; ввод/проверка; отправка без повторов; успех с безопасным продолжением; неверные учётные данные; блокировка; proof отсутствует, истёк или использован; ограничение повторов; сбой доставки. Применять только состояния текущего auth-сценария.",
+      "notes": "Структурное предложение, визуальная композиция не утверждена. Не добавлять новые продуктовые правила."
+    },
+    {
+      "id": "verify-email--form-status",
+      "name": "Форма и результат",
+      "position": 3,
+      "purpose": "Подтвердить владение адресом.",
+      "content": "Sent, token processing, valid/invalid/expired/used; resend и лимиты.",
+      "primaryAction": "Подтвердить / отправить повторно",
+      "interactions": "Подтвердить / отправить повторно. Поддержать клавиатуру; сохранить контекст при возврате и ошибке.",
+      "dependencies": "Identity: purpose-bound proof/session; Notifications: доставка; безопасное продолжение.",
+      "sources": [
+        "docs/architecture/public-page-structure.md",
+        "docs/product/mvp.md",
+        "docs/architecture/public-sitemap.md"
+      ],
+      "phase": "MVP",
+      "inclusion": "included",
+      "required": true,
+      "reviewed": true,
+      "desktop": "Ясная иерархия; связанные данные рядом; основной сценарий без декоративных отвлечений.",
+      "mobile": "Одна колонка в порядке чтения; перенос длинных названий; действия от 44px; без горизонтальной прокрутки.",
+      "states": "Исходное состояние; ввод/проверка; отправка без повторов; успех с безопасным продолжением; неверные учётные данные; блокировка; proof отсутствует, истёк или использован; ограничение повторов; сбой доставки. Применять только состояния текущего auth-сценария.",
+      "notes": "Структурное предложение, визуальная композиция не утверждена. Не добавлять новые продуктовые правила."
+    },
+    {
+      "id": "verify-email--recovery",
+      "name": "Связанные действия",
+      "position": 4,
+      "purpose": "Сохранить возможность продолжить.",
+      "content": "Вход, регистрация или восстановление по контексту; сохранить только разрешённый внутренний переход.",
+      "primaryAction": "Перейти к связанному действию",
+      "interactions": "Перейти к связанному действию. Поддержать клавиатуру; сохранить контекст при возврате и ошибке.",
+      "dependencies": "Identity: purpose-bound proof/session; Notifications: доставка; безопасное продолжение.",
+      "sources": [
+        "docs/architecture/public-page-structure.md",
+        "docs/product/mvp.md",
+        "docs/architecture/public-sitemap.md"
+      ],
+      "phase": "MVP",
+      "inclusion": "included",
+      "required": true,
+      "reviewed": true,
+      "desktop": "Ясная иерархия; связанные данные рядом; основной сценарий без декоративных отвлечений.",
+      "mobile": "Одна колонка в порядке чтения; перенос длинных названий; действия от 44px; без горизонтальной прокрутки.",
+      "states": "Исходное состояние; ввод/проверка; отправка без повторов; успех с безопасным продолжением; неверные учётные данные; блокировка; proof отсутствует, истёк или использован; ограничение повторов; сбой доставки. Применять только состояния текущего auth-сценария.",
+      "notes": "Структурное предложение, визуальная композиция не утверждена. Не добавлять новые продуктовые правила."
+    },
+    {
+      "id": "verify-email--legal-navigation",
+      "name": "Правовая информация и завершение страницы",
+      "position": 5,
+      "purpose": "Сохранить доступ к условиям и дальнейшим действиям.",
+      "content": "Ссылки на четыре правовых документа; утверждённый контакт, если предоставлен; только опубликованные направления.",
+      "primaryAction": "Открыть правовой документ",
+      "interactions": "Открыть правовой документ. Поддержать клавиатуру; сохранить контекст при возврате и ошибке.",
+      "dependencies": "Identity: purpose-bound proof/session; Notifications: доставка; безопасное продолжение.",
+      "sources": [
+        "docs/architecture/public-page-structure.md",
+        "docs/product/mvp.md",
+        "docs/architecture/public-sitemap.md"
+      ],
+      "phase": "MVP",
+      "inclusion": "included",
+      "required": true,
+      "reviewed": true,
+      "desktop": "Ясная иерархия; связанные данные рядом; основной сценарий без декоративных отвлечений.",
+      "mobile": "Одна колонка в порядке чтения; перенос длинных названий; действия от 44px; без горизонтальной прокрутки.",
+      "states": "Текущий маршрут; гость/разрешённая роль; меню открыто/закрыто при необходимости; видимый focus; неопубликованные направления отсутствуют. Без искусственной загрузки статических ссылок.",
+      "notes": "Структурное предложение, визуальная композиция не утверждена. Не добавлять новые продуктовые правила."
+    }
+  ]
+}
