@@ -27,7 +27,7 @@ Read alongside [page structure](./public-page-structure.md), [user flows](./publ
 | [Architecture](./overview.md), [modules](./modules.md), [ADR-0001](../decisions/0001-modular-monolith.md) | Thin routes, module ownership, server authorization and payment authority |
 | [Direction](../design/DIRECTION.md), [system](../design/SYSTEM.md), [screens](../design/SCREENS.md), [components](../design/COMPONENTS.md), [QA](../design/QA.md), [icons](../design/icons/USAGE.md) | Functional hierarchy, accessibility, Russian-first content, selective design signatures |
 | [Reference register](../design/references/INDEX.md) and actual reference images | Inspected existing approved/rejected directories; folder names alone do not establish approval scope |
-| Local LMS Vault at `/Users/ivanmakovetskyi/Ivan's Vault/Projects/LMS` | Full Project Plan, phase plans, Roadmap, Dashboard, Timeline, epic/task maps and acceptance records; especially LA02–LA14, PM01–PM16, INF15, ST02, ST10 and QA03–QA09 |
+| Local LMS Vault at `/Users/ivanmakovetskyi/Ivan's Vault/Projects/LMS` | Full Project Plan, phase plans, Roadmap, Dashboard, Timeline, epic/task maps and acceptance records; especially LA01–LA14, PM01–PM19, INF16, ST03, ST10 and QA03–QA10 |
 
 The repository documentation and accessible local Vault constitute the available LMS Academy Docs for this review. No separately identified external document or approved legal text was supplied. Vault dates are planning targets, not release promises. Business rules follow the original specification; release allocation follows the repository scope; visual mockups do not advance later features into MVP.
 
@@ -89,22 +89,22 @@ Shells: **Public** = discovery header/footer; **Transaction** = focused commerce
 | `/courses/[slug]` | Assess course, preview and add to cart | MVP; course records, LA07 | Public |
 | `/mini-courses` | Find recorded-only products and their details | MVP behavior; separate listing is IA recommendation | Public |
 | `/mini-courses/[slug]` | Assess mini-course and add to cart | MVP; LA07, completion requirements | Public |
-| `/packages` | Compare/select eligible package configurations | Phase 2; LA12, PM14 | Public |
+| `/packages` | Compare/select eligible package configurations | Phase 2; LA12, PM17 | Public |
 | `/packages/[slug]` | Review composition, fixed price, savings; add to cart | Phase 2 behavior; detail route recommended | Public |
 | `/start-in-usa` | Explain module; standalone or package purchase when approved | Proposed standalone purchase route; release TBD (PA-04), not assigned to MVP or Phase 2 | Public |
-| `/cart` | Review selections, remove items, continue to `/checkout` | MVP; LA08, PM05; upgrades/promos Phase 2 | Guest or signed-in cart owner / Transaction |
-| `/checkout` | Buyer details, legal consent, authoritative total, card payment | MVP; PM04–PM08 | Guest or signed-in buyer / Transaction |
+| `/cart` | Review selections, remove items, continue to `/checkout` | MVP; LA09, PM07; upgrades/promos Phase 2 | Guest or signed-in cart owner / Transaction |
+| `/checkout` | Buyer details, legal consent, authoritative total, card payment | MVP; PM06–PM10 | Guest or signed-in buyer / Transaction |
 | `/checkout/result` | Read verified payment/fulfillment status, enter `/account` | MVP required outcomes; single route recommended | Authorized buyer/checkout context / Transaction |
-| `/login` | Authenticate and resume allowed destination | MVP; PM01 | Public entry / Identity |
-| `/register` | Voluntary registration, then verification | MVP; PM01, PM03 | Public entry / Identity |
-| `/verify-email` | Verification, sent, expired and resend states | MVP; PM03 | Secure token/session as appropriate / Identity |
-| `/forgot-password` | Request recovery email | MVP; PM03 | Public entry / Identity |
-| `/reset-password` | Set password using valid recovery proof | MVP; PM03 | Valid token required for mutation / Identity |
+| `/login` | Authenticate and resume allowed destination | MVP; PM02 | Public entry / Identity |
+| `/register` | Voluntary registration, then verification | MVP; PM02, PM05 | Public entry / Identity |
+| `/verify-email` | Verification, sent, expired and resend states | MVP; PM05 | Secure token/session as appropriate / Identity |
+| `/forgot-password` | Request recovery email | MVP; PM05 | Public entry / Identity |
+| `/reset-password` | Set password using valid recovery proof | MVP; PM05 | Valid token required for mutation / Identity |
 | `/offer` | Read approved sale terms | MVP; legal requirements, LA10 | Legal |
 | `/privacy` | Read approved processing/privacy policy | MVP; legal requirements, LA10 | Legal |
 | `/refunds` | Read approved refund conditions/contact procedure | MVP; legal requirements, LA10 | Legal |
 | `/license-disclaimer` | Understand certificate does not license practice | MVP; legal requirements, LA10 | Legal |
-| `/certificates/verify/[verificationId]` | Verify issuance/status and approved public fields | Phase 3; INF15, certificate trust scope | No login; minimal approved disclosure / Verification |
+| `/certificates/verify/[verificationId]` | Verify issuance/status and approved public fields | Phase 3; INF16, certificate trust scope | No login; minimal approved disclosure / Verification |
 
 Transaction pages are public-facing entry surfaces, not publicly readable order records. A query parameter or order number alone must not authorize order disclosure. Payment-provider callbacks, logout actions, media endpoints and reset-token processing endpoints are not navigation pages; their contracts are deferred to implementation/provider decisions.
 

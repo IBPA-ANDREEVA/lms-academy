@@ -1,41 +1,33 @@
-# Component Design Rules
+# Component implementation contract
 
-For each implemented component record: purpose, anatomy, variants, states, sizes, responsive behavior, accessibility, screenshots, and rejection examples. Add concrete specs only after implementation/approval.
+Before making any reusable component:
+1. List all actual routes/sections that need the same behavior.
+2. Distinguish a reusable VISUAL primitive from a product-specific composition and from a domain feature. `src/components/ui` is not a dumping ground for everything rendered twice.
+3. Find a component spec and an exact visual reference. If missing, record `proposal` and request review before globalizing an aesthetic.
+4. Define props, semantic HTML, actions/destinations, variants, responsive stacking and state matrix. Derive actual data from domain records. Avoid invented placeholder states presented as live functionality.
+5. Test component at desktop and mobile with realistic Russian, long names, prices and error copy.
+6. Only then extract and reuse. Do not abstract across dissimilar layouts merely because both contain an image and text.
 
-## Buttons
-- Primary: plum fill, white Manrope semibold text, readable height, 8px proposed radius. Usually one dominant action per context.
-- Secondary: neutral surface or low-emphasis outline; destructive only for destructive actions.
-- Support hover, focus-visible, loading, disabled, pressed states; no giant pills, gradient fills, or glow effects.
+PRIMITIVES CANDIDATES (`src/components/ui` after inspection):
+- Button, IconButton, Link, TextField, Select, Checkbox, Dialog, Disclosure, Badge/Status, InlineMessage, Spinner/Skeleton, Surface/Container, Typography primitives, perhaps MediaFrame.
+- These are CANDIDATES, not an order to build all now. Use platform-native controls when sufficient.
 
-## Inputs and forms
-- Labels remain visible; validation includes text and not only color.
-- Natural Russian field lengths; preserve entered values on validation errors.
-- Consistent heights, neutral borders, clear focus ring.
+PUBLIC COMPOSITIONS CANDIDATES (appropriate shared presentation layer with feature owners):
+- PublicHeader, PublicFooter, CourseCard, MiniCourseCard variant, CourseFacts, CategoryFilter, ResultStatus, CartIndicator, PurchasePanel, PriceSummary, MediaPreview, Breadcrumbs.
+- CourseCard uses catalog domain data, so component can live in catalog feature with public display API; avoid commerce calculation inside it.
+- Header includes only published/phase-valid routes. Never copy Toni&Guy's Teachers/Store/Apply links into this project.
 
-## Course modules
-- Photography-led course cards with course title, language, level, tutor support, price/CTA when applicable.
-- Display only factual data from catalog; do not invent counts or reviews.
-- Course cards need not be identical editorial tiles but must remain easy to compare.
+VISUAL GUIDANCE:
+- Hero is a SECTION-level composition, not a generic `Hero` component with a thousand props. Its photo-left editorial design belongs in the homepage section spec.
+- Button visuals should be plain and strong; a plum primary CTA and a quieter secondary link. No huge pills or shadow-stacked neo-brutalist buttons without reference.
+- Course cards prioritize real course photo, level/language, title, trainer, format, actual price and valid add action. Preserve scannability over art-direction stunts.
+- Catalog filters, account forms, transaction surfaces, LMS lesson and trainer queue are functional; do not transplant the giant hero letters into them.
+- Follow `icons/USAGE.md`. Prefer icons only when useful, and label unclear icons.
 
-## Learning states
-- Progress bar with numeric or textual progress.
-- Assignment statuses: pending review, accepted, revision required, overdue (if applicable); use icons + text + semantic color.
-- Clear deadlines and curator support remaining period.
+STATE CONTRACT (when relevant): default, hover, focus-visible, active/selected, disabled with explanation, submitting/loading, success, empty, error/retry, stale offer, already owned, unavailable, validation, mobile overflow, long copy, keyboard, reduced motion. Do not render disabled buttons with no explanation.
 
-## Navigation and dense surfaces
-- Functional icon set at 20–24px, labels for non-obvious meanings.
-- Trainer/admin: flat tables or lists, readable density, sorting/filter controls; avoid cards inside cards.
+REFERENCE SCOPE:
+- A component may inherit global tokens, but only an approved component-level record may define distinctive global treatments (borders, offsets, image masks, hover reveals).
+- The current H-001 reference approves no course-card, navbar or form design. Do not infer their appearance from the hero mockup.
 
-## Approved functional icon library
-
-- The existing SVGs under `public/icons/` are the chosen **functional icon collection**. Do not generate replacements, mix in Lucide variants, or silently substitute generic icons.
-- Each base name has six filenames (unsuffixed plus `.1`–`.5`); those suffixes are alternate artworks **not automatically interchangeable states**. See [icon usage rules](./icons/USAGE.md).
-- Icons currently use a 24×24 viewBox, primarily 1.5px rounded strokes, and often hardcode indigo `#292556`. Recoloring to `currentColor`, charcoal or plum requires a separately approved migration; do not overwrite source assets.
-- Use semantic, named icon mappings rather than guessing filenames by array index or suffix.
-- Branded category illustrations (nails, lashes, lamination, brows, makeup, cosmetology) are **not approved or present as a separate documented collection**; design them later as a distinct visual asset task.
-- Keep accessible labels where an action is not obvious; purely decorative SVGs can have an empty alt.
-
-## Interactive preview
-- Use reusable LMS primitives with isolated sample state and explicit demo labels.
-- Must respond to interaction; no nonfunctional play buttons, fake uploads, or fake messages presented as real.
-- Demo data cannot mutate live enrollments, progress, or student records.
+VISUAL REVIEW: capture component examples with states and constraints before changing every route. See `components/INVENTORY.md` and `QA.md`.

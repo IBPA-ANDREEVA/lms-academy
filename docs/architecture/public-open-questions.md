@@ -70,14 +70,14 @@ These remain real implementation or release prerequisites, **not additional LA02
 
 ### PA-06 — Cart persistence and account reconciliation
 
-- **Evidence:** PM05 requires persistent multi-product cart; OQ-033 leaves lifetime/session/device behavior open.
+- **Evidence:** PM07 requires persistent multi-product cart; OQ-033 leaves lifetime/session/device behavior open.
 - **Options:** (A) merge eligible unique selections after login with visible review; (B) retain current guest cart and offer account cart choice; (C) use account cart and explicitly restore guest choices on request.
 - **Recommendation:** A only after defining duplicate/ownership semantics. Preserve selections through auth, reset, verification and legal reading; reprice server-side. Define lifetime, cross-device behavior, logout isolation and consent constraints. Never silently erase either selection or share one person's cart after account switching.
-- **Owner / timing:** Product + Commerce/Identity; before PM05 and end-to-end checkout acceptance.
+- **Owner / timing:** Product + Commerce/Identity; before PM07 and end-to-end checkout acceptance.
 
 ### PA-07 — Legal content, agreements and price interpretation
 
-- **Evidence:** four legal pages required; mandatory acceptance of offer, refund policy and professional-license disclaimer. USD 2,500 cap applies to a program/package including fees/materials, but taxes, currency and multi-item treatment need counsel. OQ-001/OQ-006–OQ-008/OQ-029–OQ-030/OQ-037/OQ-082–OQ-083 are unresolved. LA08 mentions cart consent while LA10/PM08 place required purchase consent in checkout.
+- **Evidence:** four legal pages required; mandatory acceptance of offer, refund policy and professional-license disclaimer. USD 2,500 cap applies to a program/package including fees/materials, but taxes, currency and multi-item treatment need counsel. OQ-001/OQ-006–OQ-008/OQ-029–OQ-030/OQ-037/OQ-082–OQ-083 are unresolved. LA09 mentions cart consent while LA10/PM10 place required purchase consent in checkout.
 - **Options:** distinct acknowledgements versus one clearly grouped mandatory acknowledgement; final agreement capture at checkout versus earlier cart capture revalidated at payment; current policy pages plus retained version snapshots versus publicly addressable historical versions.
 - **Recommendation:** final explicit consent at checkout against approved versions, with links also in cart/footer; distinct unchecked acknowledgements for clarity unless counsel approves grouping. Keep privacy accessible without inventing a fourth mandatory checkbox. Retain accepted versions and order/identity/time evidence. Counsel must provide text, grouping, version-change behavior, retention, refund procedure, jurisdictions and exact cap/tax/currency calculation.
 - **Owner / timing:** Legal + product + Commerce; blocking production payment. No provider, tax rate, refund period, exemption claim or legal eligibility rule is approved by LA02.
@@ -128,9 +128,9 @@ These remain real implementation or release prerequisites, **not additional LA02
 
 ### PA-14 — Review placeholders and recommendations
 
-- **Evidence:** LA07 says “reviews placeholder,” but LA14 and Phase 3 schedule actual reviews/recommendations. OQ-071–OQ-073 leave eligibility, moderation, scale, attribution and recommendation method open; Vault ST15 asks for enrolled learners and moderation.
+- **Evidence:** LA07 says “reviews placeholder,” but LA14 and Phase 3 schedule actual reviews/recommendations. OQ-071–OQ-073 leave eligibility, moderation, scale, attribution and recommendation method open; Vault ST18 asks for enrolled learners and moderation.
 - **Options:** hide the section until launch, show an empty placeholder, or show approved real content after the feature ships.
-- **Recommendation:** omit public MVP review widgets/ratings, retain only a future template seam. In Phase 3 use moderated real content with approved attribution; no invented testimonials or “0 reviews” trust filler before capability exists. Keep reviews within product detail; an extra review route is unnecessary. Reconcile ST15 refinements with the product register before collecting reviews.
+- **Recommendation:** omit public MVP review widgets/ratings, retain only a future template seam. In Phase 3 use moderated real content with approved attribution; no invented testimonials or “0 reviews” trust filler before capability exists. Keep reviews within product detail; an extra review route is unnecessary. Reconcile ST18 refinements with the product register before collecting reviews.
 - **Owner / timing:** Product/content + moderation owner; before Phase 3. Homepage real course selection is not an algorithmic recommendation feature.
 
 ### PA-15 — Public certificate verification and privacy

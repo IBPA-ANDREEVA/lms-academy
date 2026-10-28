@@ -8,52 +8,53 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 
 <!-- END:nextjs-agent-rules -->
 
-# LMS Agent Instructions
+# LMS agent rules
 
-## Project and approved scope
+This is a Russian-first beauty education LMS. It is not a generic SaaS dashboard or a cosmetics store. Work in English in repository documentation and engineering communication unless asked otherwise; design real UI copy in Russian first. English product localization follows `docs/product/mvp.md`.
 
-This repository is a Russian-first beauty education LMS built as a Next.js App Router, TypeScript, Tailwind CSS, pnpm **feature-based modular monolith**.
-Read [product requirements](docs/product/requirements.md), [delivery scope](docs/product/mvp.md), [open questions](docs/product/open-questions.md), and [architecture](docs/architecture/overview.md) when your task touches them.
-Roles: guest, student, **trainer-curator**, manager, administrator. Accounts may have multiple roles. Trainer/curator role separation is unresolved (OQ-011).
+AUTHORITATIVE SOURCES. Read only the ones relevant to the task:
+- `docs/product/requirements.md`: business behavior and roles.
+- `docs/product/mvp.md`: release inclusion and exclusions.
+- `docs/product/open-questions.md`: unresolved business choices. Never resolve these by guessing.
+- `docs/architecture/overview.md`, `modules.md`: application boundaries.
+- `docs/architecture/public-sitemap.md`, `public-page-structure.md`, `public-user-flows.md`, `public-open-questions.md`: public routes, page contents, transitions, unresolved URL/policy details.
+- `docs/design/README.md`: DESIGN ENTRY POINT. Follow its source precedence for visual work.
+- `docs/design/DECISIONS.md`: selected visual direction with exact approval scope.
+- `docs/design/DIRECTION.md`: art-direction behavior.
+- `docs/design/SYSTEM.md`: visual tokens and typography rules.
+- `docs/design/SCREENS.md`, `COMPONENTS.md`: screen and component specifications.
+- `docs/design/references/INDEX.md`: reference approval and sourcing.
+- `docs/design/QA.md`: required visual verification.
 
-Do not invent business policies, product features, actual courses, prices, statistics, testimonials, provider selections, accreditation or approvals. Unresolved questions remain unresolved until the product owner records a decision.
+PRODUCT SAFETY:
+- Roles: guest, student, trainer-curator, manager, administrator; accounts may have multiple roles. Separation of trainer from curator is unresolved.
+- No fictional prices, launches, reviews, trainer credentials, performance claims, accreditation, licenses, payment providers, course inventory, legal copy or unapproved routes.
+- Do not promote Phase 2/3 features into MVP because a sketch includes them.
+- Keep payment, access, refund, certificate, student work, identity and media flows secure, authorized server-side, auditable and replay-safe.
 
-## Architecture and security
+ARCHITECTURE:
+- `src/app`: routes and entry points only.
+- `src/features/<module>`: feature-owned domain logic and UI; import other modules only via public interfaces.
+- `src/components/ui`: truly generic reusable primitives. Shared product-specific components belong in a clearly documented shared feature/composition layer; do not put commerce rules in `ui`.
+- `src/db`: database plumbing; `src/lib`: small technical utilities.
+- Modular monolith, Next.js App Router, TypeScript, Tailwind 4, pnpm. Keep dependencies justified; do not introduce architectural changes for design alone.
 
-- `src/app`: thin routing, layouts, Server Actions and Route Handlers.
-- `src/features`: domain-owned application logic; cross-feature imports use public interfaces only.
-- `src/components/ui`: reusable visual primitives; feature-specific components remain within their feature.
-- `src/db`: shared database infrastructure, not cross-domain repositories.
-- `src/lib`: small technical utilities, not a global domain layer.
-- Keep React components focused; divide large components by responsibility, not arbitrary line counts.
-- Authenticate and authorize on the server for each protected resource. Validate untrusted inputs; never trust client-supplied roles, prices, completion or ownership.
-- Treat payment, enrollment, support expiration, certificates, media and refund workflows as critical, auditable and replay-safe.
-- Do not introduce infrastructure, dependencies or broad abstractions without a justified requirement and decision.
+DESIGN IMPLEMENTATION PROTOCOL (MANDATORY FOR UI TASKS):
+1. Identify target route, user goal, release phase, states and product data. Verify against sitemap and requirements.
+2. Open `docs/design/README.md`, `DECISIONS.md`, `DIRECTION.md`, `SYSTEM.md`, the relevant screen/section/component spec, and the EXACT reference image(s). Do not design from prose alone when an image exists.
+3. Read each reference's `Borrow`, `Reject`, `Scope`, `Status` and viewport notes. A reference for a hero is NOT a reference for the catalog, checkout or dashboard. A generated raster is NOT a pixel-accurate font, real content or shippable photograph.
+4. If screen/section/component reference is missing or is `exploratory`, propose a bounded solution. Do not present an invented aesthetic as approved. Ask for human review of materially new visual direction.
+5. Use Unbounded for short display typography, Manrope for functional text; do NOT use Angry, Geist or Arial as chosen brand typography. Current starter has only `Angry.otf`; first verify legal Unbounded font sourcing/installation before claiming exact typography.
+6. Prefer editorial restraint: dramatic type + one strong photographic image + whitespace, with purpose-built overlap. Never add random geometric blobs, repetitive oversized section numbers, gradients, default card grids, fake sliders or decorative controls.
+7. Implement desktop and mobile, Russian first, accessible controls and all applicable loading, empty, error, disabled, success, focus and reduced-motion states. Preserve product facts and legal content.
+8. Render screenshots at 1440×900 and 390×844 at minimum; compare against approved composition and record differences. Check a second mobile width and tablet/content breakpoint when appropriate.
+9. Report file changes, decisions followed, any unapproved deviations, verified actions and test commands. Do not claim visual approval based on build success.
 
-## Required frontend workflow
+ICON RULE: `public/icons/{line,filled,duoline,duotone,mono,broken}/...svg` contains six style folders, not numbered `.1` variants. Use inspected explicit paths and `docs/design/icons/USAGE.md`. The existing indigo fill is NOT a new brand color.
 
-For UI implementation or redesign:
-1. Read `docs/design/DIRECTION.md` and `docs/design/SYSTEM.md`.
-2. Read `docs/design/COMPONENTS.md` and the relevant sections of `docs/design/SCREENS.md`. Observe phase tags: **MVP**, **later**, or **proposed**.
-3. Inspect `docs/design/references/INDEX.md` and any **actual** approved or rejected assets present; never assume a sample filename exists or is approved.
-4. Follow `docs/design/icons/USAGE.md` and reuse approved files under `public/icons/` before seeking any icon library or generating artwork.
-5. For substantial styling/design tasks, attempt to load the installed `uncodixfy` skill (explicit `$uncodixfy` when supported). If it is missing, say so and continue with the repository's rules. **The approved design documents override generic skill aesthetics.**
-6. Use Russian as the reference locale and test English when relevant. Headlines: Unbounded; functional UI: Manrope; approved single-accent palette.
-7. Apply the three design signatures **selectively**; they are not required on every screen. Keep student, trainer-curator and administration workspaces primarily functional.
-8. Build real accessible interaction states. Demo experiences must use isolated sample data and cannot alter actual learning records.
-9. Inspect browser screenshots where tooling is available; check desktop/mobile, Cyrillic wrapping, contrast, keyboard focus, and `docs/design/QA.md`. Report limitations rather than claiming unverified success.
-
-## General development workflow
-
-- Inspect existing code, requirements, decision register and current diff before editing.
-- Make focused changes. Preserve unrelated work and avoid speculative refactoring.
-- For complex tasks, state the approach; update the relevant source-of-truth docs when behavior or approved design choices change.
-- Run relevant validation when supported: `pnpm lint`, `pnpm exec tsc --noEmit`, `pnpm build`, plus appropriate tests.
-- Report exactly what was run and which checks could not be performed.
-- Do not remove the auto-generated Next.js agent block above. Consult installed `node_modules/next/dist/docs/` before using new Next.js APIs.
-
-## Git safety
-
-- Do not overwrite unrelated changes or commit secrets.
-- Commit only when explicitly requested or permitted by the task workflow. Keep commits focused and reviewable.
-- Do not merge, deploy, or force-push without explicit authorization.
+GENERAL WORKFLOW:
+- Inspect code and diff first. Make focused changes; preserve unrelated work.
+- Read installed `node_modules/next/dist/docs/` for affected Next.js APIs per the auto-generated block.
+- Run appropriate `pnpm lint`, `pnpm exec tsc --noEmit`, `pnpm build`, and feature tests where possible; disclose skipped checks.
+- Do not delete source documentation, artwork, student data or unrelated files on your own.
+- Do not commit, merge, deploy or force-push without explicit authorization.

@@ -1,49 +1,13 @@
-# Existing SVG Icon Library: Usage and Approval
+# Icon usage — verified repository structure
 
-## Source of truth
+Verified 2026-10-27 from GitHub tree: `public/icons/` has six STYLE DIRECTORIES: `broken`, `duoline`, `duotone`, `filled`, `line`, `mono`, each containing 130 SVGs (780 total). Earlier guidance describing `name.svg`, `name.1.svg` ... `name.5.svg` is OBSOLETE. Example path shape: `/icons/line/arrow-right-long.svg`. Verify exact spelling in repository; do not construct an uninspected path.
 
-- The user-supplied assets in `public/icons/` are the chosen **functional** icon library.
-- Preserve the original SVGs until an explicit variant-selection and color review is complete.
-- Do not replace them with generated lookalikes, Lucide/Heroicons, emoji or speculative icon paths.
-- This does **not** mean every beauty-category illustration is already available: branded large category artwork remains a separate approval task.
+These SVGs are the current functional icon inventory. Do not install Lucide/Heroicons or draw inconsistent substitutes by default. Category illustrations are not automatically part of this library.
 
-## Current repository inventory
+DEFAULT: inspect and select `line` style for ordinary controls. Use `filled` for emphasis only if behavior needs it. `duotone`, `duoline`, `mono` and `broken` are opt-in per approved component reference. Do not randomly mix icon styles in one control group.
 
-- 130 icon base names.
-- Six SVG files per base name: `name.svg`, `name.1.svg` … `name.5.svg` (780 total).
-- Some variants are byte-identical; others are different fill/outline treatments. **Numbered suffixes have no approved universal meaning.**
-- Representative icons use `viewBox="0 0 24 24"`, 1.5px rounded strokes and hardcoded `#292556` (indigo).
-- No permission to bulk delete, recolor, normalize viewBox or assume `.1` means filled or active.
+Build an explicit semantic mapping in code or docs using real paths. Icon variants and exact source need inspection at actual size; path folder alone is not semantic active state. Pair unfamiliar icons with visible text. Decorative imagery should be hidden from assistive tech; actionable buttons need accessible names.
 
-## Application usage policy
+Some SVGs contain indigo `#292556`; this is NOT a project palette approval. Preserve source files. Before using a variant on dark or plum backgrounds, verify contrast and an approved currentColor/recolor pipeline; do not destructively batch replace colors.
 
-1. Select a **specific** asset visually for a component and record its file name in the component's documented semantic mapping.
-2. Prefer an explicit map such as `{ dashboard: '/icons/home.svg', search: '/icons/search.svg' }` over dynamically constructing filenames and numbered suffixes.
-3. Check icon size and contrast at the rendered size. Expose text labels for ambiguous actions; use decorative alt only with accompanying visible text.
-4. Never infer state from a suffix; define a separate explicit `default` or `active` selection only after checking both actual SVGs.
-5. Because `#292556` is **not** in the agreed palette, do not assume it is approved as a UI color. Confirm the intent before any systematic recoloring. If approved, preserve originals and create documented `currentColor` variants or an explicit styling pipeline.
-6. Do not mix icon sets unless a documented exception is approved.
-
-## Icon Style Usage
-
-### Default
-Use Outline icons for standard functional UI.
-
-### Selected / Active
-Use Solid icons selectively when the design requires
-stronger emphasis.
-
-### Duotone
-Use for selected visual highlights and branded areas.
-
-### Mixed / Broken
-Use only when explicitly supported by an approved
-visual reference.
-
-### Rules
-- Prefer Outline as the functional default.
-- Do not randomly mix variants in one navigation group.
-- Do not automatically use Solid for every active state.
-- Never select icon styles randomly.
-- Reuse approved icons instead of generating replacements.
-- Icon color must follow approved design decisions.
+Hero H-001 does not need icons beyond a useful arrow on CTA. The reference's numbering/vertical marks are NOT required icon components. No icon should be added just to decorate empty space.

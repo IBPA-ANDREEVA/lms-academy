@@ -34,7 +34,7 @@ This differs from the Vault labels, which call all work after December 7 `Пос
 
 The MVP proves the complete paid-learning loop in production: a user can find a course, create an account, pay, receive access, watch lessons, submit homework, receive trainer feedback, complete the course, and obtain a PDF certificate.
 
-The MVP planning target in the Vault is **December 7, 2026**. The plan estimates 49 tasks and 227.5 hours, based on assumptions documented in the Vault rather than guaranteed delivery capacity or a delivery commitment.
+The MVP planning target in the Vault is **December 7, 2026**. The current Vault plan estimates 60 MVP tasks and approximately 296.5 hours, based on assumptions documented in the Vault rather than guaranteed delivery capacity or a delivery commitment.
 
 ### Public site and catalog
 
