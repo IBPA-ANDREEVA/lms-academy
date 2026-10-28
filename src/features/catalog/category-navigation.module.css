@@ -1,0 +1,29 @@
+.navigation ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 20px;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+.navigation li {
+  min-width: 0;
+}
+.navigation a {
+  display: flex;
+  align-items: center;
+  min-height: 44px;
+  padding-block: 8px;
+  border-bottom: 2px solid transparent;
+  text-decoration: none;
+  overflow-wrap: anywhere;
+}
+.navigation a:hover {
+  color: var(--brand);
+  border-color: var(--plum-border);
+}
+.navigation a[aria-current] {
+  color: var(--brand);
+  border-color: var(--brand);
+  font-weight: 700;
+}

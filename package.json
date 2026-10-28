@@ -4,14 +4,10 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "dev:sections": "node scripts/dev-sections.mjs",
-    "test:sections": "node --test tests/section-planning.test.mjs",
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "dev:components": "node scripts/dev-components.mjs",
-    "test:components": "node --test tests/component-registry.test.mjs",
-    "docs:components": "node scripts/sync-component-docs.mjs"
+    "test:frontend": "node tests/frontend.browser.mjs"
   },
   "dependencies": {
     "next": "16.4.3",

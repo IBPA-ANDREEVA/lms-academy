@@ -8,7 +8,7 @@ Vocabulary:
 - `approved-implementation`: requires reviewed desktop/mobile browser screenshots. NONE EXISTS YET.
 
 D-001 `selected` — Bold reinterpretation of the original five-page Academy PDF. Preserve business rules, roles, features and useful flows. Layout and art may change completely. Original PDF remains functional evidence.
-D-002 `selected` — Display: Unbounded. Functional/body: Manrope. Angry is superseded as brand typography. No Unbounded asset has been found in the repository; source/licensing and true font rendering still require verification.
+D-002 `selected` — Display: Unbounded. Functional/body: Manrope. Angry is superseded as brand typography. At decision time Unbounded was missing. Update 2026-10-28: local OFL asset installed; typography must still be verified in each composition.
 D-003 `selected` — Typography/graphics-led visual hierarchy. Photography remains vital but does not dictate the entire composition.
 D-004 `selected` — Experimental/brutalist composition rather than generic SaaS or soft luxury styling.
 D-005 `selected` — Geometry: selective cut-edge architecture plus restrained neo-brutalist outline language. The later chosen minimal hero DOES NOT justify adding cut corners, heavy borders and offset shadows everywhere.
@@ -30,3 +30,11 @@ NOT SELECTED / NOT IMPLIED:
 - No component design, mobile screenshot, navbar variant, course card variant, interactive animation or complete page layout is implementation-approved.
 
 Decision updates: preserve ID and history; add date, explicit owner statement, scope, affected files and screenshot references. Do not silently change `selected` to `approved-implementation`.
+
+2026-10-28 workflow update — Owner requested retirement of the planning routes and reference gallery after shared-component implementation/audit. Frontend source-of-truth inventory now lives in `docs/architecture/frontend-*.md`. Preserve product and historical visual decisions; no archive/gallery infrastructure is retained.
+
+D-014 `selected-direction` — PublicHeader follows the image supplied in this chat on 2026-10-28: rounded white container, aligned wordmark/navigation, desktop dropdown, sticky behavior, tablet overflow and mobile menu panel. Scope is header only. Real route publication and release rules override illustrative menu items. Exact implemented screenshots remain unapproved.
+
+D-015 `definition-preserved` — The edited PageContainer, Button and PublicFooter definitions were migrated into `frontend-components.md` before retiring generated planning records. Container inner widths and gutters, three button families, footer default/compact and dark minimal composition are retained. Exploratory button/footer images are not proof of implementation approval.
+
+D-016 `workflow-selected` — 2026-10-28: owner explicitly requested a new route with a preview for each component. `/preview/components` is authorized as a lightweight live review surface reusing shared code, superseding the blanket preview-route prohibition. The old planning editors, reference gallery, upload/persistence and approval infrastructure remain retired. Preview framing is a functional proposal, not human visual approval.

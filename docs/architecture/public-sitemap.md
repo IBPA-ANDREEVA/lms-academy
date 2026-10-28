@@ -26,12 +26,14 @@ Read alongside [page structure](./public-page-structure.md), [user flows](./publ
 | Original five-page PDF in `docs/references/Онлайн_академия_дизайн_платформы.pdf` | Pages 1–2: navigation, category filters, cards, packages, mini-courses, Start in USA and footer; pages 3–5: protected workspace handoffs |
 | [Architecture](./overview.md), [modules](./modules.md), [ADR-0001](../decisions/0001-modular-monolith.md) | Thin routes, module ownership, server authorization and payment authority |
 | [Direction](../design/DIRECTION.md), [system](../design/SYSTEM.md), [screens](../design/SCREENS.md), [components](../design/COMPONENTS.md), [QA](../design/QA.md), [icons](../design/icons/USAGE.md) | Functional hierarchy, accessibility, Russian-first content, selective design signatures |
-| [Reference register](../design/references/INDEX.md) and actual reference images | Inspected existing approved/rejected directories; folder names alone do not establish approval scope |
+| Historical visual references | Retired 2026-10-28 at owner request; selected decisions remain in design docs. New implementations follow user-supplied references. |
 | Local LMS Vault at `/Users/ivanmakovetskyi/Ivan's Vault/Projects/LMS` | Full Project Plan, phase plans, Roadmap, Dashboard, Timeline, epic/task maps and acceptance records; especially LA01–LA14, PM01–PM19, INF16, ST03, ST10 and QA03–QA10 |
 
 The repository documentation and accessible local Vault constitute the available LMS Academy Docs for this review. No separately identified external document or approved legal text was supplied. Vault dates are planning targets, not release promises. Business rules follow the original specification; release allocation follows the repository scope; visual mockups do not advance later features into MVP.
 
 **Labels:** **Requirement** means documented behavior; **Recommendation** means the proposed IA/interaction arrangement; **Open** means approval or missing information blocks a final choice. All URL spellings, query keys, anchors, section ordering, and shell assignments below are recommendations, including those serving required MVP functionality.
+
+Current implementation status is maintained in [frontend pages](frontend-pages.md). The observations below are historical, not the current code inventory.
 
 ## Original draft inspection baseline
 

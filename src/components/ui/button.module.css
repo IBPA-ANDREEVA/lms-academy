@@ -1,0 +1,167 @@
+.button {
+  --button-fill: var(--brand);
+  --button-ink: var(--on-brand);
+  --button-hover: var(--brand-hover);
+  --button-active: var(--brand-pressed);
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 48px;
+  padding: 10px 24px;
+  border: 1px solid transparent;
+  background: var(--button-fill);
+  color: var(--button-ink);
+  font: inherit;
+  font-weight: 700;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+  transition:
+    background-color 150ms,
+    box-shadow 150ms,
+    transform 150ms;
+}
+.label {
+  position: relative;
+  z-index: 1;
+  overflow-wrap: anywhere;
+}
+.button:hover:not(:disabled) {
+  background-color: var(--button-hover);
+}
+.button:active:not(:disabled) {
+  background-color: var(--button-active);
+}
+.button:focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: 4px;
+}
+.secondary {
+  --button-fill: var(--surface);
+  --button-ink: var(--brand);
+  --button-hover: var(--soft);
+  --button-active: var(--plum-border);
+  border-color: var(--brand);
+}
+.destructive {
+  --button-fill: var(--error);
+  --button-hover: color-mix(in srgb, var(--error) 85%, var(--text));
+  --button-active: var(--text);
+}
+.inverse {
+  --button-fill: var(--surface);
+  --button-ink: var(--brand);
+  --button-hover: var(--soft);
+  --button-active: var(--plum-border);
+}
+.inverse.destructive {
+  --button-ink: var(--error);
+}
+.sm {
+  min-height: 44px;
+  padding: 8px 16px;
+  font-size: 14px;
+}
+.lg {
+  min-height: 56px;
+  padding: 14px 28px;
+}
+.fullWidth {
+  width: 100%;
+}
+.minimal {
+  border-radius: var(--control-radius);
+  overflow: hidden;
+}
+.minimal::before {
+  content: "";
+  position: absolute;
+  inset: -80% -20% auto;
+  height: 130%;
+  background: var(--surface);
+  border-radius: 50%;
+  opacity: 0;
+  transform: translateX(-40%);
+  transition:
+    transform 200ms,
+    opacity 200ms;
+  pointer-events: none;
+}
+.minimal:hover:not(:disabled)::before {
+  opacity: 0.08;
+  transform: translateX(25%);
+}
+.neoBrutalist {
+  border: 2px solid var(--text);
+  box-shadow: 4px 4px 0 var(--text);
+}
+.neoBrutalist.inverse {
+  border-color: var(--surface);
+}
+.neoBrutalist:hover:not(:disabled) {
+  box-shadow: 5px 6px 0 var(--text);
+  transform: translateY(-2px);
+}
+.neoBrutalist:active:not(:disabled) {
+  box-shadow: 1px 1px 0 var(--text);
+  transform: translate(2px, 2px);
+}
+.cut {
+  background: var(--button-ink);
+  isolation: isolate;
+  border: 0;
+  border-radius: 0;
+  clip-path: polygon(0 0, calc(100% - 14px) 0, 100% 14px, 100% 100%, 0 100%);
+  --button-ink: var(--brand);
+}
+.cut::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  inset: 1px;
+  background: var(--surface);
+  clip-path: polygon(0 0, calc(100% - 14px) 0, 100% 14px, 100% 100%, 0 100%);
+}
+.cut:hover:not(:disabled)::before {
+  background: var(--soft);
+}
+.cut:active:not(:disabled)::before {
+  background: var(--plum-border);
+}
+.cut:focus-visible {
+  outline: none;
+  box-shadow: inset 0 0 0 4px var(--focus);
+}
+.cut:focus-visible::before {
+  inset: 4px;
+}
+.cut.destructive {
+  --button-ink: var(--error);
+}
+.button:disabled {
+  cursor: not-allowed;
+  background: var(--border);
+  color: var(--muted);
+  border-color: var(--disabled);
+  box-shadow: none;
+  transform: none;
+}
+.cut:disabled::before {
+  background: var(--border);
+}
+.pending {
+  position: absolute;
+  right: 8px;
+}
+@media (prefers-reduced-motion: reduce) {
+  .button,
+  .minimal::before {
+    transition: none;
+  }
+  .neoBrutalist:hover:not(:disabled),
+  .neoBrutalist:active:not(:disabled) {
+    transform: none;
+  }
+}

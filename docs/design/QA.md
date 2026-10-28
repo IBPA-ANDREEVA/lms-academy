@@ -3,7 +3,7 @@
 BEFORE:
 - Identify exact route, feature phase, product source and approved reference scope.
 - Open the real reference IMAGE, not only the filename/description.
-- Verify font availability and actual RU glyphs. Current starter is Geist/Arial, not selected styling.
+- Verify font availability and actual RU glyphs. Both selected fonts are local assets; check their actual rendering, not only CSS declarations.
 - Check that the image has permission for public use. Reference photography may be inspiration only.
 
 SCREENSHOT MATRIX (minimum):

@@ -35,4 +35,4 @@ EVERY ROUTE/SECTION MUST DOCUMENT:
 - Loading/empty/error/success/disabled/not-found states.
 - Unknown business policies and dependencies.
 
-Current approved section visual direction: `references/pages/home/HOME-HERO-001.md` ONLY. The remaining routes are scoped by product/architecture, not visually approved. Do not assume the entire website should match the screenshot's photo-left split.
+Current implementation and reference scope: see `../architecture/frontend-components.md`. The historical home-hero direction is selected, not an approved browser implementation. Use the reference supplied for each requested target.
