@@ -5,7 +5,7 @@ import styles from "./course-card.module.css";
 
 export type CourseCardProps = {
   course: {
-    href: string;
+    href?: string;
     title: string;
     kind: "course" | "mini-course";
     image?: { src: ImageProps["src"]; alt: string };
@@ -61,7 +61,7 @@ export function CourseCard({
             .join(" · ")}
         </p>
         <Heading className={styles.title}>
-          <Link href={course.href}>{course.title}</Link>
+          {course.href ? <Link href={course.href}>{course.title}</Link> : course.title}
         </Heading>
         {course.trainer && <p>{course.trainer}</p>}
         {(course.duration || course.format) && (

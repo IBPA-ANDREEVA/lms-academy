@@ -1,0 +1,19 @@
+.carousel { min-width: 0; }
+.controls { display: flex; justify-content: flex-end; align-items: center; gap: 10px; margin-bottom: 18px; }
+.controls button { min-width: 44px; padding-inline: 12px; border-radius: 0; }
+.counter { margin-right: auto; color: var(--brand); font-size: 12px; font-weight: 700; }
+.track { display: flex; align-items: stretch; gap: 20px; overflow-x: auto; scroll-snap-type: x mandatory; overscroll-behavior-x: contain; padding: 2px 2px 14px; scrollbar-width: thin; scrollbar-color: var(--plum-border) transparent; }
+.item { flex: 0 0 calc((100% - 40px) / 3); min-width: 0; scroll-snap-align: center; }
+.item > :first-child { height: 100%; }
+.pagination { display: flex; justify-content: center; margin-top: 6px; }
+.pagination button { display: grid; place-items: center; width: 44px; height: 44px; padding: 0; border: 0; background: transparent; cursor: pointer; }
+.pagination span { width: 8px; height: 8px; border: 1px solid var(--brand); border-radius: 50%; }
+.pagination [aria-current] span { background: var(--brand); }
+.pagination button:focus-visible { outline: 3px solid var(--focus); outline-offset: -4px; }
+.item[data-active="true"] > :first-child { border-color: var(--plum-border); }
+@media (max-width: 1000px) { .item { flex-basis: calc((100% - 20px) / 2); } }
+@media (max-width: 650px) {
+  .controls { display: none; }
+  .track { gap: 16px; margin-inline: calc(-1 * var(--offers-gutter, 20px)); padding-inline: calc((100% + 2 * var(--offers-gutter, 20px) - min(80vw, 380px)) / 2); }
+  .item { flex-basis: min(80vw, 380px); }
+}

@@ -1,0 +1,23 @@
+.dialog { width: min(680px, calc(100vw - 32px)); max-height: calc(100dvh - 32px); margin: auto; padding: 28px; border: 2px solid var(--text); background: var(--surface); color: var(--text); overflow-y: auto; overscroll-behavior: contain; }
+.dialog::backdrop { background: rgb(29 27 31 / 65%); }
+.header { display: flex; justify-content: space-between; align-items: center; gap: 16px; }
+.header h2 { margin: 0; font-size: 26px; line-height: 1.2; }
+.header button { min-width: 44px; font-size: 24px; }
+.note { margin: 20px 0; padding: 14px; background: var(--soft); color: var(--muted); font-size: 13px; line-height: 1.5; }
+.sizes { display: flex; flex-wrap: wrap; gap: 12px; margin: 0 0 18px; padding: 0; border: 0; }
+.sizes legend, .choices legend { margin-bottom: 12px; font-weight: 700; }
+.sizes label { display: flex; align-items: center; gap: 8px; min-height: 44px; cursor: pointer; font-size: 14px; }
+.sizes input { accent-color: var(--brand); width: 18px; height: 18px; }
+.count { color: var(--brand); font-weight: 700; font-size: 14px; }
+.choices { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; margin: 0; padding: 0; border: 0; }
+.choices > div { padding: 12px; border: 1px solid var(--border); }
+.choices strong, .choices small { display: block; }
+.choices strong { font-size: 13px; }
+.choices small { margin-top: 5px; color: var(--muted); font-size: 11px; line-height: 1.4; }
+.module { margin: 20px 0; padding-top: 16px; border-top: 1px solid var(--border); color: var(--brand); font-size: 14px; }
+.summary h3 { margin: 24px 0 12px; }
+.summary ul { padding: 0; list-style: none; }
+.summary li { padding: 12px 0; border-bottom: 1px solid var(--border); }
+.summary small { display: block; color: var(--muted); font-size: 12px; margin-top: 4px; }
+.summary p { font-size: 14px; line-height: 1.6; color: var(--muted); }
+@media (max-width: 500px) { .dialog { padding: 18px; } .header h2 { font-size: 22px; } .choices { grid-template-columns: 1fr; } }

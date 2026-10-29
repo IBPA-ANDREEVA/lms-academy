@@ -1,0 +1,56 @@
+.section { position: relative; isolation: isolate; overflow: hidden; padding-block: var(--offers-space, 72px); background: var(--background); }
+.content { position: relative; }
+.kicker { display: flex; align-items: center; gap: 18px; margin: 0; font-size: 12px; font-weight: 800; letter-spacing: .07em; }
+.kicker::after { content: ""; width: 68px; border-top: 1px solid var(--muted); }
+.heading { margin: 0; max-width: 660px; font-family: var(--font-unbounded), sans-serif; font-size: clamp(28px, 3.1vw, 44px); font-weight: 900; line-height: 1.06; letter-spacing: -.07em; }
+.heading span { display: block; }
+.heading span:not(:first-child) { color: var(--brand); }
+.description { max-width: 430px; margin: 0; font-size: 16px; line-height: 1.6; color: var(--muted); }
+.release { margin: 0; color: var(--brand); font-size: 10px; line-height: 1.5; font-weight: 800; letter-spacing: .06em; }
+.explorer nav { margin: 0 0 20px; }
+.explorer nav ul { gap: 8px; }
+.explorer nav button { padding: 10px 18px; border: 1px solid var(--plum-border); font-size: 12px; min-height: 44px; }
+.explorer nav button[aria-pressed="true"] { background: var(--brand); color: white; border-color: var(--brand); }
+.card { display: flex; flex-direction: column; padding: 10px; border: 1px solid var(--border); background: var(--surface); }
+.cardContent { display: flex; flex-direction: column; flex: 1; padding: 18px 12px 12px; }
+.tag { align-self: flex-start; margin: 0 0 14px; padding: 5px 8px; color: var(--brand); background: var(--soft); font-size: 10px; font-weight: 800; }
+.card h3 { margin: 0; font-size: 24px; font-weight: 800; line-height: 1.15; }
+.card ul { margin: 18px 0 24px; padding: 0; list-style: none; font-size: 13px; line-height: 1.6; color: var(--muted); }
+.card li + li { margin-top: 6px; }
+.cardFooter { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: auto; padding-top: 16px; color: var(--brand); font-size: 13px; font-weight: 700; }
+.cardFooter button { min-width: 44px; padding-inline: 10px; }
+.builderCallout { display: flex; align-items: center; gap: 22px; margin: 18px 4px 5px 0; padding: 18px; border: 1px solid var(--border); background: var(--surface); box-shadow: 5px 5px 0 var(--brand); }
+.plus { display: grid; place-items: center; flex: 0 0 64px; width: 64px; height: 64px; background: var(--soft); color: var(--brand); font-size: 36px; }
+.builderCallout p { margin: 0 0 5px; font-size: 10px; font-weight: 800; letter-spacing: .08em; color: var(--brand); }
+.builderCallout h3 { margin: 0 0 4px; font-size: 19px; line-height: 1.3; }
+.builderCallout div > span { color: var(--muted); font-size: 12px; }
+.builderCallout button { flex-shrink: 0; margin-left: auto; font-size: 12px; }
+@media (max-width: 1000px) { .builderCallout { flex-wrap: wrap; } .builderCallout button { margin-left: 86px; } }
+@media (max-width: 650px) {
+      .heading { font-size: clamp(24px, 8.2vw, 42px); }
+  .heading span:nth-child(2), .heading span:last-child { display: inline; }
+  .heading span:nth-child(2) { margin-right: .22em; }
+  .description { font-size: 14px; }
+  .explorer nav ul { flex-wrap: nowrap; overflow-x: auto; overscroll-behavior-x: contain; padding-bottom: 6px; scrollbar-width: thin; }
+  .explorer nav li { flex-shrink: 0; }
+  .explorer nav button { padding-inline: 14px; font-size: 11px; }
+  .card h3 { font-size: 22px; }
+  .builderCallout { display: grid; grid-template-columns: 44px 1fr; padding: 18px; gap: 14px; }
+  .plus { width: 44px; height: 52px; }
+  .builderCallout h3 { font-size: 17px; }
+  .builderCallout button { grid-column: 1 / -1; width: 100%; margin-left: 0; }
+}
+
+.intro { display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(240px, .75fr); gap: 14px 48px; align-items: end; margin-bottom: 28px; }
+.intro .kicker { grid-column: 1 / -1; }
+.intro .heading { max-width: none; }
+.intro .description { max-width: 430px; font-size: 15px; }
+.intro .release { grid-column: 1 / -1; }
+@media (max-width: 750px) {
+  .intro { grid-template-columns: 1fr; gap: 14px; margin-bottom: 24px; }
+  .intro .heading { font-size: clamp(23px, 6vw, 35px); }
+  .intro .heading span { display: block; margin: 0; }
+  .intro .description { font-size: 14px; }
+}
+
+.card > div:first-child { min-height: 140px; }

@@ -9,7 +9,7 @@
 .navigation li {
   min-width: 0;
 }
-.navigation a {
+.navigation a, .navigation button {
   display: flex;
   align-items: center;
   min-height: 44px;
@@ -18,12 +18,14 @@
   text-decoration: none;
   overflow-wrap: anywhere;
 }
-.navigation a:hover {
+.navigation button { padding-inline: 0; background: none; color: inherit; font: inherit; cursor: pointer; }
+.navigation a:hover, .navigation button:hover {
   color: var(--brand);
   border-color: var(--plum-border);
 }
-.navigation a[aria-current] {
+.navigation a[aria-current], .navigation button[aria-pressed="true"] {
   color: var(--brand);
   border-color: var(--brand);
   font-weight: 700;
 }
+.navigation button:focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; }
