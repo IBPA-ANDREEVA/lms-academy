@@ -1,0 +1,309 @@
+.hero {
+  /* The photo edge, triangle, hairline and CTA share these junctions. */
+  --top-edge-x: 70%;
+  --junction-x: 58%;
+  --junction-y: 61%;
+  --base-edge-x: var(--flow-hero-end, 79%);
+  --plum-base-x: 31%;
+  --cta-x: calc(var(--junction-x) + 15%);
+  --cta-y: calc(var(--junction-y) + 9%);
+  --cta-height: 72px;
+  position: relative;
+  isolation: isolate;
+  min-height: max(640px, 100svh);
+  overflow: hidden;
+  --photo-backdrop: #697478;
+  background: var(--photo-backdrop);
+}
+
+.photograph {
+  position: absolute;
+  inset: 0 35% 0 0;
+}
+
+.image {
+  object-fit: cover;
+  object-position: 50% 35%;
+}
+
+.lightField,
+.plumTriangle,
+.boundaryLine {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.lightField {
+  z-index: 1;
+  background: var(--background);
+  clip-path: polygon(
+    var(--top-edge-x) 0,
+    100% 0,
+    100% 100%,
+    var(--base-edge-x) 100%,
+    var(--junction-x) var(--junction-y)
+  );
+}
+
+.plumTriangle {
+  z-index: 2;
+  background: rgb(120 40 88 / 68%);
+  clip-path: polygon(
+    var(--junction-x) var(--junction-y),
+    var(--base-edge-x) 100%,
+    var(--plum-base-x) 100%
+  );
+}
+
+.boundaryLine {
+  z-index: 3;
+  background: var(--brand);
+  clip-path: polygon(
+    var(--top-edge-x) 0,
+    calc(var(--top-edge-x) + 2px) 0,
+    calc(var(--junction-x) + 2px) var(--junction-y),
+    var(--junction-x) var(--junction-y)
+  );
+}
+
+.content {
+  position: relative;
+  z-index: 4;
+  min-height: inherit;
+}
+
+.supporting {
+  position: absolute;
+  top: 17%;
+  right: calc(var(--page-gutter) + 6%);
+  margin: 0;
+  color: var(--text);
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1.5;
+  letter-spacing: -0.02em;
+}
+
+.headline {
+  position: absolute;
+  top: 35%;
+  right: var(--page-gutter);
+  margin: 0;
+  color: var(--text);
+  font-family: var(--font-unbounded), sans-serif;
+  font-weight: 900;
+  line-height: 0.97;
+  letter-spacing: -0.1em;
+  text-align: right;
+}
+
+.headline span {
+  display: block;
+  white-space: nowrap;
+}
+
+.firstLine {
+  font-size: clamp(70px, 6.5vw, 100px);
+}
+
+.secondLine {
+  color: var(--brand);
+  font-size: clamp(51px, 4.3vw, 67px);
+  -webkit-text-stroke: 0.7px var(--background);
+  paint-order: stroke fill;
+}
+
+.cta {
+  position: absolute;
+  top: var(--cta-y);
+  left: var(--cta-x);
+  width: min(260px, calc(100% - var(--cta-x) - var(--page-gutter)));
+  min-height: var(--cta-height);
+  justify-content: space-between;
+  padding-inline: 18px;
+  background: var(--brand);
+  border-color: var(--text);
+  color: var(--on-brand);
+  font-size: 16px;
+  line-height: 1.05;
+  text-align: left;
+}
+
+.cta > span {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.ctaCopy {
+  display: grid;
+}
+
+.ctaArrow {
+  font-size: 28px;
+  font-weight: 400;
+  line-height: 1;
+}
+
+@media (max-width: 1100px) {
+  .hero {
+    --top-edge-x: 66%;
+    --junction-x: 58%;
+    --base-edge-x: var(--flow-hero-end, 79%);
+    --cta-x: calc(var(--junction-x) + 16%);
+    --cta-y: calc(var(--junction-y) + 9%);
+    --cta-height: 64px;
+  }
+
+  .supporting {
+    right: calc(var(--page-gutter) + 4%);
+    font-size: 11px;
+  }
+
+  .image {
+    object-position: 50% 43%;
+  }
+
+  .firstLine {
+    font-size: clamp(52px, 6.7vw, 70px);
+  }
+
+  .secondLine {
+    font-size: clamp(40px, 5vw, 54px);
+  }
+
+  .cta {
+    width: min(220px, calc(100% - var(--cta-x) - var(--page-gutter)));
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 800px) {
+  .hero {
+    --top-edge-x: 66%;
+    --junction-x: 57%;
+    --junction-y: 62%;
+    --base-edge-x: var(--flow-hero-end, 79%);
+    --plum-base-x: 23%;
+    --cta-x: calc(var(--junction-x) + 15%);
+    --cta-y: calc(var(--junction-y) + 9%);
+    min-height: max(640px, 100svh);
+  }
+
+  .photograph {
+    right: 38%;
+  }
+
+  .image {
+    top: -82px !important;
+    height: calc(100% + 82px) !important;
+  }
+
+  .headline {
+    top: 35%;
+  }
+
+  .firstLine {
+    font-size: clamp(48px, 7vw, 56px);
+  }
+
+  .secondLine {
+    font-size: clamp(38px, 5.2vw, 42px);
+  }
+}
+
+@media (max-width: 600px) {
+  .hero {
+    --junction-x: 57%;
+    --junction-y: 39%;
+    --photo-left-y: 43%;
+    --photo-right-y: 57%;
+    --accent-source-x: calc(var(--junction-x) - 39%);
+    --accent-source-y: calc(var(--junction-y) + 36%);
+    --cta-x: calc(var(--junction-x) - 45%);
+    --cta-y: calc(var(--junction-y) + 41%);
+    --cta-height: 64px;
+    min-height: max(660px, 100svh);
+  }
+
+  .photograph {
+    inset: 0;
+  }
+
+  .image {
+    top: -70px !important;
+    height: calc(100% + 70px) !important;
+    object-position: 50% 50%;
+  }
+
+  .lightField {
+    clip-path: polygon(
+      0 var(--photo-left-y),
+      var(--junction-x) var(--junction-y),
+      100% var(--photo-right-y),
+      100% 100%,
+      0 100%
+    );
+  }
+
+  .plumTriangle {
+    clip-path: polygon(
+      var(--junction-x) var(--junction-y),
+      100% var(--junction-y),
+      100% var(--photo-right-y)
+    );
+  }
+
+  .boundaryLine {
+    display: none;
+  }
+
+  .supporting {
+    top: 47%;
+    right: auto;
+    left: 8%;
+    font-size: 11px;
+    line-height: 1.45;
+  }
+
+  .headline {
+    top: 58%;
+    right: 7%;
+    left: 7%;
+    text-align: left;
+  }
+
+  .firstLine {
+    font-size: clamp(42px, 11vw, 54px);
+  }
+
+  .secondLine {
+    margin-left: 5%;
+    margin-top: 10px;
+    font-size: clamp(34px, 9vw, 44px);
+  }
+
+  .cta {
+    width: min(72%, 320px);
+    padding-inline: 16px;
+  }
+}
+
+@media (max-width: 400px) {
+  .supporting {
+    font-size: 10px;
+  }
+
+  .firstLine {
+    font-size: clamp(38px, 11vw, 46px);
+  }
+
+  .secondLine {
+    font-size: clamp(34px, 9vw, 36px);
+  }
+}
+
+@media (min-width: 601px) { .plumTriangle { display: none; } }
