@@ -29,7 +29,7 @@ Maintained inventory, 2026-10-28. Read this with [sections](frontend-sections.md
 | `/courses/[slug]` | course-detail — Оценить содержание, пригодность и условия до покупки. | — | Not implemented; MVP |
 | `/courses` | courses — Найти продукт по направлению, языку и уровню. | — | Not implemented; MVP |
 | `/forgot-password` | forgot-password — Получить безопасную ссылку. | — | Not implemented; MVP |
-| `/` | home — Помочь выбрать формат обучения и перейти к реальному предложению. | `src/app/page.tsx` → `src/features/home/home-page.tsx` | Shell + unavailable state; content pending; MVP |
+| `/` | home — Помочь выбрать формат обучения и перейти к реальному предложению. | `src/app/page.tsx` → `src/features/home/home-page.tsx` → `src/features/home/sections/{hero,about,founder,learning-preview,courses,packages,mini-courses,start-usa,reviews,contact}/*-section.tsx + learning-offers/learning-offers-showcase.tsx` | HOME-02/03/05 implemented; HOME-06–09 are connected through a sticky horizontal showcase. Courses/mini-courses use labeled placeholder inventory. Packages are a Phase 2 preview with a local demo builder; Start in USA is an unresolved-release preview. HOME-10 is an explicitly labeled Phase 3 testimonial/recommendation layout preview, not published endorsements. HOME-11 is a visual, client-validated contact form with delivery disabled until backend and abuse controls exist. No live offers, testimonial records, contact submissions or catalog routes added. |
 | `/license-disclaimer` | license-disclaimer — Прочесть действующую утверждённую версию. | — | Not implemented; MVP |
 | `/login` | login — Войти и продолжить разрешённый сценарий. | — | Not implemented; MVP |
 | `None` | manager-commission — Проверить личную ведомость. | — | Not implemented; Phase 2 |
@@ -67,3 +67,7 @@ Maintained inventory, 2026-10-28. Read this with [sections](frontend-sections.md
 | `/verify-email` | verify-email — Подтвердить владение адресом. | — | Not implemented; MVP |
 
 Public navigation publication is maintained in `src/features/public-shell/navigation.ts`. Auth, commerce, protected workspaces and legal documents do not exist yet. Do not link to their proposed URLs until implemented and released. The existing project name is a working identity, not a final logo approval.
+
+### Homepage refinement — 2026-10-28
+
+`/` continues to compose shared HOME-01/12 and numbered home-owned HOME-02–11. `home-page.tsx` now inserts shared decorative seams between the vertical sections and the state-preserving, natural-height 06–09 showcase. Hero is viewport-height; navigation, learning-stage motion, compact offer layouts and cross-section geometry are implemented within the existing release constraints. `/preview/components` reflects the revised Cut button and unavailable navigation entries. See the latest verification entry for browser evidence and remaining publication blockers.

@@ -1,4 +1,12 @@
 .main {
+  --home-hero-height: max(640px, 100svh);
+  --flow-hero-end: 79%;
+  position: relative;
+  isolation: isolate;
+  overflow-anchor: none;
   flex: 1;
-  padding-block: clamp(64px, 10vw, 144px);
 }
+.main > section[id] { scroll-margin-top: 12px; }
+
+.main > section:not([data-home-hero]) { isolation: auto; }
+@media (max-width: 600px) { .main { --home-hero-height: max(660px, 100svh); } }

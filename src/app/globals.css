@@ -20,6 +20,7 @@
   --success: #177245;
   --info: #2455a4;
   --control-radius: 6px;
+  --anchor-padding: 120px;
   --page-gutter: clamp(20px, 4.1667vw, 96px);
   --header-shadow: 0 8px 32px rgb(29 27 31 / 7%);
   --footer-border: #655f67;
@@ -40,7 +41,7 @@
 html {
   min-height: 100%;
   scrollbar-gutter: stable;
-  scroll-padding-top: 120px;
+  scroll-padding-top: var(--anchor-padding);
 }
 body {
   min-height: 100dvh;

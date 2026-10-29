@@ -12,7 +12,7 @@ Source precedence:
 
 Read `QA.md` before and after implementation. User references are delivered in the task; the old reference gallery and planning editors are retired. Do not rebuild their storage, generated specs or UI. Implement directly in the requested application route/feature and update the lightweight Markdown registry.
 
-Current scope: the header follows the supplied 2026-10-28 multi-viewport reference. Container/button/footer definitions were preserved from the edited planning records. Other shared styles are bounded proposals using existing tokens. No complete page or browser implementation has human visual approval yet. Home hero composition decisions remain historical direction; request the exact reference and approved media when that section is implemented.
+Current scope: the header follows the supplied 2026-10-28 multi-viewport reference. Container/button/footer definitions were preserved from the edited planning records. Other shared styles are bounded proposals using existing tokens. No complete page or browser implementation has human visual approval yet. Homepage implementation now uses the owner-supplied hero/story references and original media. D-017 records the latest scoped refinement and Cut-button reference. Purple seam geometry spans sections; the 06–09 shared shapes remain static during switching. The latest browser verification supersedes earlier equal-height and chamfered-button implementation notes.
 
 Missing product policy, licensed media or approved legal content must be flagged rather than invented. Missing visual approval does not prevent implementing a reversible, clearly documented proposal within the user's request.
 
