@@ -36,9 +36,33 @@ try {
     await page.setViewportSize({ width, height: width <= 390 ? 844 : 900 });
     await page.goto(base);
     await page.evaluate(() => document.fonts.ready);
+    assert.equal(
+      await page.evaluate(() => getComputedStyle(document.body).backgroundColor),
+      "rgb(250, 249, 250)",
+      `Global stylesheet missing at ${width}`,
+    );
     await noOverflow();
     assert.equal(await page.locator("html").getAttribute("lang"), "ru");
     assert.equal(await page.getByRole("heading", { level: 1 }).count(), 1);
+    assert.equal(await page.locator("#about h2").count(), 1);
+    assert.equal(await page.locator("#about ul li").count(), 3);
+    assert.equal(await page.locator("#about a").getAttribute("href"), "#founder");
+    assert.equal(await page.locator("#founder h2").count(), 1);
+    assert.equal(await page.locator("#founder ol li").count(), 4);
+    assert.equal(await page.locator("#founder a, #founder button").count(), 0);
+    assert.equal(await page.locator("#about img, #founder img").count(), 2);
+    assert.equal(await page.locator("#learning-preview [role=tab]").count(), 3);
+    assert.equal(await page.locator("#learning-preview input[type=file]").count(), 0);
+    assert.equal(await page.locator("#catalog-status article").count(), 3);
+    assert.equal(await page.locator("#catalog-status article a").count(), 0);
+    const hero = page.locator("[data-home-hero]");
+    assert.equal(await hero.getByText("ВЫБРАТЬ", { exact: true }).count(), 1);
+    assert.equal(await hero.getByText("КУРС", { exact: true }).count(), 1);
+    assert.ok(
+      (await hero.locator("img").boundingBox()).height >=
+        (await hero.boundingBox()).height,
+      `Hero photograph does not fill section height at ${width}`,
+    );
     await page.screenshot({
       path: path.join(evidence, `home-${width}.png`),
       fullPage: true,
@@ -61,6 +85,96 @@ try {
             throw Error("Menu focus not restored");
         });
     }
+  }
+  for (const width of [1440, 768, 390]) {
+    await page.setViewportSize({ width, height: width === 390 ? 844 : 900 });
+    await page.goto(base);
+    await page.locator("#learning-preview").screenshot({ path: path.join(evidence, `learning-${width}.png`) });
+    await page.locator("#catalog-status").screenshot({ path: path.join(evidence, `courses-${width}.png`) });
+    await noOverflow();
+  }
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto(base);
+  await page.getByRole("tab", { name: /Сдать домашнее задание/ }).click();
+  await page.locator("#learning-preview input[type=file]").setInputFiles(path.join(process.cwd(), "src/features/home/sections/06-courses/course-photo-placeholder.png"));
+  assert.equal(await page.getByAltText(/Предпросмотр:/).count(), 1);
+  await page.locator("#learning-comment").fill("Проверка деморежима");
+  await page.getByRole("button", { name: /ИМИТИРОВАТЬ ОТПРАВКУ/ }).click();
+  assert.equal(await page.getByText("Работа на доработке").count(), 1);
+  await page.getByRole("button", { name: /ДОРАБОТАТЬ ЗАДАНИЕ/ }).click();
+  assert.equal(await page.locator("#learning-comment").inputValue(), "Проверка деморежима");
+  await page.getByRole("button", { name: "Следующая карточка" }).click();
+  await page.waitForFunction(() => document.querySelector('button[aria-label="Карточка 2 из 3"]')?.getAttribute("aria-current") === "true");
+  await page.waitForFunction(() => (document.querySelector('#catalog-status [aria-label="Примеры карточек курсов"]')?.scrollLeft ?? 0) > 250);
+  await page.locator('#catalog-status [aria-label="Примеры карточек курсов"]').evaluate((track) => track.scrollBy({ left: 400, behavior: "instant" }));
+  await page.waitForFunction(() => document.querySelector('button[aria-label="Карточка 3 из 3"]')?.getAttribute("aria-current") === "true");
+  await page.getByRole("navigation", { name: "Пример выбора направления" }).getByRole("button", { name: "Брови" }).click();
+  assert.equal(await page.locator("#catalog-status article").count(), 1);
+  assert.equal(await page.getByRole("button", { name: "Следующая карточка" }).isDisabled(), true);
+  await page.getByRole("navigation", { name: "Пример выбора направления" }).getByRole("button", { name: "Все направления" }).click();
+  assert.equal(await page.locator("#catalog-status article").count(), 3);
+  for (const width of [1440, 1024, 768, 390]) {
+    await page.setViewportSize({
+      width,
+      height: width === 390 ? 844 : width === 768 ? 700 : 900,
+    });
+    await page.goto(base);
+    const header = page.locator("header");
+    const heroTop = await page.locator("[data-home-hero]").evaluate((el) =>
+      el.getBoundingClientRect().top + scrollY,
+    );
+    assert.equal(await header.getAttribute("data-home-scrolled"), "false");
+    await page.evaluate(() => scrollTo(0, 100));
+    await page.waitForFunction(
+      () => document.querySelector("header")?.dataset.homeScrolled === "true",
+    );
+    await page.waitForTimeout(350);
+    assert.ok(
+      await header.evaluate((el) => {
+        const bar = el.querySelector('a').parentElement;
+        const channels = getComputedStyle(bar).backgroundColor
+          .match(/[\d.]+/g)
+          ?.map(Number);
+        return (
+          channels?.[0] === 255 &&
+          channels[1] === 255 &&
+          channels[2] === 255 &&
+          (channels[3] ?? 1) > 0.95
+        );
+      }),
+      `Compact header bar did not become white at ${width}`,
+    );
+    assert.equal(
+      await page.locator("[data-home-hero]").evaluate((el) =>
+        el.getBoundingClientRect().top + scrollY,
+      ),
+      heroTop,
+      `Hero shifted during header transition at ${width}`,
+    );
+    await page.screenshot({
+      path: path.join(evidence, `home-scrolled-${width}.png`),
+    });
+    await page.evaluate(() => scrollTo(0, document.documentElement.scrollHeight));
+    assert.equal(
+      await header.evaluate((el) => Math.round(el.getBoundingClientRect().top)),
+      0,
+      `Header did not remain sticky at page end at ${width}`,
+    );
+    await page.evaluate(() => scrollTo(0, 0));
+    await page.waitForFunction(
+      () => document.querySelector("header")?.dataset.homeScrolled === "false",
+    );
+    await page.waitForTimeout(350);
+    assert.equal(
+      await header.evaluate((el) => Number(getComputedStyle(el).backgroundColor.match(/[\d.]+/g)?.at(-1))),
+      0,
+    );
+    await page.emulateMedia({ reducedMotion: "reduce" });
+    assert.equal(
+      await header.evaluate((el) => getComputedStyle(el).transitionDuration),
+      "0s",
+    );
+    await page.emulateMedia({ reducedMotion: "no-preference" });
   }
   for (const route of [
     "/dev/components",
@@ -271,7 +385,6 @@ try {
       await dialog.evaluate((el) => el.contains(document.activeElement)),
     );
   }
-  await dialog.locator("summary").click();
   await dialog.getByRole("link", { name: "Брови", exact: true }).click();
   await dialog.waitFor({ state: "hidden" });
   const password = page.getByLabel("Пароль", { exact: true });

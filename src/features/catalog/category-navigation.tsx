@@ -7,6 +7,8 @@ export type CategoryNavigationProps = {
   selectedId?: string;
   label?: string;
   pending?: boolean;
+  onSelect?: (id?: string) => void;
+  resetLabel?: string;
 };
 
 /** URLs come from the owning catalog query contract, including other committed filters. */
@@ -16,6 +18,8 @@ export function CategoryNavigation({
   selectedId,
   label = "Направления обучения",
   pending = false,
+  onSelect,
+  resetLabel = "Все направления",
 }: CategoryNavigationProps) {
   if (!items.length) return null;
   return (
@@ -26,21 +30,11 @@ export function CategoryNavigation({
     >
       <ul>
         <li>
-          <Link
-            href={resetHref}
-            aria-current={!selectedId ? "page" : undefined}
-          >
-            Все направления
-          </Link>
+          {onSelect ? <button type="button" onClick={() => onSelect()} aria-pressed={!selectedId}>{resetLabel}</button> : <Link href={resetHref} aria-current={!selectedId ? "page" : undefined}>{resetLabel}</Link>}
         </li>
         {items.map((item) => (
           <li key={item.id}>
-            <Link
-              href={item.href}
-              aria-current={selectedId === item.id ? "page" : undefined}
-            >
-              {item.label}
-            </Link>
+            {onSelect ? <button type="button" onClick={() => onSelect(item.id)} aria-pressed={selectedId === item.id}>{item.label}</button> : <Link href={item.href} aria-current={selectedId === item.id ? "page" : undefined}>{item.label}</Link>}
           </li>
         ))}
       </ul>

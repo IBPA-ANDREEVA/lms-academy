@@ -39,7 +39,7 @@
   display: flex;
   align-items: center;
   gap: 8px;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
 }
 .desktopLinks li {
   position: relative;
@@ -183,9 +183,10 @@
 }
 .dialog {
   position: fixed;
-  inset: 16px 16px auto auto;
-  width: min(360px, calc(100% - 32px));
-  max-height: calc(100dvh - 32px);
+  inset: 12px 12px auto auto;
+  width: min(460px, calc(100% - 24px));
+  max-height: calc(100dvh - 24px);
+  overscroll-behavior: contain;
   border: 0;
   padding: 0;
   margin: 0;
@@ -332,4 +333,155 @@
 }
 .mobileLinks details[open] > summary .chevron {
   rotate: 0deg;
+}
+
+/* On the homepage the existing header sits directly on the hero image. */
+:global(body:has([data-home-hero])) .header {
+  position: sticky;
+  top: 0;
+  height: 84px;
+  margin-bottom: -84px;
+  padding: 0;
+  background: transparent;
+  box-shadow: none;
+  transition:
+    background-color 320ms cubic-bezier(0.2, 0.7, 0.2, 1),
+    box-shadow 320ms cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+:global(body:has([data-home-hero])) .bar {
+  min-height: 56px;
+  height: 56px;
+  padding: 0;
+  background: transparent;
+  border-radius: 0;
+  box-shadow: none;
+  transform: translateY(28px);
+  transition:
+    transform 320ms cubic-bezier(0.2, 0.7, 0.2, 1),
+    height 320ms cubic-bezier(0.2, 0.7, 0.2, 1),
+    padding 320ms cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+:global(body:has([data-home-hero])) .bar > .brand,
+:global(body:has([data-home-hero])) .desktopLinks {
+  color: var(--on-brand);
+  transition: color 220ms ease;
+}
+
+:global(body:has([data-home-hero])) .bar > .brand {
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  transition: color 220ms ease;
+}
+
+:global(body:has([data-home-hero])) .desktopLinks a:hover,
+:global(body:has([data-home-hero])) .desktopLinks summary:hover {
+  background: rgb(29 27 31 / 28%);
+}
+
+:global(body:has([data-home-hero])) .menuButton {
+  display: inline-flex;
+  background: transparent;
+  color: var(--text);
+  border-radius: 0;
+  transition: background-color 220ms ease, border-radius 320ms ease;
+}
+
+:global(body:has([data-home-hero])) .header[data-home-scrolled="true"] {
+  background: transparent;
+  box-shadow: none;
+}
+
+:global(body:has([data-home-hero])) .header[data-home-scrolled="true"] .bar {
+  background: var(--surface);
+  border-radius: 16px;
+  box-shadow: var(--header-shadow);
+  height: 64px;
+  padding-inline: 16px;
+  transform: translateY(10px);
+}
+
+:global(body:has([data-home-hero]))
+  .header[data-home-scrolled="true"]
+  .bar > .brand,
+:global(body:has([data-home-hero]))
+  .header[data-home-scrolled="true"]
+  .desktopLinks {
+  color: var(--text);
+}
+
+:global(body:has([data-home-hero]))
+  .header[data-home-scrolled="true"]
+  .desktopLinks a:hover,
+:global(body:has([data-home-hero]))
+  .header[data-home-scrolled="true"]
+  .desktopLinks summary:hover {
+  background: var(--soft);
+}
+
+@media (max-width: 800px) {
+  :global(body:has([data-home-hero])) .header {
+    height: 76px;
+    margin-bottom: -76px;
+  }
+
+  :global(body:has([data-home-hero])) .bar {
+    transform: translateY(20px);
+  }
+
+  :global(body:has([data-home-hero])) .header[data-home-scrolled="true"] .bar {
+    height: 60px;
+    transform: translateY(8px);
+  }
+
+  :global(body:has([data-home-hero])) .menuButton {
+    background: var(--background);
+    border-radius: 50%;
+  }
+
+  :global(body:has([data-home-hero]))
+    .header[data-home-scrolled="true"]
+    .menuButton {
+    background: var(--soft);
+    border-radius: 8px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :global(body:has([data-home-hero])) .header,
+  :global(body:has([data-home-hero])) .bar,
+  :global(body:has([data-home-hero])) .bar > .brand,
+  :global(body:has([data-home-hero])) .desktopLinks,
+  :global(body:has([data-home-hero])) .menuButton {
+    transition: none;
+  }
+}
+
+/* The compact shell floats with small, consistent side gutters. */
+:global(body:has([data-home-hero])) .header[data-home-scrolled="true"] > div {
+  padding-inline: 16px;
+  max-width: none;
+}
+:global(body:has([data-home-hero])) .desktopLinks > ul > li:nth-child(n + 5) { display: none; }
+:global(body:has([data-home-hero])) .desktopLinks { flex: 0 1 auto; }
+:global(body:has([data-home-hero])) .header:not([data-home-scrolled="true"]) .desktopLinks { text-shadow: 0 1px 3px rgb(0 0 0 / 70%); }
+:global(body:has([data-home-hero])) .dropdown { color: var(--text); text-shadow: none; }
+:global(body:has([data-home-hero])) .dropdown a:hover { background: var(--soft); }
+.dialogHeading { position: sticky; z-index: 1; top: 0; padding: 20px 24px; background: var(--surface); }
+.mobileLinks { padding: 4px 24px 24px; }
+.mobileLinks > ul > li { border-bottom: 1px solid var(--border); }
+.mobileLinks > ul > li:last-child { border-bottom: 0; }
+.mobileLinks > ul > li > a,
+.mobileLinks > ul > li > span { min-height: 56px; font-size: 17px; font-weight: 600; }
+.menuGroup { padding-block: 8px 16px; }
+.menuGroup > a { font-weight: 700; font-size: 17px; }
+.mobileLinks .dropdown { border: 0; padding: 0 0 0 16px !important; background: transparent; }
+.mobileLinks .dropdown a { font-size: 15px; min-height: 44px; }
+@media (max-width: 600px) {
+  :global(body:has([data-home-hero])) .header[data-home-scrolled="true"] > div { padding-inline: 10px; }
+  .dialog { inset: 8px 8px auto; width: calc(100% - 16px); max-height: calc(100dvh - 16px); }
+  .dialogHeading { padding: 16px 20px; }
+  .mobileLinks { padding-inline: 20px; }
 }

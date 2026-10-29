@@ -39,6 +39,14 @@ ARCHITECTURE:
 - `src/db`: database plumbing; `src/lib`: small technical utilities.
 - Modular monolith, Next.js App Router, TypeScript, Tailwind 4, pnpm. Keep dependencies justified; do not introduce architectural changes for design alone.
 
+PAGE → SECTION → COMPONENT HIERARCHY:
+- Divide each page into clearly owned sections. Page files should primarily compose sections rather than contain their full implementations.
+- Give every substantial section its own component file. Section files should compose independently maintainable internal components instead of becoming monolithic JSX files; give each such component its own file.
+- Colocate section-specific components and styles within the owning feature. Trivial decorative elements do not need separate files, and this convention does not require empty section directories.
+- Reuse existing shared components. Extract new shared components only when actual reuse justifies them.
+- Preserve clear Server/Client Component boundaries and minimize unnecessary `use client`.
+- Maintain the frontend page, section and component registries so future agents can locate implementation owners and consumers.
+
 DESIGN IMPLEMENTATION PROTOCOL (MANDATORY FOR UI TASKS):
 1. Identify target route, user goal, release phase, states and product data. Verify against sitemap and requirements.
 2. Read the frontend registry and inspect existing code first. Open `docs/design/README.md`, `DECISIONS.md`, `DIRECTION.md`, `SYSTEM.md`, relevant specifications, and the exact visual reference supplied by the user for this implementation.
@@ -68,3 +76,10 @@ FRONTEND WORKFLOW (MANDATORY):
 6. Follow the visual reference supplied by the user for each implementation, within product/release constraints. Do not infer approval for unrelated components or invent unavailable content.
 7. Update the registry after every page, section or shared-component change: route/owner, purpose, actual implementation path, props, consumers, status and missing work.
 8. Do not recreate `/dev/components`, `/dev/sections` or reference-gallery/editor infrastructure. The user-authorized `/preview/components` route is the single lightweight preview of actual shared components. Keep it updated when shared components change; reuse their implementations and clearly label demonstration data. Other UI work stays in the actual application.
+
+REACT MOTION (owner-requested):
+- Use the [gsap-react skill](/Users/ivanmakovetskyi/.agents/skills/gsap-react/SKILL.md) for React animation work; read `gsap-core` and `gsap-timeline` when using their APIs.
+- Use `gsap` + `@gsap/react`, register `useGSAP`, and run animations in client lifecycle only. Scope every hook to a ref; wrap later animation callbacks with `contextSafe` and clean up observers/listeners. Revert dependency-driven animations on update.
+- Respect `prefers-reduced-motion`, including live preference changes. Preserve focus, keyboard tab semantics, user-entered state, and accessible active/inactive panels. Rapid switching and resizing must cancel obsolete animations.
+- The HOME-06–09 geometry belongs to the persistent group, not to individual panels. Keep shared seam coordinates intact and background shapes stationary while content switches; size the viewport to the active content, and verify shorter/taller content changes while the switcher is sticky.
+- Homepage section folders retain their source order: 02 hero, 03 about, 04 founder, 05 learning preview, 06 courses, 07 packages, 08 mini-courses, 09 Start in USA, 10 reviews, 11 contact. Shared shell owns HOME-01 header and HOME-12 footer.

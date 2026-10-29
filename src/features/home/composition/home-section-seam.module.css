@@ -1,0 +1,19 @@
+.seam { position: relative; z-index: 2; height: 0; pointer-events: none; }
+.seam > div { position: absolute; inset-inline: 0; background: var(--brand); }
+.hero > div {
+  top: calc(var(--home-hero-height) * -.39);
+  height: calc(var(--home-hero-height) * .39 + 90px);
+  opacity: .68;
+  clip-path: polygon(58% 0,79% calc(100% - 90px),53% 100%,31% calc(100% - 90px));
+}
+.portraits > div { top: -150px; height: 200px; opacity: .75; clip-path: polygon(46% 0,57% 150px,52% 100%,44% 150px); }
+.learning > div { top: -160px; height: 208px; opacity: .82; clip-path: polygon(50% 0,44.72% 160px,28% 100%,0 160px); }
+.contact > div { top: -70px; height: 140px; clip-path: polygon(90% 0,100% 0,100% 100%,78% 50%); }
+@media (max-width: 900px) { .portraits > div { clip-path: polygon(47% 0,60% 150px,53.36% 100%,45% 150px); } .learning > div { top: -32px; height: 80px; clip-path: polygon(84% 0,100% 40%,92% 100%); } }
+@media (min-width: 601px) and (max-width: 800px) { .hero > div { top: calc(var(--home-hero-height) * -.38); height: calc(var(--home-hero-height) * .38 + 90px); clip-path: polygon(57% 0,79% calc(100% - 90px),54% 100%,23% calc(100% - 90px)); } }
+@media (max-width: 600px) {
+  .hero > div { top: -48px; height: 138px; opacity: 1; clip-path: polygon(88% 0,100% 24%,100% 100%,72% 48px); }
+  .portraits > div { top: -32px; height: 100px; opacity: 1; clip-path: polygon(90% 0,100% 32%,100% 100%,72% 32px); }
+  .learning > div { top: -24px; height: 64px; opacity: 1; clip-path: polygon(88% 0,100% 24px,84% 100%); }
+  .contact > div { top: -36px; height: 76px; clip-path: polygon(90% 0,100% 0,100% 100%,78% 50%); }
+}

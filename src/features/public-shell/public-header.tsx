@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useId, useRef, useState } from "react";
 import { Button, ButtonLink } from "@/components/ui/button";
+import { NavigationEntry } from "./navigation-entry";
 import { PageContainer } from "./page-container";
 import type { NavigationItem, NavigationLink } from "./navigation";
 import styles from "./public-header.module.css";
@@ -16,60 +17,26 @@ export type PublicHeaderProps = {
   locales?: readonly (NavigationLink & { current?: boolean })[];
 };
 
-function NavigationLinks({
-  items,
-  pathname,
-  onNavigate,
-}: {
+function NavigationLinks({ items, pathname, onNavigate, expanded = false }: {
   items: readonly NavigationItem[];
   pathname: string;
   onNavigate: () => void;
+  expanded?: boolean;
 }) {
-  return (
-    <ul>
-      {items.map((item) => (
-        <li key={item.href}>
-          {item.children?.length ? (
-            <details>
-              <summary>
-                {item.label}
-                <span aria-hidden="true" className={styles.chevron} />
-              </summary>
-              <ul className={styles.dropdown}>
-                <li>
-                  <Link
-                    href={item.href}
-                    aria-current={pathname === item.href ? "page" : undefined}
-                    onNavigate={onNavigate}
-                  >
-                    Все: {item.label.toLocaleLowerCase("ru")}
-                  </Link>
-                </li>
-                {item.children.map((child) => (
-                  <li key={child.href}>
-                    <Link href={child.href} onNavigate={onNavigate}>
-                      {child.label}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </details>
-          ) : (
-            <Link
-              href={item.href}
-              aria-current={pathname === item.href ? "page" : undefined}
-              onNavigate={onNavigate}
-            >
-              {item.label}
-            </Link>
-          )}
-        </li>
-      ))}
-    </ul>
-  );
+  return <ul>{items.map((item) => {
+    const children = item.children?.length ? <ul className={styles.dropdown}>
+      {item.children.map((child) => <li key={child.label}><NavigationEntry entry={child} onNavigate={onNavigate} /></li>)}
+    </ul> : null;
+    return <li key={item.label}>
+      {children ? expanded ? <div className={styles.menuGroup}>
+        <NavigationEntry entry={item} onNavigate={onNavigate} />{children}
+      </div> : <details><summary>{item.label}<span aria-hidden="true" className={styles.chevron} /></summary>{children}</details>
+        : <NavigationEntry entry={item} current={pathname === item.href} onNavigate={onNavigate} />}
+    </li>;
+  })}</ul>;
 }
 
-/** Shell navigation only; the caller supplies published, phase-valid destinations. */
+/** Caller-owned links and explicitly labeled unavailable preview entries. */
 export function PublicHeader({
   brand,
   navigation,
@@ -82,6 +49,7 @@ export function PublicHeader({
   const dialog = useRef<HTMLDialogElement>(null);
   const menuButton = useRef<HTMLButtonElement>(null);
   const [open, setOpen] = useState(false);
+  const [homeScrolled, setHomeScrolled] = useState(false);
   const dialogId = useId();
   const titleId = useId();
 
@@ -113,25 +81,35 @@ export function PublicHeader({
     if (!open) return;
     const previousOverflow = document.body.style.overflow;
     document.body.style.overflow = "hidden";
-    const wide = matchMedia("(min-width: 1025px)");
-    const onResize = () => {
-      if (wide.matches) {
-        dialog.current?.close();
-        setOpen(false);
-      }
-    };
-    wide.addEventListener("change", onResize);
     return () => {
       document.body.style.overflow = previousOverflow;
-      wide.removeEventListener("change", onResize);
     };
   }, [open]);
+
+  useEffect(() => {
+    const hero = document.querySelector("[data-home-hero]");
+    if (!hero) return;
+    let frame = 0;
+    const update = () => {
+      frame = 0;
+      setHomeScrolled(window.scrollY > 48);
+    };
+    const onScroll = () => {
+      if (!frame) frame = requestAnimationFrame(update);
+    };
+    update();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      if (frame) cancelAnimationFrame(frame);
+    };
+  }, [pathname]);
 
   const localeLinks = locales.length > 1 && (
     <nav aria-label="Язык сайта" className={styles.locales}>
       {locales.map((locale) => (
         <Link
-          key={locale.href}
+          key={locale.label}
           href={locale.href}
           aria-current={locale.current ? "true" : undefined}
           onNavigate={navigate}
@@ -146,6 +124,7 @@ export function PublicHeader({
     <header
       ref={root}
       className={styles.header}
+      data-home-scrolled={homeScrolled}
       onKeyDown={(event) => {
         if (event.key !== "Escape") return;
         const details = (event.target as HTMLElement).closest("details[open]");
@@ -197,6 +176,7 @@ export function PublicHeader({
               aria-controls={dialogId}
               aria-haspopup="dialog"
               onClick={() => {
+                closeDropdowns();
                 dialog.current?.showModal();
                 setOpen(true);
               }}
@@ -247,6 +227,7 @@ export function PublicHeader({
               {brand.label}
             </Link>
             <Button
+              autoFocus
               intent="secondary"
               className={styles.closeButton}
               aria-label="Закрыть меню"
@@ -260,6 +241,7 @@ export function PublicHeader({
               items={navigation}
               pathname={pathname}
               onNavigate={navigate}
+              expanded
             />
           </nav>
           {(locales.length > 1 || account || cart) && (

@@ -1,12 +1,13 @@
 import Link from "next/link";
 import { PageContainer } from "./page-container";
-import type { NavigationGroup, NavigationLink } from "./navigation";
+import type { NavigationEntry as Entry, NavigationGroup, NavigationLink } from "./navigation";
+import { NavigationEntry } from "./navigation-entry";
 import styles from "./public-footer.module.css";
 
 export type PublicFooterProps = {
   brand: NavigationLink;
   groups: readonly NavigationGroup[];
-  legalLinks: readonly NavigationLink[];
+  legalLinks: readonly Entry[];
   disclaimer?: string;
   contact?: NavigationLink;
   issuer?: string;
@@ -42,8 +43,8 @@ export function PublicFooter({
                   <h2>{group.label}</h2>
                   <ul>
                     {group.links.map((link) => (
-                      <li key={link.href}>
-                        <Link href={link.href}>{link.label}</Link>
+                      <li key={link.label}>
+                        <NavigationEntry entry={link} />
                       </li>
                     ))}
                   </ul>
@@ -58,8 +59,8 @@ export function PublicFooter({
               <nav aria-label="Правовая информация">
                 <ul className={styles.legal}>
                   {legalLinks.map((link) => (
-                    <li key={link.href}>
-                      <Link href={link.href}>{link.label}</Link>
+                    <li key={link.label}>
+                      <NavigationEntry entry={link} />
                     </li>
                   ))}
                 </ul>
