@@ -1,0 +1,2 @@
+.note { flex-shrink: 0; margin-inline-start: 8px; font-size: 10px; font-weight: 500; line-height: 1.4; text-transform: none; letter-spacing: 0; }
+.unavailable { display: flex; align-items: center; justify-content: space-between; gap: 8px; min-height: 44px; cursor: default; opacity: .65; }

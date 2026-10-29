@@ -47,7 +47,8 @@ const navigation = [
   },
   { label: "Пакеты", href: "#navigation-example" },
   { label: "Мини-курсы", href: "#course-card" },
-  { label: "Старт в США", href: "#navigation-example" },
+  { label: "Старт в США", href: "#navigation-example", preview: true },
+  { label: "Скоро: личный кабинет", preview: true },
 ];
 const legalLinks = [
   "Публичная оферта",
@@ -138,7 +139,7 @@ export function ComponentPreviewPage() {
       <PreviewSection
         id="public-header"
         name="PublicHeader"
-        description="Откройте «Курсы», проверьте Tab и Escape. При ширине до 1024px появляется меню; до 768px навигация скрывается в нём."
+        description="Откройте «Курсы», проверьте Tab и Escape. Меню доступно на любой ширине; до 768px основная навигация скрывается в нём."
         fullWidth
       >
         <div className={styles.headerStage}>
@@ -155,7 +156,7 @@ export function ComponentPreviewPage() {
         </div>
         <PageContainer size="content">
           <p id="navigation-example" className={styles.note}>
-            Все пункты этого примера ведут к разделам предпросмотра. Пакеты, EN
+            Доступные пункты ведут к разделам предпросмотра; «Скоро» обозначает недоступную ссылку. Пакеты, EN
             и «Старт в США» показаны только для проверки композиции референса.
           </p>
         </PageContainer>
@@ -166,6 +167,9 @@ export function ComponentPreviewPage() {
         name="Button / ButtonLink"
         description="Три внешних вида, независимые назначения, размеры и состояния. Наведите курсор или используйте клавиатуру."
       >
+        <ButtonLink appearance="cut" size="lg" href="#course-card">
+          СМОТРЕТЬ ВСЕ КУРСЫ <span aria-hidden="true">→</span>
+        </ButtonLink>
         <div className={styles.buttonFamilies}>
           {(["minimal", "cut", "neoBrutalist"] as const).map((appearance) => (
             <div className={styles.family} key={appearance}>
@@ -417,6 +421,18 @@ export function ComponentPreviewPage() {
             ? `Выбрано: ${category === "practice" ? "практические занятия" : "записанные материалы"}`
             : "Выбраны все направления."}
         </p>
+        <p>Локальный выбор без смены URL:</p>
+        <CategoryNavigation
+          items={[
+            { id: "practice", label: "Практика — пример", href: "#category-navigation" },
+            { id: "recorded", label: "Запись — пример", href: "#category-navigation" },
+          ]}
+          resetHref="#category-navigation"
+          resetLabel="Все примеры"
+          selectedId={category}
+          onSelect={setCategory}
+          label="Локальный пример направлений"
+        />
       </PreviewSection>
 
       <PreviewSection
