@@ -2,7 +2,7 @@
 
 LA02 · Refined after review · 2026-10-26 · Accepted architecture baseline; no implementation or product-policy approval implied.
 
-This proposal separates public discovery, purchase, and account access from protected learning. MVP exposes Russian course and mini-course discovery, cart, checkout, account recovery, and legal documents. Packages and English arrive in Phase 2; reviews and public certificate verification in Phase 3. Start in USA needs an explicit release decision.
+This proposal separates public discovery, purchase, and account access from protected learning. MVP exposes Russian course and mini-course discovery, cart, checkout, account recovery, and legal documents. Packages and full English interface localization arrive in Phase 2; PD-006 requires RU/EN legal documents in MVP; reviews and public certificate verification in Phase 3. Start in USA needs an explicit release decision.
 
 Read alongside [page structure](./public-page-structure.md), [user flows](./public-user-flows.md), and [review questions](./public-open-questions.md).
 
@@ -11,7 +11,7 @@ Read alongside [page structure](./public-page-structure.md), [user flows](./publ
 - **Discovery:** `/`, `/courses`, `/courses/[slug]`, `/mini-courses` and `/mini-courses/[slug]` serve public browsing. Keep one canonical detail URL per product; category navigation uses catalog query filters, not extra landing pages.
 - **Commerce:** `/cart` → `/checkout` → `/checkout/result` is the shared purchase path. Guest purchase remains available. The result page requires authorized checkout context; only authoritative payment confirmation grants purchased access.
 - **Identity and protected workspace:** login, registration, verification and recovery have a focused shell and preserve safe continuation. `/account` and `/account/courses/[enrollmentId]` are proposed protected handoffs, separate from public product URLs; every protected resource requires server authorization.
-- **Phases:** RU discovery, commerce, email/password identity and four legal pages are MVP. Packages, promos and English are Phase 2; reviews, contextual recommendations, social login and public certificate verification are Phase 3. `/start-in-usa` remains a proposed standalone purchase route with **release TBD**, independent of the Phase 2 package schedule.
+- **Phases:** RU discovery, commerce, email/password identity and four legal pages are MVP. Packages, promos and full English interface localization are Phase 2; PD-006 RU/EN legal content is MVP; reviews, contextual recommendations, social login and public certificate verification are Phase 3. `/start-in-usa` remains a proposed standalone purchase route with **release TBD**, independent of the Phase 2 package schedule.
 - **Homepage:** Hero → Course Discovery → Packages (Phase 2) → Mini-courses → Start in USA (release TBD) → Footer is the core commercial sequence. Category navigation and “How Learning Works” may be added or integrated during visual design. Section arrangements are design recommendations, not immutable implementation requirements; unreleased sections and links stay absent.
 - **Review now:** settle locale URL policy and the literal protected namespace before route implementation (PA-02/PA-03). Retain the existing catalog split and conditional Start in USA route. Product policies remain in the decision register for their dependent implementation phases; they do not block acceptance of this sitemap.
 
@@ -20,7 +20,7 @@ Read alongside [page structure](./public-page-structure.md), [user flows](./publ
 | Source | Evidence used |
 | --- | --- |
 | [Product requirements](../product/requirements.md) | Product types, catalog fields, identity, purchase, legal agreements, certificate behavior |
-| [Release scope](../product/mvp.md) | MVP / Phase 2 / Phase 3 boundaries; pending scope corrections remain pending |
+| [Release scope](../product/mvp.md) | MVP / Phase 2 / Phase 3 boundaries with PD-002–PD-010 overrides; unresolved dependencies remain open |
 | [Product decision register](../product/open-questions.md) | Policies that this proposal cannot settle |
 | Original technical specification in `docs/references/ТЗ_онлайн_академия_и_личные_кабинеты.docx` | Sections 2–3: catalog and guest account creation after payment; sections 7–8: legal pages, verification, phases |
 | Original five-page PDF in `docs/references/Онлайн_академия_дизайн_платформы.pdf` | Pages 1–2: navigation, category filters, cards, packages, mini-courses, Start in USA and footer; pages 3–5: protected workspace handoffs |
@@ -95,7 +95,7 @@ Shells: **Public** = discovery header/footer; **Transaction** = focused commerce
 | `/packages/[slug]` | Review composition, fixed price, savings; add to cart | Phase 2 behavior; detail route recommended | Public |
 | `/start-in-usa` | Explain module; standalone or package purchase when approved | Proposed standalone purchase route; release TBD (PA-04), not assigned to MVP or Phase 2 | Public |
 | `/cart` | Review selections, remove items, continue to `/checkout` | MVP; LA09, PM07; upgrades/promos Phase 2 | Guest or signed-in cart owner / Transaction |
-| `/checkout` | Buyer details, legal consent, authoritative total, card payment | MVP; PM06–PM10 | Guest or signed-in buyer / Transaction |
+| `/checkout` | Buyer details, all four legal acknowledgments, authoritative USD total, embedded Stripe Payment Element | MVP; PM06–PM10 | Guest or signed-in buyer / Transaction |
 | `/checkout/result` | Read verified payment/fulfillment status, enter `/account` | MVP required outcomes; single route recommended | Authorized buyer/checkout context / Transaction |
 | `/login` | Authenticate and resume allowed destination | MVP; PM02 | Public entry / Identity |
 | `/register` | Voluntary registration, then verification | MVP; PM02, PM05 | Public entry / Identity |
@@ -118,7 +118,7 @@ Use query state such as `/courses?direction=<directionSlug>&language=ru&level=be
 
 Maintain one canonical detail URL per product, with stable slugs and redirects for renamed published slugs. Do not infer actual slugs from example course titles. Invalid filters should be explained and removable; unknown products return a useful not-found state.
 
-**Phase 2 recommendation, subject to PA-02:** retain unprefixed RU routes and add `/en` plus the same paths (for example `/en/courses`, `/en/checkout`, `/en/offer`). English versions inherit each route's phase and access restrictions; an English certificate route therefore remains Phase 3. No `/ru` duplicate is proposed. Resolve locale routing before implementation; no routing library is selected. Interface language never changes purchased product identity, course-language availability, cart currency, or payment status.
+**Locale URL recommendation, subject to PA-02:** retain unprefixed RU routes and add `/en` plus the same paths (for example `/en/courses`, `/en/checkout`, `/en/offer`). Full English interface pages remain Phase 2; PD-006 RU/EN legal documents are required in MVP, and their language-access URL mechanism remains unresolved under PA-02. An English certificate verification route remains Phase 3. No `/ru` duplicate is proposed. Resolve locale routing before implementation; no routing library is selected. Interface language never changes purchased product identity, course-language availability, cart currency, or payment status.
 
 Index published discovery/detail/legal pages when approved. Recommend excluding cart, checkout/result, identity pages, filter combinations and verification records from search indexing; public verification also needs anti-enumeration controls. Indexing is not access control.
 
@@ -140,7 +140,7 @@ Account entry must respect a validated continuation first, then a permitted role
 
 **Recommendation:** one common root layout with nested public, transaction, identity and workspace shells. Route groups can organize shells but do not add URL segments or create authorization. In particular, `(student)/courses/[id]` would collide with the public `/courses/[slug]` pattern: the existing example in modules.md is illustrative, not an adopted route. Reserve a literal `/account` namespace for protected learning (PA-03).
 
-Catalog owns listings, course/mini-course/package content and offer projections. Commerce owns cart, checkout and result state; Identity owns authentication and account resolution; Learning owns dashboard handoff and entitlements; Certificates owns public verification; Notifications owns receipt/access delivery. Generic controls may be shared, but a shared shell must not become a domain-logic layer. Legal presentation/version ownership needs agreement between content operations and Commerce's consent record.
+Catalog owns listings, course/mini-course/package content and offer projections. Commerce owns cart, checkout and result state; Identity owns authentication and account resolution; Learning owns dashboard handoff and entitlements; Certificates owns public verification; Notifications owns receipt/access delivery. Generic controls may be shared, but a shared shell must not become a domain-logic layer. PD-006 requires administrator-managed RU/EN policy versions and all four checkout acknowledgments. The implementation owner for policy management still needs agreement in INF03/AD01, alongside Commerce's consent record.
 
 ## Sections instead of unnecessary pages
 
@@ -149,7 +149,7 @@ Catalog owns listings, course/mini-course/package content and offer projections.
 - “How Learning Works” may be added to the homepage or integrated into other sections during visual design; it is not a mandatory separate section. An interactive demo remains an explicitly unapproved design proposal. Prefer `/#learning-preview` if approved, without a separate `/demo` route.
 - Packages merit dedicated pages once selectable configurations and detailed terms exist. Keep configuration within `/packages`/detail, not a separate builder route.
 - Keep `/start-in-usa` as a proposed standalone purchase route with release TBD (PA-04). Omit its live navigation until publication is approved; an approved informational homepage section is an option, not a sale commitment. Phase 2 packages do not settle the standalone release.
-- About, FAQ, contact forms, blog, newsletter, wishlist, public certificate search and self-service refund application routes have no confirmed requirement. Use existing page sections/approved footer contact details where sufficient; propose new routes separately.
+- About, FAQ, contact forms, blog, newsletter, wishlist and public certificate search routes have no confirmed requirement. PD-010 requires refund-request processing and a separate restricted admin log-viewer route, but supplies no literal URLs or public refund-intake route; those contracts remain implementation/planning details. Use existing page sections/approved footer contact details where sufficient; propose new routes separately.
 
 ## Review gates
 

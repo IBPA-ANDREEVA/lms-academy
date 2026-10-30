@@ -27,15 +27,18 @@ Approved baseline:
 - the seven modules and their contracts described in
   [modules.md](./modules.md).
 
-This architecture deliberately does not select a database product, ORM,
-authentication library, payment provider, object store, protected-video provider,
-email provider, job runtime, or hosting platform. Those choices must follow an
-approved requirement and should be recorded separately.
+PD-002 selects Stripe embedded Payment Element and the existing US-entity account,
+with USD pricing/charges/payouts and eligible cards, Apple Pay, Google Pay and Klarna
+for one-time purchases. Subscriptions are excluded from all planned phases.
+PD-003 selects self-managed encrypted HLS, private Cloudflare R2 and separate
+VPS/VM FFmpeg workers. Database/ORM, authentication, email, job-runtime technology,
+application hosting, and video-worker provider/capacity remain implementation decisions.
+The separate media runtime does not change the seven domain-module boundaries.
 
-The product documents mark MVP server-side support expiration and immediate access
-revocation after confirmed refund as scope corrections pending product-owner
-approval. This architecture describes the secure target workflows but does not
-convert their MVP release placement into an approved product decision.
+PD-004 approves server-enforced enrollment support/access deadlines and access
+revocation on refunds/closure, preserving historical learning records subject to
+PD-007 retention. OQ-036/OQ-037 and OQ-048/OQ-049 still block unresolved refund
+and post-expiration details; the approvals do not settle those questions.
 
 ## Architectural goals
 
@@ -75,11 +78,12 @@ flowchart LR
     end
 
     Ports --> Files[Private object storage]
-    Ports --> Video[Protected video host]
-    Ports --> Payment[Payment provider]
+    Ports --> Video[Self-managed encrypted HLS / private R2]
+    Ports --> Payment[Stripe Payment Element]
     Ports --> Email[Email provider]
     Outbox --> Workers[Worker or scheduled invocations]
     Workers --> Ports
+    Media[Separate VPS/VM FFmpeg workers] --> Video
 ```
 
 The database, outbox, and worker boxes describe logical responsibilities, not
@@ -363,8 +367,10 @@ Responses and diagnostics must not expose secrets, signed URLs, raw payment
 payloads, student media, personal contacts, or unnecessary personal data.
 Detailed logs are restricted to authorized operators. Failure tests must assert
 both the useful user-visible result and a searchable, privacy-safe diagnostic
-record. Exact alert thresholds, retention periods, and escalation procedures
-remain unresolved under OQ-008, OQ-079, and OQ-080. A centralized error catalog
+record. PD-007 sets 30-day retention for technical errors and routine administrator
+activity; critical audit records follow legally required periods. Legal retention
+verification, exact audit scope, alert thresholds and escalation remain under
+residual OQ-008, OQ-079 and OQ-080. A centralized error catalog
 is useful only for errors actually shared across entry points; feature-only
 errors stay in the feature.
 
@@ -404,18 +410,38 @@ granting upload and finalizes it only after verifying key, size, type, ownership
 and processing result. Downloads use short-lived authorized grants; permanent
 public object URLs are prohibited for protected content.
 
-Quarantine, scanning, normalization, failed-upload recovery, allowed media, limits,
-and retention are blocked by OQ-004, OQ-043, OQ-044, and OQ-008. The architecture
-provides states such as pending, ready, rejected, and failed without choosing those
-policies.
+PD-005 requires resumable homework uploads, 1 GB per file and combined original
+submission size, no fixed count cap, supported JPEG/PNG/HEIC/WebP/MP4/MOV/WebM
+normalization, image auto-orientation/high-quality compression to maximum 2560px,
+and H.264/AAC MP4 video to maximum 1080p. Generate thumbnails/playable previews;
+allow preview/removal/replacement without corrupting submission history. Preserve
+originals until processing succeeds. Authorize the submitting student, assigned
+curator and administrators; use short-lived signed delivery and PD-001 safe retries.
+Quarantine/scanning specifics remain engineering work; OQ-043/OQ-044 remain
+unresolved. PD-007 governs retention, including outstanding reviews and legal
+exceptions; it does not authorize unconditional deletion at nominal expiry.
 
 ### Protected video
 
-Course video is delivered by a dedicated protected-video provider, not through the
-Next.js server. The Learning module verifies access and asks the provider adapter
-for a short-lived playback capability. Playback progress reported by the client is
-untrusted input and is validated before it affects progress. Provider choice and
-the authoritative viewed/completed rule are blocked by OQ-002 and OQ-021.
+PD-003 replaces external hosting with self-managed encrypted adaptive HLS in
+private Cloudflare R2, processed by FFmpeg workers on a separate VPS/VM. Supply
+1080p maximum plus 720p and 480p variants. Learning enforces enrollment authorization
+and short-lived playback access; segments and encryption keys remain protected.
+The MVP player includes a moving student-specific identifier and selectable RU/EN
+audio/subtitles where available. DRM is after MVP; screen-capture blocking is not
+guaranteed. No identifier format or key-management algorithm is implied.
+
+Trainers and administrators upload resumable MP4/MOV/WebM with supported codecs,
+maximum 20 GB and 4 hours per video; only administrators publish. Catalog owns
+publication and must reject incomplete processing while preserving the previous
+published version. Use a persistent queue, initially one concurrent job, three
+automatic retries and manual recovery, with PD-001 errors/diagnostics.
+
+INF03 must specify implementation, encryption-key management, recovery, supported-
+browser testing, operational verification and worker capacity/provider. Validate
+the $50–$100/month target through capacity testing, not an assumed cost guarantee.
+PD-004/PD-007 govern access and retention. Client progress remains untrusted and
+the authoritative lesson-completion rule remains unresolved under OQ-021.
 
 ### Integration adapters
 
@@ -425,6 +451,33 @@ media processing, Certificates owns document generation, and Notifications owns
 delivery channels. SDK types do not cross the adapter boundary. Provider webhook
 payloads are retained or normalized according to approved security and retention
 rules, and mapped to internal commands only after signature validation.
+
+## Approved MVP operations and workflow constraints
+
+PD-008 requires server-calculated 48 counted weekday-hour review deadlines using
+the assigned curator timezone captured per submission/resubmission, including
+public holidays and excluding weekends. Viewers see local deadlines. Durable,
+retry-safe notifications occur immediately, at 24/12/6/1 remaining hours and overdue;
+admin overdue notifications persist and are auditable. Keep overdue work queued,
+allow authorized admin review without reassignment, and protect concurrent actions.
+
+PD-009 makes complete category/course authoring and content/price approval plus
+independent visibility/sale/archive controls MVP. Validate readiness before
+publication and preserve existing entitlements through sales pauses/archiving.
+PD-010 requires essential admin-dashboard operations without routine developer
+intervention, automatic eligible Stripe refunds, and manual administrator review
+and issuance of every certificate after automatic eligibility calculation. The
+seven-day refund window is proposed, not final eligibility; OQ-037 still blocks it.
+Infrastructure recovery/server management stays outside the admin dashboard.
+
+Admin monitoring includes courses, progress, submissions, review history/deadlines,
+course conversations and student-request statuses. Provide persistent admin
+notifications and a separate admin-restricted log-viewer route with date/severity/
+operation/resource/reference-ID filtering and readable, privacy-safe diagnostics;
+no literal route is chosen here. Sensitive admin actions require an explanatory
+confirmation popup, explicit confirmation, server authorization and audit of actor,
+action, resource, timestamp and outcome. Account/role workflows remain separately
+authorized; no permission is inferred. Module ownership remains in [modules.md](./modules.md).
 
 ## Testing strategy
 
@@ -503,17 +556,17 @@ must be resolved before their dependent foundation work:
 | --- | --- | --- |
 | Primary database and persistence/migration tool | Defines transaction API, constraints, tests, and deployment | OQ-078, OQ-081 |
 | Authentication library/provider and session model | Defines account/session storage, verification, blocking, and multi-role actor context | OQ-013, OQ-016, OQ-032 |
-| Payment provider, merchant entity, authoritative event states, and currency scope | Defines checkout adapter, webhook verification, idempotency keys, and order state machine | OQ-001, OQ-029–OQ-032, OQ-037 |
-| Enrollment/support ownership and clock policy | Defines the entitlement aggregate and every time-based authorization check | OQ-003, OQ-048–OQ-050 |
+| Stripe entity/settlement/method eligibility verification and authoritative event states | PD-002 selects provider/account/currency; verify launch configuration and resolve payment/refund state rules | OQ-029, OQ-031, OQ-032, OQ-036, OQ-037 |
+| Remaining calendar/overlap and post-expiration rules | PD-004 fixes per-enrollment activation, durations, extensions and pauses; unresolved transitions must not be invented | OQ-048–OQ-049; PD-008 SLA is approved |
 | Lesson completion and sequential-unlock policy | Defines progress storage, authorization, and certificate inputs | OQ-021, OQ-042 |
-| Homework media policy and storage/processing provider | Defines upload contract, states, validation, security, and retry behavior | OQ-004, OQ-043, OQ-044 |
-| Protected-video provider and contracted capabilities | Defines playback authorization and media metadata | OQ-002, OQ-084 |
+| Homework processing/storage implementation and residual media policy | PD-005 fixes formats, limits, normalization, resumability and authorization; implementation must honor them | OQ-043, OQ-044; PD-007 legal verification |
+| Video worker capacity/provider, key management and operational/browser verification | INF03 specifies PD-003 self-managed R2/FFmpeg delivery; residual device/session policy stays open | OQ-084 |
 | Background job/outbox execution mechanism | Defines durable callback follow-up, reminders, email, media processing, and operations | OQ-069, OQ-080 |
 | Email provider and delivery policy | Defines sender authentication, callback mapping, retry, localization, and operational support | OQ-006, OQ-069, OQ-080 |
 | Audit scope, retention, privacy, and recovery objectives | Defines immutable evidence, deletion exceptions, storage lifecycle, and backup design | OQ-008, OQ-079, OQ-081–OQ-083 |
 | Certificate identity/template/reissue rules | Defines eligibility snapshot and immutable issuance model | OQ-051–OQ-057 |
-| MVP operational administration path | Determines which safe commands and audited tools must exist at launch | OQ-010, OQ-085 |
-| Product-owner approval of the two pending MVP scope corrections | Determines MVP acceptance coverage for support expiration and refund access revocation | OQ-003, OQ-037, OQ-048, OQ-049, OQ-085 |
+| Essential admin implementation and remaining policies | PD-009/PD-010 require dashboard authoring/operations, automatic refunds, manual certificates, monitoring and log viewing; specify implementation ownership and routes without inventing policy | OQ-031, OQ-032, OQ-036, OQ-037, OQ-051–OQ-052, OQ-079–OQ-080 |
+| Detailed refund, expiry and launch operational policies | PD-004 approves server enforcement/revocation; dependent acceptance still needs residual answers | OQ-037, OQ-048, OQ-049; PD-010 admin scope is approved |
 
 Provider selections and technical tools should be recorded in focused ADRs.
 Approved product answers must be recorded in

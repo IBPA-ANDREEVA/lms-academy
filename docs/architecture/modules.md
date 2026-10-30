@@ -11,10 +11,10 @@ The boundaries below are architectural decisions. Business values that the produ
 documents leave open stay open. A module may expose a configurable seam for an
 unresolved policy, but must not silently choose the policy.
 
-The secure workflows below include server-enforced support expiration and immediate
-access revocation after a confirmed refund because the requested architecture must
-support them. Their placement in MVP is still a scope correction pending
-product-owner approval in `docs/product/mvp.md`; this document does not approve it.
+The secure workflows below follow approved PD-004 / OQ-003 for server-enforced
+support/access deadlines and revocation on refunds/closure, with PD-007 retention.
+Detailed refund and post-expiration policies remain unresolved under OQ-036,
+OQ-037, OQ-048 and OQ-049.
 
 ## Boundary vocabulary
 
@@ -101,6 +101,13 @@ and later social account linking.
 Catalog is the source for what can be discovered, sold, and learned. It owns
 directions, product kinds, course/lesson structure, localized presentation,
 publication, prices, package composition, and references to approved course media.
+PD-009 requires MVP category add/edit/archive and trainer course/lesson/material
+authoring for assigned courses. Trainers propose prices; administrators approve
+content/prices and independently control visibility, sale availability and archiving.
+Publication validates all required lessons/video/materials/homework and a
+trainer-curator for every supported course (not mini-courses). No minimum launch
+course count is an engineering invariant. Sales pauses/archiving do not revoke
+existing Learning entitlements.
 It exposes immutable offer and course-definition projections instead of its raw
 tables.
 
@@ -128,8 +135,16 @@ grant or revoke access. The shared database transaction provides atomicity; a
 committed outbox fact triggers receipt and access notifications.
 
 Browser success redirects do not confirm payment. Only a verified authoritative
-provider event may fulfill an order. Provider choice and several state transitions
-remain blocked by OQ-001 and OQ-029 through OQ-041.
+provider event may fulfill an order. PD-002 selects Stripe embedded Payment Element,
+USD and eligible cards/wallets/Klarna one-time purchases; no subscriptions in any
+planned phase. State transitions and other commercial policies remain blocked by
+OQ-029 through OQ-041. Commerce retains immutable legal-version acceptance evidence
+and verifies all four PD-006 acknowledgments before payment. Policy-management
+ownership is an explicit planning gap to resolve in INF03/AD01; it is not a new module.
+PD-010 requires automatic Stripe approval/processing of eligible refund requests
+without administrator approval; exceptions/failures escalate to administrators.
+Final eligibility is blocked by OQ-037: the seven-day window remains proposed.
+Do not infer a manual-only MVP substitute or a final refund rule.
 
 ### Learning
 
@@ -143,9 +158,15 @@ Learning consumes Catalog definitions but does not copy current Catalog state in
 authority at request time when a historical enrollment snapshot should govern.
 Exactly which version governs is blocked by OQ-022 and OQ-023.
 
-The support clock and recorded-content clock are separate concepts even if a
-future product decision gives them the same start. Exact ownership level, start,
-pause, extension, expiry, and timezone rules are blocked by OQ-003 and OQ-049.
+PD-004 requires independent support/access deadlines per purchased course/enrollment.
+Both activate when the student explicitly marks the introductory rules page viewed:
+14 consecutive calendar days of support and 3 calendar months of course access.
+Assigned curators can extend support up to 14 calendar days per request, including
+requests after support expiry, but cannot extend course access. Administrators may
+change both deadlines, approve longer exceptions and pause access. Freeze applicable
+timers and restore exact remaining duration. Support extensions never implicitly
+extend access. Remaining calendar/timezone and overlapping-extension rules require
+explicit treatment without inventing policy; OQ-049 remains a dependency.
 Authorization must evaluate the current clock synchronously; a scheduled expiry job
 is not the security boundary.
 
@@ -164,17 +185,33 @@ state transitions are explicit and concurrency checked so two curator actions
 cannot both win. The module exposes narrow completion facts, such as whether every
 mandatory assignment for a particular completion-policy version is accepted.
 
-Assignment cardinality, replacement/deletion, deadlines, media limits, curator SLA,
-and post-support-expiry transitions remain open under OQ-004, OQ-005, OQ-020,
-OQ-043 through OQ-049. No implementation may collapse an in-review submission into
-an undefined state at expiry.
+PD-005 sets media formats, limits, normalization, resumability and private delivery.
+PD-004 requires curator review of work submitted before the permitted deadline,
+even when overdue. PD-007 governs eventual deletion and outstanding-review holds.
+Assignment cardinality, already-submitted replacement/deletion, submission deadlines and
+detailed post-expiry transitions remain under OQ-020 and OQ-043 through OQ-049.
+PD-008 fixes the review SLA at 48 counted hours, Monday–Friday continuously,
+excluding weekends and including public holidays. Snapshot the assigned curator
+timezone per submission/resubmission; each starts its own deadline and retains
+review history. Display in viewer-local time. Assignments calculates deadlines
+server-side and emits durable notification facts immediately, at 24/12/6/1 hours
+remaining and overdue, with replay/concurrency protection. Overdue work remains
+queued; Notifications delivers persistent auditable admin alerts. Administrators
+can comment/accept/request revisions without changing the assigned curator.
+PD-001 and OQ-048/OQ-079/OQ-080 remain applicable. No implementation may collapse
+in-review work into an undefined state or erase required history at expiry.
 
 ### Certificates
 
 Certificates evaluates eligibility from an explicit Catalog completion policy,
 Learning progress, Assignments acceptance facts, and the Identity certificate name.
-It owns issuance, unique numbering, the immutable display snapshot, generated PDF
-reference, and later revocation/verification state.
+It owns eligibility evaluation, the administrator review queue, manual issuance,
+unique numbering, immutable display snapshot, generated PDF reference and later
+revocation/verification state. Under PD-010, automatic eligibility never issues a
+certificate: an administrator inspects completion evidence and manually issues
+every certificate, including mini-courses. Use the approved default academy
+template unless an approved custom template is assigned. Audit the issuing actor
+and prevent duplicates; correction/revocation/reissuance remain separate policies.
 
 The evaluation is idempotent for a student, enrollment, course-policy version, and
 certificate language. Once issued, the certificate records the facts used; it is
@@ -293,7 +330,7 @@ Required invariants:
   when the selected persistence technology permits the proposed shared transaction;
 - email delivery occurs after commit and may retry independently.
 
-Product decisions OQ-001, OQ-029 through OQ-032, and OQ-037 must shape the final
+PD-002 and unresolved OQ-029, OQ-031, OQ-032 and OQ-037 must shape the final
 state machine. Package and attribution behavior additionally depends on OQ-025
 through OQ-028 and OQ-034 through OQ-041.
 
@@ -309,6 +346,7 @@ sequenceDiagram
     participant A as Assignments
     participant Trainer
     participant Cert as Certificates
+    actor Admin
     participant N as Notification outbox
 
     Student->>L: Record validated progress
@@ -324,13 +362,17 @@ sequenceDiagram
     A->>Cert: Request eligibility evaluation
     Cert->>L: read lesson-completion facts
     Cert->>A: read mandatory-work facts
-    Cert->>Cert: Issue once if approved policy is satisfied
+    Cert->>Cert: Calculate eligibility and queue administrator review
+    Admin->>Cert: Inspect completion evidence and confirm manual issuance
+    Cert->>Cert: Authorize, recheck eligibility and issue once
     Cert->>N: CertificateIssued
 ```
 
 The request to evaluate may be a direct post-commit call or an outbox-driven job;
-issuance remains idempotent either way. Main/advanced courses require all approved
-mandatory work; mini-courses rely on approved lesson completion rules. The Start in
+eligibility evaluation remains idempotent either way; PD-010 issuance requires
+manual administrator review/authorization. Main/advanced courses require acceptance
+of all mandatory homework; mini-courses require completion of all mandatory lessons.
+Issuance and its audit record must be duplicate-protected. The Start in
 the USA module and package certificate behavior remain undefined.
 
 No final state machine may be implemented until the applicable OQ-021, OQ-042,
@@ -342,8 +384,8 @@ also depends on OQ-053 through OQ-057.
 Learning owns the support entitlement; the module performing an action owns its
 business transition.
 
-This is the target authorization boundary. Its MVP scope remains pending the
-product-owner approval recorded in the product documentation.
+This is the MVP authorization boundary approved by PD-004. Timely-submitted work
+must remain reviewable by its authorized curator even after support expires.
 
 For every submission, revision, review, or enabled course message:
 
@@ -360,38 +402,48 @@ Support expiration is evaluated on request. A delayed scheduled job must not all
 an expired action. Jobs are useful for warnings, read models, and operational
 visibility only.
 
-What happens to in-review work, student revisions, message history, extensions,
-reassignment, materials, and the clock itself remains blocked by OQ-003 and
-OQ-047 through OQ-050. The model must preserve every pre-expiry submission and its
-history while those decisions are pending.
+PD-004 settles activation, durations, extension permissions, pauses, materials
+expiry and the obligation to review timely submissions. Detailed post-expiry
+transitions, revisions, message-history visibility and reassignment remain under
+OQ-047 through OQ-049. Preserve required history and outstanding reviews under
+PD-007 while those questions and legal retention checks remain pending.
 
 ### Refund to access revocation
 
 Commerce owns refund confirmation; Learning owns access state.
 
-This is the secure target flow. Immediate revocation in MVP remains a scope
-correction pending product-owner approval.
+This is the secure MVP flow under PD-004 access revocation. OQ-036/OQ-037
+still block detailed refund and recovery policy.
 
 ```mermaid
 sequenceDiagram
+    actor Requester
     actor Admin
     participant C as Commerce
-    participant P as Payment provider
+    participant P as Stripe
     participant L as Learning
     participant O as Outbox
 
-    Admin->>C: Record approved refund request/evidence
-    C->>P: Initiate refund, or await manual-provider evidence
-    P->>C: Authoritative refund confirmation
-    C->>C: Verify and deduplicate confirmation
-    C->>L: revokeEnrollmentByOrderLine(same transaction)
-    C->>O: RefundConfirmed and AccessRevoked facts
-    C-->>Admin: Auditable result
+    Requester->>C: Submit refund request
+    C->>C: Evaluate final approved eligibility rules
+    alt Eligible under final rules
+      C->>P: Automatically process refund once
+    else Exception or failed processing
+      C-->>Admin: Escalate exception/failure for inspection
+    end
+    opt Authoritative refund is confirmed
+      P->>C: Authoritative refund confirmation
+      C->>C: Verify and deduplicate confirmation
+      C->>L: revokeEnrollmentByOrderLine(same transaction)
+      C->>O: RefundConfirmed and AccessRevoked facts
+      C-->>Admin: Auditable result
+    end
 ```
 
 Required invariants:
 
-- only an authorized administrator can record/approve the platform action;
+- authorize the request and evaluate final eligibility server-side; eligible refunds
+  require no administrator approval, while exceptions/failures escalate (PD-010);
 - monetary confirmation, not intent alone, triggers the required revocation;
 - repeated confirmation is a no-op with the original result;
 - revocation blocks lessons, materials, playback grants, and protected learning
@@ -401,10 +453,31 @@ Required invariants:
 - later trainer/manager accrual reversal consumes the confirmed-refund fact;
 - notification or reporting failure does not restore access.
 
-Partial refunds and multi-product allocation are blocked by OQ-036. Product
-documentation does not approve automatic deletion of submissions or automatic
-certificate revocation after refund; neither should occur until retention and
-certificate policy is decided.
+Partial refunds and multi-product allocation are blocked by OQ-036. Refund must
+not trigger unconditional deletion of submissions: apply PD-007 retention and
+review/legal holds. Automatic certificate revocation after refund remains
+unapproved pending certificate policy.
+
+## Essential administration and operational presentation
+
+PD-010 requires the MVP dashboard to compose owner-module public interfaces for
+permitted user data, block/unblock and access controls, order/refund exceptions,
+manual certificate issuance, content/pricing publication and course monitoring.
+Administrators inspect progress, submissions/history/deadlines, course-scoped
+conversations and student-request statuses. Routine business operations must not
+require developer intervention; infrastructure recovery/server management is
+outside the interface. Account creation and role assignment use separately
+defined authorized workflows. Do not grant new role powers from a generic admin
+flag or direct table writes.
+
+Sensitive administrative operations require a consequence-explaining confirmation
+popup and explicit confirmation, followed by server enforcement and audit of actor,
+action, resource, timestamp and outcome. A confirmation dialog is not authorization.
+The separate admin-restricted operational/error-log route supports date, severity,
+operation, resource and reference-ID search/filtering, readable descriptions and
+privacy-safe diagnostics. Routine retention is 30 days under PD-007. Literal URL,
+viewer implementation owner and notification-center implementation remain planning
+details, not newly approved routes or a new domain module.
 
 ## Practical folder organization
 
@@ -502,7 +575,13 @@ pass raw tables or query builders.
 Audit semantics stay with the action owner. Shared audit persistence may record
 actor, action, target, time, correlation, and safe before/after metadata, but the
 feature defines which action is auditable and which sensitive fields must be
-omitted. Exact audit scope and retention remain blocked by OQ-079 and OQ-008.
+omitted. PD-007 fixes routine-error/admin-log retention at 30 days, encrypted
+restricted backups at 30 days, and permanent certificate records/verification
+evidence. Critical audits follow legally required periods. Audit classification
+and mandatory retention/legal exceptions remain under OQ-079 and residual OQ-008.
+Identity deletion must check active courses and verified identity, notify
+administrators and coordinate eligible deletion through each module owner.
+Restoration must not unintentionally restore deleted personal data.
 
 ## Boundary review checklist
 

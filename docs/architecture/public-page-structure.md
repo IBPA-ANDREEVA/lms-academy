@@ -40,7 +40,7 @@ Purpose: explain the academy's learning formats and help the visitor choose a re
 | 1 | Hero: approved academy identity, concise audience/value statement, actual learning format and image or approved working preview | Primary «Выбрать курс» → `/courses`; secondary «Мини-курсы» → `/mini-courses`. Phase 2 may replace secondary with «Посмотреть пакеты» → `/packages` | MVP; no unsupported outcome, license or QR claim |
 | 2 | Course Discovery: small selection of prepared launch courses, key buying facts | Titles → `/courses/[slug]`; card add action; «Все курсы» → `/courses` | MVP; editorial selection, not a personalized recommendation engine |
 | 3 | Packages: approved 2/3/6-direction offers or configuration entry, included module, real fixed price/savings | «Посмотреть пакеты» → `/packages`; offer → `/packages/[slug]` | Phase 2; absent in MVP |
-| 4 | Mini-courses: recorded-only, no curator/homework review, certificate after approved lesson completion | Detail → `/mini-courses/[slug]`; add to cart; «Все мини-курсы» → `/mini-courses` | MVP |
+| 4 | Mini-courses: recorded-only, no curator/homework review, certificate after mandatory lesson completion and administrator review/manual issuance (PD-010) | Detail → `/mini-courses/[slug]`; add to cart; «Все мини-курсы» → `/mini-courses` | MVP |
 | 5 | Start in USA: sanitation, safety, promotion and client-base development; accurate inclusion/standalone explanation | «О модуле» → `/start-in-usa` only when route ships; package link only when published | Proposed standalone purchase route; release TBD (PA-04); absent until approved for publication |
 | 6 | Public footer, including full legal navigation | `/offer`, `/privacy`, `/refunds`, `/license-disclaimer` | MVP |
 
@@ -50,7 +50,7 @@ These have no fixed numbered slot in the core structure. Category navigation and
 
 | Design option | Content / destinations | Scope boundary |
 | --- | --- | --- |
-| Category navigation | Published directions → `/courses?direction=<directionSlug>`; use the same taxonomy as catalog filters | May be included or integrated in MVP design; confirm inventory under OQ-009/OQ-017. This does not remove required catalog filtering or require a separate homepage category block. |
+| Category navigation | Published directions → `/courses?direction=<directionSlug>`; use the same taxonomy as catalog filters | May be included or integrated in MVP design; confirm actual business-selected ready inventory under PD-009 and taxonomy under OQ-017; no engineering minimum course count. This does not remove required catalog filtering or require a separate homepage category block. |
 | How Learning Works | Explain recorded lessons, required practice, review and completion for supported courses; distinguish mini-courses. Links → `/courses`, `/license-disclaimer` | Static explanation may be included or integrated in MVP design. An interactive sample at `/#learning-preview` remains a separate unapproved proposal (PA-13), isolated from real learning records. |
 | Real moderated reviews / relevant products | Approved content and canonical product links | Phase 3 only; optional placement does not promote the feature into MVP. Omit empty marketing blocks. |
 
@@ -91,7 +91,7 @@ Shared: product facts, trainer, curriculum, preview, purchase panel, later revie
 Purpose: distinguish short recorded learning from supported courses.
 
 1. Public header.
-2. H1 and format explanation: recorded content, no curator/homework review, completion certificate after all lessons viewed under the approved rule.
+2. H1 and format explanation: recorded content, no curator/homework review, certificate eligibility after all mandatory lessons complete under the approved rule, followed by administrator review/manual issuance (PD-010).
 3. Direction, available language and applicable level filters using catalog controls; hide meaningless metadata controls rather than assign fictitious levels (PA-01/OQ-088).
 4. Mini-course cards with factual title, trainer, duration/languages, direction, price; primary title → `/mini-courses/[slug]`, secondary add action. Use real inventory, not source sample names/prices as production products.
 5. «Курсы с куратором» → `/courses`.
@@ -113,7 +113,7 @@ Purpose: evaluate and buy recorded-only learning without implying personal suppo
 8. Purchase panel; «В корзину» then `/cart`; secondary `/courses` for supported learning and `/refunds` for terms.
 9. Public footer.
 
-Reuse course-detail components with type-specific content; suppress support timers and homework promises. States and mobile order match course detail. Certificate eligibility depends on OQ-021; a purchase does not immediately award a certificate.
+Reuse course-detail components with type-specific content; suppress support timers and homework promises. States and mobile order match course detail. Certificate eligibility depends on OQ-021 mandatory-lesson completion; PD-010 then requires administrator evidence review/manual issuance. A purchase does not immediately award a certificate.
 
 ## Packages `/packages` — Phase 2
 
@@ -179,12 +179,12 @@ Purpose: supply buyer identity, review legal/payment terms and pay once.
 2. Checkout title and compact selected-product summary, with «Изменить корзину» → `/cart`.
 3. Buyer identity: signed-in account or guest details; prominent optional «Уже есть аккаунт? Войти» → `/login?next=/checkout`. Guest path remains possible; do not force standalone registration. Exact additional name/address/phone fields depend on payment, legal and certificate decisions. Show why required fields are collected.
 4. Final price breakdown and currency. Phase 2 shows applied promo and eligible discount; recommend editing promo in cart rather than duplicating independently stored promo forms. Server validates current offer, eligibility and USD 2,500 program/package cap according to approved interpretation.
-5. Required explicit agreements with `/offer`, `/refunds`, `/license-disclaimer`; `/privacy` remains accessible. Do not invent a mandatory fourth consent or marketing opt-in. Recommend distinct unchecked acknowledgements for clarity; counsel decides grouping/evidence. Review links preserve checkout state and do not count as acceptance.
-6. Card payment area or provider handoff; final payable amount visible before primary «Оплатить [сумма]». Submission validates buyer/consent/offer and creates a safe payment attempt. Supported wallets are Phase 2 and provider-dependent.
+5. Required explicit acknowledgment of all four documents: `/offer`, `/privacy`, `/refunds`, `/license-disclaimer` (PD-006). Recommend distinct unchecked acknowledgements for clarity; no marketing opt-in is implied. Retain immutable published versions and acceptance timestamps/user/order references. Review links preserve checkout state and do not count as acceptance.
+6. Embedded Stripe Payment Element (PD-002); final payable amount visible before primary «Оплатить [сумма]». Submission validates buyer/consent/offer and creates a safe payment attempt. Cards, Apple Pay, Google Pay and Klarna are eligibility-dependent; Klarna installments are for eligible one-time purchases. USD pricing/charges/payouts; subscriptions are excluded.
 7. Payment progress/error area; provider return → `/checkout/result`; secondary back to `/cart` before payment. Do not restart payment while status is unknown.
 8. Transaction legal footer and approved support contact when available.
 
-Shared: buyer form, cart summary, legal acknowledgements, payment status. States: empty cart → recover to `/cart`; validation/unchecked agreements; price/legal-version change requiring renewed review; cap or eligibility rejection; expired session with preserved cart; unavailable provider; duplicate click; payment processing; payment cancellation/failure. Hosted versus embedded payment and verification timing are open. Mobile never hides terms or final price behind a collapsed summary; preserve input and focus after external payment/app return.
+Shared: buyer form, cart summary, legal acknowledgements, payment status. States: empty cart → recover to `/cart`; validation/unchecked agreements; price/legal-version change requiring renewed review; cap or eligibility rejection; expired session with preserved cart; unavailable provider; duplicate click; payment processing; payment cancellation/failure. Embedded Payment Element is approved; verification timing remains open. Required approved legal documents missing in the selected language block checkout (PD-006). Mobile never hides terms or final price behind a collapsed summary; preserve input and focus after external payment/app return.
 
 ## Purchase confirmation `/checkout/result` — MVP
 
@@ -216,7 +216,7 @@ Shared: identity forms, feedback, token-result panel, continuation handling. Mob
 
 ## Legal pages — MVP
 
-Purpose: let any visitor read the actual applicable terms, including while reviewing checkout. Four documents are separate routes for stable linking, independent versions and direct consent references.
+Purpose: let any visitor read the actual applicable terms, including while reviewing checkout. Four RU/EN documents are separate routes for stable linking, immutable published versions and direct consent references (PD-006). Administrators upload/version/publish after legal professional approval through Draft → Approved → Published. Notify affected students of changes; material changes require renewed acknowledgment at the next checkout, editorial changes notification only. Existing course access continues.
 
 | Route | Top-to-bottom content after Public header | Primary / secondary links |
 | --- | --- | --- |
@@ -242,6 +242,6 @@ Shared: status panel, issuance summary, disclaimer. States: loading, unavailable
 
 ## Cross-page mobile and release review
 
-Future implementation should check 1440×900, 768×1024 and 390×844 per [QA](../design/QA.md), plus content-driven breakpoints. Check Cyrillic wrapping, logical heading/focus order, keyboard menu/filter behavior, touch targets, visible cart/payment actions, legal readability, loading/error announcements and reduced motion. Repeat in English when Phase 2 translations ship; missing translations must be explicit. Font/reference conflicts remain review items and no new visual system is approved here.
+Future implementation should check 1440×900, 768×1024 and 390×844 per [QA](../design/QA.md), plus content-driven breakpoints. Check Cyrillic wrapping, logical heading/focus order, keyboard menu/filter behavior, touch targets, visible cart/payment actions, legal readability, loading/error announcements and reduced motion. Verify RU/EN legal content under PD-006 for MVP; repeat full interface checks when Phase 2 translations ship. Missing translations must be explicit. Font/reference conflicts remain review items and no new visual system is approved here.
 
 No browser UI was implemented or visually tested in LA02. The original draft records reference-image/wireframe inspection; this refinement does not repeat that inspection or establish responsive behavior, contrast or keyboard conformance in a running academy site.

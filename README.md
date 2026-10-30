@@ -11,7 +11,7 @@ Russian-first online beauty education platform supporting course discovery and p
 - pnpm
 - Accepted architecture: [feature-based modular monolith](docs/decisions/0001-modular-monolith.md)
 
-Database, authentication, payment, media, notification and hosting providers remain subject to recorded decisions.
+Approved [product decisions](docs/product/decisions.md) select Stripe embedded Payment Element (USD) and self-managed encrypted video using private Cloudflare R2 and separate VPS/VM FFmpeg workers. Database/authentication, notification, application hosting, and remaining implementation choices stay subject to recorded decisions.
 
 ## Local setup
 

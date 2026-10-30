@@ -35,7 +35,7 @@ flowchart TD
     identity -->|Existing account| login["Optional login; preserve cart"]
     login --> details
     details --> consent["Review total and explicit legal agreements"]
-    consent --> payment["Card payment"]
+    consent --> payment["Stripe embedded Payment Element / eligible methods"]
     payment --> result["Result /checkout/result"]
     result --> confirmed{"Server says payment and access ready?"}
     confirmed -->|No or unknown| recovery["Pending, failure or cancellation recovery"]
@@ -84,7 +84,7 @@ flowchart LR
     access --> dashboard["/account"]
 ```
 
-Do not silently skip cart through an ambiguously labeled “Buy” button. If a future direct-purchase action is approved, its destination must still expose the actual selected order and all checkout requirements. Mini-courses have no curator/homework-review promise. Later lesson completion, not purchase, establishes certificate eligibility under OQ-021.
+Do not silently skip cart through an ambiguously labeled “Buy” button. If a future direct-purchase action is approved, its destination must still expose the actual selected order and all checkout requirements. Mini-courses have no curator/homework-review promise. Completion of mandatory lessons, not purchase, establishes certificate eligibility under OQ-021/PD-010; every certificate then requires administrator evidence review and manual issuance.
 
 ## 4. Existing student → Login → Dashboard
 
@@ -115,7 +115,7 @@ flowchart LR
     read --> catalog["Catalog when no checkout context"]
 ```
 
-Legal pages never require login. Reading a policy is not consent; the buyer must explicitly acknowledge the required documents at checkout. A changed material version/offer should trigger renewed review before payment (recommendation; counsel sets exact evidence rules). Privacy remains accessible without assuming it is an extra mandatory checkbox. If required text is unavailable or unapproved, prevent production payment and explain the failure; do not replace it with generated legal advice.
+Legal pages never require login. Reading a policy is not consent; the buyer must explicitly acknowledge the required documents at checkout. PD-006 requires notification of policy changes to affected students and renewed acknowledgment at next checkout for material changes; editorial changes require notification only. Published versions are immutable, acceptance records retain timestamps/user/order references, and existing access continues. PD-006 requires explicit acknowledgment of Privacy Policy as well as Terms of Sale, Refund Policy and Licensing Disclaimer. If required approved text is unavailable in the selected language, prevent production payment and explain the failure; do not replace it with generated legal advice.
 
 ## 6. Guest purchase → Account creation and access
 
@@ -176,7 +176,7 @@ Do not send plaintext passwords, infer email verification from a payment provide
 | Duplicate callback, reload or back navigation | Return original outcome | No duplicated order, enrollment or email intent |
 | Unknown/unauthorized attempt | Minimal recovery to login/cart/catalog | No order, address or email disclosure |
 
-Payment state mappings, terminal states, retry windows and escalation timing depend on OQ-001/OQ-031 and PA-12. Avoid an invented timeout that turns pending into failed.
+Stripe is approved by PD-002; payment state mappings, terminal states, retry windows and escalation timing remain under OQ-031 and PA-12. Avoid an invented timeout that turns pending into failed.
 
 ## Conditional and later handoffs
 
@@ -191,7 +191,7 @@ Resolve these before the corresponding feature or launch acceptance, as grouped 
 | Risk / confusing transition | Planned prevention or recovery | Dependency |
 | --- | --- | --- |
 | Unavailable packages, EN, reviews, Start in USA or demo appear clickable in MVP | Omit their links/sections until approved and functioning in their release | Release scope; PA-02/PA-04/PA-13/PA-14 |
-| Direction chosen with zero launch products | Explain empty result, reset filters and offer available categories | OQ-009/OQ-017 |
+| Direction chosen with zero launch products | Explain empty result, reset filters and offer available categories | PD-009 business inventory readiness / OQ-017 |
 | Course removed or repriced between catalog and checkout | Revalidate, explain changed line, allow return/remove; no silent charge change | Catalog/Commerce contracts |
 | Advanced product selected without approved eligibility rule | Disclose requirement and block unsupported sale path rather than invent document checks | OQ-018 |
 | Repeated add, active ownership or expired enrollment | Show existing state; use approved repurchase/overlap policy | PA-10; OQ-026 |
@@ -199,15 +199,15 @@ Resolve these before the corresponding feature or launch acceptance, as grouped 
 | Auth, verification or reset loses purchase | Persist safe continuation and cart; revalidate after return | PA-05/06 |
 | Login default sends multi-role buyer into trainer tools | Purchase continuation takes priority subject to authorized student context | OQ-013 |
 | Guest email typo or existing-email collision after charge | Validate email input; define ownership-safe correction/escalation before launch | OQ-032; PA-05/12 |
-| Legal link loses checkout input or agreement versions change | Preserve non-sensitive state, return link, collect current explicit consent | OQ-007; PA-07 |
-| Bank app return/session expiry on mobile | Recover attempt independently of tab session; reauthenticate for order/learning data | OQ-001/OQ-031 |
+| Legal link loses checkout input or agreement versions change | Preserve non-sensitive state, return link, collect current explicit consent | PD-006; residual OQ-007; PA-07 |
+| Bank app return/session expiry on mobile | Recover attempt independently of tab session; reauthenticate for order/learning data | PD-002 / OQ-031 |
 | Promo fails or package replacement surprises buyer | Explain reason, preserve original selections, require deliberate replacement | OQ-025–OQ-028/OQ-034–OQ-035 |
 | Payment succeeds but email/enrollment is delayed | Distinct state, durable retry and real support escalation; no repurchase | PA-12; OQ-069/OQ-080 |
 | Refund or expiry removes previously available learning | Show authoritative access state and approved explanation/support; retain history | OQ-003/OQ-036/OQ-037/OQ-048/OQ-049 |
 | Verification course has been archived | Retain issuance snapshot/title; omit broken product link | OQ-055/OQ-056 |
 | Account blocked | Clear permitted recovery path without granting protected access | OQ-016 |
 
-Server-side support expiry and immediate audited revocation after confirmed refunds are documented target safeguards whose MVP scope corrections still await product-owner approval. This draft preserves that status; it does not approve the corrections or invent refund eligibility, support clocks or certificate revocation rules.
+PD-004 approves server-enforced access/support clocks and revocation. PD-010 requires automatic eligible Stripe refunds and confirmed-refund access revocation in MVP; exceptions/failures escalate to administrators. The seven-day window remains proposed under OQ-037, not final public policy. PD-010 also requires manual administrator issuance after eligibility review for every certificate. Do not infer certificate correction/revocation/reissuance rules.
 
 ## Acceptance scenarios for future implementation
 

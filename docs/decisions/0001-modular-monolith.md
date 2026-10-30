@@ -15,8 +15,8 @@ catalog publication, purchase and payment confirmation, enrollment, protected
 learning, homework review, certificates, notifications, refunds, and later
 commercial operations. These workflows share strong consistency and authorization
 requirements. For example, confirmed payment must grant the intended enrollment
-once, and confirmed refund must revoke it immediately and auditably if the pending
-MVP scope correction is approved.
+once, and confirmed refund must revoke it immediately and auditably under PD-004,
+while detailed refund policy remains open.
 
 The product is at an early stage. The repository is a single Next.js App Router
 application with seven feature roots, and many provider and product-policy
@@ -177,7 +177,7 @@ distributed-system costs of the alternatives at the current stage.
 - Boundary or ownership changes update `docs/architecture/modules.md` and, when
   significant, receive a new ADR.
 - Unresolved product questions remain unresolved in implementation and tests until
-  recorded as approved decisions in `docs/product/open-questions.md`.
+  recorded as approved decisions in `docs/product/decisions.md`.
 
 ### Permitted
 
@@ -242,6 +242,26 @@ queries, events, ownership, and failure semantics. A later ADR must define data
 migration, consistency, observability, security, deployment, and rollback. The
 default remains in-process; extraction is not an assumed roadmap item.
 
+## Product decision update · 2026-10-30
+
+PD-002 selects Stripe; PD-003 replaces the external video host with private
+Cloudflare R2 and FFmpeg workers on a separate VPS/VM. This required media runtime
+is an explicit exception to the earlier single-runtime assumption, not a split of
+the domain modules into microservices. INF03 must specify its operation, key
+management, recovery and capacity/browser verification before implementation.
+PD-004–PD-007 govern access, uploads, policies and retention; their unresolved
+dependencies remain in the product register.
+
+## Product decision follow-up · 2026-10-30
+
+PD-008–PD-010 add approved SLA/reminders and administrator review, full MVP
+category/course authoring/publication, essential dashboard operations, automatic
+eligible Stripe refunds and manually issued certificates after automatic
+eligibility. These workflows retain the existing module ownership and public
+interfaces. Admin controls do not introduce direct cross-module table access or
+infrastructure-recovery controls. Refund eligibility remains legally conditional
+under OQ-037; the proposed seven-day window is not a settled policy.
+
 ## Follow-up decisions
 
 The following need focused decisions before the relevant implementation, but they
@@ -249,9 +269,9 @@ do not change this ADR:
 
 - primary database and persistence/migration tooling;
 - authentication provider/library and session strategy;
-- payment provider and authoritative payment/refund state mapping;
+- authoritative Stripe payment/refund state mapping and launch verification (PD-002 selects Stripe, account ownership and USD);
 - private object storage and homework-media processing;
-- protected-video provider and playback grant model;
+- self-managed R2/FFmpeg video operational details, encryption-key management, worker capacity/provider and playback grants under PD-003;
 - background-job and transactional-outbox execution;
 - email delivery provider;
 - deployment, observability, backup, and recovery platform choices.

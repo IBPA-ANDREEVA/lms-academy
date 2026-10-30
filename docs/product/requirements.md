@@ -2,7 +2,7 @@
 
 ## Purpose and source authority
 
-This document defines the intended behavior of the online academy for future product and engineering work. It consolidates the original Russian technical specification, the five-page wireframe PDF, and the LMS planning notes. It describes required behavior without selecting technologies or resolving decisions that the sources leave open.
+This document defines the intended behavior of the online academy for future product and engineering work. It consolidates the original Russian technical specification, the five-page wireframe PDF, and the LMS planning notes. It describes required behavior, including the owner-approved selections in [decisions.md](./decisions.md), without resolving questions that remain open.
 
 Source references used in this document:
 
@@ -17,14 +17,14 @@ The original technical specification and wireframe PDF are now available under `
 
 Source precedence for interpreting this document:
 
-1. The original technical specification is authoritative for business rules and feature intent.
+1. Approved product decisions in [decisions.md](./decisions.md) take precedence over superseded source and planning assumptions. The original technical specification remains authoritative where not superseded.
 2. The wireframe PDF illustrates expected information architecture and representative interactions; placeholders such as academy name, prices, images, and lesson names are not final content.
 3. The Vault plans refine delivery sequencing and implementation slices. They do not silently override the original business rules.
 4. Any unresolved conflict or placeholder is recorded in [open-questions.md](./open-questions.md).
 
 Release allocation is maintained in [mvp.md](./mvp.md). A requirement appearing here does not imply that it belongs in the first release.
 
-Unless labeled otherwise, normative product behavior in this document comes from S1, with interface evidence from S2. A **planning refinement** comes from P1 or P2 and narrows delivery or acceptance without changing the underlying business rule. A **scope correction pending product-owner approval** records a requested documentation correction for which no explicit approval evidence is present in the source set. An **engineering recommendation** is additional implementation guidance inferred to make a source requirement secure, reliable, or testable; it is not an original business decision and must not be used to resolve an open product question.
+Unless labeled otherwise, normative product behavior in this document comes from S1, with interface evidence from S2. A **planning refinement** comes from P1 or P2 and narrows delivery or acceptance without changing the underlying business rule. A **scope correction pending product-owner approval** labels only changes for which no explicit approval evidence exists; it does not apply to PD-002–PD-010; explicit proposals within an approved entry remain qualified. An **engineering recommendation** is additional implementation guidance inferred to make a source requirement secure, reliable, or testable; it is not an original business decision and must not be used to resolve an open product question.
 
 ## Product goals and operating model
 
@@ -39,7 +39,7 @@ The initial subject directions are:
 - makeup;
 - cosmetology.
 
-Administrators must be able to add directions without a code change.
+Administrators add, edit and archive educational categories/directions without code changes (PD-009). Course quantity and selection are business decisions; engineering must not enforce a minimum launch course count.
 
 The operating model distinguishes instructor-created content from curator-supported learning:
 
@@ -86,14 +86,14 @@ A student may:
 A trainer-curator may:
 
 - see only assigned courses and students needed to perform the role;
-- upload draft lesson video and materials for owned courses;
+- create courses, lessons and materials for assigned courses, and propose prices for administrator approval (PD-009);
 - review assigned homework, provide feedback, accept work, or request revision;
 - answer course-scoped student questions;
 - see their own accrual and payout information when that module is enabled.
 
 A trainer-curator must not:
 
-- publish a course without administrator approval;
+- publish a course; only administrators approve content/prices and control publication (PD-009);
 - see student contact details outside the platform;
 - see total academy revenue.
 
@@ -131,9 +131,9 @@ The catalog must support these product types:
 
 | Product type | Curator support | Homework review | Completion basis |
 | --- | --- | --- | --- |
-| Beginner course | Required | During the support period | All required assignments accepted |
-| Advanced course | Required | During the support period | All required assignments accepted |
-| Mini-course | None; recorded content only | None | All lessons viewed |
+| Beginner course | Required | Timely submissions remain reviewable after support expiry (PD-004) | All required assignments accepted |
+| Advanced course | Required | Timely submissions remain reviewable after support expiry (PD-004) | All required assignments accepted |
+| Mini-course | None; recorded content only | None | All mandatory lessons completed; administrator review/manual certificate issuance (PD-010) |
 | Start in the USA module | None specified | None specified | Not defined |
 | Package | Per included course | Per included course | Each included product's own rules |
 
@@ -158,7 +158,9 @@ A course record must support:
 - preview video;
 - available course languages;
 - student reviews when review functionality is enabled;
-- publication and sale status.
+- independently controlled visibility, sale availability and archiving (PD-009).
+
+**PD-009 publication readiness:** all required lessons, videos, materials and homework must be complete before publication. Every curator-supported course requires an assigned trainer-curator; mini-courses do not. Trainers propose prices and administrators approve them. Pausing sales or archiving never revokes existing student entitlements. Use an approved default academy certificate template unless an approved custom template exists. Full category/course authoring and approval/publication controls are MVP; launch inventory remains business-supplied data, not an engineering quota.
 
 The public catalog must support filtering by direction, course language, and level. The wireframe also shows category tabs and a price area, but does not establish additional filtering rules.
 
@@ -236,16 +238,19 @@ The source links this cap to a BPPE registration exemption. Legal counsel must c
 Before payment, the buyer must explicitly accept:
 
 - the public offer or terms of sale;
+- the privacy policy;
 - the refund policy;
 - the license disclaimer stating that a certificate does not authorize professional practice.
 
-**Engineering recommendation:** retain evidence of the accepted document versions, timestamp, user or checkout identity, and relevant order. Final retention and evidentiary requirements require legal approval.
+**Approved — PD-006 / OQ-007:** retain immutable published versions and acceptance history with timestamps, user and order references. All four documents require explicit acknowledgment before payment. Block checkout if required approved documents are unavailable in the selected language. Material changes require renewed acknowledgment at the next checkout; editorial changes require notification only. Notify affected students and preserve existing course access. Retention follows PD-007, subject to its pending legal verification.
 
 ### Payment processing
 
-- Payment must be handled by a selected payment provider; the provider and receiving legal entity are unresolved.
-- Card payment is required.
-- Apple Pay and Google Pay are requested where supported by the chosen provider and environment.
+- **Approved — PD-002 / OQ-001:** Stripe, using the existing active account owned by the academy's US legal entity, with embedded Stripe Payment Element.
+- USD pricing, charges, and payouts to the existing US company bank account; US and international customers where supported.
+- Cards, Apple Pay, Google Pay, and Klarna where eligible. Klarna installments apply to eligible one-time purchases.
+- Subscriptions are excluded from MVP and all future planned phases.
+- Before launch, verify the exact legal entity, Stripe account settlement configuration, and payment-method eligibility. OQ-029, OQ-031, OQ-032, OQ-036, and OQ-037 remain separate.
 - Fulfillment occurs only after authoritative payment confirmation.
 - Failed, cancelled, or incomplete payment must not grant access.
 
@@ -277,14 +282,15 @@ Stacking, per-customer limits, minimum spend, currency behavior, and treatment o
 
 ### Refunds and access reversal
 
-- Only an administrator may record or approve a refund in the platform.
+- **Approved — PD-010 / OQ-010:** eligible refund requests are automatically approved and processed through Stripe without administrator approval; exceptional cases and failures escalate to administrators. Administrators inspect orders, refunds, statuses and exceptions.
+- The supplied seven-day window after confirmed payment, regardless of course progress, is explicitly **proposed**, subject to applicable law and final refund rules. OQ-037 remains blocking; do not treat that window as final eligibility policy.
 
-**Scope correction pending product-owner approval:**
+**Approved access revocation — PD-004 / OQ-003; unresolved refund details remain under OQ-036/OQ-037:**
 
 - Once a monetary refund is confirmed, the affected course access must be revoked immediately, including in MVP.
 - The revocation must be server-enforced and recorded with the order, refund confirmation, actor, timestamp, affected enrollment, and resulting access state so it is auditable.
 - Trainer and manager accruals must be reversed for the refunded sale when those financial modules exist.
-- The MVP delivery plan allows the monetary refund to be performed manually in the payment provider, but confirmed refund recording and the resulting access revocation are MVP requirements. Later phases automate provider-side refund integration and financial reversals.
+- Automatic Stripe refunds and confirmed-refund access revocation are MVP (PD-010). Trainer/manager financial reversals remain with their later financial modules. A manual-provider workflow is not a substitute for the approved automatic refund path.
 - Refund handling must be idempotent so repeated confirmation cannot create inconsistent access or financial effects.
 - Partial-refund and multi-product order behavior is unresolved.
 
@@ -324,17 +330,18 @@ The precise threshold for considering a video or lesson viewed is unresolved.
 
 - Authorized students may view or download the materials attached to an accessible lesson.
 - Protected student resources must not be exposed through permanent public links.
-- Access to materials follows the course-access period unless a different rule is explicitly configured.
+- Access to materials follows the course-access deadline unless extended under PD-004.
 
 ### Homework submission
 
 - A homework submission may contain photos, video, and a text comment.
 - The user must see previews of uploaded media before submission.
-- The original source asks the platform to accept arbitrary incoming media sizes and formats and compress or normalize them automatically, while also saying maximum sizes are undecided. The implementation must therefore define supported formats, practical service limits, and user-facing validation before launch.
-- The allowed file count is not specified.
+- **Approved — PD-005 / OQ-004:** all supported photo/video formats, including JPEG, PNG, HEIC, WebP, MP4, MOV and WebM, with automatic normalization.
+- Maximum 1 GB per file and 1 GB combined original files per submission; no fixed file-count limit.
+- Images: auto-orientation, high-quality compression, maximum 2560px processed copies. Videos: H.264/AAC MP4, maximum 1080p. Generate thumbnails and playable previews.
 - Submission files must be stored privately and made available only to authorized student, assigned curator, and authorized administrators.
 
-**Engineering recommendation:** make the upload flow recoverable on mobile networks and enforce private delivery through authorized storage paths. Exact resumability and service limits remain open.
+**Approved — PD-005:** resumable uploads with progress and interruption recovery; students can preview, remove and replace files. Use short-lived signed delivery, preserve originals until processing succeeds, and never corrupt submission history. Safe retries, understandable errors and structured logs follow PD-001. Retention follows course access and PD-007, including outstanding review obligations. OQ-043/OQ-044 remain dependencies; OQ-045 still governs changes to an already-submitted assignment.
 
 ### Homework lifecycle
 
@@ -351,15 +358,18 @@ The system must preserve submission and review history across revisions. A curat
 - Student-curator messages are scoped to a course.
 - A student may ask questions and receive curator responses while support is active.
 - The student must see the remaining curator-support time.
-- The specification proposes two weeks of support and states that homework review and messaging close after expiry.
+- **Approved — PD-004 / OQ-003:** both timers start when the student explicitly marks the introductory course page as viewed; that page explains all important course rules.
+- Support lasts 14 consecutive calendar days; course access lasts 3 calendar months including support. Track separate deadlines per purchased course/enrollment.
+- Students can submit a Request Extension form even after support expires. Assigned curators may extend support by up to 14 calendar days per request, never course access. Administrators may modify both deadlines, approve longer exceptions, and temporarily pause access.
+- Pauses freeze applicable timers and preserve the exact remaining duration until restoration. Support extensions never automatically extend course access.
+- Support closes at its deadline; lessons and materials close at the course-access deadline unless extended. Refunds/closure revoke access while preserving historical learning records, subject to PD-007 retention safeguards.
 
-**Scope correction pending product-owner approval:**
+**Approved server enforcement — PD-004 / OQ-003:**
 
 - From MVP, the server must enforce the configured support expiration when authorizing new homework submissions, homework revisions, curator review actions that the approved expiry policy disallows, and new course-scoped messages if messaging is enabled in that release. A hidden or deferred countdown must not leave expired operations accessible.
 - Every assignment submitted before support expires must retain a valid, explicit lifecycle status and its history after expiry. Expiration must not silently discard it, move it to an undefined state, or make its next permitted action ambiguous.
-- The product owner must approve whether a curator may finish an in-review assignment and whether a student may revise it after expiry. Until OQ-048 is decided, the expiry state machine and its MVP acceptance tests are blocked.
-- Recorded lessons remain available for a separate access period, provisionally shown as three months.
-- Start point, pauses, extensions, reassignment, and timezone rules are unresolved.
+- Curators must review assignments submitted before the permitted deadline even if review is overdue. OQ-048 still blocks detailed post-expiration transitions, including student revision handling.
+- PD-008 / OQ-005 now supplies the approved review SLA; OQ-049 remains an unresolved access-clock dependency. Calendar-month calculation and overlapping-extension details require consistent implementation; no specific algorithm was supplied. Reassignment and remaining timezone questions must not be guessed.
 
 The wireframe shows an in-lesson curator hint, text comment area, upload surface, and a button for submitting work for review.
 
@@ -368,7 +378,7 @@ The wireframe shows an in-lesson curator hint, text comment area, upload surface
 ### Course workspace
 
 - A trainer sees owned or assigned courses and the number of active students.
-- A trainer may upload draft video and lesson materials.
+- A trainer creates courses, lessons and materials for assigned courses and proposes prices; administrators approve content and pricing (PD-009).
 - Only an administrator may approve and publish trainer-created or edited content.
 - Publication must not accidentally expose incomplete or unapproved content.
 
@@ -378,11 +388,15 @@ The wireframe shows an in-lesson curator hint, text comment area, upload surface
 - It is ordered by submission time or response deadline so the most urgent work is clear.
 - Each item shows the response deadline.
 - Overdue work is visually emphasized and triggers an administrator notification.
-- The example response SLA is 48 hours, but the actual SLA is unresolved.
+- **Approved — PD-008 / OQ-005:** 48 counted hours from submission, counting Monday–Friday continuously, excluding weekends; public holidays count.
+- Snapshot the assigned curator's timezone at submission; display deadlines in each viewer's local timezone. Each new submission or corrected resubmission has an independent 48-hour deadline, with all history preserved.
+- Notify the curator immediately on submission, at 24, 12, 6 and 1 remaining hours, and when overdue. Overdue work remains in the queue; persistent, auditable administrator notifications are required. Contacting the curator is optional.
+- Students see the expected review deadline and current status. Administrators can comment, accept or request revisions without changing the assigned curator; audit every action.
+- Timely submissions must still be reviewed after support expiration. OQ-048 still controls student revisions after expiry. Calculate deadlines server-side with durable reminders, retry safety, concurrency protection and PD-001 errors. OQ-079/OQ-080 remain dependencies.
 
 ### Review detail
 
-The curator must be able to:
+The curator, and an administrator acting under PD-008 without changing the assigned curator, must be able to:
 
 - inspect submitted photos and video;
 - read the student's comment and relevant submission history;
@@ -429,6 +443,8 @@ Eligibility timing, tax treatment, currency, partial refunds, payout cadence, an
 
 ## Administration
 
+**Approved — PD-010 / OQ-010:** all essential business operations are available in the MVP admin dashboard without routine developer intervention. Infrastructure recovery and server management remain outside the admin interface. Sensitive operations require a confirmation popup explaining consequences and explicit confirmation before proceeding. Enforce permissions/business rules server-side; audit administrator, action, resource, timestamp and outcome, with PD-001 errors/diagnostics.
+
 ### Catalog administration
 
 Administrators must be able to:
@@ -446,18 +462,19 @@ Administrators must be able to:
 
 Administrators must be able to:
 
-- create and block accounts;
-- grant and revoke roles;
+- view permitted user information and block/unblock accounts;
+- use separately defined, authorized account-creation and role-assignment workflows; PD-010 does not define new account or role-grant rules;
+- manually grant, suspend, restore and revoke course access, auditing sensitive changes;
 - assign trainers or curators to courses;
 - configure trainer rates and manager percentages;
-- inspect and correct enrollment access with an audit record.
+- inspect and correct enrollment access with an audit record; modify support/course-access deadlines, approve longer exceptions, and pause/restore applicable timers under PD-004.
 
 ### Sales administration
 
 Administrators must be able to:
 
 - view all orders and details;
-- record and process refunds;
+- inspect automatic Stripe refund outcomes, exceptions and failures under PD-010; final refund eligibility remains under OQ-037;
 - manage promo codes;
 - inspect manual enrollments and payment evidence;
 - inspect current access state;
@@ -468,7 +485,9 @@ Administrators must be able to:
 Administrators must be able to:
 
 - monitor review deadlines and overdue homework by trainer or curator;
-- receive overdue notifications;
+- receive persistent, auditable overdue notifications;
+- inspect all courses, student progress, submissions, review history, deadlines and course-scoped conversations; view student requests and their processing statuses (PD-010);
+- comment, accept or request homework revisions under PD-008 without automatically changing the assigned curator;
 - inspect assignment and reassignment of curators;
 - moderate student reviews when reviews are enabled.
 
@@ -477,9 +496,15 @@ Administrators must be able to:
 Administrators must be able to:
 
 - manage Russian and English certificate templates;
-- inspect the issued-certificate registry;
-- revoke a certificate without deleting its audit history;
+- inspect eligible certificates in a review queue and review completion evidence before manual issuance for every course type, including mini-courses (PD-010);
+- use the approved default academy template unless an approved custom template is assigned;
+- inspect the issued-certificate registry and prevent duplicate issuance with audit evidence;
+- implement correction, revocation and reissuance only after their separate decisions;
 - support public verification when the QR registry is enabled.
+
+### Operational logs
+
+PD-010 requires a separate administrator-restricted route for operational/error logs; its literal URL is not yet selected. Search/filter by date, severity, operation, affected resource and reference ID. Show clear descriptions alongside technical diagnostics, protect sensitive personal information/credentials, and retain routine logs 30 days under PD-007. No infrastructure-recovery controls belong in this viewer.
 
 ### Payout administration
 
@@ -493,9 +518,11 @@ Administrators must be able to:
 ## Certificates
 
 - A supported main or advanced course becomes certificate-eligible when all mandatory assignments are accepted.
-- A mini-course becomes certificate-eligible when all lessons are viewed.
+- A mini-course becomes certificate-eligible when all mandatory lessons are completed (PD-010); OQ-021 still defines authoritative lesson completion.
 - The Start in the USA module and package-level certificate behavior are not defined.
-- An eligible student may download a PDF certificate in the required available language.
+- The LMS calculates eligibility automatically; eligibility does not issue a certificate. Every certificate requires administrator evidence review and manual issuance, including mini-courses. Eligible cases enter an administrator review queue (PD-010).
+- Use the approved default academy template unless an approved custom template is assigned (PD-009/PD-010). Issuance is auditable and duplicate-protected.
+- After administrator issuance, the student may download the PDF certificate in the required available language.
 - Each certificate has a unique number.
 - The certificate includes the required disclaimer that it confirms completion of an educational course, is not a license, and does not authorize professional activity.
 - In the QR-enabled phase, the certificate contains a QR code leading to a public verification page.
@@ -514,12 +541,13 @@ Email notifications are required unless a release scope explicitly defers a spec
 - curator response;
 - reminder for an unsubmitted assignment;
 - warning three days before curator support expires;
-- certificate ready.
+- certificate ready;
+- policy-change notices for affected students (PD-006).
 
 ### Trainer-curator notifications
 
-- new homework submission;
-- homework approaching its response deadline.
+- immediate new-homework notification;
+- PD-008 reminders at 24, 12, 6 and 1 counted hours remaining, plus overdue notification; delivery must be durable and retry-safe.
 
 ### Manager notifications
 
@@ -528,11 +556,12 @@ Email notifications are required unless a release scope explicitly defers a spec
 
 ### Administrator notifications
 
-- overdue review;
-- refund;
-- monthly payout summary.
+- persistent, auditable overdue review notifications;
+- refund exceptions and failed refunds under PD-010;
+- monthly payout summary;
+- account-deletion requests (PD-007).
 
-Delivery channels, retry policy, user preferences, quiet hours, and exact timing are unresolved.
+PD-008 fixes review-notification timing and durable retry-safe delivery. Other notification timing, delivery-channel details, retry parameters, preferences and quiet-hour policies remain unresolved; do not use those gaps to silently change the approved SLA reminders.
 
 ## Reporting and analytics
 
@@ -553,12 +582,16 @@ The administrative reporting suite must eventually support:
 
 ## Video and protected media
 
-- Course video must use a protected video-hosting provider rather than the application server.
+- **Approved — PD-003 / OQ-002:** self-managed streaming and encryption with private Cloudflare R2 and separate VPS/VM FFmpeg workers; provider and capacity chosen during implementation. This replaces external protected-video hosting.
+- Encrypted adaptive HLS: maximum 1080p, with 720p and 480p variants.
+- Trainers and administrators may upload; only administrators may publish. Resumable MP4/MOV/WebM uploads with supported codecs, maximum 20 GB and 4 hours per video.
+- Persistent processing queue, initially one concurrent job, three automatic retries, and manual recovery. Failed processing must not publish incomplete content or replace the previous published version.
+- PD-001 diagnostics/errors; target $50–$100/month subject to capacity testing. INF03 must specify implementation, encryption-key management, recovery, supported-browser testing, and operational verification.
 - Playback must require LMS authorization.
 - Direct links must not provide durable access outside the platform.
 - Downloads must not be offered through the product.
-- Signed playback access and expiration must be hardened in the later protection phase.
-- A personalized overlay containing the student's email is required as a deterrent to screen recording in the later phase.
+- Server-side enrollment authorization, short-lived playback access, and protected video segments and encryption keys are required in MVP.
+- A moving student-specific identifier watermark and trainer uploads are MVP. DRM is deferred until after MVP; the identifier format is not selected by PD-003.
 - The platform must support multiple audio tracks or RU/EN subtitles where the course provides them.
 
 No browser-based system can guarantee prevention of screen capture. The requirement is deterrence and access control, not an absolute technical guarantee.
@@ -572,9 +605,17 @@ Public pages must exist for:
 - refund policy;
 - professional-license disclaimer.
 
-Legal counsel supplies and approves the final text. The application must publish the approved versions and capture mandatory checkout consent.
+**Approved — PD-006 / OQ-007:** administrators upload, version and publish Russian and English documents after legal professional approval, using Draft → Approved → Published. Published versions are immutable. Public legal pages are linked in the footer; checkout verifies explicit acknowledgment of all four documents server-side. Administrative authorization, an audit trail, and PD-001 failures are required. Final texts and legal approval evidence remain outstanding under the residual OQ-007.
 
-Student, payment, homework, certificate, consent, and audit records must be retained for at least the legally required period and must not be deleted merely because a course closes. The source leaves the number of years to legal counsel.
+**Approved — PD-007 / OQ-008:**
+
+- Accounts remain until manual deletion or a verified deletion request. Financial records remain until eligible for deletion subject to legal obligations; consent records follow account retention unless legally required longer.
+- Homework and messages are deleted when associated course access ends, normally after 3 months, accounting for pauses, extensions, outstanding reviews and legal exceptions.
+- Certificate records and necessary verification evidence are retained permanently.
+- Technical-error logs and routine administrator activity have 30-day retention; critical audit records follow legally required periods.
+- Account deletion notifies administrators. Automatically delete eligible data only when no active courses remain and identity/retention checks pass; otherwise an administrator contacts the student.
+- Backups are encrypted, restricted, and retained 30 days. Recovery must prevent deleted personal data from being unintentionally restored.
+- Automated retention safeguards, restricted access and PD-001 failure handling are required. Mandatory retention periods, deletion exceptions and applicable privacy requirements still need legal verification.
 
 The platform must minimize role access to personal data and keep protected student resources private. Detailed privacy rights, deletion exceptions, processor agreements, and jurisdictional requirements are unresolved.
 
@@ -624,35 +665,35 @@ The platform must minimize role access to personal data and keep protected stude
 
 ### Supported-course completion
 
-1. The student opens authorized lessons in the configured order.
+1. The student explicitly marks the introductory course page, containing all important course rules, as viewed to activate the independent support/access deadlines; then opens authorized lessons in the configured order.
 2. The student watches content and uses lesson materials.
 3. The student submits required homework during active support.
 4. The curator reviews it within the configured SLA and accepts it or requests revision.
 5. The student revises until every mandatory assignment is accepted.
-6. The LMS creates certificate eligibility and generates the certificate.
+6. The LMS calculates eligibility and queues administrator evidence review; only the administrator's manual issuance produces the certificate (PD-010).
 
 ### Mini-course completion
 
 1. The student purchases or receives the mini-course.
 2. The student views every required lesson.
-3. The LMS generates certificate eligibility without curator review.
+3. The LMS calculates eligibility without curator homework review, then queues administrator evidence review and manual issuance (PD-010).
 
 ### Refund
 
-1. An administrator records or initiates the refund.
-2. The monetary refund is confirmed according to the release's provider integration.
-3. Affected access is revoked immediately and the revocation evidence is recorded, including when the monetary refund was processed manually for MVP.
+1. The server evaluates a refund request using the final approved eligibility rules; the proposed seven-day window remains under OQ-037.
+2. Eligible requests are approved and processed through Stripe automatically; exceptions and failures escalate to administrators.
+3. Authoritative confirmed refunds revoke affected access automatically and immediately, with audit evidence and no duplicate refunds (PD-010).
 4. Related trainer and manager accruals are reversed when those modules exist.
 5. The event and actor remain auditable and reports reflect the correction.
 
 ### Homework review escalation
 
 1. Submission enters the assigned curator's queue.
-2. The LMS calculates the response deadline.
-3. Approaching deadlines notify the curator.
-4. Overdue items are highlighted and notify an administrator.
-5. The administrator may inspect or reassign according to a policy that still must be defined.
+2. The server calculates 48 counted weekday hours using the curator timezone captured at submission.
+3. Notify immediately, at 24/12/6/1 remaining hours, and overdue (PD-008).
+4. Keep overdue work in the queue and create persistent, auditable administrator notifications.
+5. Administrators can review/comment/accept/request revision without changing the assigned curator. Separate reassignment policy remains unresolved.
 
 ## Traceability for future agents
 
-Before implementing a feature, use this document for business intent, [mvp.md](./mvp.md) for release inclusion, and [open-questions.md](./open-questions.md) for decisions that must not be guessed. Where a source placeholder remains open, implementation may create a configurable seam or test fixture, but must not encode an unapproved business answer as fact.
+Before implementing a feature, read [decisions.md](./decisions.md) for approved overrides, use this document for business intent, [mvp.md](./mvp.md) for release inclusion, and [open-questions.md](./open-questions.md) for decisions that must not be guessed. Where a source placeholder remains open, implementation may create a configurable seam or test fixture, but must not encode an unapproved business answer as fact.

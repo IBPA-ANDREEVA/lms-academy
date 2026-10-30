@@ -11,7 +11,7 @@ The existing sitemap and the separation of discovery, commerce, identity and pro
 | Item | Effect on routing/navigation now | Review timing |
 | --- | --- | --- |
 | PA-01: catalog boundaries | Retain `/courses` and `/mini-courses` with canonical details and query-based categories | No new sitemap decision; inventory, taxonomy values and filter behavior before LA06/LA07 |
-| PA-02: locale URLs | Confirm whether unprefixed RU plus `/en/...` is the URL convention, avoiding a later URL migration | Before route implementation; English content and fallback behavior remain Phase 2 |
+| PA-02: locale URLs | Confirm whether unprefixed RU plus `/en/...` is the URL convention, avoiding a later URL migration | Before route implementation; full English interface content remains Phase 2, but PD-006 RU/EN legal-language access is needed for MVP |
 | PA-03: protected namespace | Confirm literal `/account` so protected learning cannot collide with public `/courses/[slug]` | Before route implementation; role-default behavior remains an identity/workspace dependency |
 | PA-04: Start in USA | Retain proposed `/start-in-usa`; release TBD means no live navigation until publication approval | Conditional publication decision, not a blocker for MVP sitemap acceptance |
 
@@ -22,14 +22,14 @@ The existing sitemap and the separation of discovery, commerce, identity and pro
 - **Evidence:** requirements distinguish main courses, mini-courses, packages and Start in USA; PDF pages 1–2 show product groups. MVP requires courses/mini-courses and direction/language/level filters. OQ-017/OQ-088 leave taxonomy and initial language inventory open.
 - **Retained architecture:** `/courses` for main/advanced courses plus a separate `/mini-courses` listing, sharing data and controls; one canonical detail URL per product. The first draft considered an all-product catalog or homepage-only mini-courses; this refinement keeps the existing split rather than reopening those alternatives.
 - **Deferred details:** direction/slug conventions, applicable mini-course levels, filter multi-select, labels and initial products remain inventory-driven implementation questions. Query-based categories do not require extra direction landing pages, search or price filters. Single-select controls remain a recommendation unless inventory shows a need for more.
-- **Owner / timing:** Product/content + engineering; before LA06/LA07. OQ-009/OQ-017/OQ-088 remain in the product register; they do not block retaining the sitemap.
+- **Owner / timing:** Product/content + engineering; before LA06/LA07. PD-009 governs authoring/publication; actual ready inventory is business-supplied, while OQ-017/OQ-088 remain in the product register; they do not block retaining the sitemap.
 
 ### PA-02 — RU/EN routing and missing translations
 
-- **Evidence:** MVP is Russian; English is Phase 2. Course language visibility/filtering is MVP. OQ-024/OQ-088 remain unresolved.
+- **Evidence:** MVP interface is Russian; full English interface localization is Phase 2. PD-006 requires RU/EN legal documents in MVP and PD-003 requires selectable available RU/EN audio/subtitles. Course language visibility/filtering is MVP. OQ-024/OQ-088 remain unresolved.
 - **Options:** (A) unprefixed RU plus `/en/...`; (B) `/ru/...` and `/en/...` with migration redirects; (C) one URL with language preference only.
 - **Recommendation:** A preserves the requested public URLs and supports shareable localized pages. Hide enabled EN navigation until approved translations exist. Switch to the equivalent product/page without changing cart, currency or course language. When translation is missing, explain and offer the available language; do not silently relabel RU as EN. Approved legal content is mandatory for a payable locale.
-- **Owner / timing:** Product/content + engineering; confirm only the URL convention for current route work. Translation supply/fallback and localized legal content remain Phase 2 dependencies under OQ-024/OQ-088; agreeing URL policy does not ship English in MVP. Exact redirect, canonical and language metadata strategy needs implementation design.
+- **Owner / timing:** Product/content + engineering; confirm only the URL convention for current route work. Full interface translation supply/fallback remains Phase 2 under OQ-024/OQ-088, but PD-006 legal-language access must be resolved for MVP without inventing a new route. Agreeing URL policy does not ship the full English interface in MVP. Exact redirect, canonical and language metadata strategy needs implementation design.
 
 ### PA-03 — Protected workspace namespace and multi-role entry
 
@@ -51,9 +51,9 @@ These remain real implementation or release prerequisites, **not additional LA02
 
 | Dependent work | Retained notes | Decision home / timing |
 | --- | --- | --- |
-| MVP catalog and identity/workspace behavior | PA-01 details; PA-03 role behavior; PA-05 activation/matching; PA-06 carts | OQ-009/OQ-013/OQ-016/OQ-017/OQ-032/OQ-033/OQ-051/OQ-088 before dependent implementation |
-| MVP checkout, legal approval and purchase recovery | PA-07 legal/pricing; PA-08 payment/status; PA-10 eligibility/repurchase; PA-12 recovery | Referenced OQs below before payment integration, affected-product sale or launch acceptance; retain `/checkout/result` without choosing a provider now |
-| MVP learning/commerce scope corrections | PA-17 | OQ-003/OQ-037/OQ-048/OQ-049/OQ-085 and pending approvals before dependent implementation/acceptance |
+| MVP catalog and identity/workspace behavior | PA-01 details; PA-03 role behavior; PA-05 activation/matching; PA-06 carts | PD-009 inventory readiness; OQ-013/OQ-016/OQ-017/OQ-032/OQ-033/OQ-051/OQ-088 before dependent implementation |
+| MVP checkout, legal approval and purchase recovery | PA-07 legal/pricing; PA-08 payment/status; PA-10 eligibility/repurchase; PA-12 recovery | Referenced OQs below before payment integration, affected-product sale or launch acceptance; retain `/checkout/result`; Stripe embedded Payment Element is approved by PD-002 |
+| MVP learning/commerce scope corrections | PA-17 | PD-004 and residual OQ-037/OQ-048/OQ-049 before dependent implementation/acceptance |
 | Phase 2 packages, promotions, localization and analytics | PA-09; PA-11; PA-02 translation behavior | OQ-024–OQ-028/OQ-034–OQ-035/OQ-040–OQ-041/OQ-065/OQ-074–OQ-075/OQ-088 before those features |
 | Phase 3 reviews/recommendations and public verification | PA-14; PA-15 | OQ-055/OQ-056/OQ-071–OQ-073 before those features; MVP PDF issuance does not depend on public verification |
 | Homepage composition and visual evidence | PA-13; PA-16 | Design review before dependent UI work; optional section placement/demo is not a routing gate |
@@ -75,19 +75,18 @@ These remain real implementation or release prerequisites, **not additional LA02
 - **Recommendation:** A only after defining duplicate/ownership semantics. Preserve selections through auth, reset, verification and legal reading; reprice server-side. Define lifetime, cross-device behavior, logout isolation and consent constraints. Never silently erase either selection or share one person's cart after account switching.
 - **Owner / timing:** Product + Commerce/Identity; before PM07 and end-to-end checkout acceptance.
 
-### PA-07 — Legal content, agreements and price interpretation
+### PA-07 — Remaining legal/pricing readiness
 
-- **Evidence:** four legal pages required; mandatory acceptance of offer, refund policy and professional-license disclaimer. USD 2,500 cap applies to a program/package including fees/materials, but taxes, currency and multi-item treatment need counsel. OQ-001/OQ-006–OQ-008/OQ-029–OQ-030/OQ-037/OQ-082–OQ-083 are unresolved. LA09 mentions cart consent while LA10/PM10 place required purchase consent in checkout.
-- **Options:** distinct acknowledgements versus one clearly grouped mandatory acknowledgement; final agreement capture at checkout versus earlier cart capture revalidated at payment; current policy pages plus retained version snapshots versus publicly addressable historical versions.
-- **Recommendation:** final explicit consent at checkout against approved versions, with links also in cart/footer; distinct unchecked acknowledgements for clarity unless counsel approves grouping. Keep privacy accessible without inventing a fourth mandatory checkbox. Retain accepted versions and order/identity/time evidence. Counsel must provide text, grouping, version-change behavior, retention, refund procedure, jurisdictions and exact cap/tax/currency calculation.
-- **Owner / timing:** Legal + product + Commerce; blocking production payment. No provider, tax rate, refund period, exemption claim or legal eligibility rule is approved by LA02.
+- **Unresolved:** final legally approved RU/EN texts, approval evidence, exact cap/tax/multi-item calculation, refund procedure and legal retention/privacy exceptions. OQ-006, residual OQ-007/OQ-008, OQ-029, OQ-037 and OQ-082/OQ-083 remain dependencies.
+- **Approved boundary:** PD-002 fixes USD; PD-006 fixes all four explicit acknowledgments, immutable versions/evidence, language availability blocking, and material/editorial change behavior. These choices are not open alternatives.
+- **Owner / timing:** Legal + product + Commerce; before production payment. No final legal text, tax rate, refund period or exemption claim is approved by the workflow decision.
 
-### PA-08 — Payment presentation and result authorization
+### PA-08 — Remaining payment/status authorization
 
-- **Evidence:** cards required, provider/legal entity undecided; wallets later. Authoritative confirmed payment grants access, never a browser return flag. OQ-001/OQ-031 govern provider states.
-- **Options:** hosted redirect or embedded provider flow; separate outcome routes or one result route; owner session and/or narrowly scoped checkout capability for status access.
-- **Recommendation:** one `/checkout/result` covering pending, confirmed/preparing, ready, failed and cancelled. Use a provider-supported integration once selected. Authorize order details per buyer/checkout context; no raw order ID as a secret. Learning always needs authenticated enrollment authorization. Approve terminal-state/retry rules and safe browser/app returns before implementation.
-- **Owner / timing:** Commerce + identity/security engineering with product; blocking payment integration. This route does not define webhook URLs or select a provider.
+- **Unresolved:** authoritative Stripe event mapping, terminal states, retry windows, status-access authorization and safe browser/app return behavior under OQ-031/OQ-032. Authoritative confirmed payment grants access, never a browser return flag.
+- **Approved boundary:** PD-002 selects Stripe embedded Payment Element, USD and eligible cards/Apple Pay/Google Pay/Klarna one-time purchases. Hosted checkout is no longer an open choice. Verify exact legal entity, settlement configuration and method eligibility before launch.
+- **Recommendation:** one `/checkout/result` covering pending, confirmed/preparing, ready, failed and cancelled; authorize order details per buyer/checkout context. No raw order ID as a secret. Learning requires authenticated enrollment authorization.
+- **Owner / timing:** Commerce + identity/security engineering with product; before payment integration and launch acceptance.
 
 ### PA-09 — Package configuration and cart replacement
 
@@ -112,7 +111,7 @@ These remain real implementation or release prerequisites, **not additional LA02
 
 ### PA-12 — Delayed fulfillment, email failure and support escape routes
 
-- **Evidence:** confirmed payment must lead to access and receipt; durable retries required. OQ-006/OQ-010/OQ-069/OQ-080/OQ-085 leave contact identities, notification timing and operational recovery incomplete. No actual support address/form SLA is supplied.
+- **Evidence:** confirmed payment must lead to access and receipt; durable retries required. PD-010 fixes essential admin scope; OQ-006/OQ-069/OQ-080 leave contact identities, remaining notification details and operational recovery incomplete. PD-008 already fixes curator reminder timing. No actual support address/form SLA is supplied.
 - **Options:** approved email channel, an existing staffed help channel, or a separately scoped support form; explicit status recheck plus operational escalation after a defined threshold.
 - **Recommendation:** choose a real staffed channel and escalation policy before launch; surface it in stalled payment/account-access states and approved footer content. Provide “payment received, access preparing” separately from pending payment; email failure must not encourage repurchase. Define guest typo correction and resend without revealing another account. Do not create a new `/contact` or helpdesk feature from a concept screenshot.
 - **Owner / timing:** Product operations + Commerce/Notifications; blocking purchase recovery acceptance.
@@ -147,18 +146,17 @@ These remain real implementation or release prerequisites, **not additional LA02
 - **Recommendation:** have the design owner reconcile the source documents and confirm web-font rights before styling. For now, retain the explicit task/repository instruction and do not silently let a conflicting style file override it. Update the reference register in a separate authorized task with precise borrow/do-not-borrow guidance. Do not adopt contact forms, numerical claims, other brands or later-phase features from images.
 - **Owner / timing:** Product/design; before UI implementation. LA02 preserves all assets and does not modify design source-of-truth files.
 
-### PA-17 — Scope corrections and launch claims
+### PA-17 — Remaining launch scope and acceptance
 
-- **Evidence:** repository requirements/scope mark MVP support-expiration enforcement and immediate audited access revocation after confirmed refund as corrections pending owner approval. Vault schedules broader countdown/refund automation later. OQ-003/OQ-037/OQ-048/OQ-049/OQ-085 remain dependencies.
-- **Options:** approve secure MVP corrections with operations and acceptance rules; or explicitly revise scope with a safe, approved alternative and updated acceptance plan.
-- **Recommendation:** resolve the pending corrections before accepting checkout-to-learning behavior. Public pages must disclose only approved support/access periods and refund rules. Do not promise unlimited access, universal start dates, post-expiry review, partial-refund behavior or automatic certificate cancellation.
-- **Owner / timing:** Product + operations + relevant engineering owners; before MVP learning/commerce acceptance. This planning document does not record approval on their behalf.
+- **Unresolved:** final refund eligibility and post-expiration transitions under OQ-037/OQ-048/OQ-049, plus implementation/acceptance evidence. Countdown remains later scope; PD-010 requires automatic Stripe refunds and full essential administration in MVP. The seven-day window is proposed, not final policy.
+- **Approved boundary:** PD-004 establishes server-enforced deadlines, extension/pause permissions, review obligations for timely submissions, and revocation on refunds/closure. Public pages may disclose only the approved behavior; no unlimited access, partial-refund policy or automatic certificate cancellation is implied.
+- **Owner / timing:** Product + operations + relevant engineering owners; before MVP learning/commerce acceptance. Resolve remaining questions and the scope/calendar mismatch in the Vault review.
 
 ## Original draft inputs and inspection limits
 
 The source-access and visual-inspection notes below are retained from the first draft. This refinement reviews repository documentation and does not repeat the attachment/Vault/image inspection or resolve the missing production inputs.
 
-- No approved launch catalog, prices, trainer credentials, course media, module offer, legal copy, payment merchant/provider, domain, support channel or certificate identity was found as production-ready data. Examples in S1/S2 are not substitutes (OQ-001/OQ-006/OQ-007/OQ-009/OQ-051/OQ-052).
+- The original draft lacked production-ready launch catalog, prices, trainer credentials, course media, module offer, legal copy, merchant/provider, domain, support channel and certificate identity. PD-002 now selects Stripe/account ownership/currency, with exact legal-entity verification still required. PD-009 approves catalog readiness/authoring rules without an engineering minimum course count. Actual ready inventory remains business-supplied; legal texts and identities remain pending under OQ-006/OQ-007/OQ-051/OQ-052; S1/S2 examples are not substitutes.
 - The local Vault and both original repository attachments were accessible. No additional independently identified “LMS Academy Docs” file/link was supplied; this review does not claim to have read an unidentified remote source.
 - Reference contact sheets from the initial inventory and all five wireframe pages were visually inspected. Additional reference images appeared during the task; those later additions were not reviewed or changed. Reference placement is evidence of files present, not a reviewer approval record. Browser screenshots, responsive behavior, contrast and keyboard interaction were not verified because no UI was implemented in this task.
 - No legal research or new legal interpretation was performed. Counsel must decide the actual rules; the USD 2,500 mention reproduces project scope, not external legal advice.

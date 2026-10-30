@@ -16,16 +16,9 @@ Status vocabulary:
 
 | ID | Status | Needed by milestone | Question | Why it matters |
 | --- | --- | --- | --- | --- |
-| OQ-001 | Blocking MVP | Before payment-provider integration (PM06); no later than MVP acceptance (QA07) | Which payment provider will be used, which merchant account and legal entity receives funds, and which countries/currencies must checkout support? | Determines checkout, webhooks, receipts, wallets, refunds, compliance, and testing. |
-| OQ-002 | Blocking MVP | Before protected-video integration (INF10); no later than end-to-end QA (QA04–QA05) | Which protected video host will be used and which playback, audio-track, subtitle, signed-link, and watermark capabilities are contracted? | Determines lesson delivery, localization, authorization, cost, and Phase 3 protection feasibility. |
-| OQ-003 | Blocking MVP | Before support-expiration implementation and end-to-end QA (QA04–QA05) | When do the curator-support clock and recorded-content access clock start, pause, expire, or extend? Is recorded access actually three months? | Controls entitlements, submissions, messaging, reminders, refunds, and support workload. Server-side expiration enforcement is MVP even though the visible countdown remains Phase 2. |
-| OQ-004 | Blocking MVP | Before homework media processing (INF12); no later than end-to-end QA (QA04–QA05) | What homework photo and video formats, maximum item count, per-file limits, total submission limit, and normalization targets are supported? | The source asks for arbitrary uploads and compression but separately leaves maximum size open; unlimited input is not operationally well-defined. |
-| OQ-005 | Blocking MVP | Before trainer review acceptance and end-to-end QA (QA04–QA05) | What is the curator response SLA, which timezone and business calendar apply, and what happens when work is overdue? | Needed for queue ordering, notifications, escalation, reporting, and staffing. The 48-hour value is only an example. |
-| OQ-006 | Blocking MVP | Before legal pages, production email, and certificate templates; no later than MVP acceptance (QA07) | What is the academy's approved name, domain, sender identities, and certificate issuer identity? | Required for branding, email, legal pages, URLs, and certificates. |
-| OQ-007 | Blocking MVP | Before legal sign-off (QA06) and production checkout | What final offer, privacy, refund, and license-disclaimer texts are approved, in which languages, and how are versions retained? | Production checkout cannot collect valid consent against placeholders. |
-| OQ-008 | Blocking MVP | Before retention safeguards (INF08); no later than MVP acceptance (QA07) | What record-retention period and deletion exceptions apply to users, payments, consents, homework, messages, audit events, and certificates? | The source says at least a lawyer-defined number of years but supplies no duration. |
-| OQ-009 | Blocking MVP | Before end-to-end QA (QA04–QA05) | Which prepared courses, lessons, media, prices, trainers, and certificate templates form the launch catalog, and who signs off their readiness? | The MVP plan depends on preloaded content rather than full catalog administration. |
-| OQ-010 | Blocking MVP | Before MVP acceptance (QA07) | What operational tools or documented procedures replace the deferred full admin screens at launch? | Staff must be able to support accounts, access, content, certificates, immediate auditable access revocation after confirmed refunds, and manual refund decisions safely. |
+| OQ-006 | Blocking MVP | Before legal pages, production email, and certificate templates; no later than MVP acceptance (QA07) | Intentionally deferred: what is the academy's approved name, domain, sender identities, and certificate issuer identity? | Required for branding, email, legal pages, URLs, and certificates. |
+| OQ-007 | Blocking MVP | Before QA02 and production checkout | Which final RU/EN texts have legal professional approval for publication, and where is that approval evidence? | Policy-management and consent rules are approved in PD-006; actual legal texts and legal sign-off are still required. |
+| OQ-008 | Blocking MVP | Before retention safeguards (INF08) and MVP acceptance (QA07) | Which mandatory legal retention periods, deletion exceptions, and applicable privacy requirements must qualify the approved retention policy? | PD-007 approves the product policy, but explicitly leaves these legal checks pending. |
 
 ## Roles, ownership, and authorization
 
@@ -60,7 +53,6 @@ Status vocabulary:
 | OQ-027 | Blocking feature | When the cart suggests a package, does it replace selected lines automatically only after consent, or merely link to a package page? |
 | OQ-028 | Blocking feature | What happens to existing enrollments when a package's composition or price changes after purchase? |
 | OQ-029 | Blocking MVP | How exactly is the USD 2,500 cap applied to taxes, mandatory fees, materials, discounts, multi-product carts, and non-USD payments? Counsel must confirm the BPPE interpretation. |
-| OQ-030 | Clarify | Are prices stored and charged only in USD, or are display and settlement currencies required? |
 
 ## Checkout, orders, discounts, and refunds
 
@@ -72,7 +64,7 @@ Status vocabulary:
 | OQ-034 | Blocking feature | May promo codes stack? Are they single-use per customer? Can a fixed discount exceed the eligible subtotal? How do currency and tax interact with it? |
 | OQ-035 | Blocking feature | What happens to promo-code usage counts after cancellation or refund? |
 | OQ-036 | Blocking feature | Are partial refunds supported for an order, a package component, or a portion of a course? How are access and accrual reversals prorated? |
-| OQ-037 | Blocking MVP | What refund policy and eligibility rules govern administrator decisions, and which reason/evidence fields must be recorded? |
+| OQ-037 | Blocking MVP | What final refund eligibility, legal conditions, exception rules and reason/evidence fields govern automatic Stripe refunds and administrator escalation? PD-010 approves automation, but explicitly calls the seven-day window after confirmed payment, regardless of progress, proposed and subject to applicable law and final rules; do not encode it as final policy. |
 | OQ-038 | Blocking feature | What constitutes acceptable evidence for manager-created manual enrollment, and who may approve or reverse it? |
 | OQ-039 | Blocking feature | What order, receipt, tax, and accounting record should a manual enrollment create? |
 | OQ-040 | Blocking feature | What is the precedence when referral link, promo code, prior lead ownership, and manual enrollment point to different managers? |
@@ -83,14 +75,13 @@ Status vocabulary:
 | ID | Status | Question |
 | --- | --- | --- |
 | OQ-042 | Blocking MVP | Does sequential unlocking require video completion, lesson completion, accepted homework, or a configurable combination? |
-| OQ-043 | Blocking MVP | What upload failures must be recoverable, and are resumable uploads required for large mobile videos? |
-| OQ-044 | Blocking MVP | What malware scanning, media moderation, transcoding failure, and retention rules apply to student uploads? |
+| OQ-043 | Blocking MVP | Which remaining upload-failure recovery acceptance cases must be specified beyond the resumability, progress, interruption recovery, safe retries and original preservation already approved in PD-005? |
+| OQ-044 | Blocking MVP | Which malware-scanning, media-moderation and remaining transcoding-failure rules apply to student uploads beyond PD-005 recovery and PD-007 retention safeguards? |
 | OQ-045 | Clarify | May a student replace or delete a pending submission? Can they submit another revision before the curator acts? |
 | OQ-046 | Clarify | Are there assignment due dates distinct from the two-week support expiry, and who configures them? |
-| OQ-047 | Blocking feature | Does message history become read-only after support expires, and may administrators reopen or extend support? |
-| OQ-048 | Blocking MVP | What happens to an in-review submission when support expires? Must the curator finish it, may the student revise, or does the flow close immediately? **Implementation dependency:** the MVP homework state machine, certificate eligibility, server-side expiry enforcement, and acceptance tests must preserve every submitted assignment in a valid state with an unambiguous next permitted action. |
-| OQ-049 | Blocking MVP | Are curator-support periods tracked per course, package component, cohort, or student? **Implementation dependency:** the MVP entitlement data model and authorization checks must know which enrollment or support record owns the clock before expiry can be enforced consistently. Package-specific behavior may remain later scope, but the MVP course-and-student rule cannot. |
-| OQ-050 | Clarify | Are lesson recordings and materials equally available after support expiry, or do materials have different access rules? |
+| OQ-047 | Blocking feature | Does message history become read-only after support expires? PD-004 already establishes extension and administrator override permissions; remaining message-history visibility is unresolved. |
+| OQ-048 | Blocking MVP | Which detailed post-expiration transitions apply to in-review work, student revisions and certificate eligibility? PD-004 requires curators to review assignments submitted before the permitted deadline even if overdue; it does not settle the remaining transitions. Every submitted assignment needs a valid state and unambiguous next permitted action. |
+| OQ-049 | Blocking MVP | Which residual package/cohort and calendar/timezone/overlapping-extension rules apply beyond PD-004 independent deadlines per purchased course/enrollment? The MVP ownership and activation rule is approved; no alternative student-global clock is implied. |
 
 ## Certificates
 
@@ -123,7 +114,7 @@ Status vocabulary:
 | OQ-065 | Blocking feature | What consent makes an abandoned cart recoverable and permits a manager to see or contact the buyer? |
 | OQ-066 | Blocking feature | How are leads assigned, deduplicated, reassigned, closed, and retained? What statuses are required? |
 | OQ-067 | Blocking feature | Which contact channels may managers use, and must contact attempts be recorded? |
-| OQ-068 | Clarify | Are student-curator messages plain text only, or do they support attachments, voice, moderation, unread state, and retention rules? |
+| OQ-068 | Clarify | Are student-curator messages plain text only, or do they support attachments, voice, moderation and unread state? What remaining handling details are needed under PD-007 retention? |
 | OQ-069 | Clarify | What are the exact timing, retry, deduplication, localization, unsubscribe, and preference rules for each email notification? |
 | OQ-070 | Blocking feature | Which push platform is intended, which events deserve push, and how are device permissions and preferences managed? |
 
@@ -144,18 +135,17 @@ Status vocabulary:
 | ID | Status | Question |
 | --- | --- | --- |
 | OQ-078 | Blocking MVP | What recovery point and recovery time objectives apply to the database and private media? Who performs restoration tests? |
-| OQ-079 | Blocking MVP | Which administrator actions must be audited, how long are audit events retained, and who may inspect them? |
+| OQ-079 | Blocking MVP | Which administrator actions are routine versus critical audits, and who may inspect them? PD-007 fixes routine retention at 30 days; which legally required periods apply to critical audit records? |
 | OQ-080 | Blocking MVP | What production monitoring and alert thresholds cover payment failure, email failure, upload processing, video authorization, and scheduled jobs? |
-| OQ-081 | Clarify | What privacy rights and deletion/export procedures apply, and which financial, education, certificate, or audit records are exempt from deletion? |
+| OQ-081 | Clarify | Which remaining privacy rights, export procedures and legal deletion exceptions apply beyond PD-007 verified deletion, administrator notification/contact, eligibility checks and permanent certificate evidence? |
 | OQ-082 | Clarify | Are minors permitted to purchase or enroll? If so, what guardian consent or privacy requirements apply? |
 | OQ-083 | Clarify | Which jurisdictions besides California or BPPE-related rules govern commerce, privacy, tax, education disclaimers, and recordkeeping? |
-| OQ-084 | Blocking feature | What threat model and provider capability define acceptable protected-video behavior, given that screen recording cannot be fully prevented? |
+| OQ-084 | Blocking feature | What remaining device/session threat model and acceptance criteria apply to PD-003 self-managed protected playback? Screen-capture blocking is not guaranteed; DRM is deferred until after MVP. |
 
 ## Scope and planning discrepancies
 
 | ID | Status | Question |
 | --- | --- | --- |
-| OQ-085 | Blocking MVP | Does the minimal MVP administration slice have approved operational substitutes for course updates, pricing, access correction, certificate support, and refunds? The original specification asks for basic admin, while the Vault defers most CRUD. |
 | OQ-086 | Clarify | Should product reporting continue to use the original feature phases, or should Phase 2 and Phase 3 be renamed to match the Vault's single `post-MVP` implementation window? This documentation preserves the original feature distinction. |
 | OQ-087 | Clarify | The December 7, 2026 and January 26, 2027 dates are planning targets, not guaranteed commitments. Are these targets still current, who owns reforecasting, and which dependency or capacity changes trigger a revised plan? |
 | OQ-088 | Clarify | The original MVP says Russian only, while the catalog requirements mention language visibility and filtering. For MVP, should cards show only Russian availability, or must mixed-language inventory already be supported? |
