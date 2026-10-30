@@ -48,7 +48,6 @@ const navigation = [
   { label: "Пакеты", href: "#navigation-example" },
   { label: "Мини-курсы", href: "#course-card" },
   { label: "Старт в США", href: "#navigation-example", preview: true },
-  { label: "Скоро: личный кабинет", preview: true },
 ];
 const legalLinks = [
   "Публичная оферта",
@@ -139,7 +138,7 @@ export function ComponentPreviewPage() {
       <PreviewSection
         id="public-header"
         name="PublicHeader"
-        description="Откройте «Курсы», проверьте Tab и Escape. Меню доступно на любой ширине; до 768px основная навигация скрывается в нём."
+        description="Откройте «Курсы», проверьте Tab и Escape. На узком экране навигация переходит во вторую строку."
         fullWidth
       >
         <div className={styles.headerStage}>
@@ -156,7 +155,7 @@ export function ComponentPreviewPage() {
         </div>
         <PageContainer size="content">
           <p id="navigation-example" className={styles.note}>
-            Доступные пункты ведут к разделам предпросмотра; «Скоро» обозначает недоступную ссылку. Пакеты, EN
+            Доступные пункты ведут к разделам предпросмотра. Пакеты, EN
             и «Старт в США» показаны только для проверки композиции референса.
           </p>
         </PageContainer>

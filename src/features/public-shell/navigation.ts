@@ -22,8 +22,6 @@ export const publicSite = {
     ] },
     { label: "Отзывы", href: "/#reviews", preview: true },
     { label: "Контакты", href: "/#contact" },
-    { label: "Личный кабинет", preview: true },
-    { label: "Корзина", preview: true },
   ] satisfies NavigationItem[],
   footerGroups: [
     { label: "Обучение", links: [

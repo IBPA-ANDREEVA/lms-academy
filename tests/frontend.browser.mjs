@@ -68,22 +68,13 @@ try {
       fullPage: true,
     });
     if (width <= 1024) {
-      await page.getByRole("button", { name: "Открыть меню" }).click();
-      await page.getByRole("dialog").waitFor();
-      await page.keyboard.press("Tab");
-      assert.ok(
-        await page.evaluate(() =>
-          document.querySelector("dialog").contains(document.activeElement),
-        ),
-      );
+      const mobileNav = page.getByRole("navigation", { name: "Основная навигация" });
+      assert.ok(await mobileNav.isVisible());
+      assert.equal(await page.getByRole("button", { name: "Открыть меню" }).count(), 0);
+      await mobileNav.locator("summary").click();
+      assert.ok(await mobileNav.getByRole("link", { name: "Основные курсы" }).isVisible());
       await page.keyboard.press("Escape");
-      await page.getByRole("dialog").waitFor({ state: "hidden" });
-      await page
-        .getByRole("button", { name: "Открыть меню" })
-        .evaluate((el) => {
-          if (el !== document.activeElement)
-            throw Error("Menu focus not restored");
-        });
+      assert.equal(await mobileNav.locator("details[open]").count(), 0);
     }
   }
   for (const width of [1440, 768, 390]) {
@@ -128,7 +119,7 @@ try {
     await page.waitForFunction(
       () => document.querySelector("header")?.dataset.homeScrolled === "true",
     );
-    await page.waitForTimeout(350);
+    await page.waitForFunction(() => Number.parseFloat(getComputedStyle(document.querySelector("header")).getPropertyValue("--header-progress")) > .99);
     assert.ok(
       await header.evaluate((el) => {
         const bar = el.querySelector('a').parentElement;
@@ -164,7 +155,7 @@ try {
     await page.waitForFunction(
       () => document.querySelector("header")?.dataset.homeScrolled === "false",
     );
-    await page.waitForTimeout(350);
+    await page.waitForFunction(() => Number.parseFloat(getComputedStyle(document.querySelector("header")).getPropertyValue("--header-progress")) < .01);
     assert.equal(
       await header.evaluate((el) => Number(getComputedStyle(el).backgroundColor.match(/[\d.]+/g)?.at(-1))),
       0,
@@ -209,13 +200,14 @@ try {
     });
   }
   const previewHeader = page.locator("#public-header");
-  await previewHeader.getByRole("button", { name: "Открыть меню" }).click();
-  await previewHeader.getByRole("dialog").waitFor();
+  const previewNav = previewHeader.getByRole("navigation", { name: "Основная навигация" });
+  await previewNav.locator("summary").click();
+  assert.ok(await previewNav.getByRole("link", { name: "Пример курса" }).isVisible());
   await page.screenshot({
-    path: path.join(evidence, "preview-menu-mobile.png"),
+    path: path.join(evidence, "preview-navigation-mobile.png"),
   });
   await page.keyboard.press("Escape");
-  await previewHeader.getByRole("dialog").waitFor({ state: "hidden" });
+  assert.equal(await previewNav.locator("details[open]").count(), 0);
   await page
     .getByRole("button", { name: "Показать загрузку", exact: true })
     .click();
@@ -277,7 +269,7 @@ try {
   const linkStub = path.join(temp, "link.cjs");
   await writeFile(
     linkStub,
-    `const React=require(${JSON.stringify(require.resolve("react"))});module.exports=function({onNavigate,children,...props}){return React.createElement('a',{...props,onClick:()=>onNavigate?.()},children)}`,
+    `const React=require(${JSON.stringify(require.resolve("react"))});module.exports=function({onNavigate,onClick,children,...props}){return React.createElement('a',{...props,onClick:(event)=>{onClick?.(event);onNavigate?.()}},children)}`,
   );
   const navigationStub = path.join(temp, "navigation.cjs");
   await writeFile(navigationStub, `exports.usePathname=()=>'/';`);
@@ -371,22 +363,18 @@ try {
   await page.keyboard.press("Escape");
   assert.equal(await desktop.locator("details[open]").count(), 0);
   await desktop.locator("summary").click();
-  await page.getByRole("heading", { name: "Проверка компонентов" }).click();
+  // The expanded header dropdown overlaps the fixture heading. Click the
+  // visible page gutter to exercise a genuine outside pointer interaction.
+  await page.mouse.click(10, 400);
   assert.equal(await desktop.locator("details[open]").count(), 0);
   await page.setViewportSize({ width: 390, height: 844 });
-  await page.getByRole("button", { name: "Открыть меню" }).click();
+  const mobileNav = page.getByRole("navigation", { name: "Основная навигация" });
+  await mobileNav.locator("summary").click();
   await page.screenshot({
-    path: path.join(evidence, "header-mobile-open.png"),
+    path: path.join(evidence, "header-mobile-dropdown.png"),
   });
-  const dialog = page.getByRole("dialog");
-  for (let i = 0; i < 16; i++) {
-    await page.keyboard.press("Tab");
-    assert.ok(
-      await dialog.evaluate((el) => el.contains(document.activeElement)),
-    );
-  }
-  await dialog.getByRole("link", { name: "Брови", exact: true }).click();
-  await dialog.waitFor({ state: "hidden" });
+  await mobileNav.getByRole("link", { name: "Брови", exact: true }).click();
+  assert.equal(await mobileNav.locator("details[open]").count(), 0);
   const password = page.getByLabel("Пароль", { exact: true });
   assert.equal(await password.getAttribute("type"), "password");
   await page.getByRole("button", { name: "Показать пароль" }).click();
@@ -437,7 +425,7 @@ try {
     ),
   );
   console.log(
-    `Passed: public home, live preview, retired routes, responsive components, menu/dropdown, forms, pending state. Evidence: ${evidence}`,
+    `Passed: public home, live preview, retired routes, responsive components, header dropdown, forms, pending state. Evidence: ${evidence}`,
   );
 } finally {
   await browser.close();

@@ -35,6 +35,8 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         <PublicHeader
           brand={publicSite.brand}
           navigation={publicSite.navigation}
+          showAuth
+          showCartPreview
         />
         {children}
         <PublicFooter
