@@ -4,7 +4,8 @@
 
 This document defines the implementation boundaries for the LMS described in
 [product requirements](../product/requirements.md), [delivery scope](../product/mvp.md),
-and the [open-question register](../product/open-questions.md). It is the default
+[approved product decisions](../product/decisions.md), and the
+[open-question register](../product/open-questions.md). It is the default
 architecture for application work; it does not resolve open product policy.
 
 The following labels distinguish established decisions from design proposals:
@@ -325,13 +326,46 @@ for entitlements.
 
 Expected domain outcomes use explicit typed results or known domain errors, for
 example `NOT_AUTHENTICATED`, `NOT_AUTHORIZED`, `INVALID_TRANSITION`,
-`SUPPORT_EXPIRED`, or `CONFLICT`. Entry points translate them consistently to form
-feedback, `notFound`, redirects, or HTTP status codes. Unexpected errors are logged
-with a correlation ID and shown through the nearest App Router error boundary.
+`SUPPORT_EXPIRED`, or `CONFLICT`. Entry points translate them consistently to
+form feedback, `notFound`, redirects, or HTTP status codes. Unexpected errors
+are shown through the nearest App Router error boundary.
 
-Responses and logs must not expose stack traces, secrets, signed URLs, raw payment
-payloads, student media, or unnecessary personal data. A centralized error
-catalog is useful only for errors actually shared across entry points; feature-only
+**Approved product decision PD-001:** [failure messages and traceable logging](../product/decisions.md#pd-001--clear-failure-messages-and-traceable-diagnostics).
+Each failed operation must have two appropriately separated representations:
+
+1. **User-facing message:** use clear, nontechnical wording appropriate to the
+   interface locale (Russian first for MVP). Explain what happened in familiar
+   language, whether the action succeeded when that can be established, and
+   the next safe step. Never expose HTTP codes, database errors, webhook terms,
+   stack traces, or provider internals. Provide a safe support reference code for
+   unexpected problems. For an uncertain payment state, do not claim that funds
+   were or were not charged; advise the user not to repeat payment until the
+   status is verified.
+2. **Developer/operator diagnostic:** create a structured, actionable, and
+   traceable event recording a stable internal error code, severity, UTC time,
+   module/operation, sanitized resource IDs, correlation/request/job ID,
+   known outcome, retry eligibility and attempt, and root-cause context when
+   known. Propagate correlation across provider callbacks, outbox jobs, and
+   retries. Record expected validation or access failures at an appropriate
+   severity rather than treating every such event as a production emergency.
+
+Examples of user-facing Russian copy:
+
+- Upload interrupted: "Не удалось загрузить файл. Проверьте подключение и
+  попробуйте ещё раз. Уже отправленные файлы останутся, если они были сохранены."
+  Only mention saved files when the application has confirmed they were saved.
+- Video temporarily unavailable: "Не удалось открыть урок. Попробуйте немного
+  позже. Если проблема повторится, обратитесь в поддержку и укажите код ошибки."
+- Payment status unknown: "Проверяем статус оплаты. Не оплачивайте заказ повторно,
+  пока статус не обновится. Если это занимает слишком долго, обратитесь в поддержку."
+
+Responses and diagnostics must not expose secrets, signed URLs, raw payment
+payloads, student media, personal contacts, or unnecessary personal data.
+Detailed logs are restricted to authorized operators. Failure tests must assert
+both the useful user-visible result and a searchable, privacy-safe diagnostic
+record. Exact alert thresholds, retention periods, and escalation procedures
+remain unresolved under OQ-008, OQ-079, and OQ-080. A centralized error catalog
+is useful only for errors actually shared across entry points; feature-only
 errors stay in the feature.
 
 ### Transaction boundaries
@@ -482,6 +516,8 @@ must be resolved before their dependent foundation work:
 | Product-owner approval of the two pending MVP scope corrections | Determines MVP acceptance coverage for support expiration and refund access revocation | OQ-003, OQ-037, OQ-048, OQ-049, OQ-085 |
 
 Provider selections and technical tools should be recorded in focused ADRs.
-Approved product answers must first be recorded in
-`docs/product/open-questions.md` using its decision template, then reflected in the
-requirements, scope, state machines, and tests.
+Approved product answers must be recorded in
+`docs/product/decisions.md` (not the open-question register), linked to their
+original OQ IDs, and then reflected in requirements, scope, state machines,
+and tests. Resolved entries leave the active open-question register once their
+full question and approved answer are preserved in the decision record.
