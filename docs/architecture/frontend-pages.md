@@ -22,30 +22,30 @@ Maintained inventory, 2026-10-28. Read this with [sections](frontend-sections.md
 | `None` | admin-review-moderation — Публиковать только допустимые отзывы. | — | Not implemented; Phase 3 |
 | `None` | admin-templates — Управлять утверждёнными RU/EN шаблонами. | — | Not implemented; Phase 2 |
 | `None` | admin-users — Поддержать доступ и роли запуска. | — | Not implemented; MVP |
-| `/cart` | cart — Проверить выбранные продукты и точную стоимость. | — | Not implemented; MVP |
+| `/cart` | cart — Review selections and continue to checkout | `src/app/cart/page.tsx` → `src/features/commerce/cart-page.tsx` → `sections/cart-section.tsx` | LA09 interactive UI; development-only demo selection; production commerce pending |
 | `/certificates/verify/[verificationId]` | certificate-verification — Проверить выдачу по QR без публичного поиска. | — | Not implemented; Phase 3 |
 | `/checkout/result` | checkout-result — Показать авторитетный результат и безопасный доступ. | — | Not implemented; MVP |
-| `/checkout` | checkout — Подтвердить покупателя, стоимость, соглашения и оплатить один раз. | — | Not implemented; MVP |
-| `/courses/[slug]` | course-detail — Оценить содержание, пригодность и условия до покупки. | — | Not implemented; MVP |
-| `/courses` | courses — Найти продукт по направлению, языку и уровню. | — | Not implemented; MVP |
-| `/forgot-password` | forgot-password — Получить безопасную ссылку. | — | Not implemented; MVP |
+| `/checkout` | checkout — Guest buyer, agreements and payment availability | `src/app/checkout/page.tsx` → `src/features/commerce/checkout-page.tsx` → checkout sections | LA09 interactive UI; optional AuthModal, payment and unpublished consent disabled; server/legal integration pending |
+| `/courses/[slug]` | course-detail — Оценить содержание, пригодность и условия до покупки. | `src/app/(details)/courses/[slug]/page.tsx` → `src/features/course-detail/detail-page.tsx` → six numbered sections | Implemented review-only detail composition for explicitly labeled catalog examples; unknown slug 404, no live offer or approved content; MVP publication pending OQ-009 and visual review |
+| `/courses` | courses — Найти продукт по направлению, языку и уровню. | `src/app/(catalog)/courses/page.tsx` + shared `(catalog)/layout.tsx` → `src/features/catalog/catalog-page.tsx` → numbered catalog sections | Implemented hero, filters, URL state and example cards with whole-card navigation to detail previews; no approved published inventory or commerce action yet; MVP visual review pending |
+| `/forgot-password` | forgot-password — Получить безопасную ссылку. | — | Standalone route not implemented; UI-only recovery view exists in the shared header modal; MVP backend pending |
 | `/` | home — Помочь выбрать формат обучения и перейти к реальному предложению. | `src/app/page.tsx` → `src/features/home/home-page.tsx` → `src/features/home/sections/{hero,about,founder,learning-preview,courses,packages,mini-courses,start-usa,reviews,contact}/*-section.tsx + learning-offers/learning-offers-showcase.tsx` | HOME-02/03/05 implemented; HOME-06–09 are connected through a sticky horizontal showcase. Courses/mini-courses use labeled placeholder inventory. Packages are a Phase 2 preview with a local demo builder; Start in USA is an unresolved-release preview. HOME-10 is an explicitly labeled Phase 3 testimonial/recommendation layout preview, not published endorsements. HOME-11 is a visual, client-validated contact form with delivery disabled until backend and abuse controls exist. No live offers, testimonial records, contact submissions or catalog routes added. |
 | `/license-disclaimer` | license-disclaimer — Прочесть действующую утверждённую версию. | — | Not implemented; MVP |
-| `/login` | login — Войти и продолжить разрешённый сценарий. | — | Not implemented; MVP |
+| `/login` | login — Войти и продолжить разрешённый сценарий. | — | Standalone route not implemented; UI-only login view exists in `src/features/identity/auth-modal.tsx`, opened by PublicHeader; MVP backend pending |
 | `None` | manager-commission — Проверить личную ведомость. | — | Not implemented; Phase 2 |
 | `None` | manager-enrollment — Зачислить после проверенной офлайн-оплаты. | — | Not implemented; Phase 2 |
 | `None` | manager-leads — Вести только разрешённые контакты. | — | Not implemented; Phase 2 |
 | `None` | manager-promotions — Использовать собственную атрибуцию. | — | Not implemented; Phase 2 |
 | `None` | manager-sales — Увидеть свои продажи за период. | — | Not implemented; Phase 2 |
-| `/mini-courses` | mini-courses — Найти продукт по направлению, языку и уровню. | — | Not implemented; MVP |
-| `/mini-courses/[slug]` | mini-detail — Оценить содержание, пригодность и условия до покупки. | — | Not implemented; MVP |
+| `/mini-courses` | mini-courses — Найти записанный продукт по направлению, языку и уровню. | `src/app/(catalog)/mini-courses/page.tsx` + shared `(catalog)/layout.tsx` → `src/features/catalog/catalog-page.tsx` → mini-course section | Implemented compact recorded-only example cards with whole-card navigation to detail previews; no approved published inventory or commerce action yet; MVP visual review pending |
+| `/mini-courses/[slug]` | mini-detail — Оценить содержание, пригодность и условия до покупки. | `src/app/(details)/mini-courses/[slug]/page.tsx` → shared `src/features/course-detail/detail-page.tsx` with mini-course data/style variant | Implemented recorded-only review composition, no curator/homework promise; unknown slug 404, live offer and approved content pending |
 | `None` | notification-preferences — Управлять уведомлениями только после утверждения настроек. | — | Not implemented; Conditional |
 | `/offer` | offer — Прочесть действующую утверждённую версию. | — | Not implemented; MVP |
 | `/packages/[slug]` | package-detail — Понять точный состав и итог покупки. | — | Not implemented; Phase 2 |
 | `/packages` | packages — Сравнить разрешённые наборы без предположений о произвольной сборке. | — | Not implemented; Phase 2 |
 | `/privacy` | privacy — Прочесть действующую утверждённую версию. | — | Not implemented; MVP |
 | `/refunds` | refunds — Прочесть действующую утверждённую версию. | — | Not implemented; MVP |
-| `/register` | register — Создать аккаунт без автоматического платного доступа. | — | Not implemented; MVP |
+| `/register` | register — Создать аккаунт без автоматического платного доступа. | — | Standalone route not implemented; UI-only registration view exists in the shared header modal; MVP backend pending |
 | `/reset-password` | reset-password — Восстановить учётные данные. | — | Not implemented; MVP |
 | `None` | role-context — Выбрать разрешённый рабочий контекст без нового аккаунта. | — | Not implemented; MVP |
 | `/start-in-usa` | start-usa — Объяснить модуль, сохранив открытый вопрос публикации и продажи. | — | Not implemented; Unresolved |
