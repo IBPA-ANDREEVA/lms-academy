@@ -1,0 +1,8 @@
+.section { position: relative; padding: 120px 0 138px; background: var(--background); }
+.grid { display: grid; grid-template-columns: minmax(0,.43fr) minmax(0,.57fr); gap: clamp(36px,6vw,100px); }
+.heading { position: relative; padding: 28px 0 0; }
+.heading::before { content: ""; position: absolute; top: 0; left: 0; width: 62px; height: 4px; background: var(--brand); }
+.heading :global(h2) { margin: 0; font-size: clamp(36px,4vw,58px); line-height: 1.08; letter-spacing: -.07em; }
+.heading :global(h2 span) { color: var(--brand); }
+.heading > p { max-width: 34ch; color: var(--muted); font-size: 15px; }
+@media (max-width: 760px) { .section { padding: 80px 0 92px; } .grid { grid-template-columns: 1fr; gap: 26px; } }

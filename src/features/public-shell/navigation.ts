@@ -14,21 +14,19 @@ export const publicSite = {
   brand: { label: "LMS Academy", href: "/" },
   navigation: [
     { label: "Об академии", href: "/#about" },
-    { label: "Обучение", href: "/#learning-preview", children: [
-      { label: "Основные курсы", href: "/#catalog-status" },
+    { label: "Обучение", href: "/courses", children: [
+      { label: "Основные курсы", href: "/courses" },
       { label: "Пакеты", href: "/#packages", preview: true },
-      { label: "Мини-курсы", href: "/#mini-courses" },
+      { label: "Мини-курсы", href: "/mini-courses" },
       { label: "Старт в США", href: "/#start-usa", preview: true },
     ] },
     { label: "Отзывы", href: "/#reviews", preview: true },
     { label: "Контакты", href: "/#contact" },
-    { label: "Личный кабинет", preview: true },
-    { label: "Корзина", preview: true },
   ] satisfies NavigationItem[],
   footerGroups: [
     { label: "Обучение", links: [
-      { label: "Основные курсы", href: "/#catalog-status" },
-      { label: "Мини-курсы", href: "/#mini-courses" },
+      { label: "Основные курсы", href: "/courses" },
+      { label: "Мини-курсы", href: "/mini-courses" },
       { label: "Пакеты", href: "/#packages", preview: true },
       { label: "Старт в США", href: "/#start-usa", preview: true },
     ] },
@@ -41,7 +39,7 @@ export const publicSite = {
     { label: "Личный кабинет", links: [
       { label: "Войти", preview: true },
       { label: "Регистрация", preview: true },
-      { label: "Корзина", preview: true },
+      { label: "Корзина", href: "/cart" },
     ] },
   ] satisfies NavigationGroup[],
   legalLinks: [

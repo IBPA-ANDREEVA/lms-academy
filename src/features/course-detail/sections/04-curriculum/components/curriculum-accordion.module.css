@@ -1,0 +1,18 @@
+.list { display: grid; gap: 10px; }
+.module { border: 1px solid var(--text); background: var(--surface); }
+.module[open] { border-color: var(--brand); }
+.module summary { display: grid; grid-template-columns: 42px 1fr 32px; gap: 10px; align-items: center; min-height: 72px; padding: 14px 18px; font-weight: 800; cursor: pointer; list-style: none; }
+.module summary::-webkit-details-marker { display: none; }
+.module summary:hover,.module[open] summary { background: var(--soft); }
+.module summary:focus-visible { outline: 3px solid var(--focus); outline-offset: -3px; }
+.index { color: var(--brand); font-size: 12px; font-weight: 800; }
+.mark { color: var(--brand); font-size: 22px; font-weight: 400; justify-self: end; transition: transform .2s ease; }
+.module[open] .mark { transform: rotate(45deg); }
+.lessons { padding: 4px 24px 20px 70px; border-top: 1px solid var(--border); }
+.demo { margin: 14px 0; color: var(--brand); font-size: 11px; font-weight: 800; }
+.lessons ol { margin: 0; padding-left: 20px; }
+.lessons li { padding: 10px 0; color: var(--muted); font-size: 14px; }
+.lessons li + li { border-top: 1px solid var(--border); }
+.lessons li small { float: right; margin-left: 12px; }
+@media (prefers-reduced-motion: reduce) { .mark { transition: none; } }
+@media (max-width: 520px) { .module summary { grid-template-columns: 26px 1fr 24px; padding: 12px; } .lessons { padding-left: 38px; padding-right: 14px; } }

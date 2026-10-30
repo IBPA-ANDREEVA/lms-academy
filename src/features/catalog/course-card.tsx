@@ -1,6 +1,7 @@
 import Image, { type ImageProps } from "next/image";
 import Link from "next/link";
 import type { ReactNode } from "react";
+import { Button, ButtonLink } from "@/components/ui/button";
 import styles from "./course-card.module.css";
 
 export type CourseCardProps = {
@@ -20,6 +21,8 @@ export type CourseCardProps = {
   headingLevel?: "h2" | "h3";
   status?: "available" | "owned" | "in-cart" | "unavailable" | "stale";
   action?: ReactNode;
+  variant?: "default" | "brutalist" | "compact";
+  demonstration?: boolean;
 };
 
 const statusLabels = {
@@ -36,10 +39,13 @@ export function CourseCard({
   headingLevel: Heading = "h3",
   status = "available",
   action,
+  variant = "default",
+  demonstration = false,
 }: CourseCardProps) {
+  const detailPreview = demonstration && course.href;
   return (
-    <article className={styles.card}>
-      {course.image && (
+    <article className={`${styles.card} ${styles[variant]} ${detailPreview ? styles.clickable : ""}`}>
+      {course.image ? (
         <div className={styles.media}>
           <Image
             src={course.image.src}
@@ -48,8 +54,9 @@ export function CourseCard({
             sizes="(max-width: 600px) 100vw, (max-width: 1024px) 50vw, 33vw"
           />
         </div>
-      )}
+      ) : variant !== "default" ? <div className={styles.media} aria-hidden="true"><span className={styles.imageMark}>◇</span></div> : null}
       <div className={styles.content}>
+        {demonstration && <p className={styles.demo}>ДЕМОНСТРАЦИЯ КАРТОЧКИ</p>}
         <p className={styles.meta}>
           {[
             course.kind === "mini-course" ? "Мини-курс" : "Курс",
@@ -78,8 +85,24 @@ export function CourseCard({
         {status !== "available" && (
           <p className={styles.meta}>{statusLabels[status]}</p>
         )}
-        {status === "available" && action && (
+        {status === "available" && action && !demonstration && (
           <div className={styles.action}>{action}</div>
+        )}
+        {demonstration && (
+          <div className={styles.action}>
+            {course.href ? (
+              <ButtonLink
+                href={course.href}
+                appearance="cut"
+                intent="secondary"
+                aria-label={variant === "compact" ? `Открыть пример мини-курса: ${course.title}` : undefined}
+              >
+                {variant === "compact" ? "→" : "Смотреть пример →"}
+              </ButtonLink>
+            ) : (
+              <Button appearance="cut" intent="secondary" disabled>После публикации</Button>
+            )}
+          </div>
         )}
       </div>
     </article>

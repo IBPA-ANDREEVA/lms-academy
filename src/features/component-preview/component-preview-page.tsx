@@ -11,6 +11,7 @@ import {
   TextField,
 } from "@/components/ui/form-controls";
 import { SectionHeading } from "@/components/ui/section-heading";
+import { CommerceComponentsPreview } from "@/features/commerce";
 import {
   CategoryNavigation,
   CourseCard,
@@ -25,6 +26,7 @@ import styles from "./component-preview-page.module.css";
 
 const components = [
   ["public-header", "PublicHeader"],
+  ["commerce", "CartItems / OrderSummary"],
   ["button", "Button"],
   ["form-controls", "FormControls"],
   ["course-card", "CourseCard"],
@@ -48,7 +50,6 @@ const navigation = [
   { label: "Пакеты", href: "#navigation-example" },
   { label: "Мини-курсы", href: "#course-card" },
   { label: "Старт в США", href: "#navigation-example", preview: true },
-  { label: "Скоро: личный кабинет", preview: true },
 ];
 const legalLinks = [
   "Публичная оферта",
@@ -136,10 +137,13 @@ export function ComponentPreviewPage() {
         </div>
       </PageContainer>
 
+      <PreviewSection id="commerce" name="CartItems / OrderSummary" description="Общие строки, сумма и состояния корзины. Данные демонстрационные, оплата отключена; тестовые действия доступны только в режиме разработки.">
+        <CommerceComponentsPreview />
+      </PreviewSection>
       <PreviewSection
         id="public-header"
         name="PublicHeader"
-        description="Откройте «Курсы», проверьте Tab и Escape. Меню доступно на любой ширине; до 768px основная навигация скрывается в нём."
+        description="Откройте «Курсы», проверьте Tab и Escape. На узком экране навигация переходит во вторую строку."
         fullWidth
       >
         <div className={styles.headerStage}>
@@ -147,7 +151,7 @@ export function ComponentPreviewPage() {
             brand={brand}
             navigation={navigation}
             account={{ label: "Войти", href: "#form-controls" }}
-            cart={{ label: "Корзина", href: "#course-card", count: 2 }}
+            showCartPreview
             locales={[
               { label: "RU", href: "#navigation-example", current: true },
               { label: "EN", href: "#navigation-example" },
@@ -156,7 +160,7 @@ export function ComponentPreviewPage() {
         </div>
         <PageContainer size="content">
           <p id="navigation-example" className={styles.note}>
-            Доступные пункты ведут к разделам предпросмотра; «Скоро» обозначает недоступную ссылку. Пакеты, EN
+            Доступные пункты ведут к разделам предпросмотра. Пакеты, EN
             и «Старт в США» показаны только для проверки композиции референса.
           </p>
         </PageContainer>
@@ -344,6 +348,7 @@ export function ComponentPreviewPage() {
         </div>
         <div className={styles.cards}>
           <CourseCard
+            variant="brutalist"
             course={{
               href: "#course-note",
               title: "Пример основного курса",
@@ -352,12 +357,13 @@ export function ComponentPreviewPage() {
             }}
             status={courseStatus}
             action={
-              <Button onClick={() => setCourseStatus("in-cart")}>
+              <Button appearance="cut" onClick={() => setCourseStatus("in-cart")}>
                 Добавить — демо
               </Button>
             }
           />
           <CourseCard
+            variant="compact"
             course={{
               href: "#course-note",
               title:
@@ -367,7 +373,7 @@ export function ComponentPreviewPage() {
             }}
             status={courseStatus}
             action={
-              <Button onClick={() => setCourseStatus("in-cart")}>
+              <Button appearance="cut" onClick={() => setCourseStatus("in-cart")}>
                 Добавить — демо
               </Button>
             }
