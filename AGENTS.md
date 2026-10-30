@@ -15,7 +15,8 @@ This is a Russian-first beauty education LMS. It is not a generic SaaS dashboard
 AUTHORITATIVE SOURCES. Read only the ones relevant to the task:
 - `docs/product/requirements.md`: business behavior and roles.
 - `docs/product/mvp.md`: release inclusion and exclusions.
-- `docs/product/open-questions.md`: unresolved business choices. Never resolve these by guessing.
+- `docs/product/open-questions.md`: only unresolved product questions. Never resolve these by guessing.
+- `docs/product/decisions.md`: confirmed product decisions; never place approved decisions or binding implementation instructions in the open-question register.
 - `docs/architecture/overview.md`, `modules.md`: application boundaries.
 - `docs/architecture/public-sitemap.md`, `public-page-structure.md`, `public-user-flows.md`, `public-open-questions.md`: public routes, page contents, transitions, unresolved URL/policy details.
 - `docs/design/README.md`: DESIGN ENTRY POINT. Follow its source precedence for visual work.
@@ -31,6 +32,7 @@ PRODUCT SAFETY:
 - No fictional prices, launches, reviews, trainer credentials, performance claims, accreditation, licenses, payment providers, course inventory, legal copy or unapproved routes.
 - Do not promote Phase 2/3 features into MVP because a sketch includes them.
 - Keep payment, access, refund, certificate, student work, identity and media flows secure, authorized server-side, auditable and replay-safe.
+- Handle every failure with a plain-language, helpful user message and a separate structured, privacy-safe, traceable engineering diagnostic. No developer terminology in user-facing errors (PD-001).
 
 ARCHITECTURE:
 - `src/app`: routes and entry points only.
