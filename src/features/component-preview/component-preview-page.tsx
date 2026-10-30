@@ -344,6 +344,7 @@ export function ComponentPreviewPage() {
         </div>
         <div className={styles.cards}>
           <CourseCard
+            variant="brutalist"
             course={{
               href: "#course-note",
               title: "Пример основного курса",
@@ -352,12 +353,13 @@ export function ComponentPreviewPage() {
             }}
             status={courseStatus}
             action={
-              <Button onClick={() => setCourseStatus("in-cart")}>
+              <Button appearance="cut" onClick={() => setCourseStatus("in-cart")}>
                 Добавить — демо
               </Button>
             }
           />
           <CourseCard
+            variant="compact"
             course={{
               href: "#course-note",
               title:
@@ -367,7 +369,7 @@ export function ComponentPreviewPage() {
             }}
             status={courseStatus}
             action={
-              <Button onClick={() => setCourseStatus("in-cart")}>
+              <Button appearance="cut" onClick={() => setCourseStatus("in-cart")}>
                 Добавить — демо
               </Button>
             }
