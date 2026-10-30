@@ -1,0 +1,10 @@
+.seam { position: relative; z-index: 2; height: 0; pointer-events: none; }
+.seam span { position: absolute; display: block; background: var(--brand); }
+.preview span { top: -52px; right: 0; width: 34%; height: 110px; clip-path: polygon(18% 0,100% 0,100% 100%,0 48%); }
+.trainer span { top: -55px; left: 0; width: 27%; height: 110px; clip-path: polygon(0 0,100% 50%,0 100%); }
+:global([data-kind="mini-course"]) .preview span { width: 24%; height: 78px; top: -37px; opacity: .8; }
+:global([data-kind="mini-course"]) .trainer span { width: 21%; opacity: .75; }
+@media (max-width: 760px) {
+  .preview span { top: -22px; width: 48%; height: 52px; }
+  .trainer span { top: -25px; width: 38%; height: 56px; }
+}

@@ -1,0 +1,8 @@
+.unavailable { display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100%; padding: 36px; color: var(--surface); text-align: center; }
+.unavailable > span { display: grid; place-items: center; width: 76px; height: 76px; margin-bottom: 22px; border: 1px solid currentColor; border-radius: 50%; font-size: 34px; }
+.unavailable strong { font-size: 20px; }
+.unavailable p { margin: 10px 0 0; color: #d4cdd3; font-size: 14px; }
+.unavailable button { margin-top: 24px; color: var(--surface); }
+.video { width: 100%; height: 100%; object-fit: contain; background: var(--text); }
+:global([data-kind="mini-course"]) .unavailable { color: var(--text); }
+:global([data-kind="mini-course"]) .unavailable p { color: var(--muted); }

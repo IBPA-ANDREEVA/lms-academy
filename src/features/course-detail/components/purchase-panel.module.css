@@ -1,0 +1,11 @@
+.panel { min-width: 0; padding: clamp(22px, 2.7vw, 38px); background: var(--surface); border: 1px solid var(--text); clip-path: polygon(0 0,calc(100% - 22px) 0,100% 22px,100% 100%,0 100%); }
+.kicker { margin: 0 0 28px; color: var(--brand); font-size: 12px; font-weight: 800; letter-spacing: .1em; }
+.price { margin: 0; font-family: var(--font-unbounded), sans-serif; font-size: clamp(19px, 2vw, 28px); font-weight: 700; line-height: 1.2; overflow-wrap: anywhere; }
+.status { min-height: 48px; margin: 14px 0 22px; font-size: 14px; color: var(--muted); }
+.action { display: flex; align-items: center; min-height: 56px; }
+.action > * { max-width: 100%; }
+.note { margin: 30px 0 0; padding-top: 20px; border-top: 1px solid var(--border); color: var(--muted); font-size: 12px; line-height: 1.5; }
+.compact { border: 0; clip-path: none; background: transparent; padding: 0; }
+.compact .kicker { margin-bottom: 14px; }
+.compact .status { min-height: 0; }
+:global([data-kind="mini-course"]) .panel:not(.compact) { background: var(--soft); }
