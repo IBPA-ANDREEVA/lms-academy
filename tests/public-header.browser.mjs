@@ -21,7 +21,7 @@ try {
     const nav = header.getByRole("navigation", { name: "Основная навигация" });
     assert.equal(await header.getByRole("button", { name: "Открыть меню" }).count(), 0);
     assert.ok(await header.getByRole("button", { name: "Войти", exact: true }).isVisible());
-    assert.ok(await header.getByRole("button", { name: "Корзина пока недоступна" }).isDisabled());
+    assert.ok(await header.getByRole("button", { name: /^Корзина, продуктов:/ }).isEnabled());
     assert.equal(await nav.locator(":scope > ul > li").count(), 4);
     assert.equal(await nav.getByText("Личный кабинет").count(), 0);
     assert.equal(await nav.getByText("Корзина").count(), 0);

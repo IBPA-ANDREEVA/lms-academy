@@ -39,7 +39,7 @@ export const publicSite = {
     { label: "Личный кабинет", links: [
       { label: "Войти", preview: true },
       { label: "Регистрация", preview: true },
-      { label: "Корзина", preview: true },
+      { label: "Корзина", href: "/cart" },
     ] },
   ] satisfies NavigationGroup[],
   legalLinks: [

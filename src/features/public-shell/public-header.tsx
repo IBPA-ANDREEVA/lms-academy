@@ -7,6 +7,7 @@ import { gsap } from "gsap";
 import { useGSAP } from "@gsap/react";
 import { Button, ButtonLink } from "@/components/ui/button";
 import { AuthModal } from "@/features/identity";
+import { CartPreview } from "@/features/commerce";
 import { NavigationEntry } from "./navigation-entry";
 import { PageContainer } from "./page-container";
 import type { NavigationItem, NavigationLink } from "./navigation";
@@ -180,9 +181,7 @@ export function PublicHeader({
                 ) : null}
               </Link>
             ) : showCartPreview ? (
-              <button className={styles.cart} type="button" disabled aria-label="Корзина пока недоступна" title="Корзина пока недоступна">
-                <span className={styles.cartIcon} aria-hidden="true" />
-              </button>
+              <CartPreview key={pathname} triggerClassName={styles.cart} iconClassName={styles.cartIcon} countClassName={styles.count} />
             ) : null}
             {showAuth ? (
               <Button ref={authButton} className={styles.signIn} onClick={() => {

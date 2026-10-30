@@ -11,6 +11,7 @@ import {
   TextField,
 } from "@/components/ui/form-controls";
 import { SectionHeading } from "@/components/ui/section-heading";
+import { CommerceComponentsPreview } from "@/features/commerce";
 import {
   CategoryNavigation,
   CourseCard,
@@ -25,6 +26,7 @@ import styles from "./component-preview-page.module.css";
 
 const components = [
   ["public-header", "PublicHeader"],
+  ["commerce", "CartItems / OrderSummary"],
   ["button", "Button"],
   ["form-controls", "FormControls"],
   ["course-card", "CourseCard"],
@@ -135,6 +137,9 @@ export function ComponentPreviewPage() {
         </div>
       </PageContainer>
 
+      <PreviewSection id="commerce" name="CartItems / OrderSummary" description="Общие строки, сумма и состояния корзины. Данные демонстрационные, оплата отключена; тестовые действия доступны только в режиме разработки.">
+        <CommerceComponentsPreview />
+      </PreviewSection>
       <PreviewSection
         id="public-header"
         name="PublicHeader"
@@ -146,7 +151,7 @@ export function ComponentPreviewPage() {
             brand={brand}
             navigation={navigation}
             account={{ label: "Войти", href: "#form-controls" }}
-            cart={{ label: "Корзина", href: "#course-card", count: 2 }}
+            showCartPreview
             locales={[
               { label: "RU", href: "#navigation-example", current: true },
               { label: "EN", href: "#navigation-example" },

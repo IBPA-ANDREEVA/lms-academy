@@ -1,11 +1,12 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import {
-  PublicFooter,
+  PublicSiteFooter,
   PublicHeader,
   publicSite,
 } from "@/features/public-shell";
 import "./globals.css";
+import { CartProvider } from "@/features/commerce";
 
 const manrope = localFont({
   src: "../assets/fonts/Manrope.ttf",
@@ -32,18 +33,16 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         <a className="skip-link" href="#main-content">
           Перейти к содержанию
         </a>
-        <PublicHeader
-          brand={publicSite.brand}
-          navigation={publicSite.navigation}
-          showAuth
-          showCartPreview
-        />
-        {children}
-        <PublicFooter
-          brand={publicSite.brand}
-          groups={publicSite.footerGroups}
-          legalLinks={publicSite.legalLinks}
-        />
+        <CartProvider>
+          <PublicHeader
+            brand={publicSite.brand}
+            navigation={publicSite.navigation}
+            showAuth
+            showCartPreview
+          />
+          {children}
+          <PublicSiteFooter />
+        </CartProvider>
       </body>
     </html>
   );

@@ -188,7 +188,7 @@ try {
     await page.goto(base + "/preview/components");
     await page.evaluate(() => document.fonts.ready);
     await noOverflow();
-    assert.equal(await page.locator("main > section").count(), 8);
+    assert.equal(await page.locator("main > section").count(), 9);
     assert.ok(
       (
         await page.locator('meta[name="robots"]').getAttribute("content")
