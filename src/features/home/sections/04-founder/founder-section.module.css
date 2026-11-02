@@ -306,3 +306,17 @@
 .milestones p { color: var(--muted); font-weight: 400; margin: 8px 0 0; }
 .number::after { display: none; }
 @media(max-width:600px) { .content { padding-top: 380px; padding-bottom: 80px; } .milestones { gap: 24px; } .milestones::before { display: none; } }
+
+.biography { max-width: 620px; width: 100%; }
+.biography > p { font-size: clamp(18px,1.6vw,23px); line-height: 1.6; font-weight: 400; }
+.story { margin-top: 32px; }
+.story > button { display: flex; justify-content: space-between; align-items: center; width: 100%; border: 0; border-block: 1px solid var(--plum-border); padding: 18px 0; background: transparent; color: var(--brand); font: 600 14px var(--font-manrope); text-align: left; cursor: pointer; }
+.story > button span:last-child { font-size: 26px; font-weight: 400; }
+.story > button:hover { padding-inline: 10px; background: var(--soft); }
+.story > button:focus-visible { outline: 2px solid var(--focus); outline-offset: 4px; }
+.storyViewport { height: 0; overflow: clip; }
+.storyText { display: grid; gap: 28px; padding-block: 32px 12px; }
+.storyText p { margin: 0; padding-left: 24px; border-left: 1px solid var(--plum-border); font-size: 15px; line-height: 1.85; }
+.storyText p:first-child { color: var(--brand); }
+.milestones { gap: 32px 36px; }
+@media(prefers-reduced-motion:no-preference) { .story > button { transition: padding .3s,background .3s; } }

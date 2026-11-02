@@ -1,6 +1,5 @@
 import Image from "next/image";
 import aboutPortrait from "../../../../../public/ibpa/lдля клиентов 77 37 копія.jpg";
-import { ButtonLink } from "@/components/ui/button";
 import { PageContainer } from "@/features/public-shell";
 import { AcademyBenefits } from "./components/academy-benefits";
 import styles from "./about-section.module.css";
@@ -29,15 +28,6 @@ export function AboutSection() {
         </p>
         <AcademyBenefits />
         <p className={styles.footnote}>Сертификат подтверждает прохождение курса и не заменяет лицензию штата.</p>
-        <ButtonLink
-          href="#founder"
-          appearance="cut"
-          intent="secondary"
-          size="lg"
-          className={styles.cta}
-        >
-          УЗНАТЬ БОЛЬШЕ <span aria-hidden="true">→</span>
-        </ButtonLink>
       </PageContainer>
     </section>
   );
