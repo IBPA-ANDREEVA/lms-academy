@@ -10,7 +10,7 @@ export function TrainerSection({ product }: { product: DetailProduct }) {
   if (!product.trainer) return null;
   return (
     <section id="trainer" className={styles.section} aria-labelledby="trainer-title">
-      <PageContainer size="content" className={styles.grid}>
+      <PageContainer reveal size="content" className={styles.grid}>
         <div className={styles.intro}>
           <SectionLabel>ПРЕПОДАВАТЕЛЬ</SectionLabel>
           <SectionHeading id="trainer-title" display>Человек<br /><span>за курсом</span></SectionHeading>

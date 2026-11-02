@@ -96,14 +96,18 @@ export function LearningOffersShowcase({ panels }: { panels: [ReactNode, ReactNo
     if (!group || !header) return;
     const updateDock = () => {
       const nav = group.querySelector('[role="tablist"]');
-      const docked = Boolean(nav && group.getBoundingClientRect().top <= header.getBoundingClientRect().bottom && group.getBoundingClientRect().bottom > header.getBoundingClientRect().bottom + 56);
+      const docked = Boolean(nav && group.getBoundingClientRect().top <= header.getBoundingClientRect().bottom + 24 && group.getBoundingClientRect().bottom > header.getBoundingClientRect().bottom + 56);
       header.dataset.offersDocked = String(docked);
+      const bar = header.querySelector(':scope > div > div');
+      const gap = nav && bar ? Math.max(0, nav.getBoundingClientRect().top - bar.getBoundingClientRect().bottom) : 0;
+      header.style.setProperty("--offers-bridge-height", `${Math.min(24, gap)}px`);
     };
     window.addEventListener("scroll", updateDock, { passive: true });
     window.addEventListener("resize", updateDock);
     updateDock();
-    const resize = new ResizeObserver(() => group.style.setProperty("--public-header-offset", `${header.getBoundingClientRect().height}px`));
+    const resize = new ResizeObserver(() => { group.style.setProperty("--public-header-offset", `${header.getBoundingClientRect().height}px`); updateDock(); });
     resize.observe(header);
+    resize.observe(group);
     const onHash = () => {
       const hash = location.hash.slice(1);
       const index = hash === "usa-topics" ? 3 : sections.findIndex((section) => section.anchor === hash);
@@ -135,6 +139,7 @@ export function LearningOffersShowcase({ panels }: { panels: [ReactNode, ReactNo
       window.removeEventListener("scroll", updateDock);
       window.removeEventListener("resize", updateDock);
       delete header.dataset.offersDocked;
+      header.style.removeProperty("--offers-bridge-height");
       cancelAnimationFrame(initialHash);
       window.removeEventListener("hashchange", onHash);
       window.removeEventListener("popstate", onHash);

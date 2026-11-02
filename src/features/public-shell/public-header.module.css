@@ -237,3 +237,5 @@
 @media(max-width:760px) { .header[data-catalog-route="true"] .bar { height: 104px; } }
 
 .header[data-offers-docked="true"] .bar { border-radius: 16px 16px 0 0; box-shadow: none; }
+
+.header[data-offers-docked="true"] .bar::after { content: ""; position: absolute; left: 0; right: 0; bottom: calc(-1 * var(--offers-bridge-height, 0px)); height: var(--offers-bridge-height, 0px); background: var(--surface); pointer-events: none; z-index: -1; }

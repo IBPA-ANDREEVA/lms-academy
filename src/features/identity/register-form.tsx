@@ -20,7 +20,7 @@ export function RegisterForm({ onViewChange }: { onViewChange: (view: AuthView) 
       <PasswordField label="Подтвердите пароль" name="confirm-password" autoComplete="new-password" placeholder="Повторите пароль" />
       <TextField label="Дата рождения" type="text" name="birthdate" inputMode="numeric" autoComplete="bday" placeholder="ДД.ММ.ГГГГ" />
       <Button type="submit" appearance="cut" intent="secondary" fullWidth className={styles.primaryAction}>СОЗДАТЬ АККАУНТ <span aria-hidden="true">→</span></Button>
-      {notice && <FormMessage>Регистрация пока недоступна. Это демонстрация интерфейса.</FormMessage>}
+      {notice && <FormMessage>Регистрация пока недоступна. </FormMessage>}
       <SocialActions />
       <div className={styles.switchView}>Уже есть аккаунт? <button type="button" onClick={() => onViewChange("login")}>Войти ↗</button></div>
     </form>

@@ -10,7 +10,7 @@ import styles from "./purchase-terms-section.module.css";
 export function PurchaseTermsSection({ product }: { product: DetailProduct }) {
   return (
     <section id="enroll" className={styles.section} aria-labelledby="terms-title">
-      <PageContainer size="content">
+      <PageContainer reveal size="content">
         <div className={styles.grid}>
           <div className={styles.intro}>
             <SectionLabel>УСЛОВИЯ ОБУЧЕНИЯ</SectionLabel>

@@ -23,7 +23,7 @@ export function FounderSection() {
       </div>
       <div className={styles.plumWedge} aria-hidden="true" />
       <div className={styles.edgeLine} aria-hidden="true" />
-      <PageContainer size="wide" className={styles.content}>
+      <PageContainer reveal size="wide" className={styles.content}>
         <p className={styles.kicker}>ОСНОВАТЕЛЬ</p>
         <h2 id="founder-title" className={styles.heading}>
           <span>ОПЫТ,</span>

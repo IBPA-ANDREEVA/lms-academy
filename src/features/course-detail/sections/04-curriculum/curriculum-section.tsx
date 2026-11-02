@@ -8,7 +8,7 @@ import styles from "./curriculum-section.module.css";
 export function CurriculumSection({ product }: { product: DetailProduct }) {
   return (
     <section id="curriculum" className={styles.section} aria-labelledby="curriculum-title">
-      <PageContainer size="content" className={styles.grid}>
+      <PageContainer reveal size="content" className={styles.grid}>
         <div className={styles.copy}>
           <SectionLabel>ПРОГРАММА</SectionLabel>
           <SectionHeading id="curriculum-title" display>Путь<br /><span>по темам</span></SectionHeading>

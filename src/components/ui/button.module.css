@@ -172,3 +172,19 @@
     transform: none;
   }
 }
+
+/* Cut: the caption advances while the two edges open apart. */
+.cut::before, .cut::after, .cut .label, .cut .label > span { transition: transform .45s cubic-bezier(.22,1,.36,1), background-color .35s, color .35s; }
+.cut:is(:hover,:focus-visible):not(:disabled) { color: var(--brand); }
+.cut:is(:hover,:focus-visible):not(:disabled)::before { transform: translateX(-3px) skewX(-12deg); background: var(--soft); }
+.cut:is(:hover,:focus-visible):not(:disabled)::after { transform: translateX(6px) skewX(-24deg); }
+.cut:is(:hover,:focus-visible):not(:disabled) .label { transform: translateX(3px); }
+.cut:is(:hover,:focus-visible):not(:disabled) .label > span[aria-hidden="true"] { transform: translateX(5px); }
+.cut:active:not(:disabled) .label { transform: translateX(1px); }
+.cut.inverse:is(:hover,:focus-visible):not(:disabled) { color: var(--surface); }
+.cut.inverse:is(:hover,:focus-visible):not(:disabled)::before { background: rgb(255 255 255 / 12%); }
+@media(prefers-reduced-motion:reduce) {
+  .cut::before,.cut::after,.cut .label,.cut .label > span { transition: none; }
+  .cut:is(:hover,:focus-visible):not(:disabled)::before,.cut:is(:hover,:focus-visible):not(:disabled)::after { transform: skewX(-16deg); }
+  .cut:is(:hover,:focus-visible):not(:disabled) .label,.cut:is(:hover,:focus-visible):not(:disabled) .label > span[aria-hidden="true"] { transform: none; }
+}

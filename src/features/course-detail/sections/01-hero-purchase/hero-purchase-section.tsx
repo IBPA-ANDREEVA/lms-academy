@@ -12,7 +12,7 @@ export function HeroPurchaseSection({ product }: { product: DetailProduct }) {
   const catalogHref = product.kind === "mini-course" ? "/mini-courses" : "/courses";
   return (
     <section className={styles.section} aria-labelledby="detail-title">
-      <PageContainer size="content">
+      <PageContainer reveal size="content">
         <nav aria-label="Хлебные крошки" className={styles.crumbs}>
           <Link href="/">Главная</Link><span aria-hidden="true">/</span>
           <Link href={catalogHref}>{product.kind === "mini-course" ? "Мини-курсы" : "Курсы"}</Link><span aria-hidden="true">/</span>

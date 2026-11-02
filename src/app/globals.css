@@ -125,20 +125,13 @@ html {
 
 @media (prefers-reduced-motion: no-preference) {
   button, a, summary { transition: color .2s ease, background-color .2s ease, border-color .2s ease, box-shadow .2s ease; }
-  details[open] > :not(summary), dialog[open], [role="dialog"], [role="listbox"] { animation: public-open .22s ease-out; }
-  @keyframes public-open { from { opacity: .3; translate: 0 6px; } to { opacity: 1; translate: 0 0; } }
+  details[open] > :not(summary), dialog[open], [role="dialog"], [role="listbox"] { animation: public-open .4s cubic-bezier(.22,1,.36,1); }
+  @keyframes public-open { from { opacity: 0; translate: 0 16px; } to { opacity: 1; translate: 0 0; } }
 }
 
 @media (prefers-reduced-motion: no-preference) {
-  @supports (animation-timeline: view()) {
-    main section h2 {
-      animation: section-arrival linear both;
-      animation-timeline: view();
-      animation-range: entry 0% entry 100%;
-    }
-    @keyframes section-arrival {
-      from { opacity: .35; translate: 0 18px; }
-      to { opacity: 1; translate: 0 0; }
-    }
-  }
+  dialog[open]::backdrop { animation: backdrop-open .35s ease-out; }
+  @keyframes backdrop-open { from { opacity: 0; } to { opacity: 1; } }
+  a:hover, button:hover:not(:disabled), summary:hover { transition-duration: .3s; }
+  select, input, textarea { transition: border-color .25s, box-shadow .25s, background-color .25s; }
 }

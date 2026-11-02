@@ -75,3 +75,7 @@ LA09 refinement (2026-10-29): CartPreview now keeps its panel mounted for a reve
 Preview uses these actual components without duplicated styling. New styling is a bounded owner-requested proposal, pending visual review; [verification note](../design/landing-refinement-2026-11-02.md).
 
 AuthModal motion follow-up: `identity/auth-modal.tsx` keeps the existing `open`/`onClose` API and consumers. Focus now follows the committed open/view state synchronously inside its effect with `preventScroll`, replacing uncancelled animation-frame focus callbacks. Native dialog entrance styling follows the shared reduced-motion media query; no authentication behavior is added.
+
+## Public polish follow-up · 2026-11-02
+
+See [current implementation and verification](../design/public-polish-followup.md). Existing route/section owners remain. PublicHeader and HOME-06–09 now share an attached light navigation surface; HOME-03 CTA is removed; HOME-04 owns `components/founder-story.tsx` (`children`) with animated disclosure. Public fixture explanations are removed per explicit owner instruction, with unavailable actions preserved. PageContainer adds opt-in `reveal` for home narrative and detail sections; Button/ButtonLink retain their APIs with revised Cut motion, also visible in the canonical component preview. Missing real content/services and human visual review remain pending.

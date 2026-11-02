@@ -5,7 +5,7 @@ import styles from "./reviews-section.module.css";
 export function ReviewsSection() {
   return (
     <section data-flow-section id="reviews" className={styles.section} aria-labelledby="reviews-title">
-      <PageContainer size="wide" className={styles.content}>
+      <PageContainer reveal size="wide" className={styles.content}>
         <div className={styles.top}>
           <div className={styles.intro}>
             <p className={styles.kicker}>ОТЗЫВЫ И РЕКОМЕНДАЦИИ</p>

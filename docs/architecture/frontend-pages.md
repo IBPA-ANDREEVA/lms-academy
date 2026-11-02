@@ -75,3 +75,7 @@ Public navigation publication is maintained in `src/features/public-shell/naviga
 ## Public refinement · 2026-11-02
 
 `/` retains `src/features/home/home-page.tsx` and all numbered owners; `/courses` and `/mini-courses` retain `src/features/catalog/catalog-page.tsx`. Updated RU content, six benefits, founder disclosure, staged learning demo, compact offers navigation, single reviews strip, catalog hero overlay/filters and shared card styling. `src/features/public-shell/public-motion.tsx` accepts `children` from the root layout for route fades alongside CSS section-heading entrances on existing public routes, with scoped cleanup and reduced motion. No new page/locale/backend is implied. See [scope and verification](../design/landing-refinement-2026-11-02.md); owner visual approval remains pending.
+
+## Public polish follow-up · 2026-11-02
+
+See [current implementation and verification](../design/public-polish-followup.md). Existing route/section owners remain. PublicHeader and HOME-06–09 now share an attached light navigation surface; HOME-03 CTA is removed; HOME-04 owns `components/founder-story.tsx` (`children`) with animated disclosure. Public fixture explanations are removed per explicit owner instruction, with unavailable actions preserved. PageContainer adds opt-in `reveal` for home narrative and detail sections; Button/ButtonLink retain their APIs with revised Cut motion, also visible in the canonical component preview. Missing real content/services and human visual review remain pending.

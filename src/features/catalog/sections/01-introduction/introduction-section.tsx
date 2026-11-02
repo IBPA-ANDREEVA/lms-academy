@@ -6,7 +6,7 @@ import styles from "./introduction-section.module.css";
 
 export function IntroductionSection() {
   return <section className={styles.hero} aria-labelledby="catalog-title">
-    <PageContainer size="wide" className={styles.content}>
+    <PageContainer reveal size="wide" className={styles.content}>
       <div className={styles.copy}>
         <p className={styles.eyebrow}>КАТАЛОГ ОБУЧЕНИЯ</p>
         <h1 id="catalog-title">ОБУЧЕНИЕ<br /><span>В БЬЮТИ.</span></h1>

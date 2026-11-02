@@ -17,7 +17,7 @@ export function AboutSection() {
         />
       </div>
       <div className={styles.lightField} aria-hidden="true" />
-      <PageContainer size="wide" className={styles.content}>
+      <PageContainer reveal size="wide" className={styles.content}>
         <p className={styles.kicker}>ОБ АКАДЕМИИ</p>
         <h2 id="about-title" className={styles.heading}>
           <span>ВСЁ ДЛЯ КАРЬЕРЫ</span>

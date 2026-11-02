@@ -60,3 +60,5 @@
 @media(max-width:800px) { .group { --offers-nav-height: 56px; } .switcher { padding-inline: 8px; gap: 0; } .switcher button { padding-inline: 14px; font-size: 12px; } }
 @media(prefers-reduced-motion:reduce) { .switcher button::after,.switcher button span { transition: none; } .switcher button:hover span { transform: none; } }
 @media(max-width:760px) { .switcher { top: var(--public-header-offset); } }
+
+@media(max-width:600px) { .switcher { margin-inline: 10px; } }

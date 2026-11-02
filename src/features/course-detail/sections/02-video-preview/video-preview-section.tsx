@@ -8,7 +8,7 @@ import styles from "./video-preview-section.module.css";
 export function VideoPreviewSection({ product }: { product: DetailProduct }) {
   return (
     <section id="preview" className={styles.section} aria-labelledby="preview-title">
-      <PageContainer size="content" className={styles.grid}>
+      <PageContainer reveal size="content" className={styles.grid}>
         <div className={styles.copy}>
           <SectionLabel>ПУБЛИЧНОЕ ПРЕВЬЮ</SectionLabel>
           <SectionHeading id="preview-title" display>Посмотрите<br /><span>формат</span></SectionHeading>

@@ -23,7 +23,7 @@ try {
   await page.getByRole('tab',{name:'Сдать домашнее задание'}).click();
   assert.equal(await page.getByRole('img',{name:'Место для демонстрационного видеоурока'}).count(),0);
   await page.locator('#learning-comment').fill('Проверка сохранения работы');
-  await page.getByRole('button',{name:'ИМИТИРОВАТЬ ОТПРАВКУ'}).click();
+  await page.getByRole('button',{name:'К ОБРАТНОЙ СВЯЗИ'}).click();
   await page.getByRole('button',{name:'ДОРАБОТАТЬ ЗАДАНИЕ'}).click();
   assert.equal(await page.locator('#learning-comment').inputValue(),'Проверка сохранения работы');
   await page.getByRole('tab',{name:/Смотреть урок/}).click();
