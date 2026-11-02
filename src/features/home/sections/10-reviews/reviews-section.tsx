@@ -17,13 +17,6 @@ export function ReviewsSection() {
           </div>
           <ReviewsCarousel />
         </div>
-        <div className={styles.recommendations}>
-          <div>
-            <h3>РЕКОМЕНДАЦИИ СПЕЦИАЛИСТОВ</h3>
-            <p>Место для проверенных рекомендаций после согласования материалов.</p>
-          </div>
-          <div className={styles.recommendationPlaceholder} aria-label="Макет будущей рекомендации специалиста">ЗДЕСЬ БУДЕТ ПОДТВЕРЖДЁННАЯ<br />РЕКОМЕНДАЦИЯ СПЕЦИАЛИСТА</div>
-        </div>
       </PageContainer>
     </section>
   );

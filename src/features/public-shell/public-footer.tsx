@@ -44,7 +44,7 @@ export function PublicFooter({
                   <ul>
                     {group.links.map((link) => (
                       <li key={link.label}>
-                        <NavigationEntry entry={link} />
+                        <NavigationEntry entry={link} showPreviewLabel={false} />
                       </li>
                     ))}
                   </ul>
@@ -60,7 +60,7 @@ export function PublicFooter({
                 <ul className={styles.legal}>
                   {legalLinks.map((link) => (
                     <li key={link.label}>
-                      <NavigationEntry entry={link} />
+                      <NavigationEntry entry={link} showPreviewLabel={false} />
                     </li>
                   ))}
                 </ul>

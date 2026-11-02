@@ -45,3 +45,8 @@
   .intro .heading span { display: block; margin: 0; }
   .intro .description { font-size: 14px; }
 }
+
+.card { padding: 0; border: 0; border-radius: 0; background: transparent; }
+.cardLabel { display: none; }
+.card > article { border: 2px solid var(--text); height: 100%; }
+.card > article > div:nth-child(2) { padding: 24px; }

@@ -34,7 +34,7 @@ try {
     await page.goto(base);
     await trigger.hover();
     await preview.waitFor();
-    assert.equal(await trigger.evaluate(el => getComputedStyle(el).color), "rgb(120, 40, 88)");
+    await page.waitForFunction(() => getComputedStyle(document.querySelector('button[aria-label^="Корзина, продуктов:"]')).color === "rgb(120, 40, 88)");
     assert.equal(await preview.getByRole("button", { name: "Закрыть предпросмотр корзины" }).count(), 0);
     const animatedPanel = page.locator('[class*="previewBridge"]').first();
     await page.mouse.move(10, 400);
@@ -53,6 +53,8 @@ try {
     assert.equal(await animatedPanel.evaluate(el => Number(getComputedStyle(el).opacity)), 1);
     await page.emulateMedia({ reducedMotion: "no-preference" });
     await page.goto(`${base}/cart`);
+    await main.getByText("Пока здесь пусто").waitFor();
+    await page.mouse.move(10, 400);
     await trigger.focus();
     await preview.waitFor();
     await page.keyboard.press("Escape");
@@ -125,7 +127,7 @@ try {
     await main.getByRole("button", { name: "Добавить тестовый курс", exact: true }).click();
     await trigger.click(); await preview.waitFor();
     await preview.getByRole("button", { name: "Удалить: Тестовый курс", exact: true }).click();
-    await preview.getByText("Ваша корзина пока пуста.").waitFor();
+    await preview.getByRole("heading", { name: "Пока пусто", exact: true }).waitFor();
     assert.equal(await trigger.getAttribute("aria-label"), "Корзина, продуктов: 0");
     await page.keyboard.press("Escape");
     await page.evaluate(() => localStorage.setItem("lms.la09.demo-cart.v1", "malformed"));

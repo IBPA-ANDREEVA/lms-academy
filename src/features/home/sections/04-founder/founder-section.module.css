@@ -292,3 +292,17 @@
 
 
 @media (min-width: 601px) { .plumWedge { display: none; } }
+
+/* November public-page refinement. */
+
+.content { padding-block: 96px; }
+.biography { margin-top: 32px; }
+.biography p { margin: 0 0 20px; }
+.biography summary { width: fit-content; cursor: pointer; color: var(--brand); padding-block: 12px; border-bottom: 1px solid var(--plum-border); }
+.biography details[open] summary { margin-bottom: 24px; }
+.milestones { grid-template-columns: repeat(2,minmax(0,1fr)); gap: 32px; margin-top: 48px; }
+.milestones li { text-transform: none; line-height: 1.6; }
+.milestones strong { font-size: 14px; }
+.milestones p { color: var(--muted); font-weight: 400; margin: 8px 0 0; }
+.number::after { display: none; }
+@media(max-width:600px) { .content { padding-top: 380px; padding-bottom: 80px; } .milestones { gap: 24px; } .milestones::before { display: none; } }

@@ -71,3 +71,7 @@ Public navigation publication is maintained in `src/features/public-shell/naviga
 ### Homepage refinement — 2026-10-28
 
 `/` continues to compose shared HOME-01/12 and numbered home-owned HOME-02–11. `home-page.tsx` now inserts shared decorative seams between the vertical sections and the state-preserving, natural-height 06–09 showcase. Hero is viewport-height; navigation, learning-stage motion, compact offer layouts and cross-section geometry are implemented within the existing release constraints. `/preview/components` reflects the revised Cut button and unavailable navigation entries. See the latest verification entry for browser evidence and remaining publication blockers.
+
+## Public refinement · 2026-11-02
+
+`/` retains `src/features/home/home-page.tsx` and all numbered owners; `/courses` and `/mini-courses` retain `src/features/catalog/catalog-page.tsx`. Updated RU content, six benefits, founder disclosure, staged learning demo, compact offers navigation, single reviews strip, catalog hero overlay/filters and shared card styling. `src/features/public-shell/public-motion.tsx` accepts `children` from the root layout for route fades alongside CSS section-heading entrances on existing public routes, with scoped cleanup and reduced motion. No new page/locale/backend is implied. See [scope and verification](../design/landing-refinement-2026-11-02.md); owner visual approval remains pending.

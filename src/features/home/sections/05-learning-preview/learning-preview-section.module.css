@@ -55,3 +55,22 @@
 @media (max-width: 650px) { .section { padding-block: 40px 48px; } .layout { gap: 34px; } .heading { font-size: clamp(35px, 10.5vw, 52px); } .description { font-size: 15px; } .demo { box-shadow: 7px 7px 0 var(--text); } .demoHeader { padding: 12px; font-size: 12px; } .demoHeader strong span { display: block; } .demoBadge { max-width: 110px; white-space: normal; padding: 6px; font-size: 9px; } .tabs button { min-height: 52px; flex-direction: column; gap: 2px; font-size: 9px; line-height: 1.2; } .demoBody { grid-template-columns: 1fr; gap: 22px; padding: 18px; } .lessonCard { display: grid; grid-template-columns: 35% 65%; } .mediaPlaceholder { min-height: 125px; padding: 7px; } .mediaPlaceholder span { font-size: 9px; } .mediaPlaceholder strong { font-size: 10px; } .lessonText { padding: 11px; } .lessonText h3 { font-size: 15px; } .lessonText p:last-child { font-size: 10px; } .demoFooter { display: grid; gap: 4px; padding: 14px 18px; } }
 
 .layout { position: relative; z-index: 3; }
+
+/* November public-page refinement. */
+
+.section { padding-block: clamp(80px,8vw,128px); }
+.layout { grid-template-columns: minmax(240px,.45fr) minmax(0,1fr); gap: 60px; }
+.heading { font-size: clamp(28px,3vw,46px); }
+.demoBody { display: block; min-height: 480px; padding: 32px; }
+.lessonCard { margin-bottom: 28px; }
+.mediaPlaceholder { aspect-ratio: 16/9; min-height: 220px; }
+.lessonText { display: none; }
+.stageContent { max-width: 680px; margin-inline: auto; }
+.feedbackStatus { padding: 32px; margin-block: 32px; border-left: 3px solid var(--brand); }
+.demoBody[data-stage="feedback"] { display: flex; align-items: center; background: var(--soft); }
+.demoBody[data-stage="assignment"] .upload { min-height: 150px; }
+@media(max-width:900px) { .layout { grid-template-columns: 1fr; } .intro { max-width: 560px; } }
+@media(max-width:600px) { .demoBody { padding: 20px; min-height: 440px; } .demo { box-shadow: 6px 6px 0 var(--text); } .mediaPlaceholder { min-height: 170px; } .tabs button { flex-direction: column; } }
+
+
+.lessonCard { display: block; }

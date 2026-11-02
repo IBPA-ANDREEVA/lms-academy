@@ -21,14 +21,14 @@ export function AboutSection() {
       <PageContainer size="wide" className={styles.content}>
         <p className={styles.kicker}>ОБ АКАДЕМИИ</p>
         <h2 id="about-title" className={styles.heading}>
-          <span>БОЛЬШЕ, ЧЕМ</span>
-          <span>ОБУЧЕНИЕ</span>
+          <span>ВСЁ ДЛЯ КАРЬЕРЫ</span>
+          <span>В БЬЮТИ —</span><span>В ОДНОМ МЕСТЕ</span>
         </h2>
         <p className={styles.description}>
-          LMS Academy объединяет онлайн-уроки по бьюти-направлениям,
-          практические задания и обратную связь в курсах с куратором.
+          LMS Academy — онлайн-академия для бьюти-мастеров на русском и английском языках. Здесь можно освоить новое направление с нуля, повысить квалификацию и подготовиться к работе в США.
         </p>
         <AcademyBenefits />
+        <p className={styles.footnote}>Сертификат подтверждает прохождение курса и не заменяет лицензию штата.</p>
         <ButtonLink
           href="#founder"
           appearance="cut"

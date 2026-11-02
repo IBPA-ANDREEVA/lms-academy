@@ -42,7 +42,7 @@ export function CourseCard({
   variant = "default",
   demonstration = false,
 }: CourseCardProps) {
-  const detailPreview = demonstration && course.href;
+  const detailPreview = Boolean(course.href);
   return (
     <article className={`${styles.card} ${styles[variant]} ${detailPreview ? styles.clickable : ""}`}>
       {course.image ? (

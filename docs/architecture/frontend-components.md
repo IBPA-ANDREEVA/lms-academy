@@ -63,3 +63,15 @@ Home-only shared composition and carousel/media reuse for HOME-06–09 are regis
 Reused canonical primitives: Button/ButtonLink (existing Cut outline and detached slash), TextField, Checkbox, SelectField, FormMessage, PageContainer, PublicHeader/PublicFooter and AuthModal. No primitive styles or design tokens changed. Checkout-local compositions remain in commerce. Legal document links cannot be active until approved content is published.
 
 LA09 refinement (2026-10-29): CartPreview now keeps its panel mounted for a reversible 220ms GSAP opacity/8px translation tween. Closed/closing panels are inert, aria-hidden and non-interactive; Escape/outside/pointer/focus dismissal stays intact. Scoped useGSAP owns cleanup; live reduced-motion changes and resizing settle to the requested state. Preview close X removed; per-product removal retained. Header hover/open style uses plum ink on pale background, including over the homepage hero. Repetitive demo paragraphs reduced to one short demo/payment label; item and summary copy tightened. Shared source and production demo exclusion unchanged.
+
+## Shared refinement · 2026-11-02
+
+- `catalog/course-card.tsx` / module CSS: existing props unchanged; all valid `course.href` cards receive a full-card heading-link overlay. Rectangular neobrutalist border/shadow and hover lift; existing Cut actions. Consumers: home courses/mini-courses, both catalogs and `/preview/components` (same live implementations).
+- `public-shell/public-header.tsx` / module CSS: existing props unchanged; underline/color hover, floating overlay extended to the two catalog entry routes, with opaque rounded bar there. Other routes retain their existing shell.
+- `public-shell/public-footer.tsx`: same props/consumers; passes `showPreviewLabel={false}` to canonical NavigationEntry. Disabled items remain semantically unavailable.
+- `commerce/cart-preview.tsx`: same trigger props, disclosure behavior and consumers; empty state has cart icon, clear heading and one Cut catalog action. Existing loading/error/recovery flows retained.
+- `public-shell/public-motion.tsx`: `children: ReactNode`; root-layout composition across public routes. Scoped GSAP route entrances on an owned wrapper, CSS heading entrances, lifecycle cleanup and live reduced-motion support; no business rules or extra route wrappers.
+
+Preview uses these actual components without duplicated styling. New styling is a bounded owner-requested proposal, pending visual review; [verification note](../design/landing-refinement-2026-11-02.md).
+
+AuthModal motion follow-up: `identity/auth-modal.tsx` keeps the existing `open`/`onClose` API and consumers. Focus now follows the committed open/view state synchronously inside its effect with `preventScroll`, replacing uncancelled animation-frame focus callbacks. Native dialog entrance styling follows the shared reduced-motion media query; no authentication behavior is added.

@@ -144,7 +144,7 @@ export function LearningOffersShowcase({ panels }: { panels: [ReactNode, ReactNo
     <div className={styles.bottomGeometry} aria-hidden="true" data-offers-geometry="bottom" />
     <div className={styles.switcher} role="tablist" aria-label="Форматы обучения">
       {sections.map((section, index) => <button key={section.id} ref={(node) => { tabsRef.current[index] = node; }} type="button" role="tab" id={`offer-tab-${section.id}`} aria-controls={`offer-panel-${section.id}`} aria-selected={index === activeIndex} tabIndex={index === activeIndex ? 0 : -1} onClick={() => goTo(index)} onKeyDown={(event) => onTabKey(event, index)}>
-        <span>{section.label}</span>{"preview" in section && <small>ПРЕВЬЮ</small>}
+        <span>{section.label}</span>
       </button>)}
     </div>
     <div ref={trackRef} className={styles.track} data-offers-track

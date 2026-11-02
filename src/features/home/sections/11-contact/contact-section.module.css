@@ -36,3 +36,6 @@
 
 
 .layout { position: relative; z-index: 3; }
+
+/* November public-page refinement. */
+.section { padding-block: clamp(80px,8vw,128px); }

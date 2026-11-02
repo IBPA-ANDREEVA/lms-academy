@@ -32,17 +32,12 @@ export function AuthModal({ open, onClose }: Props) {
     if (open && !element.open) element.showModal();
     if (!open && element.open) element.close();
     if (open) {
-      requestAnimationFrame(() => {
-        element.querySelector<HTMLInputElement>('[data-auth-view]:not([hidden]) [data-auth-first]')?.focus();
-      });
+      element.querySelector<HTMLInputElement>('[data-auth-view]:not([hidden]) [data-auth-first]')?.focus({ preventScroll: true });
     }
-  }, [open]);
+  }, [open, view]);
 
   function changeView(next: AuthView) {
     setView(next);
-    requestAnimationFrame(() => {
-      dialog.current?.querySelector<HTMLInputElement>(`[data-auth-view="${next}"] [data-auth-first]`)?.focus();
-    });
   }
 
   return (

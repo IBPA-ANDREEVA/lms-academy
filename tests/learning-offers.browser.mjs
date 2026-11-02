@@ -113,7 +113,7 @@ try {
     assert.ok(Math.abs(sticky.header - sticky.nav) < 2, `switcher overlaps header ${width}`);
     if (width === 390) {
       await select(page, 0);
-      await swipe(page, page.locator("#courses-title"));
+      await swipe(page, page.locator("#catalog-status p").last());
       await settle(page, 1);
       await page.getByRole("button", { name: "Все пакеты", exact: true }).click();
       await swipe(page, page.locator("#packages [data-offer-carousel]"));

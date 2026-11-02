@@ -37,3 +37,13 @@
   .topGeometry { top: -32px; height: 108px; clip-path: polygon(82% 0,100% 0,100% 100%,94% 100%); }
   .bottomGeometry { bottom: -64px; height: 112px; clip-path: polygon(0 0,40% 48px,24% 100%,0 100%); }
 }
+
+/* November public-page refinement. */
+
+.group { --offers-space: clamp(64px,6vw,96px); --offers-nav-height: 76px; }
+.switcher { padding: 10px var(--offers-gutter); gap: 8px; border-block: 0; box-shadow: 0 1px 0 var(--border); }
+.switcher button { min-height: 54px; border: 1px solid transparent; color: var(--text); transition: background-color .2s,color .2s,border-color .2s; }
+.switcher button[aria-selected="true"] { background: var(--text); color: var(--surface); border-color: var(--text); }
+.switcher button:hover:not([aria-selected="true"]) { border-color: var(--plum-border); }
+@media(max-width:800px) { .switcher { padding-inline: 16px; } .switcher button { padding-inline: 20px; } .group { --offers-nav-height: 76px; } }
+@media(prefers-reduced-motion:reduce) { .switcher button { transition: none; } }

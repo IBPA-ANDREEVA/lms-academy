@@ -62,3 +62,11 @@
 
 /* The persistent group owns the course surface, including on mobile. */
 @media (max-width: 650px) { .section { color: white; } .heading span:nth-child(2), .heading span:nth-child(3), .previewLabel, .catalogNote { color: var(--soft); } .showcase nav button { color: white; border-color: var(--plum-border); } .showcase nav button[aria-pressed="true"], .showcase nav button:hover { background: white; color: var(--brand); } .dots button::before { border-color: white; } .dots button[aria-current="true"]::before { background: white; } }
+
+.track { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); grid-template-rows: auto; gap: 28px; padding: 8px 10px 16px 0; }
+.cardFrame,.cardFrame:first-child { grid-row: auto; padding: 0; background: transparent; box-shadow: none; }
+.cardFrame article,.cardFrame:first-child article { display: flex; height: 100%; border: 2px solid var(--text); }
+.cardFrame article > div:first-child,.cardFrame:first-child article > div:first-child { height: auto; aspect-ratio: 4/3; flex: none; }
+.cardFrame article > div:nth-child(2),.cardFrame:first-child article > div:nth-child(2) { padding: 24px; gap: 16px; flex: 1; align-content: start; }
+.cardLabel { display: none; }
+@media(max-width:700px) { .track { display: flex; padding-inline: 6px; } .cardFrame,.cardFrame:first-child { flex: 0 0 min(82vw,380px); } }

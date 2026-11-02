@@ -84,7 +84,8 @@ export function LearningPreviewDemo() {
           </button>
         ))}
       </div>
-      <div className={styles.demoBody}>
+      <div className={styles.demoBody} data-stage={stage}>
+        {stage === "lesson" && <div className={styles.stageContent} role="tabpanel" id="learning-panel-lesson" aria-labelledby="learning-tab-lesson" tabIndex={0}>
         <div className={styles.lessonCard}>
           <div className={styles.mediaPlaceholder} role="img" aria-label="Место для демонстрационного видеоурока">
             <span>ВИДЕОУРОК</span>
@@ -96,11 +97,10 @@ export function LearningPreviewDemo() {
             <p>В настоящем курсе здесь будут урок и материалы для подготовки к заданию.</p>
           </div>
         </div>
-        {stage === "lesson" && <div className={styles.stageContent} role="tabpanel" id="learning-panel-lesson" aria-labelledby="learning-tab-lesson" tabIndex={0}>
           <p className={styles.status}>ШАГ 01 / ПРОСМОТР УРОКА</p>
           <h3>Сначала изучите материал</h3>
           <p>Это демонстрация учебной среды. Видеоурок появится здесь после добавления согласованного демоматериала.</p>
-          <Button appearance="neoBrutalist" onClick={() => changeStage("assignment")}>К ЗАДАНИЮ <span aria-hidden="true">→</span></Button>
+          <Button appearance="cut" onClick={() => changeStage("assignment")}>К ЗАДАНИЮ <span aria-hidden="true">→</span></Button>
         </div>}
         {stage === "assignment" && <div className={styles.stageContent} role="tabpanel" id="learning-panel-assignment" aria-labelledby="learning-tab-assignment" tabIndex={0}>
           <p className={styles.status}>{submitted ? "ДЕМО-СТАТУС / ОТПРАВЛЕНО" : "ШАГ 02 / МОЯ РАБОТА"}</p>
@@ -123,7 +123,7 @@ export function LearningPreviewDemo() {
           </ul>}
           <label className={styles.commentLabel} htmlFor="learning-comment">КОММЕНТАРИЙ К РАБОТЕ</label>
           <textarea style={{ resize: "none" }} id="learning-comment" value={comment} onChange={(event) => setComment(event.target.value)} placeholder="Расскажите, что получилось и что вызвало сложности." rows={3} disabled={submitted} />
-          {submitted ? <Button appearance="neoBrutalist" intent="secondary" onClick={() => changeStage("feedback")}>ПОСМОТРЕТЬ ОТВЕТ <span aria-hidden="true">→</span></Button> : <Button appearance="neoBrutalist" onClick={() => { setSubmitted(true); changeStage("feedback"); }} disabled={!photos.length && !comment.trim()}>ИМИТИРОВАТЬ ОТПРАВКУ <span aria-hidden="true">↗</span></Button>}
+          {submitted ? <Button appearance="cut" intent="secondary" onClick={() => changeStage("feedback")}>ПОСМОТРЕТЬ ОТВЕТ <span aria-hidden="true">→</span></Button> : <Button appearance="cut" onClick={() => { setSubmitted(true); changeStage("feedback"); }} disabled={!photos.length && !comment.trim()}>ИМИТИРОВАТЬ ОТПРАВКУ <span aria-hidden="true">↗</span></Button>}
           {!submitted && <small className={styles.helper}>Добавьте фото или комментарий, чтобы продолжить.</small>}
         </div>}
         {stage === "feedback" && <div className={styles.stageContent} role="tabpanel" id="learning-panel-feedback" aria-labelledby="learning-tab-feedback" tabIndex={0}>
@@ -131,7 +131,7 @@ export function LearningPreviewDemo() {
           <h3>{submitted ? "Работа на доработке" : "Как выглядит обратная связь"}</h3>
           <p>Пример комментария к работе: «Хорошее начало. Обратите внимание на симметрию и повторите упражнение, затем отправьте обновлённое фото».</p>
           <div className={styles.feedbackStatus}><strong>Статус примера: доработка</strong><span>После обратной связи работу можно изменить и отправить снова.</span></div>
-          <Button appearance="neoBrutalist" onClick={() => { setSubmitted(false); changeStage("assignment"); }}>ДОРАБОТАТЬ ЗАДАНИЕ <span aria-hidden="true">→</span></Button>
+          <Button appearance="cut" onClick={() => { setSubmitted(false); changeStage("assignment"); }}>ДОРАБОТАТЬ ЗАДАНИЕ <span aria-hidden="true">→</span></Button>
         </div>}
       </div>
       <div className={styles.demoFooter}><strong>ДЕМО · БЕЗ ОТПРАВКИ</strong><span>Ваши файлы и комментарий не сохраняются и никому не передаются.</span></div>

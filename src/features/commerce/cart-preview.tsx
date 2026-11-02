@@ -100,7 +100,7 @@ export function CartPreview({ triggerClassName, iconClassName, countClassName }:
           <div className={styles.previewTotal}><span>Демо-итог</span><strong>{cart.scenario === "recalculating" ? "Пересчёт…" : formatDemoAmount(cart.total)}</strong></div>
           {blocked ? <Button appearance="cut" fullWidth disabled>Перейти к оплате</Button> : <ButtonLink appearance="cut" fullWidth href="/checkout" onClick={close}>Перейти к оплате <span aria-hidden="true">→</span></ButtonLink>}
           <p className={styles.previewLink}><Link href="/cart" onClick={close}>Открыть корзину</Link></p>
-        </> : <div className={styles.previewEmpty}><p>Ваша корзина пока пуста.</p><Link href="/courses" onClick={close}>Выбрать курс →</Link><p><Link href="/cart" onClick={close}>Открыть корзину</Link></p></div>)}
+        </> : <div className={styles.previewEmpty}><span className={styles.emptyCartIcon} aria-hidden="true" /><h3>Пока пусто</h3><p>Здесь будут курсы, выбранные для обучения.</p><ButtonLink appearance="cut" href="/courses" onClick={close}>К курсам <span aria-hidden="true">→</span></ButtonLink></div>)}
         <DemoControls compact />
       </section>
     </div>

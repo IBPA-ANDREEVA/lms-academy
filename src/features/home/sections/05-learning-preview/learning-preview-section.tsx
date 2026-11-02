@@ -9,7 +9,7 @@ export function LearningPreviewSection() {
         <div className={styles.intro}>
           <p className={styles.kicker}>КАК ПРОХОДИТ ОБУЧЕНИЕ</p>
           <h2 id="learning-preview-title" className={styles.heading}>
-            <span>ПОПРОБУЙ</span><span>САМ.</span>
+            <span>КАК ЭТО</span><span>РАБОТАЕТ</span>
           </h2>
           <p className={styles.description}>
             Посмотрите пример урока, добавьте фото работы и узнайте, как выглядит обратная связь куратора.

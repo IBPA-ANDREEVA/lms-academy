@@ -13,6 +13,7 @@ try{
   await page.setViewportSize({width,height:width<=390?844:900});
   await page.goto(`${process.env.FRONTEND_URL||"http://localhost:3000"}/courses`);
   await page.evaluate(()=>document.fonts.ready);
+  await page.waitForTimeout(700);
   await page.locator('#catalog-panel-courses article').first().waitFor({state:"visible"});
   assert.equal(await page.locator('[role="tabpanel"]:not([aria-hidden="true"])').count(),1);
   assert.equal(await page.locator('#catalog-panel-courses article').count(),4);
@@ -49,8 +50,8 @@ try{
   await page.getByRole("tab",{name:"Курсы",exact:true}).focus();
   await page.keyboard.press("ArrowRight");await page.waitForURL("**/mini-courses");
   assert.equal(await page.getByRole("tab",{name:"Мини-курсы"}).getAttribute("aria-selected"),"true");
-  await page.evaluate(()=>scrollTo(0,1000));
-  await page.waitForFunction(()=>scrollY>=990);
+  await page.locator('#catalog-filters').evaluate(el=>scrollTo(0,scrollY+el.getBoundingClientRect().top));
+  await page.waitForTimeout(650);
   const filterTop=await page.locator('#catalog-filters').evaluate(el=>el.getBoundingClientRect().top);
   const headerBottom=await page.locator('header').first().evaluate(el=>el.getBoundingClientRect().bottom);
   assert.ok(Math.abs(filterTop-headerBottom)<3,`sticky filter ${filterTop}, header ${headerBottom}`);

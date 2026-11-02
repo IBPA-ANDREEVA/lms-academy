@@ -63,6 +63,10 @@ try {
     assert.ok(await page.getByRole("dialog", { name: "Войти в LMS Academy" }).isVisible());
     await page.keyboard.press("Escape");
     assert.ok(await header.getByRole("button", { name: "Войти", exact: true }).evaluate((element) => element === document.activeElement));
+    // Native dialog focus restoration may scroll the document. Re-establish
+    // the collapsed state before comparing the return transition geometry.
+    await page.evaluate(() => scrollTo(0, 160));
+    await page.waitForFunction(() => document.querySelector("header")?.dataset.homeScrolled === "true" && Number.parseFloat(getComputedStyle(document.querySelector("header")).getPropertyValue("--header-progress")) > .99);
     const filledBounds = await bar.boundingBox();
     await page.evaluate(() => scrollTo(0, 0));
     await page.waitForFunction(() => document.querySelector("header")?.dataset.homeScrolled === "false");

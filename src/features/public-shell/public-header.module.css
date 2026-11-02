@@ -218,3 +218,20 @@
   .header[data-home-route="true"] .bar { background: Canvas; color: CanvasText; border: 1px solid CanvasText; }
   .header[data-home-route="true"] .cart { color: CanvasText; }
 }
+
+/* November public-page refinement. */
+
+.navigation a,.navigation summary { position: relative; transition: color .2s ease,background-color .2s ease; }
+.navigation a::after,.navigation summary::after { content: ""; position: absolute; bottom: 5px; left: 7px; right: 7px; height: 2px; background: currentColor; transform: scaleX(0); transform-origin: left; transition: transform .22s ease; }
+.navigation a:hover::after,.navigation summary:hover::after,.navigation a:focus-visible::after { transform: scaleX(1); }
+.navigation a:hover,.navigation summary:hover { color: var(--brand); background: var(--soft); }
+@media(prefers-reduced-motion:reduce) { .navigation a,.navigation summary,.navigation a::after,.navigation summary::after { transition: none; } }
+
+
+.header[data-catalog-route="true"] .bar { background: var(--surface); color: var(--text); }
+.header[data-catalog-route="true"] .cart { color: var(--brand); }
+
+.header[data-catalog-route="true"] > div { padding-inline: 16px; }
+.header[data-catalog-route="true"] { padding-top: 10px; }
+.header[data-catalog-route="true"] .bar { border-radius: 16px; height: 64px; box-shadow: var(--header-shadow); }
+@media(max-width:760px) { .header[data-catalog-route="true"] .bar { height: 104px; } }

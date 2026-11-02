@@ -24,7 +24,7 @@ export function CourseShowcase() {
       <div className={styles.track} ref={trackRef} onScroll={syncIndex} data-offer-carousel aria-label="Примеры карточек курсов">
         {visibleCourses.map(({ id, course }) => <div className={styles.cardFrame} key={id}>
           <p className={styles.cardLabel}>МАКЕТ КАРТОЧКИ · НЕ ОФЕРТА</p>
-          <CourseCard course={course} status="unavailable" />
+          <CourseCard course={course} variant="brutalist" demonstration />
         </div>)}
       </div>
       <div className={styles.carouselControls} aria-label="Навигация по карточкам">

@@ -25,3 +25,8 @@
 @media (min-width: 701px) and (max-width: 1000px) { .layout { gap: 30px; } .module { padding: 18px; } .topics li { padding: 12px; } .moduleHeader { flex-wrap: wrap; } .cta { min-width: 0; width: 100%; } }
 @media (max-width: 700px) { .layout { grid-template-columns: 1fr; gap: 32px; } .intro { max-width: 650px; } .heading { font-size: 52px; } .module { max-width: 800px; width: calc(100% - 10px); } .description { margin-block: 24px; } .cta { margin-top: 0; } }
 @media (max-width: 650px) {   .intro { padding: 0; } .kicker { font-size: 11px; margin-bottom: 28px; } .kicker::after { width: 45px; } .heading { font-size: clamp(38px,11vw,50px); } .description { font-size: 14px; } .format { font-size: 11px; } .release { font-size: 12px; } .cta { min-width: 0; width: calc(100% - 5px); } .module { padding: 14px; box-shadow: 7px 7px 0 var(--brand); } .moduleHeader { font-size: 9px; letter-spacing: .06em; margin: 12px 0 20px; } .media > div { min-height: 140px; } .topics { gap: 8px; } .topics li { min-height: 96px; padding: 12px; } .topics h3 { font-size: clamp(12px,3.7vw,16px); } .moduleFooter { gap: 10px; font-size: 8px; } }
+
+.layout { grid-template-columns: minmax(0,1fr); gap: 32px; }
+.intro { display: flex; align-items: center; flex-wrap: wrap; gap: 24px; padding: 0; }
+.intro p { margin: 0; }
+.cta { margin-left: auto; }
