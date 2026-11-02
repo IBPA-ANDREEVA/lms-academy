@@ -45,7 +45,7 @@ export function LearningOffersShowcase({ panels }: { panels: [ReactNode, ReactNo
     if (!track || !panel || !group || !contextSafe) return;
     const media = gsap.matchMedia();
     media.add({ reduce: "(prefers-reduced-motion: reduce)", animate: "(prefers-reduced-motion: no-preference)" }, (context) => {
-      const duration = context.conditions?.reduce ? 0 : .38;
+      const duration = context.conditions?.reduce ? 0 : .48;
       let lastHeight = panel.offsetHeight;
       const resize = contextSafe(() => {
         const height = panel.offsetHeight;
@@ -61,7 +61,7 @@ export function LearningOffersShowcase({ panels }: { panels: [ReactNode, ReactNo
       });
       if (startHeight.current !== null) {
         timeline.fromTo(track, { height: startHeight.current }, { height: lastHeight, clearProps: "height" }, 0);
-        timeline.fromTo(panel, { opacity: duration ? 0 : 1, x: duration ? direction.current * 18 : 0 }, { opacity: 1, x: 0, clearProps: "opacity,transform" }, 0);
+        timeline.fromTo(panel, { opacity: duration ? 0 : 1, x: duration ? direction.current * 28 : 0 }, { opacity: 1, x: 0, clearProps: "opacity,transform" }, 0);
       }
       const colors = getComputedStyle(group);
       const backgroundColor = colors.getPropertyValue(activeIndex === 0 ? "--brand" : "--background").trim();
@@ -94,6 +94,14 @@ export function LearningOffersShowcase({ panels }: { panels: [ReactNode, ReactNo
     const group = groupRef.current;
     const header = document.querySelector("header");
     if (!group || !header) return;
+    const updateDock = () => {
+      const nav = group.querySelector('[role="tablist"]');
+      const docked = Boolean(nav && group.getBoundingClientRect().top <= header.getBoundingClientRect().bottom && group.getBoundingClientRect().bottom > header.getBoundingClientRect().bottom + 56);
+      header.dataset.offersDocked = String(docked);
+    };
+    window.addEventListener("scroll", updateDock, { passive: true });
+    window.addEventListener("resize", updateDock);
+    updateDock();
     const resize = new ResizeObserver(() => group.style.setProperty("--public-header-offset", `${header.getBoundingClientRect().height}px`));
     resize.observe(header);
     const onHash = () => {
@@ -124,6 +132,9 @@ export function LearningOffersShowcase({ panels }: { panels: [ReactNode, ReactNo
     const initialHash = requestAnimationFrame(onHash);
     return () => {
       resize.disconnect();
+      window.removeEventListener("scroll", updateDock);
+      window.removeEventListener("resize", updateDock);
+      delete header.dataset.offersDocked;
       cancelAnimationFrame(initialHash);
       window.removeEventListener("hashchange", onHash);
       window.removeEventListener("popstate", onHash);

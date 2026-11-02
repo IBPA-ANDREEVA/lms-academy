@@ -235,3 +235,5 @@
 .header[data-catalog-route="true"] { padding-top: 10px; }
 .header[data-catalog-route="true"] .bar { border-radius: 16px; height: 64px; box-shadow: var(--header-shadow); }
 @media(max-width:760px) { .header[data-catalog-route="true"] .bar { height: 104px; } }
+
+.header[data-offers-docked="true"] .bar { border-radius: 16px 16px 0 0; box-shadow: none; }
