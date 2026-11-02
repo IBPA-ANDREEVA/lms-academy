@@ -56,7 +56,7 @@ export function CourseCard({
         </div>
       ) : variant !== "default" ? <div className={styles.media} aria-hidden="true"><span className={styles.imageMark}>◇</span></div> : null}
       <div className={styles.content}>
-        {demonstration && <p className={styles.demo}>ДЕМОНСТРАЦИЯ КАРТОЧКИ</p>}
+
         <p className={styles.meta}>
           {[
             course.kind === "mini-course" ? "Мини-курс" : "Курс",
@@ -95,9 +95,9 @@ export function CourseCard({
                 href={course.href}
                 appearance="cut"
                 intent="secondary"
-                aria-label={variant === "compact" ? `Открыть пример мини-курса: ${course.title}` : undefined}
+                aria-label={variant === "compact" ? `Открыть мини-курс: ${course.title}` : undefined}
               >
-                {variant === "compact" ? "→" : "Смотреть пример →"}
+                {variant === "compact" ? "→" : "Подробнее →"}
               </ButtonLink>
             ) : (
               <Button appearance="cut" intent="secondary" disabled>После публикации</Button>

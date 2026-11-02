@@ -9,7 +9,7 @@ export function PreviewPlayer({ src, captions }: { src?: string; captions?: stri
   const [attempt, setAttempt] = useState(0);
 
   if (!src) {
-    return <div className={styles.unavailable} role="status"><span aria-hidden="true">▷</span><strong>Публичное видео пока недоступно</strong><p>Превью появится после утверждения материала.</p></div>;
+    return <div className={styles.unavailable} role="status"><span aria-hidden="true">▷</span><strong>Публичное видео пока недоступно</strong></div>;
   }
 
   if (failed) {

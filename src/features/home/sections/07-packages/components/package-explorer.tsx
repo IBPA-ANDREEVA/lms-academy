@@ -18,7 +18,7 @@ export function PackageExplorer() {
     <OfferCarousel key={filter || "all"} label="Пакеты" items={sizes.map((size) => ({ id: String(size), content: <PackageCard size={size} onExplore={() => setBuilderSize(size)} /> }))} />
     <div className={styles.builderCallout}>
       <span className={styles.plus} aria-hidden="true">+</span>
-      <div><p>СОЗДАЙТЕ СВОЙ ПАКЕТ</p><h3>Нужна своя комбинация курсов?</h3><span>Попробуйте выбор направлений в деморежиме.</span></div>
+      <div><p>СОЗДАЙТЕ СВОЙ ПАКЕТ</p><h3>Нужна своя комбинация курсов?</h3><span></span></div>
       <Button appearance="neoBrutalist" onClick={() => setBuilderSize(2)}>СОБРАТЬ СВОЙ ПАКЕТ <span aria-hidden="true">→</span></Button>
     </div>
     {builderSize !== null && <PackageBuilder initialSize={builderSize} onClose={() => setBuilderSize(null)} />}

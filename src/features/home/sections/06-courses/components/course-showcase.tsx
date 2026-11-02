@@ -19,11 +19,11 @@ export function CourseShowcase() {
 
   return (
     <div className={styles.showcase}>
-      <p className={styles.previewLabel}>ПРИМЕР КАРТОЧЕК · ДАННЫЕ ПОЯВЯТСЯ ПОСЛЕ ПУБЛИКАЦИИ</p>
+
       <CategoryNavigation items={placeholderDirections} resetHref="#catalog-status" selectedId={selectedId} label="Пример выбора направления" onSelect={selectDirection} />
       <div className={styles.track} ref={trackRef} onScroll={syncIndex} data-offer-carousel aria-label="Примеры карточек курсов">
         {visibleCourses.map(({ id, course }) => <div className={styles.cardFrame} key={id}>
-          <p className={styles.cardLabel}>МАКЕТ КАРТОЧКИ · НЕ ОФЕРТА</p>
+
           <CourseCard course={course} variant="brutalist" demonstration />
         </div>)}
       </div>
@@ -34,7 +34,7 @@ export function CourseShowcase() {
         </div>
         <Button appearance="neoBrutalist" intent="secondary" size="sm" onClick={() => goTo(activeIndex + 1)} disabled={activeIndex === visibleCourses.length - 1} aria-label="Следующая карточка">→</Button>
       </div>
-      <p className={styles.catalogNote}>Каталог и страницы курсов станут доступны после публикации утверждённых программ.</p>
+
     </div>
   );
 }

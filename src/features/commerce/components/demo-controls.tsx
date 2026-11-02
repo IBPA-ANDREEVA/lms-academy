@@ -1,5 +1,6 @@
 "use client";
 
+import { usePathname } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { SelectField } from "@/components/ui/form-controls";
 import { useCart } from "../cart-provider";
@@ -8,9 +9,11 @@ import styles from "../commerce.module.css";
 
 export function DemoControls({ compact = false }: { compact?: boolean }) {
   const cart = useCart();
+  const pathname = usePathname();
+  if (pathname !== "/preview/components") return null;
   if (!cart.demoEnabled || cart.loading || cart.error) return null;
   return <div className={styles.demo}>
-    <p className={styles.caption}>Демо · оплата недоступна</p>
+
     <div className={styles.demoActions}>
       {!cart.items.some(item => item.id === "demo-course") && <Button intent="secondary" size="sm" onClick={() => cart.addDemo("demo-course")}>Добавить тестовый курс</Button>}
       {!compact && !cart.items.some(item => item.id === "demo-mini") && <Button intent="secondary" size="sm" onClick={() => cart.addDemo("demo-mini")}>Добавить тестовый мини-курс</Button>}

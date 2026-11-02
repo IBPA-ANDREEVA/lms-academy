@@ -75,7 +75,7 @@ export function LearningPreviewDemo() {
     <div className={styles.demo} ref={demoRef}>
       <div className={styles.demoHeader}>
         <strong>LMS ACADEMY <span>/ Учебная среда</span></strong>
-        <span className={styles.demoBadge}>ДЕМО · БЕЗ ОТПРАВКИ</span>
+
       </div>
       <div className={styles.tabs} role="tablist" aria-label="Этапы обучения">
         {stages.map((item, index) => (
@@ -89,7 +89,7 @@ export function LearningPreviewDemo() {
         <div className={styles.lessonCard}>
           <div className={styles.mediaPlaceholder} role="img" aria-label="Место для демонстрационного видеоурока">
             <span>ВИДЕОУРОК</span>
-            <strong>Демо-видео пока не добавлено</strong>
+
           </div>
           <div className={styles.lessonText}>
             <p className={styles.eyebrow}>ПРИМЕР УРОКА</p>
@@ -99,16 +99,16 @@ export function LearningPreviewDemo() {
         </div>
           <p className={styles.status}>ШАГ 01 / ПРОСМОТР УРОКА</p>
           <h3>Сначала изучите материал</h3>
-          <p>Это демонстрация учебной среды. Видеоурок появится здесь после добавления согласованного демоматериала.</p>
+
           <Button appearance="cut" onClick={() => changeStage("assignment")}>К ЗАДАНИЮ <span aria-hidden="true">→</span></Button>
         </div>}
         {stage === "assignment" && <div className={styles.stageContent} role="tabpanel" id="learning-panel-assignment" aria-labelledby="learning-tab-assignment" tabIndex={0}>
-          <p className={styles.status}>{submitted ? "ДЕМО-СТАТУС / ОТПРАВЛЕНО" : "ШАГ 02 / МОЯ РАБОТА"}</p>
+          <p className={styles.status}>{submitted ? "РАБОТА ГОТОВА К ПРОВЕРКЕ" : "ШАГ 02 / МОЯ РАБОТА"}</p>
           <h3>Практическое задание</h3>
-          <p>Добавьте фотографии и комментарий, чтобы попробовать процесс отправки работы. Файлы остаются только в этой вкладке.</p>
+          <p>Добавьте фотографии и комментарий к работе.</p>
           <label className={styles.upload}>
             <span className={styles.plus} aria-hidden="true">+</span>
-            <span><strong>Добавить фотографии</strong><small>Предпросмотр файлов · деморежим</small></span>
+            <span><strong>Добавить фотографии</strong><small>Предпросмотр файловрежим</small></span>
             <input type="file" accept="image/*" multiple onChange={addPhotos} disabled={submitted} />
           </label>
           {error && <p className={styles.error} role="alert">{error}</p>}
@@ -123,18 +123,18 @@ export function LearningPreviewDemo() {
           </ul>}
           <label className={styles.commentLabel} htmlFor="learning-comment">КОММЕНТАРИЙ К РАБОТЕ</label>
           <textarea style={{ resize: "none" }} id="learning-comment" value={comment} onChange={(event) => setComment(event.target.value)} placeholder="Расскажите, что получилось и что вызвало сложности." rows={3} disabled={submitted} />
-          {submitted ? <Button appearance="cut" intent="secondary" onClick={() => changeStage("feedback")}>ПОСМОТРЕТЬ ОТВЕТ <span aria-hidden="true">→</span></Button> : <Button appearance="cut" onClick={() => { setSubmitted(true); changeStage("feedback"); }} disabled={!photos.length && !comment.trim()}>ИМИТИРОВАТЬ ОТПРАВКУ <span aria-hidden="true">↗</span></Button>}
+          {submitted ? <Button appearance="cut" intent="secondary" onClick={() => changeStage("feedback")}>ПОСМОТРЕТЬ ОТВЕТ <span aria-hidden="true">→</span></Button> : <Button appearance="cut" onClick={() => { setSubmitted(true); changeStage("feedback"); }} disabled={!photos.length && !comment.trim()}>К ОБРАТНОЙ СВЯЗИ <span aria-hidden="true">↗</span></Button>}
           {!submitted && <small className={styles.helper}>Добавьте фото или комментарий, чтобы продолжить.</small>}
         </div>}
         {stage === "feedback" && <div className={styles.stageContent} role="tabpanel" id="learning-panel-feedback" aria-labelledby="learning-tab-feedback" tabIndex={0}>
-          <p className={styles.status}>ШАГ 03 / ОТВЕТ КУРАТОРА · ПРИМЕР</p>
+          <p className={styles.status}>ШАГ 03 / ОТВЕТ КУРАТОРА</p>
           <h3>{submitted ? "Работа на доработке" : "Как выглядит обратная связь"}</h3>
-          <p>Пример комментария к работе: «Хорошее начало. Обратите внимание на симметрию и повторите упражнение, затем отправьте обновлённое фото».</p>
-          <div className={styles.feedbackStatus}><strong>Статус примера: доработка</strong><span>После обратной связи работу можно изменить и отправить снова.</span></div>
+          <p>«Хорошее начало. Обратите внимание на симметрию и повторите упражнение, затем отправьте обновлённое фото».</p>
+          <div className={styles.feedbackStatus}><strong>Нужна доработка</strong><span>После обратной связи работу можно изменить и отправить снова.</span></div>
           <Button appearance="cut" onClick={() => { setSubmitted(false); changeStage("assignment"); }}>ДОРАБОТАТЬ ЗАДАНИЕ <span aria-hidden="true">→</span></Button>
         </div>}
       </div>
-      <div className={styles.demoFooter}><strong>ДЕМО · БЕЗ ОТПРАВКИ</strong><span>Ваши файлы и комментарий не сохраняются и никому не передаются.</span></div>
+
     </div>
   );
 }

@@ -16,7 +16,7 @@ export function CheckoutBuyer() {
       <div className={styles.sectionHeading}><h2 id="buyer-heading">Контактные данные</h2>
         <button ref={login} type="button" className={styles.textButton} onClick={() => setAuthOpen(true)}>Уже есть аккаунт? Войти</button></div>
       <form noValidate onSubmit={event => { event.preventDefault(); setTouched(true); }}>
-        <TextField label="Email" type="email" autoComplete="email" name="email" required value={email} onChange={event => setEmail(event.target.value)} onBlur={() => setTouched(true)} error={error || undefined} hint="Для подтверждения покупки и получения доступа. В демонстрации данные никуда не отправляются." />
+        <TextField label="Email" type="email" autoComplete="email" name="email" required value={email} onChange={event => setEmail(event.target.value)} onBlur={() => setTouched(true)} error={error || undefined} hint="Для подтверждения покупки и получения доступа. " />
       </form>
       <p className={styles.caption}>Можно продолжить как гость — вход необязателен.</p>
     </section>

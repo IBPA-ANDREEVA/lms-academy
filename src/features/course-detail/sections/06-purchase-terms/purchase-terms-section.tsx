@@ -15,7 +15,7 @@ export function PurchaseTermsSection({ product }: { product: DetailProduct }) {
           <div className={styles.intro}>
             <SectionLabel>УСЛОВИЯ ОБУЧЕНИЯ</SectionLabel>
             <SectionHeading id="terms-title" display>Перед<br /><span>выбором</span></SectionHeading>
-            <p>Условия покупки будут окончательными только после публикации продукта и правовых документов.</p>
+
           </div>
           <TermsList product={product} />
         </div>

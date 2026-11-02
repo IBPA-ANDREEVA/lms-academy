@@ -12,8 +12,8 @@ export function ReviewsSection() {
             <h2 id="reviews-title" className={styles.heading}>
               <span>ОПЫТ,</span><span>КОТОРЫМ</span><span>ДЕЛЯТСЯ</span>
             </h2>
-            <p className={styles.description}>Здесь появятся отзывы учеников и профессиональные рекомендации после проверки и публикации.</p>
-            <p className={styles.phase}>ПРЕДПРОСМОТР РАЗДЕЛА · ЭТАП 3</p>
+
+
           </div>
           <ReviewsCarousel />
         </div>

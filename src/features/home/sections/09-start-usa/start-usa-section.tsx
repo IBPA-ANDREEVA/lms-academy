@@ -8,7 +8,7 @@ export function StartUsaSection() {
     <PageContainer size="wide" className={styles.layout}>
       <div className={styles.intro}>
         <p className={styles.format}>ОДИН МОДУЛЬ · БЕЗ КУРАТОРА</p>
-        <p className={styles.release}>Предпросмотр. Дата выхода пока не определена.</p>
+
         <UsaModuleCta />
       </div>
       <UsaModulePreview />

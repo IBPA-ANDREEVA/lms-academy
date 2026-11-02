@@ -15,7 +15,7 @@ export function ReviewsCarousel() {
   return (
     <div className={styles.carousel} role="region" aria-roledescription="карусель" aria-label="Макеты будущих отзывов учеников">
       <div className={styles.carouselHeader}>
-        <p>ОТЗЫВЫ И РЕКОМЕНДАЦИИ · ПРЕВЬЮ</p>
+        <p>ОТЗЫВЫ И РЕКОМЕНДАЦИИ</p>
         <div className={styles.arrows}>
           <Button size="sm" intent="secondary" aria-label="Предыдущий макет отзыва" aria-controls={trackId} disabled={activeIndex === 0} onClick={() => goTo(activeIndex - 1)}>←</Button>
           <Button size="sm" aria-label="Следующий макет отзыва" aria-controls={trackId} disabled={activeIndex === placeholders.length - 1} onClick={() => goTo(activeIndex + 1)}>→</Button>
@@ -37,11 +37,7 @@ export function ReviewsCarousel() {
         {placeholders.map((number) => (
           <article className={styles.card} key={number} role="group" aria-label={`Макет отзыва ${number} из ${placeholders.length}`}>
             <span className={styles.quote} aria-hidden="true">“</span>
-            <div className={styles.textPlaceholder}>{number === 4 ? "ЗДЕСЬ БУДЕТ ПОДТВЕРЖДЁННАЯ РЕКОМЕНДАЦИЯ СПЕЦИАЛИСТА" : "ЗДЕСЬ БУДЕТ ТЕКСТ ПОДТВЕРЖДЁННОГО ОТЗЫВА"}</div>
-            <div className={styles.identity}>
-              <span className={styles.photoPlaceholder}>ФОТО</span>
-              <div><strong>{number === 4 ? "ИМЯ СПЕЦИАЛИСТА" : "ИМЯ УЧЕНИКА"}</strong><span>Название курса после публикации</span><small>Данные появятся после проверки</small></div>
-            </div>
+            <div className={styles.textPlaceholder} aria-hidden="true" />
           </article>
         ))}
       </div>

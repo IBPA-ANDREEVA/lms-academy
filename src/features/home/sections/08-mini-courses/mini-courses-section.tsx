@@ -7,7 +7,7 @@ export function MiniCoursesSection() {
     <PageContainer size="wide" className={styles.content}>
       <div className={styles.facts}><strong>ТОЛЬКО ЗАПИСЬ · БЕЗ КУРАТОРА</strong><span>Сертификат после завершения всех уроков</span></div>
       <MiniCourseExplorer />
-      <p className={styles.catalogNote}>Сейчас показаны макеты карточек. Каталог мини-курсов появится после публикации программ.</p>
+
     </PageContainer>
   </section>;
 }

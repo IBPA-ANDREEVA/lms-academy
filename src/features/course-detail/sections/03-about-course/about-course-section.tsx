@@ -12,7 +12,7 @@ export function AboutCourseSection({ product }: { product: DetailProduct }) {
         <div className={styles.heading}>
           <SectionLabel>О ПРОГРАММЕ</SectionLabel>
           <SectionHeading id="about-course-title" display>{product.kind === "mini-course" ? <>Короче.<br /><span>По делу.</span></> : <>Знания.<br /><span>Практика.</span></>}</SectionHeading>
-          <p>Содержание и результаты будут точными только после утверждения учебной программы.</p>
+
         </div>
         <CourseOutcomes product={product} />
       </PageContainer>
