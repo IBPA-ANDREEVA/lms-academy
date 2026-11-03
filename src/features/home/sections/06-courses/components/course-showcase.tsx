@@ -1,7 +1,7 @@
 "use client";
 
 import { useOfferSelectionMotion } from "../../../learning-offers/use-offer-selection-motion";
-import { useRef, useState } from "react";
+import { useState } from "react";
 import { useSnapCarousel } from "../../../learning-offers/use-snap-carousel";
 import { Button } from "@/components/ui/button";
 import { CategoryNavigation, CourseCard } from "@/features/catalog";
@@ -23,8 +23,6 @@ export function CourseShowcase() {
   const showProducts = catalog.status === "success" && visibleCourses.length > 0;
   const selectionKey = `${selectedId ?? "all"}:${catalog.status}:${visibleCourses.map(p => p.id).join(",")}`;
   useOfferSelectionMotion(trackRef, selectionKey);
-  const stageRef = useRef<HTMLDivElement>(null);
-  useFeaturedCourseScroll(stageRef, selectionKey);
 
   function selectDirection(id?: string) {
     setSelectedId(id);
@@ -35,7 +33,7 @@ export function CourseShowcase() {
     <div className={styles.showcase}>
 
       <CategoryNavigation items={placeholderDirections} resetHref="#catalog-status" selectedId={selectedId} label="Направления курсов" onSelect={selectDirection} />
-      <div ref={stageRef} className={styles.featuredStage}>
+      <div className={styles.featuredStage}>
       <div className={styles.track} ref={trackRef} onScroll={syncIndex} data-offer-carousel aria-label="Карточки курсов">
         {!showProducts ? <CatalogState status={catalog.status} filtered={Boolean(selectedId)} onReset={() => selectDirection(undefined)} /> : visibleCourses.map(({ id, course }) => <div className={styles.cardFrame} key={id}>
           <div data-featured-card className={styles.featuredCard}>
