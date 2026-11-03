@@ -1,0 +1,60 @@
+$ next build
+▲ Next.js 16.4.3 (Turbopack)
+- Environments: .env
+✓ Running next.config.ts took 15ms
+- Cache Components enabled
+- Partial Prefetching enabled
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 583ms
+  Running TypeScript ...
+  Finished TypeScript in 1249ms ...
+  Collecting page data using 7 workers ...
+  Generating static pages using 7 workers (0/15) ...
+{"event":"catalog.read.unavailable","diagnosticId":"catalog-adapter-not-connected","reason":"adapter_not_connected","kind":"all","operation":"fetchPublishedCatalog","outcome":"unavailable"}
+{"event":"catalog.read.unavailable","diagnosticId":"catalog-adapter-not-connected","reason":"adapter_not_connected","kind":"all","operation":"fetchPublishedCatalog","outcome":"unavailable"}
+{"event":"catalog.read.unavailable","diagnosticId":"catalog-adapter-not-connected","reason":"adapter_not_connected","kind":"all","operation":"fetchPublishedCatalog","outcome":"unavailable"}
+{"event":"catalog.read.unavailable","diagnosticId":"catalog-adapter-not-connected","reason":"adapter_not_connected","kind":"all","operation":"fetchPublishedCatalog","outcome":"unavailable"}
+{"event":"catalog.read.unavailable","diagnosticId":"catalog-adapter-not-connected","reason":"adapter_not_connected","kind":"all","operation":"fetchPublishedCatalog","outcome":"unavailable"}
+{"event":"catalog.read.unavailable","diagnosticId":"catalog-adapter-not-connected","reason":"adapter_not_connected","kind":"all","operation":"fetchPublishedCatalog","outcome":"unavailable"}
+{"event":"catalog.read.unavailable","diagnosticId":"catalog-adapter-not-connected","reason":"adapter_not_connected","kind":"all","operation":"fetchPublishedCatalog","outcome":"unavailable"}
+{"event":"catalog.read.unavailable","diagnosticId":"catalog-adapter-not-connected","reason":"adapter_not_connected","kind":"all","operation":"fetchPublishedCatalog","outcome":"unavailable"}
+{"event":"catalog.read.unavailable","diagnosticId":"catalog-adapter-not-connected","reason":"adapter_not_connected","kind":"all","operation":"fetchPublishedCatalog","outcome":"unavailable"}
+{"event":"catalog.read.unavailable","diagnosticId":"catalog-adapter-not-connected","reason":"adapter_not_connected","kind":"all","operation":"fetchPublishedCatalog","outcome":"unavailable"}
+{"event":"catalog.read.unavailable","diagnosticId":"catalog-adapter-not-connected","reason":"adapter_not_connected","kind":"all","operation":"fetchPublishedCatalog","outcome":"unavailable"}
+{"event":"catalog.read.unavailable","diagnosticId":"catalog-adapter-not-connected","reason":"adapter_not_connected","kind":"all","operation":"fetchPublishedCatalog","outcome":"unavailable"}
+  Generating static pages using 7 workers (3/15) 
+  Generating static pages using 7 workers (7/15) 
+{"event":"catalog.read.unavailable","diagnosticId":"catalog-adapter-not-connected","reason":"adapter_not_connected","kind":"all","operation":"fetchPublishedCatalog","outcome":"unavailable"}
+{"event":"catalog.read.unavailable","diagnosticId":"catalog-adapter-not-connected","reason":"adapter_not_connected","kind":"all","operation":"fetchPublishedCatalog","outcome":"unavailable"}
+{"event":"catalog.read.unavailable","diagnosticId":"catalog-adapter-not-connected","reason":"adapter_not_connected","kind":"all","operation":"fetchPublishedCatalog","outcome":"unavailable"}
+{"event":"catalog.read.unavailable","diagnosticId":"catalog-adapter-not-connected","reason":"adapter_not_connected","kind":"all","operation":"fetchPublishedCatalog","outcome":"unavailable"}
+{"event":"catalog.read.unavailable","diagnosticId":"catalog-adapter-not-connected","reason":"adapter_not_connected","kind":"all","operation":"fetchPublishedCatalog","outcome":"unavailable"}
+  Generating static pages using 7 workers (11/15) 
+{"event":"catalog.read.unavailable","diagnosticId":"catalog-adapter-not-connected","reason":"adapter_not_connected","kind":"all","operation":"fetchPublishedCatalog","outcome":"unavailable"}
+{"event":"catalog.read.unavailable","diagnosticId":"catalog-adapter-not-connected","reason":"adapter_not_connected","kind":"all","operation":"fetchPublishedCatalog","outcome":"unavailable"}
+{"event":"catalog.read.unavailable","diagnosticId":"catalog-adapter-not-connected","reason":"adapter_not_connected","kind":"all","operation":"fetchPublishedCatalog","outcome":"unavailable"}
+✓ Generating static pages using 7 workers (15/15) in 332ms
+  Finalizing page optimization ...
+
+Route (app)
+┌ ○ /
+├ ○ /_not-found
+├ ○ /apple-icon.png
+├ ○ /cart
+├ ○ /checkout
+├ ○ /courses
+├   /courses/[slug]
+│ └ ◐ /courses/[slug]
+├ ○ /icon.svg
+├ ○ /mini-courses
+├   /mini-courses/[slug]
+│ └ ◐ /mini-courses/[slug]
+├ ○ /preview/components
+├ ○ /robots.txt
+└ ○ /sitemap.xml
+
+
+○  (Static)             prerendered as static content
+◐  (Partial Prerender)  prerendered as static HTML with dynamic server-streamed content
+

@@ -1,0 +1,5 @@
+PASS preview recovery: [
+  'Corrupt catalog/cart storage: visible recovery, structured diagnostics, reset/reload',
+  'Cross-tab catalog clear/reset',
+  'Blocked storage: catalog updates in memory, visible catalog/cart write warnings'
+]

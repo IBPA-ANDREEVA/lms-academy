@@ -1,0 +1,7 @@
+$ next start --port 3123
+▲ Next.js 16.4.3
+- Local:         http://localhost:3123
+- Network:       http://10.1.10.245:3123
+✓ Ready in 174ms
+✓ Running next.config.ts took 77ms
+[ELIFECYCLE] Command failed with exit code 143.
