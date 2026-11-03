@@ -7,6 +7,10 @@ import {
   publicSite,
 } from "@/features/public-shell";
 import "./globals.css";
+import { CatalogProvider } from "@/features/catalog/catalog-provider";
+import { PreviewControl } from "@/features/catalog/preview/preview-control";
+import { fetchPublishedCatalog } from "@/server/catalog";
+import { testPreview } from "@/lib/site-environment";
 import { CartProvider } from "@/features/commerce";
 
 const manrope = localFont({
@@ -25,16 +29,18 @@ const unbounded = localFont({
 export const metadata: Metadata = {
   title: { default: "LMS Academy", template: "%s — LMS Academy" },
   description: "Обучение в сфере красоты.",
+  ...(testPreview ? { robots: { index: false, follow: false } } : {}),
 };
 
-export default function RootLayout({ children }: LayoutProps<"/">) {
+export default async function RootLayout({ children }: LayoutProps<"/">) {
+  const catalog = testPreview ? { status: "empty" as const, products: [] as [] } : await fetchPublishedCatalog();
   return (
     <html lang="ru" className={`${manrope.variable} ${unbounded.variable}`}>
       <body>
         <a className="skip-link" href="#main-content">
           Перейти к содержанию
         </a>
-        <CartProvider>
+        <CatalogProvider enabled={testPreview} initial={catalog}><CartProvider>
           <PublicHeader
             brand={publicSite.brand}
             navigation={publicSite.navigation}
@@ -43,7 +49,8 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           />
           <PublicMotion>{children}</PublicMotion>
           <PublicSiteFooter />
-        </CartProvider>
+        {testPreview && <PreviewControl />}
+        </CartProvider></CatalogProvider>
       </body>
     </html>
   );

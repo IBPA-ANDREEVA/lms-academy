@@ -14,6 +14,7 @@ export function CartFeedback() {
     {cart.demoEnabled && <Button intent="secondary" onClick={cart.clear}>Очистить тестовую корзину</Button>}
   </div>;
   return <>
+    {cart.demoEnabled && <FormMessage>Демо-корзина: тестовые цены в USD. Покупка и оплата недоступны.</FormMessage>}
     {cart.storageWarning && <FormMessage tone="error">Не удалось сохранить тестовую корзину в браузере. При обновлении страницы изменения могут потеряться.</FormMessage>}
     {cart.scenario === "recalculating" && <FormMessage>Демонстрация: пересчитываем стоимость…</FormMessage>}
     {cart.scenario === "unavailable" && <FormMessage tone="error">Демонстрация: продукт больше недоступен. Удалите его из корзины или сбросьте тестовое состояние.</FormMessage>}
