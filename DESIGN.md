@@ -1,5 +1,7 @@
 # LMS frontend design context
 
+Latest selected scope: **D-021, 2026-11-03**, recorded at the end of this file. Earlier dated motion/mobile descriptions are historical where D-021 supersedes them.
+
 Russian-first beauty education. Public discovery uses restrained editorial composition; forms and protected workspaces use quiet functional layouts. Product facts and release scope override decorative references. Read [design guidance](docs/design/README.md), [decisions](docs/design/DECISIONS.md), and the [frontend registry](docs/architecture/frontend-components.md).
 
 Tokens: `docs/design/SYSTEM.md` → `src/app/globals.css` → component CSS modules. Manrope is functional type; Unbounded is short display type, opt-in only. Both are self-hosted through `next/font/local` from `src/assets/fonts`, with their original OFL licenses. No Geist, Arial, synthetic weights, dark-mode auto-recoloring, or third-party font requests.
@@ -17,3 +19,13 @@ LAND02 scoped update (2026-11-02): [motion/mobile/FAQ reference contract](docs/q
 Cut interactions: owner-requested Parallax Cut layers (foreground −3px/−4px, shadow +5px/+6px, independent slash and +5px arrow) emphasize physical depth over color. Stable click area; 300ms hover/210ms arrow/120ms press; fine-pointer hover, touch press, visible focus, still reduced/disabled/loading states. This supersedes earlier caption/edge opening notes only for the Cut family.
 
 Premium motion update (2026-11-02, D-020): [MOTION.md](docs/design/MOTION.md) supersedes the earlier session intro. Public links use a short plum Wipe; genuine cold-entry loading uses a centered Circle mask. One desktop story handoff adds no page height; the featured course row adds at most 120px when it fits. HOME-06–09 keeps direct tab control, natural active height and stationary geometry, with pullback/slide/expand motion. Mobile, reduced-motion and task-heavy flows remain direct. No Lenis, new router, WebGL, photography or content is introduced. Actual browser implementation remains pending owner review.
+
+## Current motion and mobile direction · 2026-11-03 (D-021)
+
+The owner's Animation Redesign brief supersedes the compact mobile hero, FAQ-after-contact order, Parallax Cut/slash, Circle loader, shrinking sticky portrait surfaces and course-only sticky scroll beat described above. Preserve those notes as history. Current behavior is in [MOTION.md](docs/design/MOTION.md); the exact supplied image scope and verification are in [the QA report](docs/qa/animation-redesign-2026-11-03.md).
+
+Mobile hero fills the available first screen below the 68px header. Hero, About and Founder use photo-first composition at <=760px, retaining the actual photographs and Cyrillic typefaces. Four offer tabs fit the screen; desktop uses one white pill within a plum sticky band. Swipe rails show part of the next card, hide their horizontal scrollbar and omit mobile arrows; accessible dots remain. This explicit owner request overrides the premium skill's ordinary scrollbar preference for these rails only. Mini discovery uses stacked compact cards and two mobile columns. FAQ immediately precedes Contact and links directly to its form.
+
+Cut uses a solid offset shadow with a small lift/shift; its hit area stays still. The welcome splash uses the existing `--brand: #782858`, then clears; real pending loading and navigation retain separate ownership. Normal document flow owns the portrait join. HOME-06–09 owns one bounded scroll entrance for every format and cancels obsolete switching motion. Section entrances animate authored content, never the structural seam. Existing working-form/checkout semantics stay direct.
+
+The tokens remain `docs/design/SYSTEM.md` -> `src/app/globals.css` -> existing CSS modules. No new brand colors, typography, photography, routes, prices or server capabilities. Selected reference direction is not human approval of the resulting screenshots.

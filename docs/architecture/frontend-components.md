@@ -171,3 +171,18 @@ This supersedes the timed intro and previous small-offset offers transition entr
 Home-only composition/hooks and their evidence for local ownership are registered in [sections](frontend-sections.md#premium-motion-ownership--2026-11-02-supersedes-earlier-motion-only-notes). `/preview/components` embeds the same shared code. Screenshot review remains pending; [verification](../qa/premium-motion-2026-11-02.md).
 
 D-020 visual QA follow-up: HOME-08 `mini-courses-section.module.css` constrains its compact-card media to the assigned grid column (`min-width:0;width:100%`). Existing aspect/min-height sizing could paint over card titles without document overflow. This is local to MiniCourseExplorer; the shared CourseCard API/styles remain unchanged. The premium motion suite checks image/content separation and text ranges at all four motion viewports.
+
+## Shared motion/component delta · 2026-11-03 (D-021)
+
+[Verification, exact image scope and limitations](../qa/animation-redesign-2026-11-03.md). Public APIs remain unchanged except replacing the obsolete loader owner.
+
+| Import / API | Actual consumers | Current implementation / status |
+| --- | --- | --- |
+| `@/components/ui/button`: Button/ButtonLink; `appearance`, `intent`, `size`, `inverse`, `fullWidth`, Button `loading` | Home CTAs/demo/offer cards/Contact; catalog introduction/CourseCard; detail purchase/preview/terms; identity forms; commerce/cart preview/cart/checkout; component preview | Cut Lift & Shift with solid depth, stable hit area, normal/hover/press/focus/disabled/loading/inverse/reduced preview states. Other families unchanged. |
+| `@/components/ui/use-disclosure-motion`: `useDisclosureMotion(root)` | FounderStory, FaqItem, catalog FilteringSection, detail CurriculumAccordion | Whole-details border-box height and `--disclosure-progress`; reversible, native reduced/no-JS behavior, resize cleanup. Curriculum has no published rows on current routes, so its runtime content path remains unverified. |
+| `features/catalog/course-card.tsx`: CourseCard, existing course/headingLevel/status/action/variant/demonstration props | Catalog courses/minis, Home CourseShowcase/MiniCourseExplorer, ComponentPreviewPage | Compact variant now stacks media/content at every width; no overflow masking. Shared media/card contract and server policy ownership unchanged. |
+| `features/public-shell/section-reveal.tsx`: SectionReveal, div props + `treatment`; PageContainer `reveal` | Existing home/catalog/detail PageContainers and MotionPreview | Enter once for authored headings/groups; no blanket hash skip. Persistent offers group owns its own entrance. Structural surfaces never translate. |
+| `features/public-shell/page-wipe-transition.tsx`: `content,pathname,loading,onActive` | PublicMotion in root layout | Public hash and page routing, real visible destination readiness, preserved Next history state, latest-request/interrupt handling; no query/user data in timeout diagnostic. |
+| `features/public-shell/splash-loader.tsx`: `active,suppressed=false,inline=false,welcome=false` | PublicMotion and MotionPreview | New canonical loader; plum three-lobe spread and clearing mask. Welcome only on initial home mount; pending loading waits 180ms. `circle-loader.tsx` removed; no remaining runtime imports. |
+| `features/public-shell/mobile-navigation.tsx`: existing navigation/brand/account/showAuth/onAuth props | PublicHeader | Native modal opens before animation; one reversible clip/content timeline, Escape/focus/body-lock cleanup, reduced preference handling. |
+| Existing preview children | ComponentPreviewPage | CutButtonPreview and MotionPreview use real owners; index now names SplashLoader. Anchor offsets account for root padding. |

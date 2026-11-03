@@ -1,0 +1,35 @@
+{
+  "sourceCommit": "6714c55",
+  "checks": [
+    {
+      "command": "pnpm lint",
+      "status": "passed"
+    },
+    {
+      "command": "pnpm exec tsc --noEmit",
+      "status": "passed"
+    },
+    {
+      "command": "pnpm build",
+      "status": "passed",
+      "next": "16.4.3"
+    },
+    {
+      "command": "node --check tests/premium-motion.browser.mjs; node --check tests/circle-loading.browser.mjs; node --check tests/motion-system.browser.mjs",
+      "status": "passed"
+    },
+    {
+      "command": "premium audit_project.py --mode strict",
+      "status": "passed",
+      "findings": 0
+    },
+    {
+      "command": "npx --yes -p @google/design.md designmd lint DESIGN.md",
+      "status": "passed with warning",
+      "errors": 0,
+      "warnings": 1
+    }
+  ],
+  "externalPlaywrightSuites": "Not run; actual UI verification used the connected Browser.",
+  "globalReducedMotionEmulation": "Unavailable through the connected Browser capabilities; source reviewed, Cut still-state preview exercised."
+}

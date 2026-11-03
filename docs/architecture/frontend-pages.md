@@ -139,3 +139,15 @@ No new routes or page owners. Root PublicMotion owns first eligible public-entry
 ## Premium motion update · 2026-11-02 (D-020)
 
 Routes, release scope and business data are unchanged. RootLayout still owns PublicMotion. Its new PageWipeTransition coordinates public-link prefetch/cover/commit/reveal using Next's router. The real detail loading entry now renders PublicRouteLoading; CircleLoader is cold-entry only and suppressed after Wipe owns navigation. Cart, checkout, preview, filters, catalog tab buttons, dialogs and hashes retain native/local flow. HomePage composes AcademyStory around existing HOME-03/04; HOME-06 has a large-screen-only 120px featured beat; HOME-06–09 retains its existing group ownership with a Carousel-style switch. `/preview/components` now has ten sections including actual SectionReveal/CircleLoader demonstrations. Props, paths, constraints and verification are in [MOTION.md](../design/MOTION.md) and the [report](../qa/premium-motion-2026-11-02.md). No browser implementation approval or backend completion is claimed.
+
+## Current animation/mobile delta · 2026-11-03 (D-021)
+
+This supersedes conflicting historical motion/mobile notes above. [Evidence and limits](../qa/animation-redesign-2026-11-03.md).
+
+| Routes | Actual owner / consumers | Current behavior and status |
+| --- | --- | --- |
+| `/` | `features/home/home-page.tsx`, existing numbered section owners | Hero -> About -> Founder -> LearningPreview -> 06–09 offers -> Reviews -> **FAQ -> Contact**. Source folder numbers unchanged. Full-height mobile hero, photo-first narrative sections, fitting tabs, next-card swipe cue. Working UI; existing fixtures/services/publication blockers unchanged. |
+| `/courses`, `/mini-courses` | Persistent `features/catalog/components/catalog-experience.tsx` | Bidirectional format animation, one active/inert panel, natural height and results alignment; filters/query state preserved. Compact minis stack their media above content, two mobile columns. No duplicate route implementation. |
+| Detail routes | Existing `features/course-detail/detail-page.tsx` + public shell | Shared Cut and section motion preserved; anchor padding corrected. Unknown/unpublished states remain existing route-owned UI. |
+| All public discovery routes | `features/public-shell/public-motion.tsx`, PageWipeTransition, SplashLoader, MobileNavigation | Same-page/cross-page hash transition, visible Activity-tree readiness, inactive-offer selection, interruption fallback, mobile menu choreography. Cart/checkout/preview remain outside route wipes. |
+| `/preview/components` | Existing ComponentPreviewPage, CutButtonPreview, MotionPreview | Real Lift & Shift and Splash implementations, explicitly labeled demonstration states. No additional preview routes. |

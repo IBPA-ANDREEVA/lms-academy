@@ -55,3 +55,5 @@ NEVER INVENT:
 - Continuous scroll effects, excessive parallax or animated distraction in purchase/learning workflows.
 
 IMPLEMENTATION CHECK: A page passing TypeScript and having our palette is not 'on brand' unless the approved image-to-element relationships are visible at real browser widths. See `QA.md`.
+
+CURRENT SCOPED UPDATE (D-021, 2026-11-03): portrait section geometry stays in normal document flow, with content-only entrances. The offer band's plum background belongs to its persistent sticky dock; panels own content only. At <=760px the supplied photo-first compositions and full-height hero take precedence over historical compact mobile notes. FAQ flows into Contact. Swipe rails expose the next card without a bar/mobile arrows. Cut uses Lift & Shift. See [MOTION.md](MOTION.md) and [reference contract](../qa/animation-redesign-2026-11-03.md); no additional brand or content approval is implied.

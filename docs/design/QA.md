@@ -30,3 +30,5 @@ FUNCTIONAL:
 
 REPORT FORMAT:
 Target / task; reference IDs and approval status; screenshots with paths and viewport; what visually matches; deviations and why; interaction/accessibility/state tests; commands actually run; missing approvals; final human review status. Do not report `approved` without human review of the actual browser screenshots.
+
+D-021 verification entry: [Animation/mobile redesign, 2026-11-03](../qa/animation-redesign-2026-11-03.md). Includes real Browser walkthroughs, animation-frame values, 1440/768/390/360 captures, found-and-fixed issues, remaining unverified environments and the explicit supersession of D-020 assertions. No human implementation approval inferred.
