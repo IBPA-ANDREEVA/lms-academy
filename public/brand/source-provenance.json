@@ -1,0 +1,21 @@
+{
+  "source": "IMG_4590.PNG",
+  "sha256": "e45596f9eb2c26ca2afb06b308736fc9a88d68703e60c9dd3454c94d431a46cb",
+  "dimensions": [
+    2172,
+    724
+  ],
+  "bounds": [
+    148,
+    182,
+    1856,
+    404
+  ],
+  "markBounds": [
+    148,
+    182,
+    409,
+    404
+  ],
+  "method": "Alpha/color segmentation; spline paths; flat median colors; no embedded raster; dark variant white wordmark"
+}
