@@ -173,18 +173,83 @@
   }
 }
 
-/* Cut: the caption advances while the two edges open apart. */
-.cut::before, .cut::after, .cut .label, .cut .label > span { transition: transform .45s cubic-bezier(.22,1,.36,1), background-color .35s, color .35s; }
-.cut:is(:hover,:focus-visible):not(:disabled) { color: var(--brand); }
-.cut:is(:hover,:focus-visible):not(:disabled)::before { transform: translateX(-3px) skewX(-12deg); background: var(--soft); }
-.cut:is(:hover,:focus-visible):not(:disabled)::after { transform: translateX(6px) skewX(-24deg); }
-.cut:is(:hover,:focus-visible):not(:disabled) .label { transform: translateX(3px); }
-.cut:is(:hover,:focus-visible):not(:disabled) .label > span[aria-hidden="true"] { transform: translateX(5px); }
-.cut:active:not(:disabled) .label { transform: translateX(1px); }
-.cut.inverse:is(:hover,:focus-visible):not(:disabled) { color: var(--surface); }
-.cut.inverse:is(:hover,:focus-visible):not(:disabled)::before { background: rgb(255 255 255 / 12%); }
+/* Parallax Cut: the hit area stays fixed; outline, slash, label and arrow travel separately.
+   data-cut-state / data-cut-reduced-motion are review-only hooks used in /preview/components. */
+.button.cut {
+  --cut-body-x: 0px;
+  --cut-body-y: 0px;
+  --cut-slash-x: 0px;
+  --cut-label-x: 0px;
+  --cut-label-y: 0px;
+  --cut-slash-y: 0px;
+  --cut-depth-x: 0px;
+  --cut-arrow-x: 0px;
+  --cut-depth-y: 0px;
+  --cut-depth-opacity: 0;
+  --cut-duration: 300ms;
+  --cut-arrow-duration: 210ms;
+  overflow: visible;
+  transition: none;
+}
+.cut::before {
+  transform: translate(var(--cut-body-x),var(--cut-body-y)) skewX(-16deg);
+  transition: transform var(--cut-duration) cubic-bezier(.22,1,.36,1);
+}
+.cut::after {
+  transform: translate(var(--cut-slash-x),var(--cut-slash-y)) skewX(-16deg);
+  transition: transform var(--cut-duration) cubic-bezier(.22,1,.36,1);
+}
+.cut .label {
+  transform: translate(var(--cut-label-x),var(--cut-label-y));
+  transition: transform var(--cut-duration) cubic-bezier(.22,1,.36,1);
+}
+.cut .label > span[aria-hidden="true"] {
+  display: inline-block;
+  flex: none;
+  transform: translateX(var(--cut-arrow-x));
+  transition: transform var(--cut-arrow-duration) cubic-bezier(.22,1,.36,1);
+}
+.cut .cutDepth {
+  position: absolute;
+  z-index: -2;
+  inset: 2px 20px 2px 10px;
+  border: 2px solid currentColor;
+  transform: translate(var(--cut-depth-x),var(--cut-depth-y)) skewX(-16deg);
+  opacity: var(--cut-depth-opacity);
+  pointer-events: none;
+  transition: transform var(--cut-duration) cubic-bezier(.22,1,.36,1), opacity var(--cut-duration) ease;
+}
+/* Preserve every variant's resting colors on hover/press. */
+.button.cut:is(:hover,:active):not(:disabled)::before { background: var(--surface); }
+.button.cut.inverse:is(:hover,:active):not(:disabled)::before { background: transparent; }
+@media(hover:hover) and (pointer:fine) {
+  .cut:where(:hover,[data-cut-state="hover"]):not(:disabled):not([aria-disabled="true"]):not([aria-busy="true"]) {
+    --cut-body-x: -3px; --cut-body-y: -4px; --cut-slash-x: 6px; --cut-slash-y: -2px; --cut-label-x: -3px; --cut-label-y: -4px; --cut-arrow-x: 5px; --cut-depth-x: 5px; --cut-depth-y: 6px; --cut-depth-opacity: 1;
+  }
+}
+.cut:where(:focus-visible,[data-cut-state="focus"]):not(:disabled):not([aria-disabled="true"]):not([aria-busy="true"]) {
+  --cut-body-x: -3px; --cut-body-y: -4px; --cut-slash-x: 6px; --cut-slash-y: -2px; --cut-label-x: -3px; --cut-label-y: -4px; --cut-arrow-x: 5px; --cut-depth-x: 5px; --cut-depth-y: 6px; --cut-depth-opacity: 1;
+  outline: 3px solid var(--focus); outline-offset: 4px;
+}
+.cut:where(:active,[data-cut-state="pressed"]):not(:disabled):not([aria-disabled="true"]):not([aria-busy="true"]) {
+  --cut-body-x: 2px; --cut-body-y: 3px; --cut-slash-x: 4px; --cut-slash-y: 2px; --cut-label-x: 2px; --cut-label-y: 3px; --cut-arrow-x: 2px; --cut-depth-x: 3px; --cut-depth-y: 4px; --cut-depth-opacity: 1;
+  --cut-duration: 120ms; --cut-arrow-duration: 120ms;
+}
 @media(prefers-reduced-motion:reduce) {
-  .cut::before,.cut::after,.cut .label,.cut .label > span { transition: none; }
-  .cut:is(:hover,:focus-visible):not(:disabled)::before,.cut:is(:hover,:focus-visible):not(:disabled)::after { transform: skewX(-16deg); }
-  .cut:is(:hover,:focus-visible):not(:disabled) .label,.cut:is(:hover,:focus-visible):not(:disabled) .label > span[aria-hidden="true"] { transform: none; }
+ .button.cut {
+  --cut-body-x: 0px !important; --cut-body-y: 0px !important; --cut-label-y: 0px !important; --cut-slash-y: 0px !important; --cut-depth-x: 0px !important; --cut-slash-x: 0px !important; --cut-label-x: 0px !important; --cut-arrow-x: 0px !important; --cut-depth-y: 0px !important; --cut-depth-opacity: 0 !important;
+ }
+ .cut::before, .cut::after, .cut .label, .cut .label > span[aria-hidden="true"], .cut .cutDepth { transition: none; }
+}
+[data-cut-reduced-motion] .button.cut {
+ --cut-body-x: 0px !important; --cut-body-y: 0px !important; --cut-label-y: 0px !important; --cut-slash-y: 0px !important; --cut-depth-x: 0px !important; --cut-slash-x: 0px !important; --cut-label-x: 0px !important; --cut-arrow-x: 0px !important; --cut-depth-y: 0px !important; --cut-depth-opacity: 0 !important;
+}
+[data-cut-reduced-motion] .cut::before, [data-cut-reduced-motion] .cut::after, [data-cut-reduced-motion] .cut .label, [data-cut-reduced-motion] .cut .label > span[aria-hidden="true"], [data-cut-reduced-motion] .cut .cutDepth { transition: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  .button.cut:is(:hover,:active):not(:disabled):not([aria-disabled="true"])::before { background: var(--soft); }
+  .button.cut.inverse:is(:hover,:active):not(:disabled):not([aria-disabled="true"])::before { background: rgb(255 255 255 / 12%); }
+}
+@media (hover: none) {
+  .neoBrutalist:hover:not(:active):not(:disabled) { transform: none; box-shadow: 4px 4px 0 var(--text); }
 }
