@@ -17,3 +17,8 @@
   .track { gap: 16px; margin-inline: calc(-1 * var(--offers-gutter, 20px)); padding-inline: calc((100% + 2 * var(--offers-gutter, 20px) - min(80vw, 380px)) / 2); }
   .item { flex-basis: min(80vw, 380px); }
 }
+
+@media(max-width:650px) {
+ .carousel[data-mobile-grid="true"] .track { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 18px 14px; margin: 0; padding: 4px 7px 10px 0; overflow: visible; }
+ .carousel[data-mobile-grid="true"] .pagination, .carousel[data-mobile-grid="true"] .controls { display: none; }
+}

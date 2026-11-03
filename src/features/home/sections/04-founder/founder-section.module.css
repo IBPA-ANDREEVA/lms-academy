@@ -292,3 +292,50 @@
 
 
 @media (min-width: 601px) { .plumWedge { display: none; } }
+
+/* November public-page refinement. */
+
+.content { padding-block: 96px; }
+.biography { margin-top: 32px; }
+.biography p { margin: 0 0 20px; }
+.biography summary { width: fit-content; cursor: pointer; color: var(--brand); padding-block: 12px; border-bottom: 1px solid var(--plum-border); }
+.biography details[open] summary { margin-bottom: 24px; }
+.milestones { grid-template-columns: repeat(2,minmax(0,1fr)); gap: 32px; margin-top: 48px; }
+.milestones li { text-transform: none; line-height: 1.6; }
+.milestones strong { font-size: 14px; }
+.milestones p { color: var(--muted); font-weight: 400; margin: 8px 0 0; }
+.number::after { display: none; }
+@media(max-width:600px) { .content { padding-top: 380px; padding-bottom: 80px; } .milestones { gap: 24px; } .milestones::before { display: none; } }
+
+.biography { max-width: 620px; width: 100%; }
+.biography > p { font-size: clamp(18px,1.6vw,23px); line-height: 1.6; font-weight: 400; }
+.story { margin-top: 32px; }
+.story > button { display: flex; justify-content: space-between; align-items: center; width: 100%; border: 0; border-block: 1px solid var(--plum-border); padding: 18px 0; background: transparent; color: var(--brand); font: 600 14px var(--font-manrope); text-align: left; cursor: pointer; }
+.story > button span:last-child { font-size: 26px; font-weight: 400; }
+.story > button:hover { padding-inline: 10px; background: var(--soft); }
+.story > button:focus-visible { outline: 2px solid var(--focus); outline-offset: 4px; }
+.storyViewport { height: 0; overflow: clip; }
+.storyText { display: grid; gap: 28px; padding-block: 32px 12px; }
+.storyText p { margin: 0; padding-left: 24px; border-left: 1px solid var(--plum-border); font-size: 15px; line-height: 1.85; }
+.storyText p:first-child { color: var(--brand); }
+.milestones { gap: 32px 36px; }
+@media(prefers-reduced-motion:no-preference) { .story > button { transition: padding .3s,background .3s; } }
+
+.heading span { white-space: normal; }
+@media(max-width:600px) {
+ .photograph { height: 260px; }
+ .plumWedge { clip-path: polygon(0 260px,100% 213px,100% 230px,0 277px); }
+ .content { padding-top: 290px; padding-bottom: 48px; }
+ .heading { font-size: clamp(23px,7vw,32px); line-height: 1.15; }
+ .biography { margin-top: 20px; }
+ .biography > p { font-size: 17px; }
+ .milestones { margin-top: 28px; gap: 16px; }
+ .milestones li { align-items: start; min-height: 0; }
+ .milestones p { margin-top: 4px; }
+ .storyText { gap: 18px; padding-block: 20px; }
+ .storyText p { padding-left: 14px; font-size: 14px; line-height: 1.65; }
+}
+
+.story > summary { display: flex; justify-content: space-between; align-items: center; min-height: 48px; padding: 12px 0; border-block: 1px solid var(--plum-border); color: var(--brand); font-size: 14px; font-weight: 600; cursor: pointer; list-style: none; }
+.story > summary::-webkit-details-marker { display: none; }
+.story[open] > summary span { rotate: 45deg; }

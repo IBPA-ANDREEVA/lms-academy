@@ -1,0 +1,912 @@
+{
+  "results": [
+    {
+      "name": "navigation 1440",
+      "status": "WORKING",
+      "detail": null
+    },
+    {
+      "name": "auth views/focus/state 1440",
+      "status": "WORKING",
+      "detail": "No account/session/email created; only unavailable notices"
+    },
+    {
+      "name": "auth background scroll 1440",
+      "status": "WORKING",
+      "detail": {
+        "before": 0,
+        "after": 600,
+        "locked": false
+      }
+    },
+    {
+      "name": "founder disclosure 1440",
+      "status": "WORKING",
+      "detail": null
+    },
+    {
+      "name": "learning demo 1440",
+      "status": "WORKING",
+      "detail": "Local blob preview/comment retained; no upload/submission"
+    },
+    {
+      "name": "offer panels/geometry 1440",
+      "status": "WORKING",
+      "detail": [
+        {
+          "navTop": 74,
+          "barBottom": 74,
+          "headerBottom": 84,
+          "height": 746.859375,
+          "activeHeight": 746.859375,
+          "inertPanels": 3,
+          "shapeOffset": -48,
+          "shapeClip": "polygon(76% 0px, 100% 0px, 100% 100%, 94% 100%)"
+        },
+        {
+          "navTop": 74,
+          "barBottom": 74,
+          "headerBottom": 84,
+          "height": 842.5625,
+          "activeHeight": 842.5625,
+          "inertPanels": 3,
+          "shapeOffset": -48,
+          "shapeClip": "polygon(76% 0px, 100% 0px, 100% 100%, 94% 100%)"
+        },
+        {
+          "navTop": 74,
+          "barBottom": 74,
+          "headerBottom": 84,
+          "height": 725,
+          "activeHeight": 725,
+          "inertPanels": 3,
+          "shapeOffset": -48,
+          "shapeClip": "polygon(76% 0px, 100% 0px, 100% 100%, 94% 100%)"
+        },
+        {
+          "navTop": 74,
+          "barBottom": 74,
+          "headerBottom": 84,
+          "height": 824.375,
+          "activeHeight": 824.375,
+          "inertPanels": 3,
+          "shapeOffset": -48,
+          "shapeClip": "polygon(76% 0px, 100% 0px, 100% 100%, 94% 100%)"
+        }
+      ]
+    },
+    {
+      "name": "package builder 1440",
+      "status": "WORKING",
+      "detail": "Local selection/summary, no real package eligibility or price"
+    },
+    {
+      "name": "mini filters/start USA 1440",
+      "status": "WORKING",
+      "detail": null
+    },
+    {
+      "name": "reviews scroll 1440",
+      "status": "WORKING",
+      "detail": {
+        "before": 2,
+        "after": 2
+      }
+    },
+    {
+      "name": "contact validation 1440",
+      "status": "WORKING",
+      "detail": "Blur validation only; delivery disabled"
+    },
+    {
+      "name": "catalog filters/history 1440",
+      "status": "BROKEN_OR_CHECK_FAILED",
+      "error": "TimeoutError: page.waitForURL: Timeout 8000ms exceeded.\n=========================== logs ===========================\nwaiting for navigation to \"**/courses?direction=brows&language=en\" until \"load\"\n  navigated to \"http://localhost:3000/courses?direction=brows\"\n============================================================"
+    },
+    {
+      "name": "reduced motion rapid tabs 1440",
+      "status": "WORKING",
+      "detail": {
+        "height": 823.375,
+        "active": 823.375
+      }
+    },
+    {
+      "name": "commerce seed/cart/checkout 1440",
+      "status": "WORKING",
+      "detail": {
+        "consentCount": 3,
+        "paymentDisabled": true,
+        "emailPreserved": "bad"
+      }
+    },
+    {
+      "name": "commerce scenarios 1440",
+      "status": "WORKING",
+      "detail": "All four fixture scenarios block checkout; removal verified"
+    },
+    {
+      "name": "commerce corrupt restoration 1440",
+      "status": "WORKING",
+      "detail": null
+    },
+    {
+      "name": "navigation 390",
+      "status": "WORKING",
+      "detail": null
+    },
+    {
+      "name": "auth views/focus/state 390",
+      "status": "WORKING",
+      "detail": "No account/session/email created; only unavailable notices"
+    },
+    {
+      "name": "auth background scroll 390",
+      "status": "WORKING",
+      "detail": {
+        "before": 0,
+        "after": 600,
+        "locked": false
+      }
+    },
+    {
+      "name": "founder disclosure 390",
+      "status": "WORKING",
+      "detail": null
+    },
+    {
+      "name": "learning demo 390",
+      "status": "WORKING",
+      "detail": "Local blob preview/comment retained; no upload/submission"
+    },
+    {
+      "name": "offer panels/geometry 390",
+      "status": "WORKING",
+      "detail": [
+        {
+          "navTop": 112,
+          "barBottom": 112,
+          "headerBottom": 112,
+          "height": 684.03125,
+          "activeHeight": 684.03125,
+          "inertPanels": 3,
+          "shapeOffset": -32,
+          "shapeClip": "polygon(82% 0px, 100% 0px, 100% 100%, 94% 100%)"
+        },
+        {
+          "navTop": 112,
+          "barBottom": 112,
+          "headerBottom": 112,
+          "height": 912.375,
+          "activeHeight": 912.375,
+          "inertPanels": 3,
+          "shapeOffset": -32,
+          "shapeClip": "polygon(82% 0px, 100% 0px, 100% 100%, 94% 100%)"
+        },
+        {
+          "navTop": 112,
+          "barBottom": 112,
+          "headerBottom": 112,
+          "height": 741.875,
+          "activeHeight": 741.875,
+          "inertPanels": 3,
+          "shapeOffset": -32,
+          "shapeClip": "polygon(82% 0px, 100% 0px, 100% 100%, 94% 100%)"
+        },
+        {
+          "navTop": 112,
+          "barBottom": 112,
+          "headerBottom": 112,
+          "height": 748,
+          "activeHeight": 748,
+          "inertPanels": 3,
+          "shapeOffset": -32,
+          "shapeClip": "polygon(82% 0px, 100% 0px, 100% 100%, 94% 100%)"
+        }
+      ]
+    },
+    {
+      "name": "package builder 390",
+      "status": "WORKING",
+      "detail": "Local selection/summary, no real package eligibility or price"
+    },
+    {
+      "name": "mini filters/start USA 390",
+      "status": "WORKING",
+      "detail": null
+    },
+    {
+      "name": "reviews scroll 390",
+      "status": "WORKING",
+      "detail": {
+        "before": 0,
+        "after": 305
+      }
+    },
+    {
+      "name": "contact validation 390",
+      "status": "WORKING",
+      "detail": "Blur validation only; delivery disabled"
+    },
+    {
+      "name": "catalog filters/history 390",
+      "status": "BROKEN_OR_CHECK_FAILED",
+      "error": "TimeoutError: page.waitForURL: Timeout 8000ms exceeded.\n=========================== logs ===========================\nwaiting for navigation to \"**/courses?direction=brows&language=en\" until \"load\"\n============================================================"
+    },
+    {
+      "name": "reduced motion rapid tabs 390",
+      "status": "BROKEN_OR_CHECK_FAILED",
+      "error": "TimeoutError: page.goto: Timeout 8000ms exceeded.\nCall log:\n\u001b[2m  - navigating to \"http://localhost:3000/#learning-offers\", waiting until \"load\"\u001b[22m\n"
+    },
+    {
+      "name": "commerce seed/cart/checkout 390",
+      "status": "WORKING",
+      "detail": {
+        "consentCount": 3,
+        "paymentDisabled": true,
+        "emailPreserved": "bad"
+      }
+    },
+    {
+      "name": "commerce scenarios 390",
+      "status": "WORKING",
+      "detail": "All four fixture scenarios block checkout; removal verified"
+    },
+    {
+      "name": "commerce corrupt restoration 390",
+      "status": "WORKING",
+      "detail": null
+    }
+  ],
+  "events": [],
+  "captures": [
+    {
+      "file": "state-navigation-open-1440.png",
+      "url": "http://localhost:3000/",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      }
+    },
+    {
+      "file": "state-login-1440.png",
+      "url": "http://localhost:3000/",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      }
+    },
+    {
+      "file": "state-login-unavailable-1440.png",
+      "url": "http://localhost:3000/",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      }
+    },
+    {
+      "file": "state-register-1440.png",
+      "url": "http://localhost:3000/",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      }
+    },
+    {
+      "file": "state-register-unavailable-1440.png",
+      "url": "http://localhost:3000/",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      }
+    },
+    {
+      "file": "state-recovery-1440.png",
+      "url": "http://localhost:3000/",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      }
+    },
+    {
+      "file": "state-recovery-unavailable-1440.png",
+      "url": "http://localhost:3000/",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      }
+    },
+    {
+      "file": "state-auth-background-scroll-1440.png",
+      "url": "http://localhost:3000/",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      }
+    },
+    {
+      "file": "state-founder-open-1440.png",
+      "url": "http://localhost:3000/",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      }
+    },
+    {
+      "file": "state-learning-assignment-empty-1440.png",
+      "url": "http://localhost:3000/",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      }
+    },
+    {
+      "file": "state-learning-file-error-1440.png",
+      "url": "http://localhost:3000/",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      }
+    },
+    {
+      "file": "state-learning-photo-1440.png",
+      "url": "http://localhost:3000/",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      }
+    },
+    {
+      "file": "state-learning-feedback-1440.png",
+      "url": "http://localhost:3000/",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      }
+    },
+    {
+      "file": "state-learning-revision-1440.png",
+      "url": "http://localhost:3000/",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      }
+    },
+    {
+      "file": "state-offers-0-1440.png",
+      "url": "http://localhost:3000/",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      }
+    },
+    {
+      "file": "state-offers-1-1440.png",
+      "url": "http://localhost:3000/",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      }
+    },
+    {
+      "file": "state-offers-2-1440.png",
+      "url": "http://localhost:3000/",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      }
+    },
+    {
+      "file": "state-offers-3-1440.png",
+      "url": "http://localhost:3000/",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      }
+    },
+    {
+      "file": "state-package-builder-empty-1440.png",
+      "url": "http://localhost:3000/",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      }
+    },
+    {
+      "file": "state-package-builder-selected-1440.png",
+      "url": "http://localhost:3000/",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      }
+    },
+    {
+      "file": "state-package-summary-1440.png",
+      "url": "http://localhost:3000/",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      }
+    },
+    {
+      "file": "state-package-over-limit-1440.png",
+      "url": "http://localhost:3000/",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      }
+    },
+    {
+      "file": "state-home-mini-filter-1440.png",
+      "url": "http://localhost:3000/",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      }
+    },
+    {
+      "file": "state-usa-topics-1440.png",
+      "url": "http://localhost:3000/",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      }
+    },
+    {
+      "file": "state-reviews-next-1440.png",
+      "url": "http://localhost:3000/",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      }
+    },
+    {
+      "file": "state-contact-errors-1440.png",
+      "url": "http://localhost:3000/",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      }
+    },
+    {
+      "file": "state-catalog-direction-open-1440.png",
+      "url": "http://localhost:3000/courses",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      }
+    },
+    {
+      "file": "state-catalog-brows-1440.png",
+      "url": "http://localhost:3000/courses?direction=brows",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      }
+    },
+    {
+      "file": "state-catalog-language-keyboard-1440.png",
+      "url": "http://localhost:3000/courses?direction=brows",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      }
+    },
+    {
+      "file": "state-reduced-motion-1440.png",
+      "url": "http://localhost:3000/#learning-offers",
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      }
+    },
+    {
+      "file": "state-cart-filled-1440.png",
+      "url": "http://localhost:3000/cart",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      }
+    },
+    {
+      "file": "state-cart-preview-filled-1440.png",
+      "url": "http://localhost:3000/cart",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      }
+    },
+    {
+      "file": "state-checkout-filled-1440.png",
+      "url": "http://localhost:3000/checkout",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      }
+    },
+    {
+      "file": "state-checkout-email-error-1440.png",
+      "url": "http://localhost:3000/checkout",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      }
+    },
+    {
+      "file": "state-checkout-login-1440.png",
+      "url": "http://localhost:3000/checkout",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      }
+    },
+    {
+      "file": "state-cart-recalculating-1440.png",
+      "url": "http://localhost:3000/cart",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      }
+    },
+    {
+      "file": "state-cart-unavailable-1440.png",
+      "url": "http://localhost:3000/cart",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      }
+    },
+    {
+      "file": "state-cart-price-changed-1440.png",
+      "url": "http://localhost:3000/cart",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      }
+    },
+    {
+      "file": "state-cart-error-1440.png",
+      "url": "http://localhost:3000/cart",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      }
+    },
+    {
+      "file": "state-cart-removed-1440.png",
+      "url": "http://localhost:3000/cart",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      }
+    },
+    {
+      "file": "state-cart-storage-error-1440.png",
+      "url": "http://localhost:3000/cart",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      }
+    },
+    {
+      "file": "state-navigation-open-390.png",
+      "url": "http://localhost:3000/",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      }
+    },
+    {
+      "file": "state-login-390.png",
+      "url": "http://localhost:3000/",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      }
+    },
+    {
+      "file": "state-login-unavailable-390.png",
+      "url": "http://localhost:3000/",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      }
+    },
+    {
+      "file": "state-register-390.png",
+      "url": "http://localhost:3000/",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      }
+    },
+    {
+      "file": "state-register-unavailable-390.png",
+      "url": "http://localhost:3000/",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      }
+    },
+    {
+      "file": "state-recovery-390.png",
+      "url": "http://localhost:3000/",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      }
+    },
+    {
+      "file": "state-recovery-unavailable-390.png",
+      "url": "http://localhost:3000/",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      }
+    },
+    {
+      "file": "state-auth-background-scroll-390.png",
+      "url": "http://localhost:3000/",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      }
+    },
+    {
+      "file": "state-founder-open-390.png",
+      "url": "http://localhost:3000/",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      }
+    },
+    {
+      "file": "state-learning-assignment-empty-390.png",
+      "url": "http://localhost:3000/",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      }
+    },
+    {
+      "file": "state-learning-file-error-390.png",
+      "url": "http://localhost:3000/",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      }
+    },
+    {
+      "file": "state-learning-photo-390.png",
+      "url": "http://localhost:3000/",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      }
+    },
+    {
+      "file": "state-learning-feedback-390.png",
+      "url": "http://localhost:3000/",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      }
+    },
+    {
+      "file": "state-learning-revision-390.png",
+      "url": "http://localhost:3000/",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      }
+    },
+    {
+      "file": "state-offers-0-390.png",
+      "url": "http://localhost:3000/",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      }
+    },
+    {
+      "file": "state-offers-1-390.png",
+      "url": "http://localhost:3000/",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      }
+    },
+    {
+      "file": "state-offers-2-390.png",
+      "url": "http://localhost:3000/",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      }
+    },
+    {
+      "file": "state-offers-3-390.png",
+      "url": "http://localhost:3000/",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      }
+    },
+    {
+      "file": "state-package-builder-empty-390.png",
+      "url": "http://localhost:3000/",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      }
+    },
+    {
+      "file": "state-package-builder-selected-390.png",
+      "url": "http://localhost:3000/",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      }
+    },
+    {
+      "file": "state-package-summary-390.png",
+      "url": "http://localhost:3000/",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      }
+    },
+    {
+      "file": "state-package-over-limit-390.png",
+      "url": "http://localhost:3000/",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      }
+    },
+    {
+      "file": "state-home-mini-filter-390.png",
+      "url": "http://localhost:3000/",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      }
+    },
+    {
+      "file": "state-usa-topics-390.png",
+      "url": "http://localhost:3000/",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      }
+    },
+    {
+      "file": "state-reviews-next-390.png",
+      "url": "http://localhost:3000/",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      }
+    },
+    {
+      "file": "state-contact-errors-390.png",
+      "url": "http://localhost:3000/",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      }
+    },
+    {
+      "file": "state-catalog-direction-open-390.png",
+      "url": "http://localhost:3000/courses",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      }
+    },
+    {
+      "file": "state-catalog-brows-390.png",
+      "url": "http://localhost:3000/courses?direction=brows",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      }
+    },
+    {
+      "file": "state-catalog-language-keyboard-390.png",
+      "url": "http://localhost:3000/courses?direction=brows",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      }
+    },
+    {
+      "file": "state-cart-filled-390.png",
+      "url": "http://localhost:3000/cart",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      }
+    },
+    {
+      "file": "state-cart-preview-filled-390.png",
+      "url": "http://localhost:3000/cart",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      }
+    },
+    {
+      "file": "state-checkout-filled-390.png",
+      "url": "http://localhost:3000/checkout",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      }
+    },
+    {
+      "file": "state-checkout-email-error-390.png",
+      "url": "http://localhost:3000/checkout",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      }
+    },
+    {
+      "file": "state-checkout-login-390.png",
+      "url": "http://localhost:3000/checkout",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      }
+    },
+    {
+      "file": "state-cart-recalculating-390.png",
+      "url": "http://localhost:3000/cart",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      }
+    },
+    {
+      "file": "state-cart-unavailable-390.png",
+      "url": "http://localhost:3000/cart",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      }
+    },
+    {
+      "file": "state-cart-price-changed-390.png",
+      "url": "http://localhost:3000/cart",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      }
+    },
+    {
+      "file": "state-cart-error-390.png",
+      "url": "http://localhost:3000/cart",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      }
+    },
+    {
+      "file": "state-cart-removed-390.png",
+      "url": "http://localhost:3000/cart",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      }
+    },
+    {
+      "file": "state-cart-storage-error-390.png",
+      "url": "http://localhost:3000/cart",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      }
+    }
+  ]
+}

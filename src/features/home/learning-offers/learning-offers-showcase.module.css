@@ -17,7 +17,8 @@
 .switcher button:focus-visible { outline: 3px solid var(--focus); outline-offset: -4px; }
 .switcher small { font-size: 9px; letter-spacing: .08em; font-weight: 600; }
 .track { position: relative; overflow: clip; }
-.panel { position: relative; min-width: 0; }
+.panel { position: relative; min-width: 0; background: var(--background); transform-origin: 50% 0; }
+.panel:first-child { background: var(--brand); }
 .panel[aria-hidden="true"] { position: absolute; inset: 0 0 auto; visibility: hidden; pointer-events: none; }
 .panel > section { background: transparent; scroll-margin-top: calc(var(--public-header-offset) + var(--offers-nav-height) - var(--anchor-padding)); }
 .panel > section::before, .panel > section::after { content: none; }
@@ -37,3 +38,43 @@
   .topGeometry { top: -32px; height: 108px; clip-path: polygon(82% 0,100% 0,100% 100%,94% 100%); }
   .bottomGeometry { bottom: -64px; height: 112px; clip-path: polygon(0 0,40% 48px,24% 100%,0 100%); }
 }
+
+/* November public-page refinement. */
+
+.group { --offers-space: clamp(64px,6vw,96px); --offers-nav-height: 76px; }
+.switcher { padding: 10px var(--offers-gutter); gap: 8px; border-block: 0; box-shadow: 0 1px 0 var(--border); }
+.switcher button { min-height: 54px; border: 1px solid transparent; color: var(--text); transition: background-color .2s,color .2s,border-color .2s; }
+.switcher button[aria-selected="true"] { background: var(--text); color: var(--surface); border-color: var(--text); }
+.switcher button:hover:not([aria-selected="true"]) { border-color: var(--plum-border); }
+@media(max-width:800px) { .switcher { padding-inline: 16px; } .switcher button { padding-inline: 20px; } .group { --offers-nav-height: 76px; } }
+@media(prefers-reduced-motion:reduce) { .switcher button { transition: none; } }
+
+/* Attached secondary navigation: same gutters and surface as the header. */
+.group { --offers-nav-height: 56px; }
+.switcher { top: calc(var(--public-header-offset) - 10px); margin-inline: 16px; padding: 0 20px; gap: 12px; min-height: 56px; border-radius: 0 0 16px 16px; box-shadow: 0 10px 20px rgb(29 27 31 / 4%); }
+.switcher button { position: relative; min-height: 56px; padding: 12px 18px; border: 0; font-size: 13px; font-weight: 500; background: transparent; color: var(--muted); }
+.switcher button[aria-selected="true"], .switcher button:hover:not([aria-selected="true"]) { border: 0; background: transparent; color: var(--brand); }
+.switcher button::after { content: ""; position: absolute; left: 18px; right: 18px; bottom: 8px; height: 1px; background: var(--brand); transform: scaleX(0); transform-origin: left; transition: transform .4s cubic-bezier(.22,1,.36,1); }
+.switcher button[aria-selected="true"]::after { transform: scaleX(1); }
+.switcher button span { transition: transform .35s cubic-bezier(.22,1,.36,1); }
+.switcher button:hover span { transform: translateY(-2px); }
+@media(max-width:800px) { .group { --offers-nav-height: 56px; } .switcher { padding-inline: 8px; gap: 0; } .switcher button { padding-inline: 14px; font-size: 12px; } }
+@media(prefers-reduced-motion:reduce) { .switcher button::after,.switcher button span { transition: none; } .switcher button:hover span { transform: none; } }
+@media(max-width:760px) { .switcher { top: var(--public-header-offset); } }
+
+@media(max-width:600px) { .switcher { margin-inline: 10px; } }
+
+.group[data-enhanced="false"] .switcher { display: none; }
+.group[data-enhanced="false"] .panel { position: relative; visibility: visible; }
+@media(max-width:760px) {
+ .group { --offers-space: 32px; --offers-nav-height: 60px; }
+ .switcher { top: var(--public-header-offset); margin: 0; padding: 5px 12px; min-height: 60px; gap: 4px; border-radius: 0; border-block: 1px solid var(--border); box-shadow: none; scroll-padding-inline: 12px; }
+ .switcher button { flex: 0 0 auto; min-height: 48px; padding: 8px 14px; font-size: 13px; font-weight: 700; border-radius: 12px; }
+ .switcher button[aria-selected="true"] { background: var(--brand); color: white; }
+ .switcher button::after { display: none; }
+ .switcher button:hover span { transform: none; }
+}
+
+.group[data-enhanced="false"] .panel:not(:first-child) > section { background: var(--background); }
+
+.switcher button { scroll-margin-top: calc(-1 * var(--anchor-padding)); }

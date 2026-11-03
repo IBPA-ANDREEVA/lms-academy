@@ -122,3 +122,17 @@ html {
     scrollbar-color: auto;
   }
 }
+
+@media (prefers-reduced-motion: no-preference) {
+  button, a, summary { transition: color .2s ease, background-color .2s ease, border-color .2s ease, box-shadow .2s ease; }
+  /* Only opt-in owners use this entrance; GSAP disclosures and menus never overlap it. */
+  [data-css-motion="surface"]:not(dialog), dialog[data-css-motion="surface"][open] { animation: public-open .26s cubic-bezier(.22,1,.36,1); }
+  @keyframes public-open { from { opacity: 0; translate: 0 8px; } to { opacity: 1; translate: 0 0; } }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  dialog[open]::backdrop { animation: backdrop-open .35s ease-out; }
+  @keyframes backdrop-open { from { opacity: 0; } to { opacity: 1; } }
+  a:hover, button:hover:not(:disabled), summary:hover { transition-duration: .3s; }
+  select, input, textarea { transition: border-color .25s, box-shadow .25s, background-color .25s; }
+}

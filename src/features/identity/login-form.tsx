@@ -15,7 +15,7 @@ export function LoginForm({ onViewChange }: { onViewChange: (view: AuthView) => 
       <PasswordField label="Пароль" name="password" autoComplete="current-password" placeholder="Введите пароль" />
       <button type="button" className={styles.forgotLink} onClick={() => onViewChange("forgot")}>Забыли пароль?</button>
       <Button type="submit" appearance="cut" intent="secondary" fullWidth className={styles.primaryAction}>ВОЙТИ <span aria-hidden="true">→</span></Button>
-      {notice && <FormMessage>Вход пока недоступен. Это демонстрация интерфейса.</FormMessage>}
+      {notice && <FormMessage>Вход пока недоступен. </FormMessage>}
       <SocialActions />
       <div className={styles.switchView}>Ещё нет аккаунта? <button type="button" onClick={() => onViewChange("register")}>Зарегистрироваться ↗</button></div>
     </form>

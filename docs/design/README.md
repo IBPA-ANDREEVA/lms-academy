@@ -17,3 +17,5 @@ Current scope: the header follows the supplied 2026-10-28 multi-viewport referen
 Missing product policy, licensed media or approved legal content must be flagged rather than invented. Missing visual approval does not prevent implementing a reversible, clearly documented proposal within the user's request.
 
 User-authorized exception (2026-10-28): `/preview/components` provides interactive examples of the existing shared components. It does not restore planning records, reference storage or approval tools. Keep previews synchronized with shared APIs.
+
+Public animation behavior and ownership: [MOTION.md](MOTION.md). It applies the owner's 2026-11-02 motion-only brief to existing compositions; it grants no new layout/content/production approval.

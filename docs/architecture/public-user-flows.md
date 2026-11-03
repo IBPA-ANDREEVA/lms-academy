@@ -102,7 +102,7 @@ flowchart TD
     role --> dashboard["Student /account when appropriate"]
 ```
 
-Login/register/recovery/verification must carry a validated internal continuation, such as `/checkout`, without accepting arbitrary external redirects. Never trust client-supplied roles. Invalid or unauthorized continuations fall back to a permitted account entry; expired sessions should not lose cart selection. Multi-role users should continue a purchase in student context, with separate permitted workspace choices; OQ-013 must decide default role behavior. Do not create manager/trainer/admin public sign-up routes.
+Login/register/recovery/verification must carry a validated internal continuation, such as `/checkout`, without accepting arbitrary external redirects. Never trust client-supplied roles. Invalid or unauthorized continuations fall back to a permitted account entry; expired sessions should not lose cart selection. Multi-role users should continue a purchase in student context, with separate permitted workspace choices; OQ-013 must decide default role behavior. Do not create referral-partner/trainer/admin public sign-up routes.
 
 ## 5. Visitor → Legal information
 

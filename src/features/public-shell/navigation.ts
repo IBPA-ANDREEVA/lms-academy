@@ -11,7 +11,7 @@ export type NavigationGroup = {
 // Owner-authorized shell preview. Anchors reach existing homepage sections;
 // entries without href are visibly unavailable and never publish a new route.
 export const publicSite = {
-  brand: { label: "LMS Academy", href: "/" },
+  brand: { label: "Beauty Business Academy", href: "/" },
   navigation: [
     { label: "Об академии", href: "/#about" },
     { label: "Обучение", href: "/courses", children: [

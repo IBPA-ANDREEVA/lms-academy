@@ -16,9 +16,9 @@ Status vocabulary:
 
 | ID | Status | Needed by milestone | Question | Why it matters |
 | --- | --- | --- | --- | --- |
-| OQ-006 | Blocking MVP | Before legal pages, production email, and certificate templates; no later than MVP acceptance (QA07) | Intentionally deferred: what is the academy's approved name, domain, sender identities, and certificate issuer identity? | Required for branding, email, legal pages, URLs, and certificates. |
+| OQ-006 | Blocking MVP | Before legal pages, production email, and certificate templates; no later than MVP acceptance (QA003) | Intentionally deferred: what is the academy's approved name, domain, sender identities, and certificate issuer identity? | Required for branding, email, legal pages, URLs, and certificates. |
 | OQ-007 | Blocking MVP | Before QA02 and production checkout | Which final RU/EN texts have legal professional approval for publication, and where is that approval evidence? | Policy-management and consent rules are approved in PD-006; actual legal texts and legal sign-off are still required. |
-| OQ-008 | Blocking MVP | Before retention safeguards (INF08) and MVP acceptance (QA07) | Which mandatory legal retention periods, deletion exceptions, and applicable privacy requirements must qualify the approved retention policy? | PD-007 approves the product policy, but explicitly leaves these legal checks pending. |
+| OQ-008 | Blocking MVP | Before retention safeguards (INF08) and MVP acceptance (QA003) | Which mandatory legal retention periods, deletion exceptions, and applicable privacy requirements must qualify the approved retention policy? | PD-007 approves the product policy, but explicitly leaves these legal checks pending. |
 
 ## Roles, ownership, and authorization
 
@@ -27,7 +27,7 @@ Status vocabulary:
 | OQ-011 | Clarify | Are `trainer` and `curator` always the same person, or may teaching, content ownership, and homework review be assigned separately? |
 | OQ-012 | Clarify | Can multiple curators be assigned to one course or cohort, and can one student be reassigned? What history remains visible after reassignment? |
 | OQ-013 | Clarify | What does role switching look like for a multi-role user, and which role is selected after login? |
-| OQ-014 | Clarify | Can managers or trainers also be administrators, and are any role combinations prohibited or subject to separation-of-duties controls? |
+| OQ-014 | Clarify | PD-011 permits referral capability for trainer/curator/administrator or other authorized accounts. Which remaining role/capability combinations require separation-of-duties controls? |
 | OQ-015 | Clarify | What student fields may a curator see beyond display name and course activity? The source explicitly prohibits contact details outside the platform but does not define the allowed profile view. |
 | OQ-016 | Clarify | What actions may a blocked user take, and what happens to active enrollments, pending homework, messages, and financial records? |
 
@@ -65,10 +65,10 @@ Status vocabulary:
 | OQ-035 | Blocking feature | What happens to promo-code usage counts after cancellation or refund? |
 | OQ-036 | Blocking feature | Are partial refunds supported for an order, a package component, or a portion of a course? How are access and accrual reversals prorated? |
 | OQ-037 | Blocking MVP | What final refund eligibility, legal conditions, exception rules and reason/evidence fields govern automatic Stripe refunds and administrator escalation? PD-010 approves automation, but explicitly calls the seven-day window after confirmed payment, regardless of progress, proposed and subject to applicable law and final rules; do not encode it as final policy. |
-| OQ-038 | Blocking feature | What constitutes acceptable evidence for manager-created manual enrollment, and who may approve or reverse it? |
+| OQ-038 | Blocking feature | What constitutes acceptable evidence for authorized-operator manual enrollment, and who may approve or reverse it? |
 | OQ-039 | Blocking feature | What order, receipt, tax, and accounting record should a manual enrollment create? |
-| OQ-040 | Blocking feature | What is the precedence when referral link, promo code, prior lead ownership, and manual enrollment point to different managers? |
-| OQ-041 | Blocking feature | How long does manager attribution persist, and is it first-touch, last-touch, promo-specific, or manually overridden? |
+| OQ-040 | Blocking feature | What is the precedence when referral link, promo code, prior lead ownership, and manual enrollment point to different referral partners? |
+| OQ-041 | Blocking feature | How long does referral attribution persist, and is it first-touch, last-touch, promo-specific, or manually overridden? |
 
 ## Learning access, homework, and curator support
 
@@ -95,13 +95,13 @@ Status vocabulary:
 | OQ-056 | Blocking feature | What does a revoked or superseded certificate page show, and who may revoke or restore it? |
 | OQ-057 | Clarify | Does course content or completion-rule change ever invalidate previously issued certificates? |
 
-## Trainer and manager finance
+## Trainer and referral-partner finance
 
 | ID | Status | Question |
 | --- | --- | --- |
 | OQ-058 | Blocking feature | When does a student become eligible for a trainer per-student accrual: payment, access grant, support start, first activity, or refund-window expiry? |
 | OQ-059 | Blocking feature | Is the mini-course trainer percentage calculated from gross price, discounted subtotal, net receipts, or amount after fees and taxes? |
-| OQ-060 | Blocking feature | Is manager commission calculated from gross sales, discounted subtotal, collected cash, or net revenue? |
+| OQ-060 | Blocking feature | Is referral-partner commission calculated from gross sales, discounted subtotal, collected cash, or net revenue? |
 | OQ-061 | Blocking feature | How are partial refunds, chargebacks, package allocations, complimentary access, and manual enrollments reflected in accruals? |
 | OQ-062 | Blocking feature | What payout cadence, currency, minimum threshold, approval workflow, tax documentation, and overseas payout method apply? |
 | OQ-063 | Blocking feature | Can configured rates change over time, and must each sale snapshot the rate that applied at attribution? |
@@ -111,9 +111,9 @@ Status vocabulary:
 
 | ID | Status | Question |
 | --- | --- | --- |
-| OQ-065 | Blocking feature | What consent makes an abandoned cart recoverable and permits a manager to see or contact the buyer? |
+| OQ-065 | Blocking feature | What consent makes an abandoned cart recoverable and permits a separately authorized operator to see or contact the buyer? |
 | OQ-066 | Blocking feature | How are leads assigned, deduplicated, reassigned, closed, and retained? What statuses are required? |
-| OQ-067 | Blocking feature | Which contact channels may managers use, and must contact attempts be recorded? |
+| OQ-067 | Blocking feature | Which contact channels may authorized operators use, and must contact attempts be recorded? |
 | OQ-068 | Clarify | Are student-curator messages plain text only, or do they support attachments, voice, moderation and unread state? What remaining handling details are needed under PD-007 retention? |
 | OQ-069 | Clarify | What are the exact timing, retry, deduplication, localization, unsubscribe, and preference rules for each email notification? |
 | OQ-070 | Blocking feature | Which push platform is intended, which events deserve push, and how are device permissions and preferences managed? |
@@ -147,6 +147,8 @@ Status vocabulary:
 | ID | Status | Question |
 | --- | --- | --- |
 | OQ-086 | Clarify | Should product reporting continue to use the original feature phases, or should Phase 2 and Phase 3 be renamed to match the Vault's single `post-MVP` implementation window? This documentation preserves the original feature distinction. |
-| OQ-087 | Clarify | The December 7, 2026 and January 26, 2027 dates are planning targets, not guaranteed commitments. Are these targets still current, who owns reforecasting, and which dependency or capacity changes trigger a revised plan? |
+| OQ-087 | Clarify | With MVP 2026-12-07 fixed and 50 hours per ordinary week confirmed, what explicit scope/additional-capacity decision addresses the remaining 82-hour MVP deficit and conditional 2026-12-18 forecast? Full 2027-01-26 remains fixed; its current forecast is 2027-01-22. The owner explicitly retained weekends and the November 26, December 25 and January 1 exclusions. |
 | OQ-088 | Clarify | The original MVP says Russian only, while the catalog requirements mention language visibility and filtering. For MVP, should cards show only Russian availability, or must mixed-language inventory already be supported? |
 | OQ-089 | Clarify | The original specification includes the student dashboard's upcoming deadlines and curator responses, but the Vault defers messaging and support countdown. Which reduced MVP dashboard states are required? |
+| OQ-090 | Blocking MVP | PD-010 requires administrator course-conversation inspection while full student-curator messaging remains Full. What minimum conversation data and request types/statuses must MVP provide, and which underlying operations are authorized? No Full messaging scope is silently promoted or waived. |
+| OQ-091 | Blocking feature | What literal restricted operational-log URL and remaining protected account/admin route spellings are approved? PD-010 requires the viewer; UI planning can proceed without inventing routes. |

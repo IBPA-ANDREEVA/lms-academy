@@ -1,0 +1,22 @@
+[
+  {
+    "scenario": "cpu",
+    "times": [],
+    "errors": []
+  },
+  {
+    "scenario": "storage",
+    "times": [],
+    "errors": []
+  },
+  {
+    "scenario": "utility",
+    "times": [],
+    "errors": []
+  },
+  {
+    "scenario": "slow",
+    "times": [],
+    "errors": []
+  }
+]

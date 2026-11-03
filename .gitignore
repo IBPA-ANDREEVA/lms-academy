@@ -51,3 +51,5 @@ next-env.d.ts
 /.detail-evidence/
 /.header-evidence/
 /premium-audit.json
+
+/.landing-evidence/

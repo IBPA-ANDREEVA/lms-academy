@@ -10,7 +10,7 @@ Source references used in this document:
 | --- | --- | --- |
 | S1 | `ТЗ_онлайн_академия_и_личные_кабинеты.docx` | Original business rules, roles, workflows, constraints, phases, and explicit open questions |
 | S2 | `Онлайн_академия_дизайн_платформы.pdf` | Five-page wireframe evidence for the public catalog, student mobile dashboard and lesson, and trainer review queue |
-| P1 | LMS Vault: `Full Project Plan.md`, `MVP Plan.md`, `Phase 2 Plan.md`, `Phase 3 Plan.md`, and `Roadmap.md` | Delivery sequencing, target dates, launch assumptions, and manual MVP operations |
+| P1 | LMS Vault: `Dashboard.md`, `Timeline.md`, and `Full Project Plan.md` | Delivery sequencing, target dates, launch assumptions, and manual MVP operations |
 | P2 | LMS Vault: `Epic Task Maps/*.md` and linked task records | Implementation slices, quality gates, and engineering refinements |
 
 The original technical specification and wireframe PDF are now available under `docs/references/`. Earlier versions of this document were prepared before repository copies were added. Vault references remain external to this repository and must be validated separately when historical schedule estimates are relied upon.
@@ -51,7 +51,7 @@ The operating model distinguishes instructor-created content from curator-suppor
 
 ### Shared rules
 
-- Supported roles are guest, student, trainer-curator, manager, and administrator.
+- Supported roles are guest, student, trainer-curator, and administrator.
 - One account may hold multiple roles at the same time.
 - An administrator assigns and removes roles.
 - A user must be able to operate in the appropriate role context without creating duplicate accounts. The exact role-switching experience is not specified.
@@ -97,28 +97,25 @@ A trainer-curator must not:
 - see student contact details outside the platform;
 - see total academy revenue.
 
-### Manager
+### Authorized referral partner (capability, not a role)
 
-A manager may:
-
-- see sales attributed to them and the resulting commission;
-- use assigned promo codes and a referral link;
-- work with assigned leads and recoverable abandoned carts when consent permits;
-- update lead status;
-- manually enroll a student after invoice or offline payment, retaining evidence and attribution.
-
-A manager must not see other managers' private pipelines or commissions unless another role explicitly grants that access.
+Under PD-011, a trainer, curator, administrator or another explicitly authorized
+account may receive a referral link and permitted own-attribution/commission views.
+Use the existing account experience; no manager dashboard or manager-only route.
+Commerce stores stable partner identity and auditable attribution independently of
+role/capability changes. Referral permission alone grants no student-contact, lead,
+manual-enrollment or unrelated administrative access.
 
 ### Administrator
 
 An administrator may manage:
 
 - directions, products, lessons, content versions, prices, packages, and publication state;
-- users, account status, roles, trainer assignments, trainer rates, and manager commission rates;
+- users, account status, roles, trainer assignments, trainer rates, and referral-partner commission rates;
 - orders, refunds, promo codes, manual enrollments, and access state;
 - homework-review quality and overdue work;
 - certificate templates, issuance records, and revocation;
-- trainer and manager payout reconciliation;
+- trainer and referral-partner payout reconciliation;
 - operational and business reports.
 
 Administrative actions must be recorded in an audit trail.
@@ -263,10 +260,10 @@ After confirmed payment, the system must:
 - create or resolve the buyer account;
 - create the order and order lines;
 - grant the corresponding enrollments and access;
-- record applicable manager attribution;
+- record applicable referral-partner attribution;
 - send payment confirmation, receipt, and access instructions.
 
-Every attributable purchase must record the responsible manager through a promo code, referral link, or manual enrollment. Attribution precedence and the handling of unattributed or conflicting signals are unresolved.
+Every attributable purchase must record the attributed referral partner through a promo code, referral link, or manual enrollment. Attribution precedence and the handling of unattributed or conflicting signals are unresolved.
 
 ### Promo codes
 
@@ -275,7 +272,7 @@ A promo code must support:
 - percentage or fixed-amount discount;
 - validity period;
 - usage limit;
-- optional manager association;
+- optional referral-partner association;
 - restriction to a specific course or package.
 
 Stacking, per-customer limits, minimum spend, currency behavior, and treatment on refund are unresolved.
@@ -289,15 +286,15 @@ Stacking, per-customer limits, minimum spend, currency behavior, and treatment o
 
 - Once a monetary refund is confirmed, the affected course access must be revoked immediately, including in MVP.
 - The revocation must be server-enforced and recorded with the order, refund confirmation, actor, timestamp, affected enrollment, and resulting access state so it is auditable.
-- Trainer and manager accruals must be reversed for the refunded sale when those financial modules exist.
-- Automatic Stripe refunds and confirmed-refund access revocation are MVP (PD-010). Trainer/manager financial reversals remain with their later financial modules. A manual-provider workflow is not a substitute for the approved automatic refund path.
+- Trainer and referral-partner accruals must be reversed for the refunded sale when those financial modules exist.
+- Automatic Stripe refunds and confirmed-refund access revocation are MVP (PD-010). Trainer/partner financial reversals remain with their later financial modules. A manual-provider workflow is not a substitute for the approved automatic refund path.
 - Refund handling must be idempotent so repeated confirmation cannot create inconsistent access or financial effects.
 - Partial-refund and multi-product order behavior is unresolved.
 
 ### Manual enrollments
 
-- A manager may enroll a student following verified invoice or offline payment.
-- The enrollment must retain the manager who performed it and payment evidence.
+- A separately authorized operator may enroll a student following verified invoice or offline payment.
+- The enrollment must retain the operator who performed it and any attributed partner and payment evidence.
 - Manual enrollment must create an auditable order or equivalent commercial record and participate in access, attribution, commission, refund, and reporting rules.
 
 ## Student learning experience
@@ -419,27 +416,25 @@ The trainer wireframe shows a review queue, selected submission media, comment e
 
 Eligibility timing, tax treatment, currency, partial refunds, payout cadence, and overseas payout method are unresolved.
 
-## Manager workflows
+## Referral and commercial operations (Full)
 
-### Sales and commission
+### Attribution and commission
 
-- The manager dashboard shows attributed sales for a selected period.
-- Manager commission is calculated after refunds.
-- The default example commission is 10%, configurable by an administrator.
-- The manager sees a commission statement and reconciliation totals for their own activity.
+Commerce owns referral links, partner identity, sale attribution and commission
+snapshots/reversals. Authorized accounts see permitted own statements in existing
+account sections. Administrators manage partner authorization, configured rates
+and reconciliation. The historical example commission is 10%; actual rates, bases,
+precedence and payout/legal rules still need approval (OQ-040–041/OQ-060–064).
+Role changes never erase or rewrite the historical attribution relationship.
 
-### Leads and abandoned carts
+### Leads, abandoned carts and manual sales
 
-- A manager may see relevant buyer contact details for assigned leads and recoverable abandoned carts.
-- The manager can update lead status.
-- Collection and use of contact data must comply with consent rules.
-- Abandoned-cart qualification, assignment, retention, contact channels, and status vocabulary are unresolved.
-
-### Promotion and attribution tools
-
-- A manager can view personal promo codes and a referral link.
-- Resulting orders retain manager attribution for reporting and commission.
-- A manager may manually enroll a student after offline payment according to the rules above.
+Retain consent-based lead/cart handling and evidenced manual sales in Commerce and
+administrative operations. Explicitly authorized operators may access only permitted
+records. Referral authorization does not confer those permissions. Consent,
+assignment, deduplication, contact channels and status vocabulary remain under
+OQ-065–067. Manual sale evidence, accounting and approval/reversal remain under
+OQ-038–039. No manager-only dashboard is required for these capabilities.
 
 ## Administration
 
@@ -466,7 +461,7 @@ Administrators must be able to:
 - use separately defined, authorized account-creation and role-assignment workflows; PD-010 does not define new account or role-grant rules;
 - manually grant, suspend, restore and revoke course access, auditing sensitive changes;
 - assign trainers or curators to courses;
-- configure trainer rates and manager percentages;
+- configure trainer rates and referral-partner percentages;
 - inspect and correct enrollment access with an audit record; modify support/course-access deadlines, approve longer exceptions, and pause/restore applicable timers under PD-004.
 
 ### Sales administration
@@ -478,7 +473,7 @@ Administrators must be able to:
 - manage promo codes;
 - inspect manual enrollments and payment evidence;
 - inspect current access state;
-- trace manager attribution.
+- trace referral-partner attribution.
 
 ### Quality administration
 
@@ -510,7 +505,7 @@ PD-010 requires a separate administrator-restricted route for operational/error 
 
 Administrators must be able to:
 
-- review monthly trainer and manager accruals;
+- review monthly trainer and referral-partner accruals;
 - reconcile refunds and corrections;
 - mark amounts as paid with dates;
 - export payout data to Excel-compatible output.
@@ -549,7 +544,7 @@ Email notifications are required unless a release scope explicitly defers a spec
 - immediate new-homework notification;
 - PD-008 reminders at 24, 12, 6 and 1 counted hours remaining, plus overdue notification; delivery must be durable and retry-safe.
 
-### Manager notifications
+### Authorized commercial-operation notifications
 
 - new lead;
 - recoverable abandoned cart.
@@ -573,7 +568,7 @@ The administrative reporting suite must eventually support:
 | Sales mix | Share of packages versus individual courses; average order value |
 | Students | New buyers, repeat purchases, course completion rate |
 | Trainers | Student counts, average review time, accruals |
-| Managers | Attributed sales and commission |
+| Referral partners | Attributed sales and commission |
 | Sources | UTM parameters and promo-code attribution |
 
 - Google Analytics and Meta Pixel are requested to support acquisition analysis.
@@ -586,7 +581,7 @@ The administrative reporting suite must eventually support:
 - Encrypted adaptive HLS: maximum 1080p, with 720p and 480p variants.
 - Trainers and administrators may upload; only administrators may publish. Resumable MP4/MOV/WebM uploads with supported codecs, maximum 20 GB and 4 hours per video.
 - Persistent processing queue, initially one concurrent job, three automatic retries, and manual recovery. Failed processing must not publish incomplete content or replace the previous published version.
-- PD-001 diagnostics/errors; target $50–$100/month subject to capacity testing. INF03 must specify implementation, encryption-key management, recovery, supported-browser testing, and operational verification.
+- PD-001 diagnostics/errors; target $50–$100/month subject to capacity testing. VIDEO001 follows up completed INF03 and must specify implementation, encryption-key management, recovery, supported-browser testing, and operational verification.
 - Playback must require LMS authorization.
 - Direct links must not provide durable access outside the platform.
 - Downloads must not be offered through the product.
@@ -683,7 +678,7 @@ The platform must minimize role access to personal data and keep protected stude
 1. The server evaluates a refund request using the final approved eligibility rules; the proposed seven-day window remains under OQ-037.
 2. Eligible requests are approved and processed through Stripe automatically; exceptions and failures escalate to administrators.
 3. Authoritative confirmed refunds revoke affected access automatically and immediately, with audit evidence and no duplicate refunds (PD-010).
-4. Related trainer and manager accruals are reversed when those modules exist.
+4. Related trainer and referral-partner accruals are reversed when those modules exist.
 5. The event and actor remain auditable and reports reflect the correction.
 
 ### Homework review escalation

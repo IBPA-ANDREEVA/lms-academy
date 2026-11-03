@@ -280,3 +280,29 @@
   }
 }
 
+
+/* November public-page refinement. */
+
+.content { padding-block: 96px; }
+.heading { font-size: clamp(24px,2.5vw,40px); line-height: 1.2; letter-spacing: -.055em; }
+.heading span { white-space: normal; }
+.description { margin-top: 28px; }
+.benefits { grid-template-columns: repeat(2,minmax(0,1fr)); gap: 32px 24px; margin-top: 48px; width: 43%; }
+.benefits li,.benefits li:first-child { padding: 16px 0 0; border-left: 0; border-top: 1px solid var(--plum-border); }
+.benefits strong { font-family: var(--font-manrope); font-size: 16px; }
+.benefits span { font-size: 13px; line-height: 1.65; }
+.footnote { width: 43%; color: var(--muted); font-size: 11px; line-height: 1.6; margin: 32px 0 0; }
+@media(max-width:900px) and (min-width:601px) { .benefits { grid-template-columns: 1fr; } }
+@media(max-width:600px) { .content { padding-block: 380px 80px; } .heading { font-size: 28px; } .benefits,.footnote { width: 100%; } .benefits { gap: 28px 20px; } .benefits strong { font-size: 15px; } }
+@media(max-width:360px) { .benefits { grid-template-columns: 1fr; } }
+
+@media(max-width:600px) {
+ .photograph { height: 260px; }
+ .lightField { clip-path: polygon(0 225px,100% 260px,100% 100%,0 100%); }
+ .content { padding-block: 280px 48px; }
+ .description { margin-top: 20px; }
+ .benefits { gap: 20px 18px; margin-top: 24px; grid-template-columns: repeat(2,minmax(0,1fr)); }
+ .benefits strong { font-size: 14px; }
+ .benefits span { font-size: 13px; line-height: 1.5; }
+ .footnote { margin-top: 20px; font-size: 12px; }
+}

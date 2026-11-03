@@ -313,6 +313,43 @@ Implementation: Admin dashboard, restricted user management, course-access contr
 
 **Documentation/planning traceability:** See [requirements](./requirements.md), [scope](./mvp.md), [architecture](../architecture/overview.md), and the follow-up decision review in the Vault `Full Project Plan.md`. This update implements no feature or database change.
 
+## PD-011 · Referral capabilities replace the dedicated manager role
+
+- **Status:** Approved
+- **Date:** 2026-10-30
+- **Evidence:** Direct owner request, “LMS Academy: Architecture & Development Plan Restructuring”, section 9. No shareable approval URL supplied.
+- **Decision:** A manager is no longer a separate platform role or dashboard by default. A trainer, curator, administrator or another explicitly authorized user may receive a referral link/attribution capability. Multiple capabilities may coexist. Referral identity and historical attribution are independent of current account roles.
+- **Ownership:** Commerce owns partner/link identity, attribution and commissions; Identity owns authorization grants. Existing trainer/curator/account experiences show referral information when authorized. Administrators manage authorized partners. Reuse Notifications. There is no eighth domain or manager-only route.
+- **Retained scope:** Referral generation, attribution, commission/reversal calculations, statements and administrative reconciliation remain Full scope. Leads, consent-gated abandoned carts and evidenced manual sales are retained as separately authorized commercial/admin operations, not automatic rights of a referral partner. Their unresolved permission/consent/evidence rules remain blocked.
+- **Removed scope:** Dedicated manager dashboard shell, manager-only routing, role-dependent referral identity and duplicate manager UI. MG02 is retired; SALE016–SALE021 retain capability work in Commerce/existing accounts/admin. Completed history remains unchanged.
+- **Constraints:** No commission percentage, basis, payout/legal procedure, lead contact permission or manual-sale evidence policy is approved by this change. Historical 10%, USD25 and 30% examples are not new production compensation settings. OQ-011 and remaining separation-of-duties questions stay open.
+- **Supersedes:** Manager role/workspace assumptions in S1/S2-derived requirements, phase plans, the Manager Account epic and manager screen registry rows. It does not promote Full finance/referral features into MVP.
+
+### Original question wording retained for traceability
+
+The following questions change terminology, not their unresolved financial/legal substance:
+
+- **OQ-014 (original):** Can managers or trainers also be administrators, and are any role combinations prohibited or subject to separation-of-duties controls?
+- **OQ-038 (original):** What constitutes acceptable evidence for manager-created manual enrollment, and who may approve or reverse it?
+- **OQ-040 (original):** What is the precedence when referral link, promo code, prior lead ownership, and manual enrollment point to different managers?
+- **OQ-041 (original):** How long does manager attribution persist, and is it first-touch, last-touch, promo-specific, or manually overridden?
+- **OQ-060 (original):** Is manager commission calculated from gross sales, discounted subtotal, collected cash, or net revenue?
+- **OQ-065 (original):** What consent makes an abandoned cart recoverable and permits a manager to see or contact the buyer?
+- **OQ-067 (original):** Which contact channels may managers use, and must contact attempts be recorded?
+
+## PD-012 · Fixed release acceptance milestones
+
+- **Status:** Approved
+- **Date:** 2026-10-30
+- **Evidence:** Same owner restructuring request, sections 2, 11 and 18.
+- **Original question:** OQ-087 · The December 7, 2026 and January 26, 2027 dates are planning targets, not guaranteed commitments. Are these targets still current, who owns reforecasting, and which dependency or capacity changes trigger a revised plan?
+- **Decision:** MVP production acceptance remains **2026-12-07** and Full production acceptance remains **2027-01-26**. They are immutable in this restructuring; neither deadline nor acceptance meaning may be shifted. The existing **2027-01-20** Full feature cutoff and January21–25 stabilization window are also retained.
+- **Constraint:** Fixed dates are not a claim of feasibility. Forecast work past its acceptance milestone must be explicitly flagged. No approved MVP requirement is removed to fit capacity. Scope changes or additional capacity require an explicit owner decision; external approval wait is not engineering effort.
+- **Estimation follow-up (2026-10-30):** The owner requested halving each remaining task estimate. Apply exactly once to pending work, preserve scope/tests/completed history and reforecast. This changes the effort assumption, not milestone dates or policy approval. Historical adjusted snapshot: MVP333 h plus Full201.5 h; the MVP capacity deficit persisted. This is provenance, not the current package forecast.
+- **Nine-epic follow-up (2026-10-30):** The owner requested coherent 5–10-hour work packages, Russian active planning notes and nine active delivery epics, then confirmed 10 working hours per working day for both phases and requested the tightest credible estimates per package. Preserve the previous reduction as history; do not apply a new blanket factor. Existing weekdays/exclusions remain; no weekend or additional-developer capacity was supplied.
+- **Capacity follow-up (2026-11-02):** The owner requested 50 hours per ordinary week and explicitly retained weekends and the November 26, December 25 and January 1 exclusions (40-hour weeks). Remove artificial idle time caused by the two-task daily cap while preserving canonical order, dependencies and per-package estimates. Current remaining effort is 537.5 h (332 MVP + 205.5 Full); no further percentage reduction or overtime is used. Conditional forecasts: MVP December 18, Full January 22; Full capability verification completes January 18 before the January 20 cutoff and the reserved January 21–26 final acceptance window. The MVP capacity deficit remains 82 h.
+- **Residual OQ-087:** The daily capacity is now specified. The response to remaining deadline conflicts still requires an explicit scope/capacity decision; the refactor does not move a deadline or cut approved scope.
+
 ## Decision entry template
 
 ```md
@@ -327,3 +364,6 @@ Implementation: Admin dashboard, restricted user management, course-access contr
 - **Consequences:** Affected requirements, delivery scope, data,
   migrations, operations, and tests
 ```
+
+
+PD-012 scheduling follow-up, 2026-10-30: the owner requested Russian epic names, sequential epic-specific task numbers, completed-task relocation into the new epic folders, and concentrating on one epic with dependency exceptions. Occasional days above 10 hours are permitted for light work. The working forecast bounds this to one extra hour on at most two weekdays per week for final documentation of settled contracts; this is a conservative planning assumption, not a new product policy. Fixed release dates and scope remain unchanged.

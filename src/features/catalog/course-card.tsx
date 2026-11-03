@@ -42,7 +42,7 @@ export function CourseCard({
   variant = "default",
   demonstration = false,
 }: CourseCardProps) {
-  const detailPreview = demonstration && course.href;
+  const detailPreview = Boolean(course.href);
   return (
     <article className={`${styles.card} ${styles[variant]} ${detailPreview ? styles.clickable : ""}`}>
       {course.image ? (
@@ -56,7 +56,7 @@ export function CourseCard({
         </div>
       ) : variant !== "default" ? <div className={styles.media} aria-hidden="true"><span className={styles.imageMark}>◇</span></div> : null}
       <div className={styles.content}>
-        {demonstration && <p className={styles.demo}>ДЕМОНСТРАЦИЯ КАРТОЧКИ</p>}
+
         <p className={styles.meta}>
           {[
             course.kind === "mini-course" ? "Мини-курс" : "Курс",
@@ -71,9 +71,9 @@ export function CourseCard({
           {course.href ? <Link href={course.href}>{course.title}</Link> : course.title}
         </Heading>
         {course.trainer && <p>{course.trainer}</p>}
-        {(course.duration || course.format) && (
+        {(course.duration || (course.format && course.kind !== "mini-course")) && (
           <p className={styles.meta}>
-            {[course.duration, course.format].filter(Boolean).join(" · ")}
+            {[course.duration, course.kind !== "mini-course" ? course.format : undefined].filter(Boolean).join(" · ")}
           </p>
         )}
         {course.kind === "mini-course" && (
@@ -93,11 +93,12 @@ export function CourseCard({
             {course.href ? (
               <ButtonLink
                 href={course.href}
-                appearance="cut"
+                appearance={variant === "compact" ? "neoBrutalist" : "cut"}
+                size={variant === "compact" ? "sm" : "md"}
                 intent="secondary"
-                aria-label={variant === "compact" ? `Открыть пример мини-курса: ${course.title}` : undefined}
+                aria-label={variant === "compact" ? `Открыть мини-курс: ${course.title}` : undefined}
               >
-                {variant === "compact" ? "→" : "Смотреть пример →"}
+                {variant === "compact" ? "→" : "Подробнее →"}
               </ButtonLink>
             ) : (
               <Button appearance="cut" intent="secondary" disabled>После публикации</Button>

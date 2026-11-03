@@ -7,13 +7,14 @@ import { SectionLabel } from "../../components/section-label";
 import styles from "./trainer-section.module.css";
 
 export function TrainerSection({ product }: { product: DetailProduct }) {
+  if (!product.trainer) return null;
   return (
     <section id="trainer" className={styles.section} aria-labelledby="trainer-title">
-      <PageContainer size="content" className={styles.grid}>
+      <PageContainer reveal size="content" className={styles.grid}>
         <div className={styles.intro}>
           <SectionLabel>ПРЕПОДАВАТЕЛЬ</SectionLabel>
           <SectionHeading id="trainer-title" display>Человек<br /><span>за курсом</span></SectionHeading>
-          <p>Автор уроков и куратор могут быть разными людьми. Профиль преподавателя появится после подтверждения данных.</p>
+
         </div>
         <div className={styles.portrait}>{product.trainer?.image
           ? <Image src={product.trainer.image.src} alt={product.trainer.image.alt} fill sizes="(max-width: 600px) 80vw, 30vw" />
@@ -24,7 +25,7 @@ export function TrainerSection({ product }: { product: DetailProduct }) {
           <p>{product.trainer?.biography ?? "Биография и релевантный опыт будут опубликованы после проверки."}</p>
           {product.trainer?.qualifications?.length
             ? <ul>{product.trainer.qualifications.map((qualification) => <li key={qualification}>{qualification}</li>)}</ul>
-            : <p className={styles.qualifications}>Подтверждённые квалификации пока не предоставлены.</p>}
+            : null}
         </div>
       </PageContainer>
     </section>

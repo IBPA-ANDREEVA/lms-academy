@@ -70,10 +70,10 @@ These remain real implementation or release prerequisites, **not additional LA02
 
 ### PA-06 — Cart persistence and account reconciliation
 
-- **Evidence:** PM07 requires persistent multi-product cart; OQ-033 leaves lifetime/session/device behavior open.
+- **Evidence:** SALE006 requires persistent multi-product cart; OQ-033 leaves lifetime/session/device behavior open.
 - **Options:** (A) merge eligible unique selections after login with visible review; (B) retain current guest cart and offer account cart choice; (C) use account cart and explicitly restore guest choices on request.
 - **Recommendation:** A only after defining duplicate/ownership semantics. Preserve selections through auth, reset, verification and legal reading; reprice server-side. Define lifetime, cross-device behavior, logout isolation and consent constraints. Never silently erase either selection or share one person's cart after account switching.
-- **Owner / timing:** Product + Commerce/Identity; before PM07 and end-to-end checkout acceptance.
+- **Owner / timing:** Product + Commerce/Identity; before SALE006 and end-to-end checkout acceptance.
 
 ### PA-07 — Remaining legal/pricing readiness
 
@@ -90,7 +90,7 @@ These remain real implementation or release prerequisites, **not additional LA02
 
 ### PA-09 — Package configuration and cart replacement
 
-- **Evidence:** S1 allows administrator-assembled fixed-price packages; examples and LA12 describe 2/3/6 directions plus module and a builder. These do not define arbitrary buyer composition. OQ-025–OQ-028 cover size, overlap, replacement and changes after sale.
+- **Evidence:** S1 allows administrator-assembled fixed-price packages; examples and SALE013 describe 2/3/6 directions plus module and a builder. These do not define arbitrary buyer composition. OQ-025–OQ-028 cover size, overlap, replacement and changes after sale.
 - **Options:** (A) fixed named packages; (B) approved configurable templates with limited choices; (C) unrestricted custom composition with a new pricing policy.
 - **Recommendation:** confirm A or B; keep selection within `/packages` and detail. Always display actual included products and comparable savings. Suggest a cart replacement with explicit before/after contents and affirmative acceptance, never an automatic rewrite. Decide prior ownership, duplicate components, proration, snapshot behavior and certificate outcomes before Phase 2.
 - **Owner / timing:** Product + Commerce/Catalog; blocks package implementation. A homepage concept or “builder” label does not resolve the configuration policy.
@@ -127,9 +127,9 @@ These remain real implementation or release prerequisites, **not additional LA02
 
 ### PA-14 — Review placeholders and recommendations
 
-- **Evidence:** LA07 says “reviews placeholder,” but LA14 and Phase 3 schedule actual reviews/recommendations. OQ-071–OQ-073 leave eligibility, moderation, scale, attribution and recommendation method open; Vault ST18 asks for enrolled learners and moderation.
+- **Evidence:** LA07 says “reviews placeholder,” but SITE021 and Phase 3 schedule actual reviews/recommendations. OQ-071–OQ-073 leave eligibility, moderation, scale, attribution and recommendation method open; Vault SITE020 asks for enrolled learners and moderation.
 - **Options:** hide the section until launch, show an empty placeholder, or show approved real content after the feature ships.
-- **Recommendation:** omit public MVP review widgets/ratings, retain only a future template seam. In Phase 3 use moderated real content with approved attribution; no invented testimonials or “0 reviews” trust filler before capability exists. Keep reviews within product detail; an extra review route is unnecessary. Reconcile ST18 refinements with the product register before collecting reviews.
+- **Recommendation:** omit public MVP review widgets/ratings, retain only a future template seam. In Phase 3 use moderated real content with approved attribution; no invented testimonials or “0 reviews” trust filler before capability exists. Keep reviews within product detail; an extra review route is unnecessary. Reconcile SITE020 refinements with the product register before collecting reviews.
 - **Owner / timing:** Product/content + moderation owner; before Phase 3. Homepage real course selection is not an algorithmic recommendation feature.
 
 ### PA-15 — Public certificate verification and privacy

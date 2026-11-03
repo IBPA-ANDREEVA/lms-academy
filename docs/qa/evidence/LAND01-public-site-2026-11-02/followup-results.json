@@ -1,0 +1,540 @@
+{
+  "results": [
+    {
+      "name": "popup geometry",
+      "width": 1440,
+      "label": "Направление Все направления",
+      "left": 392.515625,
+      "right": 656.296875,
+      "bottom": 468.59375,
+      "viewportWidth": 1440,
+      "viewportHeight": 900,
+      "documentWidth": 1440,
+      "triggerWidth": 263.78125,
+      "popupWidth": 263.78125
+    },
+    {
+      "name": "popup Escape from trigger",
+      "width": 1440,
+      "label": "Направление Все направления",
+      "remaining": 1
+    },
+    {
+      "name": "popup geometry",
+      "width": 1440,
+      "label": "Язык курса Любой",
+      "left": 672.296875,
+      "right": 936.0625,
+      "bottom": 314.59375,
+      "viewportWidth": 1440,
+      "viewportHeight": 900,
+      "documentWidth": 1440,
+      "triggerWidth": 263.765625,
+      "popupWidth": 263.765625
+    },
+    {
+      "name": "popup Escape from trigger",
+      "width": 1440,
+      "label": "Язык курса Любой",
+      "remaining": 1
+    },
+    {
+      "name": "popup geometry",
+      "width": 1440,
+      "label": "Уровень Все уровни",
+      "left": 952.0625,
+      "right": 1215.84375,
+      "bottom": 314.59375,
+      "viewportWidth": 1440,
+      "viewportHeight": 900,
+      "documentWidth": 1440,
+      "triggerWidth": 263.78125,
+      "popupWidth": 263.78125
+    },
+    {
+      "name": "popup Escape from trigger",
+      "width": 1440,
+      "label": "Уровень Все уровни",
+      "remaining": 1
+    },
+    {
+      "name": "catalog keyboard/reset/history",
+      "width": 1440,
+      "status": "WORKING"
+    },
+    {
+      "name": "reduced-motion rapid panels",
+      "width": 1440,
+      "height": 842.5625,
+      "active": 842.5625
+    },
+    {
+      "name": "component preview states",
+      "width": 1440,
+      "status": "WORKING"
+    },
+    {
+      "name": "detail preview clipping",
+      "width": 1440,
+      "copyRight": 480,
+      "mediaRight": 1380,
+      "viewport": 1440,
+      "docWidth": 1440
+    },
+    {
+      "name": "popup geometry",
+      "width": 1024,
+      "label": "Направление Все направления",
+      "left": 42.65625,
+      "right": 290.15625,
+      "bottom": 534.59375,
+      "viewportWidth": 1024,
+      "viewportHeight": 900,
+      "documentWidth": 1024,
+      "triggerWidth": 247.5,
+      "popupWidth": 247.5
+    },
+    {
+      "name": "popup Escape from trigger",
+      "width": 1024,
+      "label": "Направление Все направления",
+      "remaining": 1
+    },
+    {
+      "name": "popup geometry",
+      "width": 1024,
+      "label": "Язык курса Любой",
+      "left": 306.15625,
+      "right": 553.671875,
+      "bottom": 380.59375,
+      "viewportWidth": 1024,
+      "viewportHeight": 900,
+      "documentWidth": 1024,
+      "triggerWidth": 247.515625,
+      "popupWidth": 247.515625
+    },
+    {
+      "name": "popup Escape from trigger",
+      "width": 1024,
+      "label": "Язык курса Любой",
+      "remaining": 1
+    },
+    {
+      "name": "popup geometry",
+      "width": 1024,
+      "label": "Уровень Все уровни",
+      "left": 569.671875,
+      "right": 817.1875,
+      "bottom": 380.59375,
+      "viewportWidth": 1024,
+      "viewportHeight": 900,
+      "documentWidth": 1024,
+      "triggerWidth": 247.515625,
+      "popupWidth": 247.515625
+    },
+    {
+      "name": "popup Escape from trigger",
+      "width": 1024,
+      "label": "Уровень Все уровни",
+      "remaining": 1
+    },
+    {
+      "name": "detail preview clipping",
+      "width": 1024,
+      "copyRight": 379.90625,
+      "mediaRight": 1053.3125,
+      "viewport": 1024,
+      "docWidth": 1024
+    },
+    {
+      "name": "popup geometry",
+      "width": 768,
+      "label": "Направление Все направления",
+      "left": 32,
+      "right": 252,
+      "bottom": 534.59375,
+      "viewportWidth": 768,
+      "viewportHeight": 900,
+      "documentWidth": 768,
+      "triggerWidth": 169.28125,
+      "popupWidth": 220
+    },
+    {
+      "name": "popup Escape from trigger",
+      "width": 768,
+      "label": "Направление Все направления",
+      "remaining": 1
+    },
+    {
+      "name": "popup geometry",
+      "width": 768,
+      "label": "Язык курса Любой",
+      "left": 217.28125,
+      "right": 437.28125,
+      "bottom": 380.59375,
+      "viewportWidth": 768,
+      "viewportHeight": 900,
+      "documentWidth": 768,
+      "triggerWidth": 169.28125,
+      "popupWidth": 220
+    },
+    {
+      "name": "popup Escape from trigger",
+      "width": 768,
+      "label": "Язык курса Любой",
+      "remaining": 1
+    },
+    {
+      "name": "popup geometry",
+      "width": 768,
+      "label": "Уровень Все уровни",
+      "left": 402.5625,
+      "right": 622.5625,
+      "bottom": 380.59375,
+      "viewportWidth": 768,
+      "viewportHeight": 900,
+      "documentWidth": 768,
+      "triggerWidth": 169.28125,
+      "popupWidth": 220
+    },
+    {
+      "name": "popup Escape from trigger",
+      "width": 768,
+      "label": "Уровень Все уровни",
+      "remaining": 1
+    },
+    {
+      "name": "detail preview clipping",
+      "width": 768,
+      "copyRight": 284.921875,
+      "mediaRight": 945.53125,
+      "viewport": 768,
+      "docWidth": 768
+    },
+    {
+      "name": "popup geometry",
+      "width": 430,
+      "label": "Направление Все направления",
+      "left": 20,
+      "right": 280,
+      "bottom": 552.59375,
+      "viewportWidth": 430,
+      "viewportHeight": 844,
+      "documentWidth": 430,
+      "triggerWidth": 123.328125,
+      "popupWidth": 260
+    },
+    {
+      "name": "popup Escape from trigger",
+      "width": 430,
+      "label": "Направление Все направления",
+      "remaining": 1
+    },
+    {
+      "name": "popup geometry",
+      "width": 430,
+      "label": "Язык курса Любой",
+      "left": 153.328125,
+      "right": 413.328125,
+      "bottom": 398.59375,
+      "viewportWidth": 430,
+      "viewportHeight": 844,
+      "documentWidth": 430,
+      "triggerWidth": 123.328125,
+      "popupWidth": 260
+    },
+    {
+      "name": "popup Escape from trigger",
+      "width": 430,
+      "label": "Язык курса Любой",
+      "remaining": 1
+    },
+    {
+      "name": "popup geometry",
+      "width": 430,
+      "label": "Уровень Все уровни",
+      "left": 150,
+      "right": 410,
+      "bottom": 398.59375,
+      "viewportWidth": 430,
+      "viewportHeight": 844,
+      "documentWidth": 430,
+      "triggerWidth": 123.34375,
+      "popupWidth": 260
+    },
+    {
+      "name": "popup Escape from trigger",
+      "width": 430,
+      "label": "Уровень Все уровни",
+      "remaining": 1
+    },
+    {
+      "name": "detail preview clipping",
+      "width": 430,
+      "copyRight": 411.109375,
+      "mediaRight": 411.109375,
+      "viewport": 430,
+      "docWidth": 430
+    },
+    {
+      "name": "popup geometry",
+      "width": 390,
+      "label": "Направление Все направления",
+      "left": 20,
+      "right": 280,
+      "bottom": 552.59375,
+      "viewportWidth": 390,
+      "viewportHeight": 844,
+      "documentWidth": 390,
+      "triggerWidth": 110,
+      "popupWidth": 260
+    },
+    {
+      "name": "popup Escape from trigger",
+      "width": 390,
+      "label": "Направление Все направления",
+      "remaining": 1
+    },
+    {
+      "name": "popup geometry",
+      "width": 390,
+      "label": "Язык курса Любой",
+      "left": 140,
+      "right": 400,
+      "bottom": 398.59375,
+      "viewportWidth": 390,
+      "viewportHeight": 844,
+      "documentWidth": 400,
+      "triggerWidth": 110,
+      "popupWidth": 260
+    },
+    {
+      "name": "popup Escape from trigger",
+      "width": 390,
+      "label": "Язык курса Любой",
+      "remaining": 1
+    },
+    {
+      "name": "popup geometry",
+      "width": 390,
+      "label": "Уровень Все уровни",
+      "left": 110,
+      "right": 370,
+      "bottom": 398.59375,
+      "viewportWidth": 390,
+      "viewportHeight": 844,
+      "documentWidth": 390,
+      "triggerWidth": 110,
+      "popupWidth": 260
+    },
+    {
+      "name": "popup Escape from trigger",
+      "width": 390,
+      "label": "Уровень Все уровни",
+      "remaining": 1
+    },
+    {
+      "name": "catalog keyboard/reset/history",
+      "width": 390,
+      "status": "WORKING"
+    },
+    {
+      "name": "reduced-motion rapid panels",
+      "width": 390,
+      "height": 912.375,
+      "active": 912.375
+    },
+    {
+      "name": "component preview states",
+      "width": 390,
+      "status": "WORKING"
+    },
+    {
+      "name": "detail preview clipping",
+      "width": 390,
+      "copyRight": 411.109375,
+      "mediaRight": 411.109375,
+      "viewport": 390,
+      "docWidth": 390
+    },
+    {
+      "name": "founder heading fit",
+      "width": 390,
+      "left": 20,
+      "right": 375.515625,
+      "viewport": 390
+    },
+    {
+      "name": "popup geometry",
+      "width": 360,
+      "label": "Направление Все направления",
+      "left": 20,
+      "right": 280,
+      "bottom": 552.59375,
+      "viewportWidth": 360,
+      "viewportHeight": 844,
+      "documentWidth": 360,
+      "triggerWidth": 100,
+      "popupWidth": 260
+    },
+    {
+      "name": "popup Escape from trigger",
+      "width": 360,
+      "label": "Направление Все направления",
+      "remaining": 1
+    },
+    {
+      "name": "popup geometry",
+      "width": 360,
+      "label": "Язык курса Любой",
+      "left": 130,
+      "right": 390,
+      "bottom": 398.59375,
+      "viewportWidth": 360,
+      "viewportHeight": 844,
+      "documentWidth": 390,
+      "triggerWidth": 100,
+      "popupWidth": 260
+    },
+    {
+      "name": "popup Escape from trigger",
+      "width": 360,
+      "label": "Язык курса Любой",
+      "remaining": 1
+    },
+    {
+      "name": "popup geometry",
+      "width": 360,
+      "label": "Уровень Все уровни",
+      "left": 80,
+      "right": 340,
+      "bottom": 398.59375,
+      "viewportWidth": 360,
+      "viewportHeight": 844,
+      "documentWidth": 360,
+      "triggerWidth": 100,
+      "popupWidth": 260
+    },
+    {
+      "name": "popup Escape from trigger",
+      "width": 360,
+      "label": "Уровень Все уровни",
+      "remaining": 1
+    },
+    {
+      "name": "detail preview clipping",
+      "width": 360,
+      "copyRight": 411.109375,
+      "mediaRight": 411.109375,
+      "viewport": 360,
+      "docWidth": 360
+    },
+    {
+      "name": "founder heading fit",
+      "width": 360,
+      "left": 20,
+      "right": 336.015625,
+      "viewport": 360
+    },
+    {
+      "name": "popup geometry",
+      "width": 320,
+      "label": "Направление Все направления",
+      "left": 20,
+      "right": 280,
+      "bottom": 552.59375,
+      "viewportWidth": 320,
+      "viewportHeight": 844,
+      "documentWidth": 320,
+      "triggerWidth": 86.65625,
+      "popupWidth": 260
+    },
+    {
+      "name": "popup Escape from trigger",
+      "width": 320,
+      "label": "Направление Все направления",
+      "remaining": 1
+    },
+    {
+      "name": "popup geometry",
+      "width": 320,
+      "label": "Язык курса Любой",
+      "left": 116.65625,
+      "right": 376.65625,
+      "bottom": 398.59375,
+      "viewportWidth": 320,
+      "viewportHeight": 844,
+      "documentWidth": 377,
+      "triggerWidth": 86.671875,
+      "popupWidth": 260
+    },
+    {
+      "name": "popup Escape from trigger",
+      "width": 320,
+      "label": "Язык курса Любой",
+      "remaining": 1
+    },
+    {
+      "name": "popup geometry",
+      "width": 320,
+      "label": "Уровень Все уровни",
+      "left": 39.984375,
+      "right": 299.984375,
+      "bottom": 398.59375,
+      "viewportWidth": 320,
+      "viewportHeight": 844,
+      "documentWidth": 320,
+      "triggerWidth": 86.65625,
+      "popupWidth": 260
+    },
+    {
+      "name": "popup Escape from trigger",
+      "width": 320,
+      "label": "Уровень Все уровни",
+      "remaining": 1
+    },
+    {
+      "name": "detail preview clipping",
+      "width": 320,
+      "copyRight": 411.109375,
+      "mediaRight": 411.109375,
+      "viewport": 320,
+      "docWidth": 320
+    },
+    {
+      "name": "founder heading fit",
+      "width": 320,
+      "left": 20,
+      "right": 336.015625,
+      "viewport": 320
+    },
+    {
+      "name": "production not-found",
+      "url": "/courses/not-a-product",
+      "status": 200,
+      "heading": [
+        "Страница курса не найдена"
+      ],
+      "errors": []
+    },
+    {
+      "name": "production not-found",
+      "url": "/mini-courses/not-a-product",
+      "status": 200,
+      "heading": [
+        "Страница мини-курса не найдена"
+      ],
+      "errors": []
+    },
+    {
+      "name": "production not-found",
+      "url": "/not-a-route",
+      "status": 404,
+      "heading": [
+        "404"
+      ],
+      "errors": []
+    }
+  ],
+  "events": []
+}

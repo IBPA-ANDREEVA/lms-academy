@@ -12,7 +12,7 @@ export function CartItems({ compact = false, removable = true }: { compact?: boo
     {cart.items.map((item, index) => <li key={item.id} className={styles.item}>
       <div className={styles.placeholder} aria-label="Изображение курса: заглушка" role="img"><span aria-hidden="true" /></div>
       <div className={styles.itemInfo}>
-        <p className={styles.eyebrow}>{item.kind} · демо</p>
+        <p className={styles.eyebrow}>{item.kind}</p>
         <h3>{item.title}</h3>
         {!compact && item.kind === "Мини-курс" && <p className={styles.caption}>Только записи</p>}
         {index === 0 && cart.scenario === "unavailable" && <p className={styles.problem}>Недоступен · тестовое состояние</p>}

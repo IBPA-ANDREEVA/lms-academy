@@ -19,8 +19,8 @@ try {
     const contact = page.locator("#contact");
     await assert.equal(await reviews.getByRole("heading", { name: /ОПЫТ, КОТОРЫМ ДЕЛЯТСЯ/ }).count(), 1);
     await assert.equal(await contact.getByRole("heading", { name: /ОСТАЛИСЬ ВОПРОСЫ/ }).count(), 1);
-    assert.equal(await reviews.getByText("ПРЕДПРОСМОТР РАЗДЕЛА · ЭТАП 3").count(), 1);
-    assert.equal(await reviews.getByText("ЗДЕСЬ БУДЕТ ПОДТВЕРЖДЁННАЯ").count(), 1);
+    assert.equal(await reviews.locator("blockquote").count(), 0);
+    assert.equal(await reviews.locator("article").count(), 4);
     assert.equal(await contact.getByRole("button", { name: /ОТПРАВИТЬ СООБЩЕНИЕ/ }).isDisabled(), true);
     await reviews.scrollIntoViewIfNeeded();
     await reviews.screenshot({ path: `${evidence}/reviews-${width}.png` });
@@ -40,12 +40,12 @@ try {
   const page = await context.newPage();
   await page.goto(baseURL, { waitUntil: "networkidle" });
   const contact = page.locator("#contact");
-  const email = contact.getByRole("textbox", { name: "Email *" });
+  const email = contact.getByRole("textbox", { name: "Электронная почта *" });
   await email.fill("неверный-email");
   await email.blur();
-  await assert.equal(await contact.getByText("Введите корректный email").count(), 1);
+  await assert.equal(await contact.getByText("Введите корректный адрес электронной почты.").count(), 1);
   await email.fill("student@example.com");
-  await assert.equal(await contact.getByText("Введите корректный email").count(), 0);
+  await assert.equal(await contact.getByText("Введите корректный адрес электронной почты.").count(), 0);
   const message = contact.getByRole("textbox", { name: "Сообщение *" });
   await message.fill("Тестовый вопрос об обучении");
   await message.blur();

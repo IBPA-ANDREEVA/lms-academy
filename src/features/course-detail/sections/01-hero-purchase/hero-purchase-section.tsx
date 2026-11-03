@@ -12,7 +12,7 @@ export function HeroPurchaseSection({ product }: { product: DetailProduct }) {
   const catalogHref = product.kind === "mini-course" ? "/mini-courses" : "/courses";
   return (
     <section className={styles.section} aria-labelledby="detail-title">
-      <PageContainer size="content">
+      <PageContainer reveal size="content">
         <nav aria-label="Хлебные крошки" className={styles.crumbs}>
           <Link href="/">Главная</Link><span aria-hidden="true">/</span>
           <Link href={catalogHref}>{product.kind === "mini-course" ? "Мини-курсы" : "Курсы"}</Link><span aria-hidden="true">/</span>
@@ -20,10 +20,10 @@ export function HeroPurchaseSection({ product }: { product: DetailProduct }) {
         </nav>
         <div className={styles.grid}>
           <div className={styles.copy}>
-            {product.demonstration && <p className={styles.demo}>ДЕМОНСТРАЦИЯ СТРАНИЦЫ · ПРОДУКТ НЕ ОПУБЛИКОВАН</p>}
+
             <p className={styles.kind}>{product.kind === "mini-course" ? "КОРОТКОЕ ОБУЧЕНИЕ В ЗАПИСИ" : "ПРАКТИЧЕСКОЕ ОБУЧЕНИЕ"}</p>
             <h1 id="detail-title">{product.title}</h1>
-            <p className={styles.summary}>{product.summary ?? "Описание, программа и условия появятся после утверждения курса."}</p>
+            <p className={styles.summary}>{product.summary ?? ""}</p>
             <ProductFacts product={product} />
             <ButtonLink href="#preview" appearance="cut" intent="secondary" className={styles.previewLink}>Смотреть превью ↓</ButtonLink>
           </div>

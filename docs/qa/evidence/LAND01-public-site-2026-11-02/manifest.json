@@ -1,0 +1,2806 @@
+[
+  {
+    "file": "baseline.json",
+    "bytes": 2121,
+    "sha256": "66ba7c3c9b490fe194be3e6c8b36da48c2e5ee06a9c624606d4554641dc9ccad"
+  },
+  {
+    "file": "cart-empty-1024.png",
+    "bytes": 53846,
+    "sha256": "7a112de387d3727393bea7d42d064b0b6823da4ea9561562701adf3646c0800c",
+    "width": 1024,
+    "height": 900
+  },
+  {
+    "file": "cart-empty-1280.png",
+    "bytes": 58324,
+    "sha256": "74dce063af4a07f2735a48b25aa0f8e9f0be7fd871284a45c99f1856adfb15ce",
+    "width": 1280,
+    "height": 900
+  },
+  {
+    "file": "cart-empty-1440.png",
+    "bytes": 59127,
+    "sha256": "3f0606c2f28a5b54ae9e2afa6de79786be36ac518220202a076cd04833b0277b",
+    "width": 1440,
+    "height": 900
+  },
+  {
+    "file": "cart-empty-1440.txt",
+    "bytes": 249,
+    "sha256": "7bd737db8dba8c33072770f2518d6ae759349ad84418fbc6b12d79e7e29a36b4"
+  },
+  {
+    "file": "cart-empty-1920.png",
+    "bytes": 61572,
+    "sha256": "5ee15b7af9419e22033ec4f18b4551a80a816710565dade3fa27869b8048b25e",
+    "width": 1920,
+    "height": 900
+  },
+  {
+    "file": "cart-empty-320.png",
+    "bytes": 49797,
+    "sha256": "cf8b3ee52e272f7fb34b52d07c34a2724f2bc908e48151386fa258dfb1e1f2a5",
+    "width": 320,
+    "height": 925
+  },
+  {
+    "file": "cart-empty-360.png",
+    "bytes": 50765,
+    "sha256": "01d53ffd968bd594fcc13bb99ea3042d0795ae61f1d50e560fe1e49a206e273c",
+    "width": 360,
+    "height": 918
+  },
+  {
+    "file": "cart-empty-390.png",
+    "bytes": 51506,
+    "sha256": "13669e218f5ade493687e9f023593d5e8ad4f8a0be4bae56042a732894e025b1",
+    "width": 390,
+    "height": 918
+  },
+  {
+    "file": "cart-empty-390.txt",
+    "bytes": 249,
+    "sha256": "7bd737db8dba8c33072770f2518d6ae759349ad84418fbc6b12d79e7e29a36b4"
+  },
+  {
+    "file": "cart-empty-430.png",
+    "bytes": 50573,
+    "sha256": "f080bc981e3dfcf20316fca9480ed6ebaa724979da39bd027e0a3c6c6e042aec",
+    "width": 430,
+    "height": 893
+  },
+  {
+    "file": "cart-empty-768.png",
+    "bytes": 54922,
+    "sha256": "2395a1011013eb0f75849a95d1222eaa03c4fa0a2fbc713ea77b78f591f562e6",
+    "width": 768,
+    "height": 900
+  },
+  {
+    "file": "checkout-empty-1024.png",
+    "bytes": 55729,
+    "sha256": "c87bb729cadaaf0a8dd43475394057d9fcc7086a2ec4152718d1d049468f1cf9",
+    "width": 1024,
+    "height": 900
+  },
+  {
+    "file": "checkout-empty-1280.png",
+    "bytes": 60546,
+    "sha256": "31df9d7dcb32413b46bed2934856020da0a1c88872b27a6564b6c1d895f9c33b",
+    "width": 1280,
+    "height": 900
+  },
+  {
+    "file": "checkout-empty-1440.png",
+    "bytes": 62035,
+    "sha256": "71f997dda326086f7fab594fe79bd6735de276abbcdc34e9adf3f365a3845d5e",
+    "width": 1440,
+    "height": 900
+  },
+  {
+    "file": "checkout-empty-1440.txt",
+    "bytes": 230,
+    "sha256": "bb8b1ccf19cc1c581b781d818cfbf90a974dcd79155830e8df56da7bfdab595b"
+  },
+  {
+    "file": "checkout-empty-1920.png",
+    "bytes": 64451,
+    "sha256": "df8bbf4fe50bf8b427ebac42a4e58c6df7ea8694029e7a880f80f780ebe25053",
+    "width": 1920,
+    "height": 900
+  },
+  {
+    "file": "checkout-empty-320.png",
+    "bytes": 52198,
+    "sha256": "c3ad13b6d3d9e57de6e05d70aee54d36ad5a437fca7b12caa9c8dfcb5a24c3f4",
+    "width": 320,
+    "height": 938
+  },
+  {
+    "file": "checkout-empty-360.png",
+    "bytes": 53732,
+    "sha256": "177322d39d7b13be48ebf1410a38e83f931e98e6171caf7615413ca6d045fba5",
+    "width": 360,
+    "height": 931
+  },
+  {
+    "file": "checkout-empty-390.png",
+    "bytes": 53668,
+    "sha256": "5911bd0337f8a15874525b78ee427c1aa8675d4f20cb1db70c7a0ea30ee884f9",
+    "width": 390,
+    "height": 931
+  },
+  {
+    "file": "checkout-empty-390.txt",
+    "bytes": 230,
+    "sha256": "bb8b1ccf19cc1c581b781d818cfbf90a974dcd79155830e8df56da7bfdab595b"
+  },
+  {
+    "file": "checkout-empty-430.png",
+    "bytes": 51794,
+    "sha256": "e08fe799850f75462c3a5b7d9301e3bbd53fb91689d8d855af7ed2b7ff75ebc4",
+    "width": 430,
+    "height": 867
+  },
+  {
+    "file": "checkout-empty-768.png",
+    "bytes": 55892,
+    "sha256": "8cc315c604d77a0f6d8394c095906b5301ca5e254e0f06dbde4b157986294103",
+    "width": 768,
+    "height": 900
+  },
+  {
+    "file": "component-preview-1024.png",
+    "bytes": 607371,
+    "sha256": "0c973cce04c4573ca6e200c1cb4557a67b481917553bfa88efd63b9d65b912e0",
+    "width": 1024,
+    "height": 7897
+  },
+  {
+    "file": "component-preview-1280.png",
+    "bytes": 631046,
+    "sha256": "67eb1a0a55e0d3bc429dce73b34f25b0a4cea91c7e0aa7cf03479169e763803b",
+    "width": 1280,
+    "height": 7883
+  },
+  {
+    "file": "component-preview-1440-section-button.png",
+    "bytes": 116487,
+    "sha256": "439140b26e3ac73c3d67e209fb309c75f4030b17845620eb61821e4801b82c99",
+    "width": 1440,
+    "height": 1108
+  },
+  {
+    "file": "component-preview-1440-section-category-navigation.png",
+    "bytes": 43259,
+    "sha256": "ffbcf0c931730de14c4f5fe34f708f86631a036630f7d427f0bafa3e8cecc7fa",
+    "width": 1440,
+    "height": 446
+  },
+  {
+    "file": "component-preview-1440-section-commerce.png",
+    "bytes": 42702,
+    "sha256": "3e1fab8d42a1a3f4749317812fb2d32f9f68e55d45e1a6841f01182360024a2f",
+    "width": 1440,
+    "height": 394
+  },
+  {
+    "file": "component-preview-1440-section-course-card.png",
+    "bytes": 71788,
+    "sha256": "0ea1672afd1b12ec62324e875435081f38cdd2e110ec411deed63a92082248c9",
+    "width": 1440,
+    "height": 901
+  },
+  {
+    "file": "component-preview-1440-section-form-controls.png",
+    "bytes": 92175,
+    "sha256": "fbc31e43ae3d1d16ce687e079ca81dae44beea43228815e08919f374c9122229",
+    "width": 1440,
+    "height": 1099
+  },
+  {
+    "file": "component-preview-1440-section-page-container.png",
+    "bytes": 38343,
+    "sha256": "56d9203ce0fa170f5da80f8ab306b7e6d8d7d2185388026c9db3fba03bf8fa62",
+    "width": 1440,
+    "height": 646
+  },
+  {
+    "file": "component-preview-1440-section-public-footer.png",
+    "bytes": 67938,
+    "sha256": "7271633927752fb1afb15511dd94dd77f5a4afa25004971123cbb28ff8a6547a",
+    "width": 1440,
+    "height": 900
+  },
+  {
+    "file": "component-preview-1440-section-public-header.png",
+    "bytes": 46987,
+    "sha256": "87b8ff56aab98876edbe5268fb13b1f445b5dccedf9bbb4b8a099023bceea9c1",
+    "width": 1440,
+    "height": 629
+  },
+  {
+    "file": "component-preview-1440-section-section-heading.png",
+    "bytes": 55437,
+    "sha256": "5405cb2609783bd2cacb36a2cd2081fd0cfb2cfe103d600f92c759dd2d1cfcdf",
+    "width": 1440,
+    "height": 514
+  },
+  {
+    "file": "component-preview-1440.png",
+    "bytes": 646298,
+    "sha256": "f9db727e3c8c2f56b8188677bd2839d282b87f19c4213f85578177462db74950",
+    "width": 1440,
+    "height": 7842
+  },
+  {
+    "file": "component-preview-1440.txt",
+    "bytes": 7440,
+    "sha256": "0dd8d658a1f5fc3b244f89439d5e24367952b8878100a5b50cd53270a48ca2d7"
+  },
+  {
+    "file": "component-preview-1920.png",
+    "bytes": 668493,
+    "sha256": "e2928f2ab5eafee5db342769a919af1636a9512d8f99a34b4bbd006373d6d31b",
+    "width": 1920,
+    "height": 7842
+  },
+  {
+    "file": "component-preview-320.png",
+    "bytes": 585713,
+    "sha256": "1851b55757d3d26956f4791f6240a209b879c22bcfc3e94124dc4a18b5cf999b",
+    "width": 320,
+    "height": 11325
+  },
+  {
+    "file": "component-preview-360.png",
+    "bytes": 583756,
+    "sha256": "b62e2d50aacc45435a5e1a6c5e3d0527b3dce28576b08488d558561a4a8bddab",
+    "width": 360,
+    "height": 11014
+  },
+  {
+    "file": "component-preview-390-section-button.png",
+    "bytes": 103485,
+    "sha256": "bc0e9948f678da16f50c4950ce49b9d9c17d18ab8251c529ed71396c05773022",
+    "width": 390,
+    "height": 2133
+  },
+  {
+    "file": "component-preview-390-section-category-navigation.png",
+    "bytes": 41836,
+    "sha256": "20eece8938350f85f374383d213e2d99e72391f9b2301822e1c82cf695705a1b",
+    "width": 390,
+    "height": 591
+  },
+  {
+    "file": "component-preview-390-section-commerce.png",
+    "bytes": 41849,
+    "sha256": "75844443cd4b4f295c4700846b3f9b5365ba3c64483106d0387b999f680c6a3d",
+    "width": 390,
+    "height": 513
+  },
+  {
+    "file": "component-preview-390-section-course-card.png",
+    "bytes": 65758,
+    "sha256": "8f91dd7cf24e22443ab22b6c7d291a07110ec1fc1a7e5d296ea870a602b5f513",
+    "width": 390,
+    "height": 1318
+  },
+  {
+    "file": "component-preview-390-section-form-controls.png",
+    "bytes": 71223,
+    "sha256": "b1ada6cb4a94246dd1f2105025bc4b78a8d00155b013bc9d5c4bb57fcedb381c",
+    "width": 390,
+    "height": 1139
+  },
+  {
+    "file": "component-preview-390-section-page-container.png",
+    "bytes": 31596,
+    "sha256": "cbc069bfd60292688af57997bfeb304a6da193c3cbad8cc6ec1198122b37a9b6",
+    "width": 390,
+    "height": 662
+  },
+  {
+    "file": "component-preview-390-section-public-footer.png",
+    "bytes": 75112,
+    "sha256": "dc48c64cb2801832d2cbc0ef6a981da85504832890d3059631dd2d23bb7bc9be",
+    "width": 390,
+    "height": 1449
+  },
+  {
+    "file": "component-preview-390-section-public-header.png",
+    "bytes": 38267,
+    "sha256": "49cc9b70c0f6a32a72778cf967e64873200b46761b77d3fd737438b2d62da396",
+    "width": 390,
+    "height": 465
+  },
+  {
+    "file": "component-preview-390-section-section-heading.png",
+    "bytes": 40980,
+    "sha256": "2c9ed714cece451d1b64e38f915d38aa9c1f09e91dd243442b9caac1fdb91df5",
+    "width": 390,
+    "height": 500
+  },
+  {
+    "file": "component-preview-390.png",
+    "bytes": 582959,
+    "sha256": "78b7c6cc62c098f2afd47596aa84ce32bbba2067ae11e739ad518cb8d577db65",
+    "width": 390,
+    "height": 10748
+  },
+  {
+    "file": "component-preview-390.txt",
+    "bytes": 7434,
+    "sha256": "d7059cbd2e8e720cb0948948e81a3038ae7087b8bdd341155ccd13cfd6ff1a18"
+  },
+  {
+    "file": "component-preview-430.png",
+    "bytes": 591122,
+    "sha256": "f8028dd59ca9cc610281d9dff6083540e0b566a930ed91d39c05340188c71cd6",
+    "width": 430,
+    "height": 10680
+  },
+  {
+    "file": "component-preview-768.png",
+    "bytes": 612784,
+    "sha256": "27f66074529ca7483cd46e7470bd6251d64a687d62bafe180bc741027edf1932",
+    "width": 768,
+    "height": 8918
+  },
+  {
+    "file": "course-404-1440.png",
+    "bytes": 84249,
+    "sha256": "4a2f73d4b00b2af45c6518f80bd3a17e3ea2a04437ee6dabbb981e8acca9aab3",
+    "width": 1440,
+    "height": 1045
+  },
+  {
+    "file": "course-404-390.png",
+    "bytes": 75336,
+    "sha256": "39bd027ce642ada47b01b02d07a5bb3242905970471a86a01b1523b71c2f9825",
+    "width": 390,
+    "height": 1565
+  },
+  {
+    "file": "course-brows-1440.png",
+    "bytes": 299374,
+    "sha256": "e992c57242e43e9355477810eafb6d80feec7af36ca08b6226d28453660004de",
+    "width": 1440,
+    "height": 4057
+  },
+  {
+    "file": "course-brows-1440.txt",
+    "bytes": 2734,
+    "sha256": "478d520f104ca46778fc2f1c4e112f51ec1841a52a454dde04eedfc947eeb18d"
+  },
+  {
+    "file": "course-brows-390.png",
+    "bytes": 249090,
+    "sha256": "5400fbfbf3247bad64bae513bff7082394d4d15c75a920e204d77ac015d08571",
+    "width": 390,
+    "height": 5332
+  },
+  {
+    "file": "course-brows-390.txt",
+    "bytes": 2734,
+    "sha256": "478d520f104ca46778fc2f1c4e112f51ec1841a52a454dde04eedfc947eeb18d"
+  },
+  {
+    "file": "course-lamination-1440.png",
+    "bytes": 308504,
+    "sha256": "e78be58f8dbef37f34f0ae2c3dc1e87a693813d015cbff68c8e875fa2617b53e",
+    "width": 1440,
+    "height": 4115
+  },
+  {
+    "file": "course-lamination-1440.txt",
+    "bytes": 2825,
+    "sha256": "78d247f2f46afbfa4e62eb4e72bcf2e43078e87580bfa772fa0d07cfb9bbf22f"
+  },
+  {
+    "file": "course-lamination-390.png",
+    "bytes": 254538,
+    "sha256": "4d914f21c6c8154e62f5fa27bda4a10a8deaf87dcef125a2eea8d7f11c290fc4",
+    "width": 390,
+    "height": 5362
+  },
+  {
+    "file": "course-lamination-390.txt",
+    "bytes": 2825,
+    "sha256": "78d247f2f46afbfa4e62eb4e72bcf2e43078e87580bfa772fa0d07cfb9bbf22f"
+  },
+  {
+    "file": "course-lashes-1024.png",
+    "bytes": 281203,
+    "sha256": "b972d83f930c0e7076d13de5bb0f6025916f186138fd3c54a9f615ae12caf872",
+    "width": 1024,
+    "height": 3985
+  },
+  {
+    "file": "course-lashes-1280.png",
+    "bytes": 297198,
+    "sha256": "b2384c70e3e900f17e05939061cf8ae27329d17d4389bd93aef2f30b435718c2",
+    "width": 1280,
+    "height": 4028
+  },
+  {
+    "file": "course-lashes-1440-section-0.png",
+    "bytes": 63478,
+    "sha256": "e757c1d6dc92f198bf5395d111b2cd82341bad2b4f8653f3ce53a3652dbd6530",
+    "width": 1440,
+    "height": 988
+  },
+  {
+    "file": "course-lashes-1440-section-about-course.png",
+    "bytes": 40892,
+    "sha256": "fb60f6dffe569d6e410d843404b61ed5ccf81021b27f3aa2122bf051687fb0bf",
+    "width": 1440,
+    "height": 520
+  },
+  {
+    "file": "course-lashes-1440-section-curriculum.png",
+    "bytes": 28447,
+    "sha256": "26de0c1e402da69032ccaae827f57fccb4f8f1d5b9d1a0edb09e0108c26a7672",
+    "width": 1440,
+    "height": 580
+  },
+  {
+    "file": "course-lashes-1440-section-enroll.png",
+    "bytes": 80346,
+    "sha256": "fc8b93e5b899ca786804540d1ad1e1a2164c8bf7f2f9f7075ffc60d9a7c1f3f7",
+    "width": 1440,
+    "height": 879
+  },
+  {
+    "file": "course-lashes-1440-section-preview.png",
+    "bytes": 43616,
+    "sha256": "576d4707a3e979cf77099c8de330e98a774b88a53cea9cedf8901978a2a2e223",
+    "width": 1440,
+    "height": 643
+  },
+  {
+    "file": "course-lashes-1440.png",
+    "bytes": 306917,
+    "sha256": "11e00cdc49576f454d08100a07ff70902afc9a80258f515127b4cf1720c937bb",
+    "width": 1440,
+    "height": 4115
+  },
+  {
+    "file": "course-lashes-1440.txt",
+    "bytes": 2809,
+    "sha256": "d7f720ec9b72dff20ca930862c10f6f12d826760b00431688c89492637022dbb"
+  },
+  {
+    "file": "course-lashes-1920.png",
+    "bytes": 321021,
+    "sha256": "4f5dd64323c0e776da5752f02a787227a49b4d0e71a329d2921bbf59e69c6d25",
+    "width": 1920,
+    "height": 4168
+  },
+  {
+    "file": "course-lashes-320.png",
+    "bytes": 250163,
+    "sha256": "aa7459159be5264e945894fb5724a8dc490494fe54f497e6defbda58e6f77d62",
+    "width": 320,
+    "height": 5443
+  },
+  {
+    "file": "course-lashes-360.png",
+    "bytes": 253563,
+    "sha256": "3090675c90a1bd4e7ccc7d80412eeb51261da5c521a6e65d41f7d2163350cd2d",
+    "width": 360,
+    "height": 5405
+  },
+  {
+    "file": "course-lashes-390-section-0.png",
+    "bytes": 48468,
+    "sha256": "1d9a75b35ce949babecf985eb91e035c5f5f5f24338274de47ea6715b7fa87be",
+    "width": 390,
+    "height": 1140
+  },
+  {
+    "file": "course-lashes-390-section-about-course.png",
+    "bytes": 31972,
+    "sha256": "d898045bdfa6e0c9d37776091199653170636f1f526f32e8b23e40e4b527f646",
+    "width": 390,
+    "height": 661
+  },
+  {
+    "file": "course-lashes-390-section-curriculum.png",
+    "bytes": 17027,
+    "sha256": "e6012ca14a8a518db4542842dc721298ca576b084027f85753fcc39fbc5c3a2a",
+    "width": 390,
+    "height": 433
+  },
+  {
+    "file": "course-lashes-390-section-enroll.png",
+    "bytes": 78418,
+    "sha256": "0ce469678e532d8fe7b82e8fa77552ee038b8d0e7cce8b84c15d60cae96f3fbd",
+    "width": 390,
+    "height": 1378
+  },
+  {
+    "file": "course-lashes-390-section-preview.png",
+    "bytes": 31449,
+    "sha256": "fd4146b3ceca42fb58c2606bb019ef6c2dda28410c55f8e95f773e2811bf8d81",
+    "width": 390,
+    "height": 613
+  },
+  {
+    "file": "course-lashes-390.png",
+    "bytes": 253964,
+    "sha256": "8f62792f5e42355e6d351a383c5e962f75b27ba8607e284fa1c8e3d25bb739e3",
+    "width": 390,
+    "height": 5362
+  },
+  {
+    "file": "course-lashes-390.txt",
+    "bytes": 2809,
+    "sha256": "d7f720ec9b72dff20ca930862c10f6f12d826760b00431688c89492637022dbb"
+  },
+  {
+    "file": "course-lashes-430.png",
+    "bytes": 253276,
+    "sha256": "197037da369f40e4e39e8a7a9100f4570405dd2c791750d90382b6ebe1ffc536",
+    "width": 430,
+    "height": 5356
+  },
+  {
+    "file": "course-lashes-768.png",
+    "bytes": 285919,
+    "sha256": "dd7739e87a4bb3fa10bc43a481accde694c0eef4637489293c61115600bd72ae",
+    "width": 768,
+    "height": 4733
+  },
+  {
+    "file": "course-nails-1440.png",
+    "bytes": 299522,
+    "sha256": "36a09a27fee8cdc25d05f24fbb5f57f34e2e2623a274b7ab283b545a0ec96031",
+    "width": 1440,
+    "height": 4057
+  },
+  {
+    "file": "course-nails-1440.txt",
+    "bytes": 2742,
+    "sha256": "515a83fd0fa650038c960f09ebb5ca6127bd8d7cd0e5884c181b297ef16e4dd5"
+  },
+  {
+    "file": "course-nails-390.png",
+    "bytes": 249121,
+    "sha256": "615a59b5387aa7e662dd22e7d7ec2144f9bdde38965b5b2123eb512961c45ca3",
+    "width": 390,
+    "height": 5332
+  },
+  {
+    "file": "course-nails-390.txt",
+    "bytes": 2742,
+    "sha256": "515a83fd0fa650038c960f09ebb5ca6127bd8d7cd0e5884c181b297ef16e4dd5"
+  },
+  {
+    "file": "courses-1024.png",
+    "bytes": 447993,
+    "sha256": "7d33ac9dc3c6264ec9ae404945c8a0ab8c326826c01f782d9502f209809a3f6a",
+    "width": 1024,
+    "height": 2436
+  },
+  {
+    "file": "courses-1280.png",
+    "bytes": 548424,
+    "sha256": "6efb67974b5cfa49b4d51a24fafdd4d77840fd950074dcaff9f561b526390cf7",
+    "width": 1280,
+    "height": 1918
+  },
+  {
+    "file": "courses-1440.png",
+    "bytes": 605244,
+    "sha256": "d5b8fcc94d01a98677b49cce7603556b8e6ee311c2c1615aaa7beb97701d3739",
+    "width": 1440,
+    "height": 1972
+  },
+  {
+    "file": "courses-1440.txt",
+    "bytes": 1025,
+    "sha256": "0393ba88e9627d2ebaba90827b3d156fc453250ec52a347974057c65805735bc"
+  },
+  {
+    "file": "courses-1920.png",
+    "bytes": 761599,
+    "sha256": "b45314fd62cee71651fe67923daa8c67f22326e30742f092a207bcd39d251467",
+    "width": 1920,
+    "height": 2028
+  },
+  {
+    "file": "courses-320.png",
+    "bytes": 271358,
+    "sha256": "e7d59db58f50f06c52db26f5fc07773aa6308f29956df59f26f5c0d26067b8e8",
+    "width": 320,
+    "height": 4093
+  },
+  {
+    "file": "courses-360.png",
+    "bytes": 284585,
+    "sha256": "ae11b6b535a86cd4792b1220c514860f91830960a34f1eefc1cf99fe22dc2e82",
+    "width": 360,
+    "height": 4153
+  },
+  {
+    "file": "courses-390.png",
+    "bytes": 305269,
+    "sha256": "ad87f8e23182ead6f5ea1db0c99821380c019a1c0bdbf11a8e91b66f3543c025",
+    "width": 390,
+    "height": 4221
+  },
+  {
+    "file": "courses-390.txt",
+    "bytes": 1025,
+    "sha256": "0393ba88e9627d2ebaba90827b3d156fc453250ec52a347974057c65805735bc"
+  },
+  {
+    "file": "courses-430.png",
+    "bytes": 316800,
+    "sha256": "f44172989b2cb12522d22ade4c55a69db1edc532905e5b95d8ea4a7c8080ef6e",
+    "width": 430,
+    "height": 4301
+  },
+  {
+    "file": "courses-768.png",
+    "bytes": 394237,
+    "sha256": "329979865518429594ba07accd33451b4284c53153803cd2fde720aea118ce57",
+    "width": 768,
+    "height": 3083
+  },
+  {
+    "file": "detail-variants-review-1440.jpg",
+    "bytes": 311171,
+    "sha256": "f01382dccfffd65b2e1e51aca62a67d5f168e8074329f64c7ca86fd4cd41b943",
+    "width": 1800,
+    "height": 1740
+  },
+  {
+    "file": "detail-variants-review-390.jpg",
+    "bytes": 167906,
+    "sha256": "4fe13e21c4bee67852962efd4601fbf04ea55e2c727791237b3d278b3b80a3f2",
+    "width": 1800,
+    "height": 1740
+  },
+  {
+    "file": "extra-results.json",
+    "bytes": 681,
+    "sha256": "39a425428aae1513d82ceb386373859a9f6433d1074d058eb2ae0898d407ce2f"
+  },
+  {
+    "file": "final-state-results.json",
+    "bytes": 376,
+    "sha256": "dbea1adcb9b6ad7fb54927d95251251b5318fcf805baf6a08e4823d9d0d706c9"
+  },
+  {
+    "file": "finding-detail-preview-1024.png",
+    "bytes": 68538,
+    "sha256": "bb9b09394a4cf0566f0aa1c1d375a08b59c696196a2a2ee7c4825b25a43f7515",
+    "width": 1024,
+    "height": 900
+  },
+  {
+    "file": "finding-detail-preview-1440.png",
+    "bytes": 59698,
+    "sha256": "b44087aa0ffd09ece405199b9c5f24995f6406c369a577869e143995ad358536",
+    "width": 1440,
+    "height": 900
+  },
+  {
+    "file": "finding-detail-preview-320.png",
+    "bytes": 42499,
+    "sha256": "c12dd2c7801a9684657a805022ae533e0cca1e8561db6fd256995b5f87ead387",
+    "width": 320,
+    "height": 844
+  },
+  {
+    "file": "finding-detail-preview-360.png",
+    "bytes": 44277,
+    "sha256": "b54018975e65939aebb9c8af496f93ccee63730e0d443db8d14c1689ce32965f",
+    "width": 360,
+    "height": 844
+  },
+  {
+    "file": "finding-detail-preview-390.png",
+    "bytes": 45005,
+    "sha256": "19823f12ca54432c27f458e98a7f67463e37ff427f959129ae108b185318db19",
+    "width": 390,
+    "height": 844
+  },
+  {
+    "file": "finding-detail-preview-430.png",
+    "bytes": 45008,
+    "sha256": "3d04393331ee2bfed319a6a0f01377d617d4ee9f43ddcc24b7e49ae53cb4ca5c",
+    "width": 430,
+    "height": 844
+  },
+  {
+    "file": "finding-detail-preview-768.png",
+    "bytes": 65658,
+    "sha256": "96e1ec5a8e83285654c8eda9211bb7fba90bc50520b31d16aed238c36f1dba7b",
+    "width": 768,
+    "height": 900
+  },
+  {
+    "file": "finding-filter-escape-1440.png",
+    "bytes": 505342,
+    "sha256": "ced3cea3732a2dd5207b3d00a4fe285753380577be34cbd5a919cb5bcc9bcd94",
+    "width": 1440,
+    "height": 900
+  },
+  {
+    "file": "finding-filter-escape-320.png",
+    "bytes": 43430,
+    "sha256": "ac442353c98dbded0fb27d0f1dfb307e42254cc5bc8664cd734b47d8ce2e32fb",
+    "width": 320,
+    "height": 844
+  },
+  {
+    "file": "finding-filter-escape-390.png",
+    "bytes": 43485,
+    "sha256": "9c314885188dcb82c878f4a687dc6e2ba7a2b762e15bf2c17e9eed8dfc0632f5",
+    "width": 390,
+    "height": 844
+  },
+  {
+    "file": "finding-filter-Направление-1024.png",
+    "bytes": 74811,
+    "sha256": "fb84942534f4cbeabc86e98475892f37a74375588a90e58cfaa79257653193ec",
+    "width": 1024,
+    "height": 900
+  },
+  {
+    "file": "finding-filter-Направление-1440.png",
+    "bytes": 83966,
+    "sha256": "85ea22dd246eecc901a0eea99325b6b3328e503f3bf935d117d7ac5666137061",
+    "width": 1440,
+    "height": 900
+  },
+  {
+    "file": "finding-filter-Направление-320.png",
+    "bytes": 44569,
+    "sha256": "9a6af1c3fcfb14152d34b5c53ec73319e3c0ddddb28785f24fe5191e98a74d0f",
+    "width": 320,
+    "height": 844
+  },
+  {
+    "file": "finding-filter-Направление-360.png",
+    "bytes": 48166,
+    "sha256": "421ebe9e5b0fb8c7363b3fba45ee991a1d93d79eb2b048669ff4d0ec1b5aa4eb",
+    "width": 360,
+    "height": 844
+  },
+  {
+    "file": "finding-filter-Направление-390.png",
+    "bytes": 48988,
+    "sha256": "b32c1cd97a949dfbaab32f1c3c429fe35f854259cb806b52582eeb6e50cff910",
+    "width": 390,
+    "height": 844
+  },
+  {
+    "file": "finding-filter-Направление-430.png",
+    "bytes": 49295,
+    "sha256": "1e5bd8837c252ec00591a22ef954f00e7c3db17df341fd9212464f3c8b1a798b",
+    "width": 430,
+    "height": 844
+  },
+  {
+    "file": "finding-filter-Направление-768.png",
+    "bytes": 61794,
+    "sha256": "50733b3e011c9055c31fc528a294cf2bb57a344bc32f3b6bc405cecc8b7e0e0d",
+    "width": 768,
+    "height": 900
+  },
+  {
+    "file": "finding-filter-Уровень-1024.png",
+    "bytes": 69938,
+    "sha256": "2b19f1b4199576e392d58c1a4fa57a599f9c62a8132b7e321469d2a70fad4584",
+    "width": 1024,
+    "height": 900
+  },
+  {
+    "file": "finding-filter-Уровень-1440.png",
+    "bytes": 77052,
+    "sha256": "cddccdecb101ddbb17df507f0a8e937c0546057aaf83d7f104aad761a1c0dfda",
+    "width": 1440,
+    "height": 900
+  },
+  {
+    "file": "finding-filter-Уровень-320.png",
+    "bytes": 40597,
+    "sha256": "ebca5d8947db0c24f9cdbdbc608d1e60c64576335a94f626b52cd038fa70c373",
+    "width": 320,
+    "height": 844
+  },
+  {
+    "file": "finding-filter-Уровень-360.png",
+    "bytes": 41505,
+    "sha256": "226195794769c8aa945e02bfd0773b4b6fe7fba16f217c5d2d38da70e9a37c99",
+    "width": 360,
+    "height": 844
+  },
+  {
+    "file": "finding-filter-Уровень-390.png",
+    "bytes": 42055,
+    "sha256": "e85ca73a727153debabc4cd3b61b6179dfea54b0a491ca2ee9e2dce59523fd00",
+    "width": 390,
+    "height": 844
+  },
+  {
+    "file": "finding-filter-Уровень-430.png",
+    "bytes": 41669,
+    "sha256": "5dec6e0ab12300984ed6c3a45adad2c7278024c3974315a806cadfc26de0d2ed",
+    "width": 430,
+    "height": 844
+  },
+  {
+    "file": "finding-filter-Уровень-768.png",
+    "bytes": 55898,
+    "sha256": "fe2bd872e57ff720d7c494a26bd02f46dbd4209b698a4d307efc98dba6abef91",
+    "width": 768,
+    "height": 900
+  },
+  {
+    "file": "finding-filter-Язык-1024.png",
+    "bytes": 68504,
+    "sha256": "1a4327cc179d8dd4a391d68ee4cb0bd334d273147023d2f9ee6c7277f6425596",
+    "width": 1024,
+    "height": 900
+  },
+  {
+    "file": "finding-filter-Язык-1440.png",
+    "bytes": 75915,
+    "sha256": "106712b02048e5d98160bb48917d53f2053a2285a299b2549adaa3272c326ec5",
+    "width": 1440,
+    "height": 900
+  },
+  {
+    "file": "finding-filter-Язык-320.png",
+    "bytes": 39344,
+    "sha256": "d18fcb8989607276ac3217d6f9c6ef534eb6bf6204b7e9e09ef003e336b94f90",
+    "width": 320,
+    "height": 844
+  },
+  {
+    "file": "finding-filter-Язык-360.png",
+    "bytes": 39971,
+    "sha256": "8d6efcf4d3a918ca1dc25beecb5e56491a9748c3b3b81302a2c85b2f2be08d28",
+    "width": 360,
+    "height": 844
+  },
+  {
+    "file": "finding-filter-Язык-390.png",
+    "bytes": 40644,
+    "sha256": "15bef727a398e83edf6c96c232b2c60d38cdda04901c90f531e338898a11e7a7",
+    "width": 390,
+    "height": 844
+  },
+  {
+    "file": "finding-filter-Язык-430.png",
+    "bytes": 40584,
+    "sha256": "9ef04371c414599f4cb5882466e870002701eb6e24ca84b2e3c99d6df87bc312",
+    "width": 430,
+    "height": 844
+  },
+  {
+    "file": "finding-filter-Язык-768.png",
+    "bytes": 54887,
+    "sha256": "20a32d60820306459a14c13cc3f4df6ba0a35a8bcd18512079217d730a78e178",
+    "width": 768,
+    "height": 900
+  },
+  {
+    "file": "finding-founder-title-320.png",
+    "bytes": 73304,
+    "sha256": "b4ae83b232eb7ff5f1fb2cae8b55c335567222f6382184116c5ab26f651b3cdc",
+    "width": 320,
+    "height": 844
+  },
+  {
+    "file": "finding-founder-title-360.png",
+    "bytes": 76678,
+    "sha256": "797f3b3ae850d2ab9228ceac4328a0be6603bbcb4cdfa3067b707b7520fc4cf7",
+    "width": 360,
+    "height": 844
+  },
+  {
+    "file": "finding-founder-title-390.png",
+    "bytes": 78107,
+    "sha256": "04544e7ee8c954b1be2bff9e1f5fa9773023bc014484ead313bd93ec00e14b0f",
+    "width": 390,
+    "height": 844
+  },
+  {
+    "file": "finding-home-filtered-controls-390.png",
+    "bytes": 36194,
+    "sha256": "55dd2dff35402485ca9a395b4f462392068aa4a204d1d45e1bb5a9ca73e7d499",
+    "width": 390,
+    "height": 844
+  },
+  {
+    "file": "finding-learning-media-320.png",
+    "bytes": 34793,
+    "sha256": "31a8ae17b95152bca26b553a16bf316a8bacdff22f852bbd2cde2661ebd030b6",
+    "width": 320,
+    "height": 844
+  },
+  {
+    "file": "finding-learning-media-360.png",
+    "bytes": 37072,
+    "sha256": "9e56a7cfbfdbe905aa07a09dd0dbde360e923e440024cc485d0a8eb7637c5ac4",
+    "width": 360,
+    "height": 844
+  },
+  {
+    "file": "finding-learning-media-390.png",
+    "bytes": 38630,
+    "sha256": "45d37222094de9adcb5d81877a3d450498527a8c7c4a8faaac343bdaca6a84b0",
+    "width": 390,
+    "height": 844
+  },
+  {
+    "file": "followup-initial-results.json",
+    "bytes": 1436,
+    "sha256": "646b0616b746304586fbdc40502f9a1c2965d020702c806e2ccd65e8fc98dfac"
+  },
+  {
+    "file": "followup-results.json",
+    "bytes": 13338,
+    "sha256": "97470b3a3025dd6f19114f1d3d1fb1acb8d614afbe531e518c97a00b08318861"
+  },
+  {
+    "file": "followup-second-results.json",
+    "bytes": 5253,
+    "sha256": "24a688a62c2a8f1ef7fc3c859f63a3b60c2b5e26c9ad00f8216cc66f1b02a36e"
+  },
+  {
+    "file": "generic-404-1440.png",
+    "bytes": 65924,
+    "sha256": "697c9510cdcbc5256a1c99554c9711322134761f40b77dc95fc7d9f8e23d310a",
+    "width": 1440,
+    "height": 1411
+  },
+  {
+    "file": "generic-404-390.png",
+    "bytes": 62349,
+    "sha256": "53ae2223a96f73167474b70ff7f6ca69cfea3cf59c6f10e34269a38be3cc1998",
+    "width": 390,
+    "height": 1987
+  },
+  {
+    "file": "harness/auth-modal.browser.mjs.txt",
+    "bytes": 5419,
+    "sha256": "0bebe8517ed7e8b1eab587f96ab3c5aae3075c184bd5e037621dfd0da493f6e1"
+  },
+  {
+    "file": "harness/capture.mjs.txt",
+    "bytes": 5603,
+    "sha256": "21038a8e15c1c63e028ed17943f0fda181ba265846d51a73eff036cc236e88e3"
+  },
+  {
+    "file": "harness/catalog.browser.mjs.txt",
+    "bytes": 4765,
+    "sha256": "76a702e442c2bcabe2a90f4817e287377295a0866e8cd81b069c268a23873d36"
+  },
+  {
+    "file": "harness/commerce.browser.mjs.txt",
+    "bytes": 11420,
+    "sha256": "d0aeb9f998832dc6146fc6b06b34353fb1e39f624ce28cdb5dc5818a61ee2bd9"
+  },
+  {
+    "file": "harness/control-evidence.mjs.txt",
+    "bytes": 868,
+    "sha256": "a9826c8da227985a9797272bcb8720bac69be520d9524016c51ad35f497b3711"
+  },
+  {
+    "file": "harness/course-detail.browser.mjs.txt",
+    "bytes": 3732,
+    "sha256": "005cda997755c724c3bf311de2d1ddc7c7245608496d5323b007c34f76b7c1ce"
+  },
+  {
+    "file": "harness/extra.mjs.txt",
+    "bytes": 3483,
+    "sha256": "76994350ed69cf25d02daf1ac1e00da7534e9b34e4fa2c089a5f57ddbadaee88"
+  },
+  {
+    "file": "harness/final-states.mjs.txt",
+    "bytes": 2978,
+    "sha256": "880633e7c232416dc30ca162dfecf1e229a2ee5a7afc1bced7e705de055f9396"
+  },
+  {
+    "file": "harness/followup.mjs.txt",
+    "bytes": 6527,
+    "sha256": "425800b47a718fa2f2472d0951f78fbca694f06a57e8d4ab2f249529f15174c4"
+  },
+  {
+    "file": "harness/inventory.cjs.txt",
+    "bytes": 2016,
+    "sha256": "1a54ba0d8a8786e513321f0d9b3d234db90a54cf3f1ef6f98ffa4c101532f852"
+  },
+  {
+    "file": "harness/public-header.browser.mjs.txt",
+    "bytes": 8653,
+    "sha256": "6330e2f18d9a32e48e6a9cbf4441202b48d6727f143c90f557dd9762f1a5458b"
+  },
+  {
+    "file": "harness/public-polish.browser.mjs.txt",
+    "bytes": 4072,
+    "sha256": "39b7bef404966e98a86930c53215657ddeb30a5a95715b92bb83bb8bc3d0e6b8"
+  },
+  {
+    "file": "harness/states.mjs.txt",
+    "bytes": 15205,
+    "sha256": "ef6760f48ecc258d96ef85d031fc345cb7b085885e74dbd8c12f2fb69fc3ba13"
+  },
+  {
+    "file": "home-1024.png",
+    "bytes": 1569973,
+    "sha256": "2b1b23c0c0a07a029afabedea625389e42b8e67ee5813df6353dbe8a968f372e",
+    "width": 1024,
+    "height": 6419
+  },
+  {
+    "file": "home-1280.png",
+    "bytes": 1812616,
+    "sha256": "4b2baa0118f890324b50ef859db7fd3d35a991488e9b542d6688dc548df80062",
+    "width": 1280,
+    "height": 6593
+  },
+  {
+    "file": "home-1440-section-0.png",
+    "bytes": 519038,
+    "sha256": "259c29bd3c31f5199ea9f369b1ef94f0120dc65b9a69e14e8c5997cb0cb7a8ed",
+    "width": 1440,
+    "height": 900
+  },
+  {
+    "file": "home-1440-section-about.png",
+    "bytes": 809869,
+    "sha256": "5de230c34e9f2963caf2ffb451a0f8098ec753c974ac482551539aab1c26695d",
+    "width": 1440,
+    "height": 1026
+  },
+  {
+    "file": "home-1440-section-contact.png",
+    "bytes": 78397,
+    "sha256": "0629d6539bf4daae4554cbf2f61fec4696db8c179bbfd8c1eacb34cbdf3b6bf9",
+    "width": 1440,
+    "height": 875
+  },
+  {
+    "file": "home-1440-section-founder.png",
+    "bytes": 479584,
+    "sha256": "a5dc5cabe37d79494ae920862f25c10b92cd80025d2e84062339263f36ccdde3",
+    "width": 1440,
+    "height": 999
+  },
+  {
+    "file": "home-1440-section-learning-offers.png",
+    "bytes": 30694,
+    "sha256": "6b02cc81963f86574e3a93cb8a0761651b53d70f89f219e37a3d7e90b3b6d773",
+    "width": 1440,
+    "height": 804
+  },
+  {
+    "file": "home-1440-section-learning-preview.png",
+    "bytes": 66161,
+    "sha256": "e25c0702b46cb180864960fb5af83bca4988717478f5a0dad244241ef11367f4",
+    "width": 1440,
+    "height": 940
+  },
+  {
+    "file": "home-1440-section-reviews.png",
+    "bytes": 32664,
+    "sha256": "52e0788e90f950cbb1a784929f2a01c81898cf9b7f5169c1726c71937557f1a2",
+    "width": 1440,
+    "height": 788
+  },
+  {
+    "file": "home-1440.png",
+    "bytes": 2028631,
+    "sha256": "102f7e96be4bdf4fde2bfb2bb6ee30cd6638cce2e6087288ac5ff27dd4316734",
+    "width": 1440,
+    "height": 6749
+  },
+  {
+    "file": "home-1440.txt",
+    "bytes": 6180,
+    "sha256": "f9a9d5ea0b24dfde40a5155b46c31a848749b396511789cae458bd708c4945a4"
+  },
+  {
+    "file": "home-1920.png",
+    "bytes": 2592724,
+    "sha256": "e18db1bb960ba6d0e4d1a703c3ce6511cbd302bd9c97bba579829e232f198aa3",
+    "width": 1920,
+    "height": 6924
+  },
+  {
+    "file": "home-320.png",
+    "bytes": 627597,
+    "sha256": "cf2894d9079abf2143c5bb0fdc552d251f823e8c36f7793ca59e113b2c491904",
+    "width": 320,
+    "height": 8632
+  },
+  {
+    "file": "home-360.png",
+    "bytes": 651256,
+    "sha256": "5550a32ceb3d75a9f3c86bc1f388536cee12371682d68b24593ca859c8abe430",
+    "width": 360,
+    "height": 8423
+  },
+  {
+    "file": "home-390-section-0.png",
+    "bytes": 125010,
+    "sha256": "93b21e3b84f86c798d13023e07de701f8679d6b22c1c3e5ebcf69652aa6ecbb2",
+    "width": 390,
+    "height": 844
+  },
+  {
+    "file": "home-390-section-about.png",
+    "bytes": 165556,
+    "sha256": "0006e1939ae4b123d76e6002ddf468329f049b1a38e86bf37a26455afa481356",
+    "width": 390,
+    "height": 1404
+  },
+  {
+    "file": "home-390-section-contact.png",
+    "bytes": 56128,
+    "sha256": "341111eb63dead1c158420ba7f44c9e6ad63510f17b30f123bf89a02adfd2963",
+    "width": 390,
+    "height": 1111
+  },
+  {
+    "file": "home-390-section-founder.png",
+    "bytes": 147627,
+    "sha256": "aec1df4b784d4ea9dc9ba6cb618032e9bad60869e372184516b6b1f8de095a19",
+    "width": 390,
+    "height": 1294
+  },
+  {
+    "file": "home-390-section-learning-offers.png",
+    "bytes": 20115,
+    "sha256": "8520d02f342a6fcdc43ae9371a329a65c50d6381bdb6ca20ad133118db666ed6",
+    "width": 390,
+    "height": 741
+  },
+  {
+    "file": "home-390-section-learning-preview.png",
+    "bytes": 52110,
+    "sha256": "25c3eaa3b046b45e968e5d0fd689d157425714e2e8dc44c21f338a7702d0f65f",
+    "width": 390,
+    "height": 1016
+  },
+  {
+    "file": "home-390-section-reviews.png",
+    "bytes": 23572,
+    "sha256": "28ac287e589a6b25a4c2a97ca99fd756ff41fb46fcef84db92177f4187d2a206",
+    "width": 390,
+    "height": 799
+  },
+  {
+    "file": "home-390.png",
+    "bytes": 683549,
+    "sha256": "b9d5a782169ec3f8068de4ab32b2a2021fe1a8f5d82ef73548990eb502512225",
+    "width": 390,
+    "height": 8226
+  },
+  {
+    "file": "home-390.txt",
+    "bytes": 6035,
+    "sha256": "6dd195044889954d479ddd2eb202541813cbf77d8358126fef092ce7cce66047"
+  },
+  {
+    "file": "home-430.png",
+    "bytes": 709883,
+    "sha256": "33dc8e6f6891f1e086da5f89a2c1eca53d00b9a20e80adc9cac3457304aadbc9",
+    "width": 430,
+    "height": 8133
+  },
+  {
+    "file": "home-768.png",
+    "bytes": 1302843,
+    "sha256": "a25973f865005adc9d7d2f6576e6935c38e9d8b2ff5c3036a9a3055cc182b3d5",
+    "width": 768,
+    "height": 7448
+  },
+  {
+    "file": "interactive-results.json",
+    "bytes": 21549,
+    "sha256": "ed5569439fa800a6a2f56d6676113215577542122663e3e4dc7c8063cff647a1"
+  },
+  {
+    "file": "logs/build.log",
+    "bytes": 1047,
+    "sha256": "cf83c74ee483a0d8906c2f29d4409070a9c4009c2eb48383dd0e4f133603831e"
+  },
+  {
+    "file": "logs/capture.log",
+    "bytes": 3338,
+    "sha256": "d4233a5e4b7e87c205d15da9a2e655229e28a60c4478e742748b1998fa70e328"
+  },
+  {
+    "file": "logs/control-evidence.log",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "file": "logs/diff-check.log",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "file": "logs/extra.log",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "file": "logs/final-states.log",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "file": "logs/followup.log",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "file": "logs/lint.log",
+    "bytes": 9,
+    "sha256": "ebfee82d478f07b1e725885398b7046100b7b6a51ffc6438f52db8dc0230ea78"
+  },
+  {
+    "file": "logs/production-server.log",
+    "bytes": 181,
+    "sha256": "93282eb471e2d07eb1c61462b8dba9e49c800f603e1dd615a5d19c2db68a983c"
+  },
+  {
+    "file": "logs/states.log",
+    "bytes": 1637,
+    "sha256": "b46bad1cfa8aecef29298005c7fdea62aa083c5a9fcc2ead72c4e27fea83b72f"
+  },
+  {
+    "file": "logs/test-auth-modal.log",
+    "bytes": 510,
+    "sha256": "7c17774ba09f579c73b80d765e8da084fcb5c49dad23811310bfbc1bac6e8326"
+  },
+  {
+    "file": "logs/test-catalog.log",
+    "bytes": 598,
+    "sha256": "ae46ea74d257834d936ec5c1b7f102468e8ce8319f70bf223cf73e3d3ae38cc8"
+  },
+  {
+    "file": "logs/test-commerce-production.log",
+    "bytes": 65,
+    "sha256": "f13c2a9cd6e2037f72edf84bdf3f1b46848352872a0f34ad49d44772b252f6f9"
+  },
+  {
+    "file": "logs/test-commerce.log",
+    "bytes": 504,
+    "sha256": "f4a09d064f8e4af1c23ee350fe6d464e677d633de8dbbab8e81a14e96e52dbab"
+  },
+  {
+    "file": "logs/test-course-detail.log",
+    "bytes": 373,
+    "sha256": "71daafa0bdf294a8a8990a65b122b1f30ef2ff75d2479d88dbc31327263613fe"
+  },
+  {
+    "file": "logs/test-demo-cart.log",
+    "bytes": 1054,
+    "sha256": "ab8dc255ef3024cfb1d62acf0513ea767b8e510596c5154d0569b603ec9aa6e1"
+  },
+  {
+    "file": "logs/test-frontend.log",
+    "bytes": 472,
+    "sha256": "d536b9cce2d44405bbe1d649eb2d85f5ca7749d2323a8b394f114bd5c9db15ea"
+  },
+  {
+    "file": "logs/test-learning-offers.log",
+    "bytes": 468,
+    "sha256": "76421917c6f87253904ab57d3f894c0eff6384debe64756aaf6670e58164b250"
+  },
+  {
+    "file": "logs/test-public-header.log",
+    "bytes": 107,
+    "sha256": "13d13ddea4b0afefef8c54b1c9e814cc3d99c09ede734f84e369eeae26cde64b"
+  },
+  {
+    "file": "logs/test-public-polish.log",
+    "bytes": 105,
+    "sha256": "b0beed6401c97db4440b9ca448af14984c27b5b9fa2a3d544ce0f09f44222999"
+  },
+  {
+    "file": "logs/test-refinement.log",
+    "bytes": 125,
+    "sha256": "331e719e9eef0d00e69ccf8dd6b23b53ffba79282454a26c258cd2d6f117d484"
+  },
+  {
+    "file": "logs/typecheck-final.log",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "file": "logs/typecheck.log",
+    "bytes": 529,
+    "sha256": "815b7f980911b4b24522db7fce9db1d1b1f460f60b35c5e82cddb93f4b9fe196"
+  },
+  {
+    "file": "matrix-review-1024.jpg",
+    "bytes": 365570,
+    "sha256": "f8b98a813c5db621c47c3c71dbc66ba916350187f4786d170e259e3576c644df",
+    "width": 1800,
+    "height": 2160
+  },
+  {
+    "file": "matrix-review-1280.jpg",
+    "bytes": 348065,
+    "sha256": "1d58e748df834ada67cdfc7b5cb03e3e982db385944c66364d60ec0ba55c27b0",
+    "width": 1800,
+    "height": 2160
+  },
+  {
+    "file": "matrix-review-1440.jpg",
+    "bytes": 343832,
+    "sha256": "6b3c75abf9b2808feeb37ae2fe0c17cd6652f5b87633d16caf9f010ba878d1b0",
+    "width": 1800,
+    "height": 2160
+  },
+  {
+    "file": "matrix-review-1920.jpg",
+    "bytes": 315350,
+    "sha256": "5fc68c4e374c3a0b5fea169fa4efecfb60059d631ffc5fe5751b04290831aff5",
+    "width": 1800,
+    "height": 2160
+  },
+  {
+    "file": "matrix-review-320.jpg",
+    "bytes": 251158,
+    "sha256": "8ecdfdaaf0565507696654ad48bdad2e5c90486c1f5342fb0d2fc589c70deb72",
+    "width": 1800,
+    "height": 2160
+  },
+  {
+    "file": "matrix-review-360.jpg",
+    "bytes": 254455,
+    "sha256": "a10f577c3cfe432c5f67c61e7fd5423dd1900774786037ae08638349609110f9",
+    "width": 1800,
+    "height": 2160
+  },
+  {
+    "file": "matrix-review-390.jpg",
+    "bytes": 261547,
+    "sha256": "1b1ce218b70bf1378a3826a17ca7e28183fb137a423fb7453f37f94be4a46083",
+    "width": 1800,
+    "height": 2160
+  },
+  {
+    "file": "matrix-review-430.jpg",
+    "bytes": 263679,
+    "sha256": "534968feeadb791c3cf90b78beb30ea0faf0fe8593bd6c4a447ca2e71aa2a86b",
+    "width": 1800,
+    "height": 2160
+  },
+  {
+    "file": "matrix-review-768.jpg",
+    "bytes": 301347,
+    "sha256": "2c21370c02090c9861e1bdbc4266c312b177134601d9d3f513c79da3bc4b79e8",
+    "width": 1800,
+    "height": 2160
+  },
+  {
+    "file": "mini-404-1440.png",
+    "bytes": 86010,
+    "sha256": "66182a646a737dcfa5b7741b9b80797e078f52d0b72cdfc944c8d68a664be401",
+    "width": 1440,
+    "height": 1045
+  },
+  {
+    "file": "mini-404-390.png",
+    "bytes": 74716,
+    "sha256": "d6f248b50e31933483e0a2355a2d0588d937df8e408ba6962cab44f047d63343",
+    "width": 390,
+    "height": 1565
+  },
+  {
+    "file": "mini-brows-1440.png",
+    "bytes": 308962,
+    "sha256": "229b3ffd4fdbf417145296c3bc1fd1afe2374ccdf2fe61bccaa8196ff4bc0665",
+    "width": 1440,
+    "height": 4137
+  },
+  {
+    "file": "mini-brows-1440.txt",
+    "bytes": 2765,
+    "sha256": "629de3c04457873cf2f2f8827ed81dab4f0c110a3966b0b9b1791eb4cbab1a81"
+  },
+  {
+    "file": "mini-brows-390.png",
+    "bytes": 253546,
+    "sha256": "5e53dd044aa06c2740d08f78ae0cdf1c01e3f1df99b1125e018ca89b7e799cd5",
+    "width": 390,
+    "height": 5357
+  },
+  {
+    "file": "mini-brows-390.txt",
+    "bytes": 2765,
+    "sha256": "629de3c04457873cf2f2f8827ed81dab4f0c110a3966b0b9b1791eb4cbab1a81"
+  },
+  {
+    "file": "mini-courses-1024.png",
+    "bytes": 447302,
+    "sha256": "ba0f3b072ee0fd3f9c280b62b2f23e353b20ddeb699001105aa21e5b936a6e57",
+    "width": 1024,
+    "height": 2132
+  },
+  {
+    "file": "mini-courses-1280.png",
+    "bytes": 551659,
+    "sha256": "b739a16f77ecd8f77f7f08f73a672658fe0ea21c49f63991a6f5743a976d76d9",
+    "width": 1280,
+    "height": 1785
+  },
+  {
+    "file": "mini-courses-1440.png",
+    "bytes": 601105,
+    "sha256": "64c81cfdc2afde474a57aa1a83f7c07535c86b61778e212b07ec92e964c3aef5",
+    "width": 1440,
+    "height": 1777
+  },
+  {
+    "file": "mini-courses-1440.txt",
+    "bytes": 1210,
+    "sha256": "56e8a37088e025a0a650cacad943170403d1566a4e2752f6347e53ea3a64ad45"
+  },
+  {
+    "file": "mini-courses-1920.png",
+    "bytes": 768956,
+    "sha256": "b474ccbe4b4d4153bddc212ee81b54c6b130046f93b5fdbe3f45e64f53852cff",
+    "width": 1920,
+    "height": 1776
+  },
+  {
+    "file": "mini-courses-320.png",
+    "bytes": 268978,
+    "sha256": "bdb8198dbb1ea478586a6058b732406b3d6de5a8a7fcea8c1d23198fc4aba52c",
+    "width": 320,
+    "height": 3938
+  },
+  {
+    "file": "mini-courses-360.png",
+    "bytes": 282916,
+    "sha256": "7835edc4c846722d2af2742b677d2ce77694c4f7443b6d34654ab2f85decefe9",
+    "width": 360,
+    "height": 4021
+  },
+  {
+    "file": "mini-courses-390.png",
+    "bytes": 301632,
+    "sha256": "b8c6b2034a12bf22f2f0edb45ec95ea646d43e2df779e48e6b9ae44b15b6cdbe",
+    "width": 390,
+    "height": 4030
+  },
+  {
+    "file": "mini-courses-390.txt",
+    "bytes": 1210,
+    "sha256": "56e8a37088e025a0a650cacad943170403d1566a4e2752f6347e53ea3a64ad45"
+  },
+  {
+    "file": "mini-courses-430.png",
+    "bytes": 313439,
+    "sha256": "8457be98d430c4d3bde66c2b3437a9472a5c14c8d4ac6be809d161252952b384",
+    "width": 430,
+    "height": 4103
+  },
+  {
+    "file": "mini-courses-768.png",
+    "bytes": 385646,
+    "sha256": "cea2f2cd0c8867acc7ed6572f243f774a4c18e9f54a9e5376ff4591bf71cba83",
+    "width": 768,
+    "height": 2681
+  },
+  {
+    "file": "mini-lashes-1024.png",
+    "bytes": 275362,
+    "sha256": "2d6ec319a4cf1b898d739b15aabadb3ab69d5d2d9841e76f6b8ffa1cb53a449a",
+    "width": 1024,
+    "height": 3960
+  },
+  {
+    "file": "mini-lashes-1280.png",
+    "bytes": 291121,
+    "sha256": "dd7821bde4f25173b9a0530f0d9af5da5d45a5f48361ae613f5d52620fc5092b",
+    "width": 1280,
+    "height": 3999
+  },
+  {
+    "file": "mini-lashes-1440-section-0.png",
+    "bytes": 57420,
+    "sha256": "bae8a2fe568ac0f00e0a7d31083ed4431f2af0c48c247bd242d1e371370eef73",
+    "width": 1440,
+    "height": 931
+  },
+  {
+    "file": "mini-lashes-1440-section-about-course.png",
+    "bytes": 39667,
+    "sha256": "877a8b4d7c662f15744a61addd2db44a6373caca19520eeda893b654b91801a1",
+    "width": 1440,
+    "height": 521
+  },
+  {
+    "file": "mini-lashes-1440-section-curriculum.png",
+    "bytes": 26707,
+    "sha256": "b183b03c0f10aacc08925b855ddcad66acf31dc2d7c3722b82bdeeb5eca4a801",
+    "width": 1440,
+    "height": 580
+  },
+  {
+    "file": "mini-lashes-1440-section-enroll.png",
+    "bytes": 74657,
+    "sha256": "fbdafe90a6f25bf16f23d4d6de71bf425ab5d35039e0f8a0552b7dd067ab6a74",
+    "width": 1440,
+    "height": 900
+  },
+  {
+    "file": "mini-lashes-1440-section-preview.png",
+    "bytes": 43914,
+    "sha256": "39ea82703b89976170bcaaa864f7ad217ef231d6b730bd7c3b5ffcc1093e904c",
+    "width": 1440,
+    "height": 642
+  },
+  {
+    "file": "mini-lashes-1440.png",
+    "bytes": 300615,
+    "sha256": "f5a4bd26eec1c76ac7461e298bb7527d3435fb6079a5138d7c8dcc5f6af335e6",
+    "width": 1440,
+    "height": 4080
+  },
+  {
+    "file": "mini-lashes-1440.txt",
+    "bytes": 2748,
+    "sha256": "e62ec38756687258ab9b05e15f7fdcafe6136367965517dae2401f3a406da373"
+  },
+  {
+    "file": "mini-lashes-1920.png",
+    "bytes": 314137,
+    "sha256": "18d23baeb392863d25ef4a09edb05dddc7a3159fdc454ceb6e4505669a51e3c9",
+    "width": 1920,
+    "height": 4128
+  },
+  {
+    "file": "mini-lashes-320.png",
+    "bytes": 247041,
+    "sha256": "aa0b2f4be8d890578f6f75a9118c42f4a368e40a52b9ef83297657ff7c79ea7d",
+    "width": 320,
+    "height": 5386
+  },
+  {
+    "file": "mini-lashes-360.png",
+    "bytes": 249332,
+    "sha256": "81dd3a13ddabb05a4b7cbdf1ae6b2653d0e418bce64534f3cd1769e5de8be67e",
+    "width": 360,
+    "height": 5369
+  },
+  {
+    "file": "mini-lashes-390-section-0.png",
+    "bytes": 46513,
+    "sha256": "7a7a7aaa7fd85e1db034c7deb05038585e968c5cf518855fbd21bdd8d11d479d",
+    "width": 390,
+    "height": 1127
+  },
+  {
+    "file": "mini-lashes-390-section-about-course.png",
+    "bytes": 31552,
+    "sha256": "175aee437bcb026b3ee1ac6d9a51b9f0da8510446d7f9d00bb3adcdb71e5094a",
+    "width": 390,
+    "height": 637
+  },
+  {
+    "file": "mini-lashes-390-section-curriculum.png",
+    "bytes": 16893,
+    "sha256": "227a852ca77c9d83c47a5cfcc46fa913faf6900c8e28d72ce856c7341a85b733",
+    "width": 390,
+    "height": 433
+  },
+  {
+    "file": "mini-lashes-390-section-enroll.png",
+    "bytes": 78482,
+    "sha256": "ef80ad733b486fb85c04000766152f01aa05b7dab903ec54984d89cda1558d3c",
+    "width": 390,
+    "height": 1378
+  },
+  {
+    "file": "mini-lashes-390-section-preview.png",
+    "bytes": 31668,
+    "sha256": "146ff15ace282c08040911dce986b75f02fa91dc3ad6f9a7365e5f550c9d87b1",
+    "width": 390,
+    "height": 614
+  },
+  {
+    "file": "mini-lashes-390.png",
+    "bytes": 249568,
+    "sha256": "98cb9ac39b8c3b8b9f5ecf742325cb9e803c313bdf01bf14cec9e203362bff97",
+    "width": 390,
+    "height": 5326
+  },
+  {
+    "file": "mini-lashes-390.txt",
+    "bytes": 2748,
+    "sha256": "e62ec38756687258ab9b05e15f7fdcafe6136367965517dae2401f3a406da373"
+  },
+  {
+    "file": "mini-lashes-430.png",
+    "bytes": 249377,
+    "sha256": "f7c9f6034d4b93e7ff5ffe0c211d5e5670803482cafff33f9d10c86661cc7fc5",
+    "width": 430,
+    "height": 5341
+  },
+  {
+    "file": "mini-lashes-768.png",
+    "bytes": 280749,
+    "sha256": "e019be9227d0546455ee66a4a5bb369695aa2ab9ee35671a75350a3a3dd4fe6c",
+    "width": 768,
+    "height": 4693
+  },
+  {
+    "file": "mini-makeup-1440.png",
+    "bytes": 300218,
+    "sha256": "35d8e6426aeaad1dc60e2952ad85c875d37baae41c2f6856812e055e27bb22bb",
+    "width": 1440,
+    "height": 4080
+  },
+  {
+    "file": "mini-makeup-1440.txt",
+    "bytes": 2721,
+    "sha256": "40105782472c7880a394e6e618dc78d15bf52aff814e5e9bf039d8c99750980e"
+  },
+  {
+    "file": "mini-makeup-390.png",
+    "bytes": 248736,
+    "sha256": "8cfd6ce07a75805d4afcacf831a44794ff79044cbd4570c2cc16b4f135e57e72",
+    "width": 390,
+    "height": 5326
+  },
+  {
+    "file": "mini-makeup-390.txt",
+    "bytes": 2721,
+    "sha256": "40105782472c7880a394e6e618dc78d15bf52aff814e5e9bf039d8c99750980e"
+  },
+  {
+    "file": "mini-nails-1440.png",
+    "bytes": 300221,
+    "sha256": "c47880209bd08008d2cb6cd608542be61d569b1285e3c72d1f1ae1537cc0f33c",
+    "width": 1440,
+    "height": 4080
+  },
+  {
+    "file": "mini-nails-1440.txt",
+    "bytes": 2727,
+    "sha256": "e812938ec9f399a3c3736cfb109374363e90ac9206d2b8e35dd9dff484da5afe"
+  },
+  {
+    "file": "mini-nails-390.png",
+    "bytes": 248781,
+    "sha256": "6b006dad068c1888e5c4dc9e47327b94a3965472b199d767f9736670ff1be987",
+    "width": 390,
+    "height": 5326
+  },
+  {
+    "file": "mini-nails-390.txt",
+    "bytes": 2727,
+    "sha256": "e812938ec9f399a3c3736cfb109374363e90ac9206d2b8e35dd9dff484da5afe"
+  },
+  {
+    "file": "premium-audit.json",
+    "bytes": 244,
+    "sha256": "39499de42ddd54cb8151570fa25e80873d8e44da2db14c57c20c27f5033d2464"
+  },
+  {
+    "file": "production--courses-not-a-product.png",
+    "bytes": 42692,
+    "sha256": "7fc43815ed6fb11ae8ee4075268c278da45075f1f37e6c05e1325e29ffb8db14",
+    "width": 390,
+    "height": 844
+  },
+  {
+    "file": "production--mini-courses-not-a-product.png",
+    "bytes": 42072,
+    "sha256": "e1cf86fec83cf9ab5e4c30e88d75ed8d49c77dd2a714be87e937f5067079cd44",
+    "width": 390,
+    "height": 844
+  },
+  {
+    "file": "production--not-a-route.png",
+    "bytes": 17035,
+    "sha256": "abb85e990493901c6d4b8aec0c7f5e184c5a964661d515384e40405706766919",
+    "width": 390,
+    "height": 844
+  },
+  {
+    "file": "route-matrix.json",
+    "bytes": 849001,
+    "sha256": "daca66e3ca10448e66d6a8e8063a03eaaaa4855aa442373490d65e0a285c3d51"
+  },
+  {
+    "file": "source-inventory.json",
+    "bytes": 39571,
+    "sha256": "fd4b45cc84b1427b5907b529d8f0bf20a4b47119ba8d709a879cbb364d25c56b"
+  },
+  {
+    "file": "state-auth-background-scroll-1440.png",
+    "bytes": 240037,
+    "sha256": "bfe690eafc4137330979cad7dbf38a8d7ce2a6928f95e823f0e1bcc0dea298dd",
+    "width": 1440,
+    "height": 900
+  },
+  {
+    "file": "state-auth-background-scroll-390.png",
+    "bytes": 61072,
+    "sha256": "fc416ef70eab94aee194609134d4737e1968b1cffac0c8e2f627c8562207d0e8",
+    "width": 390,
+    "height": 844
+  },
+  {
+    "file": "state-button-loading-1440.png",
+    "bytes": 87528,
+    "sha256": "918bf0e92e5fc9b4c87d8353a8c99633cfdb528d9773151fd9a79b8de10610ba",
+    "width": 1440,
+    "height": 900
+  },
+  {
+    "file": "state-button-loading-390.png",
+    "bytes": 43100,
+    "sha256": "abf5ffb2a768fff4c3f2e432b80ec791d74e267742df3f47a82ff0b33a51500a",
+    "width": 390,
+    "height": 844
+  },
+  {
+    "file": "state-cart-error-1440.png",
+    "bytes": 99913,
+    "sha256": "b6876486864176e3addeead7bbaeade1fed5f31e588b364c0ac101aebbf646d0",
+    "width": 1440,
+    "height": 1386
+  },
+  {
+    "file": "state-cart-error-390.png",
+    "bytes": 87878,
+    "sha256": "117abf4fb1bb5f8bc251c47d408ad95bc0d2ac03ad56d8af458231175846bceb",
+    "width": 390,
+    "height": 1535
+  },
+  {
+    "file": "state-cart-filled-1440.png",
+    "bytes": 86417,
+    "sha256": "2b6c15d82ef6a6808ebe49b977ec46c0f2bbbc8ed3e10b8b9d6b72640dc2ce40",
+    "width": 1440,
+    "height": 1288
+  },
+  {
+    "file": "state-cart-filled-390.png",
+    "bytes": 73773,
+    "sha256": "07ec0241e91cdea85cf35efb079c312338fcba87f563328582adffa0b7cab0f8",
+    "width": 390,
+    "height": 1338
+  },
+  {
+    "file": "state-cart-preview-empty-1440.png",
+    "bytes": 519393,
+    "sha256": "866f30d86ba3ee4e376d03d542f026ae2318878000900991f6d4f8486d82346f",
+    "width": 1440,
+    "height": 900
+  },
+  {
+    "file": "state-cart-preview-empty-390.png",
+    "bytes": 42007,
+    "sha256": "365a67661a82b2040e526b4ebb60faa54a334fe05b0c4793fc747e786a98b830",
+    "width": 390,
+    "height": 844
+  },
+  {
+    "file": "state-cart-preview-filled-1440.png",
+    "bytes": 81352,
+    "sha256": "5367cd6e42191e9a2843c4b5f6008130c7873d262433fbd5ab9d27d0f577555b",
+    "width": 1440,
+    "height": 900
+  },
+  {
+    "file": "state-cart-preview-filled-390.png",
+    "bytes": 49754,
+    "sha256": "05873b5f8f480e1df8cc81f25e6f123c15937922323703c7c9135e1aa4d25ce0",
+    "width": 390,
+    "height": 844
+  },
+  {
+    "file": "state-cart-price-changed-1440.png",
+    "bytes": 104931,
+    "sha256": "b536f56f66f91dc347c052367bc825a527400f28709a3090a0178fe23b5372b4",
+    "width": 1440,
+    "height": 1394
+  },
+  {
+    "file": "state-cart-price-changed-390.png",
+    "bytes": 89630,
+    "sha256": "26bffad2304c3ed6683077e5e59655d1597995d19d8b92304783a54644e1eedb",
+    "width": 390,
+    "height": 1528
+  },
+  {
+    "file": "state-cart-recalculating-1440.png",
+    "bytes": 91367,
+    "sha256": "a7e54be9ff604fde877af1372844b0c630d9711afbef85995cc0d40ac8f6dc68",
+    "width": 1440,
+    "height": 1338
+  },
+  {
+    "file": "state-cart-recalculating-390.png",
+    "bytes": 78526,
+    "sha256": "d453f95fd9e15c638294655b2a0ff23eaf610c12fe6d496b0ebcabfc964c9713",
+    "width": 390,
+    "height": 1413
+  },
+  {
+    "file": "state-cart-removed-1440.png",
+    "bytes": 76175,
+    "sha256": "e4082e957a64351d367f6c0448f7fd9e268999032a39730f73d7ceb161c3c92c",
+    "width": 1440,
+    "height": 1107
+  },
+  {
+    "file": "state-cart-removed-390.png",
+    "bytes": 65343,
+    "sha256": "76f94d55e34c23a19bf5a28376b7dd79905a46b991fc082d6cdb2104270f4fd4",
+    "width": 390,
+    "height": 1174
+  },
+  {
+    "file": "state-cart-storage-error-1440.png",
+    "bytes": 56346,
+    "sha256": "ec6cd868158cbd2f90421caf03f12c6e424425fa389d5a48fcb0a56e6ef6bfb1",
+    "width": 1440,
+    "height": 900
+  },
+  {
+    "file": "state-cart-storage-error-390.png",
+    "bytes": 48935,
+    "sha256": "431ae0d5c1a048eb7a8d28739173aed4a98aeca2069ab7cdd9fef50bb1bba486",
+    "width": 390,
+    "height": 844
+  },
+  {
+    "file": "state-cart-storage-warning-1440.png",
+    "bytes": 100141,
+    "sha256": "e41bff666de03eb971815ab36223c9d9048f56b9afa4dad35a3f9cc3f7254e38",
+    "width": 1440,
+    "height": 900
+  },
+  {
+    "file": "state-cart-storage-warning-390.png",
+    "bytes": 64619,
+    "sha256": "3af946fa29e3a9daec1ba647aa1aaa5417c9f34eeb079f9ccc8f93cdd8d4c7bd",
+    "width": 390,
+    "height": 844
+  },
+  {
+    "file": "state-cart-unavailable-1440.png",
+    "bytes": 99806,
+    "sha256": "d805e1b299f927e8ea86dd17f532daaf9e34a0c925c9edeb7944f21fbe1582aa",
+    "width": 1440,
+    "height": 1371
+  },
+  {
+    "file": "state-cart-unavailable-390.png",
+    "bytes": 86460,
+    "sha256": "f72f1b2ff62bb318e3dc6228fb873c376b15820e07fa3b7ae1fd592672cba93a",
+    "width": 390,
+    "height": 1480
+  },
+  {
+    "file": "state-catalog-brows-1440.png",
+    "bytes": 179733,
+    "sha256": "3d0b448c29bcddcb92451b954c0c1b7336c0d2d4a222dfe881e559fa68e96dee",
+    "width": 1440,
+    "height": 900
+  },
+  {
+    "file": "state-catalog-brows-390.png",
+    "bytes": 40799,
+    "sha256": "7666dc5e2f0eb8bc270ff669d9fd65f7adacfb428d7ddf331186be34e8875f5f",
+    "width": 390,
+    "height": 844
+  },
+  {
+    "file": "state-catalog-direction-open-1440.png",
+    "bytes": 529517,
+    "sha256": "aab6ab8dec9ffbe63423bab3477d847f33d728683471e07b614e4bf9a268d444",
+    "width": 1440,
+    "height": 900
+  },
+  {
+    "file": "state-catalog-direction-open-390.png",
+    "bytes": 51112,
+    "sha256": "70e32a4d5ce5388b8d98d5a7707b170a28348a83f11e6c86b207b686bfdf5fcd",
+    "width": 390,
+    "height": 844
+  },
+  {
+    "file": "state-catalog-language-keyboard-1440.png",
+    "bytes": 82776,
+    "sha256": "8ffff705f3d5e6dc8eab7e64a4d8332734dfe95687b1d35950452acd0cc998e5",
+    "width": 1440,
+    "height": 900
+  },
+  {
+    "file": "state-catalog-language-keyboard-390.png",
+    "bytes": 43716,
+    "sha256": "a130e2769457aa96843f7d2560d6407042b8d40f2ef3fd9cad29c37176eb9476",
+    "width": 390,
+    "height": 844
+  },
+  {
+    "file": "state-checkout-email-error-1440.png",
+    "bytes": 105078,
+    "sha256": "fb785477a975dafce342a11dd0482316a5592d9ead0d28adff9566eab847d3f0",
+    "width": 1440,
+    "height": 900
+  },
+  {
+    "file": "state-checkout-email-error-390.png",
+    "bytes": 48561,
+    "sha256": "2ebcb020f60c11c55859a4f29ba161ec900933ebd6a57b1da7efcafc17a5dcf2",
+    "width": 390,
+    "height": 844
+  },
+  {
+    "file": "state-checkout-filled-1440.png",
+    "bytes": 158646,
+    "sha256": "7014c1c915500a3ef6fa1be9e111882fb601b01e36eb31c6f0ef662cb5428685",
+    "width": 1440,
+    "height": 1733
+  },
+  {
+    "file": "state-checkout-filled-390.png",
+    "bytes": 141053,
+    "sha256": "154a37d2f8f292a09b7334556c55f3287438f9afa12496705f4691c4c4f155a2",
+    "width": 390,
+    "height": 2574
+  },
+  {
+    "file": "state-checkout-login-1440.png",
+    "bytes": 137444,
+    "sha256": "b8723fbc6ebac7643a09d496d7169e3c2704e6a0a33a5448abeec7f7cda175b7",
+    "width": 1440,
+    "height": 900
+  },
+  {
+    "file": "state-checkout-login-390.png",
+    "bytes": 50664,
+    "sha256": "fccb844deb847e155065639ea423b94adac9fb768e6268c445a74109cc3d4c59",
+    "width": 390,
+    "height": 844
+  },
+  {
+    "file": "state-contact-errors-1440.png",
+    "bytes": 90866,
+    "sha256": "d87c01057962a0028e75ca45f7e9675ecb89de1e926191b72185f03b4ed4739b",
+    "width": 1440,
+    "height": 900
+  },
+  {
+    "file": "state-contact-errors-390.png",
+    "bytes": 45827,
+    "sha256": "aee335d442d772ac3bc3a0445bf134d93a86a787a0b830d771690364d5341106",
+    "width": 390,
+    "height": 844
+  },
+  {
+    "file": "state-course-card-hover-1440.png",
+    "bytes": 126418,
+    "sha256": "b30a6d328dc18c811abae62dc79d96bdad47a425a5e30c523f8f9bb4e5b45e76",
+    "width": 1440,
+    "height": 900
+  },
+  {
+    "file": "state-course-card-hover-390.png",
+    "bytes": 39033,
+    "sha256": "4a7ae69f493bf5473752cf3569001edd6ebd61a6bf348ecf800ced390e139c26",
+    "width": 390,
+    "height": 844
+  },
+  {
+    "file": "state-course-card-keyboard-focus-1440.png",
+    "bytes": 126847,
+    "sha256": "2960485cdda9cd9a6156e363783543aeb9b90de56225a19dbba26e3cec520086",
+    "width": 1440,
+    "height": 900
+  },
+  {
+    "file": "state-course-card-keyboard-focus-390.png",
+    "bytes": 40478,
+    "sha256": "5a7418e9c859158fdc118f1e682a13c0c5bafd7eb66cfe6464a3dd3976f1e43e",
+    "width": 390,
+    "height": 844
+  },
+  {
+    "file": "state-founder-open-1440.png",
+    "bytes": 473808,
+    "sha256": "d975ea50163e4d51b29d9a02e874f25f6fa93afa9239a3b343713955c16a8222",
+    "width": 1440,
+    "height": 900
+  },
+  {
+    "file": "state-founder-open-390.png",
+    "bytes": 87690,
+    "sha256": "ad85cdd0050e970f1244874324eac67fe0296078299aa19e4923246ed4063bc7",
+    "width": 390,
+    "height": 844
+  },
+  {
+    "file": "state-home-mini-filter-1440.png",
+    "bytes": 49560,
+    "sha256": "b6da4ef402b269b853582c49e59093054ed37fae7b5a2cb8422a31ef57336210",
+    "width": 1440,
+    "height": 900
+  },
+  {
+    "file": "state-home-mini-filter-390.png",
+    "bytes": 48981,
+    "sha256": "3f036024e2b1615b22cb38e243aa1a0b6e3f021064840f3561116615ea67da8b",
+    "width": 390,
+    "height": 844
+  },
+  {
+    "file": "state-learning-assignment-empty-1440.png",
+    "bytes": 175051,
+    "sha256": "b2b0b65743559f1ef8e96913b2e3ddc96102107af4e1673229d51577d35cd99a",
+    "width": 1440,
+    "height": 900
+  },
+  {
+    "file": "state-learning-assignment-empty-390.png",
+    "bytes": 58711,
+    "sha256": "5ab0860ac8d0738ef92da41ff782fc7c66e0706ba1840ca2023ffda29f617c1c",
+    "width": 390,
+    "height": 844
+  },
+  {
+    "file": "state-learning-feedback-1440.png",
+    "bytes": 72410,
+    "sha256": "aebf93d1d0d2bfbf79ec9afba4a9cf4cbd4e8a4d39abf11b5698ec5ce8059bff",
+    "width": 1440,
+    "height": 900
+  },
+  {
+    "file": "state-learning-feedback-390.png",
+    "bytes": 37705,
+    "sha256": "146fa5d88c70b45f5ad771156df515810ce877fc028d513ca8290999be9e0791",
+    "width": 390,
+    "height": 844
+  },
+  {
+    "file": "state-learning-file-error-1440.png",
+    "bytes": 174751,
+    "sha256": "b4f01296d5ac10dc277b44dbd4dfef76696f6be1239fb89f9cf3ab27279f83ca",
+    "width": 1440,
+    "height": 900
+  },
+  {
+    "file": "state-learning-file-error-390.png",
+    "bytes": 61054,
+    "sha256": "62b814edce7b8498bed61627868ab23cc62db70003d8321ef0d6fac50fa49477",
+    "width": 390,
+    "height": 844
+  },
+  {
+    "file": "state-learning-photo-1440.png",
+    "bytes": 170248,
+    "sha256": "6fe09b01d484b01bf3d3ab7ca56dfb930915eeab235bfe18af01c276cd29c710",
+    "width": 1440,
+    "height": 900
+  },
+  {
+    "file": "state-learning-photo-390.png",
+    "bytes": 57135,
+    "sha256": "cffa6ad29ccc5047a63735ed5201e5f2e608c8ba3886a7ee2b9d69175f6f9db8",
+    "width": 390,
+    "height": 844
+  },
+  {
+    "file": "state-learning-revision-1440.png",
+    "bytes": 77782,
+    "sha256": "c515befc38d7f1d9001978d5f8b50dfc50dfac33b3cd2eee22b6474fed0ff679",
+    "width": 1440,
+    "height": 900
+  },
+  {
+    "file": "state-learning-revision-390.png",
+    "bytes": 41943,
+    "sha256": "e854db01fd8bb173f00d4b531ab0dfd2e432ce17a3c7288be7492be68c50d04d",
+    "width": 390,
+    "height": 844
+  },
+  {
+    "file": "state-login-1440.png",
+    "bytes": 245454,
+    "sha256": "1e5649de15fc79a110babce1db11286aef8e8223ac33a7e342e3bdbd9dfb2b4f",
+    "width": 1440,
+    "height": 900
+  },
+  {
+    "file": "state-login-390.png",
+    "bytes": 51792,
+    "sha256": "a3acd8cc9efb128e3f6f5ed2eb32c697b37a1ba1f443d90c20144b6cb56ddf5a",
+    "width": 390,
+    "height": 844
+  },
+  {
+    "file": "state-login-unavailable-1440.png",
+    "bytes": 246063,
+    "sha256": "d0c4c6e7269f01a874ba90116a224e0af8d629ef73727d5146970fb1f7e20e22",
+    "width": 1440,
+    "height": 900
+  },
+  {
+    "file": "state-login-unavailable-390.png",
+    "bytes": 51911,
+    "sha256": "c8aef8600d20fb0667b6effe46311b93a491bb517212e28a31dde16f7682201a",
+    "width": 390,
+    "height": 844
+  },
+  {
+    "file": "state-navigation-open-1440.png",
+    "bytes": 514070,
+    "sha256": "177c995aaa6b5079f96d634aa9e422f08b40dcf0c15047364fd91aeaec8d558f",
+    "width": 1440,
+    "height": 900
+  },
+  {
+    "file": "state-navigation-open-390.png",
+    "bytes": 84379,
+    "sha256": "b1f8e0ad7fc6beec9182df137910c5d6ea11c9b9de933692e579cf15a0142fe9",
+    "width": 390,
+    "height": 844
+  },
+  {
+    "file": "state-offers-0-1440.png",
+    "bytes": 49050,
+    "sha256": "fd3f0b1efac0790f4148096da3eac2e388532ceaef982d026ba0375823e8729e",
+    "width": 1440,
+    "height": 900
+  },
+  {
+    "file": "state-offers-0-390.png",
+    "bytes": 32605,
+    "sha256": "b568def4cffc1f578437da46670bbf34387df4b71d942071af9b924671bc0d44",
+    "width": 390,
+    "height": 844
+  },
+  {
+    "file": "state-offers-1-1440.png",
+    "bytes": 79609,
+    "sha256": "b2546c6386287648f9b9fcddebec7db67ba67b6da1a0b7223cfefa398f679400",
+    "width": 1440,
+    "height": 900
+  },
+  {
+    "file": "state-offers-1-390.png",
+    "bytes": 43374,
+    "sha256": "5f8c17f1b55ad0def02f345d3085dc3a95309732c2bc03f0f90acb7fe7d57e52",
+    "width": 390,
+    "height": 844
+  },
+  {
+    "file": "state-offers-2-1440.png",
+    "bytes": 62429,
+    "sha256": "047cf363f4cae9729edd8cc9e534cec3ceb2f3e7c66108c0c77c1c0fce14b5cc",
+    "width": 1440,
+    "height": 900
+  },
+  {
+    "file": "state-offers-2-390.png",
+    "bytes": 32065,
+    "sha256": "1cded6f30b87bd40faf7a052e12854c20915d4f54875be0ef1e296164cd677bf",
+    "width": 390,
+    "height": 844
+  },
+  {
+    "file": "state-offers-3-1440.png",
+    "bytes": 53817,
+    "sha256": "a4681f46f382fc5d976c56327399a342a4f836a6f886116728d225826b20a1f5",
+    "width": 1440,
+    "height": 900
+  },
+  {
+    "file": "state-offers-3-390.png",
+    "bytes": 36302,
+    "sha256": "4f82726c5c9be5828e485bcf9f2990bce7f6e98d93a4195affea2d028642d58b",
+    "width": 390,
+    "height": 844
+  },
+  {
+    "file": "state-package-builder-empty-1440.png",
+    "bytes": 89329,
+    "sha256": "b85b83c0ed0388726c93fa56b5ea0f48461a2647147057b50e9718486c15ea81",
+    "width": 1440,
+    "height": 900
+  },
+  {
+    "file": "state-package-builder-empty-390.png",
+    "bytes": 32095,
+    "sha256": "1522fdb659e5266413e2eb70177585ad528310009348f03d937e96ab55ba1f23",
+    "width": 390,
+    "height": 844
+  },
+  {
+    "file": "state-package-builder-selected-1440.png",
+    "bytes": 90378,
+    "sha256": "d3f89647a0fc12c5c0e3c4d401726282bad37f15703030eb67b8bd8c8ca28567",
+    "width": 1440,
+    "height": 900
+  },
+  {
+    "file": "state-package-builder-selected-390.png",
+    "bytes": 32552,
+    "sha256": "19cfee316ee5c1d76c5cfda223a9cbaefc5402e0d4d6f2a2548594d8c54037a6",
+    "width": 390,
+    "height": 844
+  },
+  {
+    "file": "state-package-over-limit-1440.png",
+    "bytes": 92386,
+    "sha256": "f14196010ff70e9448c632d1fe10f2c12d4e0b317ca958c65f261a9648f122bb",
+    "width": 1440,
+    "height": 900
+  },
+  {
+    "file": "state-package-over-limit-390.png",
+    "bytes": 35149,
+    "sha256": "27b315efbe3e3b62b2e4566c7072ff8604b5ebaba8ad345b7a949a380d642182",
+    "width": 390,
+    "height": 844
+  },
+  {
+    "file": "state-package-summary-1440.png",
+    "bytes": 77505,
+    "sha256": "eb787f00e0f6a2d1e0950657cf8f27eeab85e8612451f00ac2f8cedc1457b585",
+    "width": 1440,
+    "height": 900
+  },
+  {
+    "file": "state-package-summary-390.png",
+    "bytes": 44675,
+    "sha256": "a22aa226ee0b72ba03ff4e40138befe3f3f5384b284eae0530b2ab3f19550e39",
+    "width": 390,
+    "height": 844
+  },
+  {
+    "file": "state-preview-card-available-1440.png",
+    "bytes": 66670,
+    "sha256": "2ca1f664c31cff580cc882f3e92fb5f0e3317a27abe8c2729fe594e08f6b9f7b",
+    "width": 1440,
+    "height": 900
+  },
+  {
+    "file": "state-preview-card-available-390.png",
+    "bytes": 54258,
+    "sha256": "67430232a86fc099925a00b1b5f0efab3b1b3fa8b8c65e2d229019801e60962e",
+    "width": 390,
+    "height": 844
+  },
+  {
+    "file": "state-preview-card-in-cart-1440.png",
+    "bytes": 66670,
+    "sha256": "2ca1f664c31cff580cc882f3e92fb5f0e3317a27abe8c2729fe594e08f6b9f7b",
+    "width": 1440,
+    "height": 900
+  },
+  {
+    "file": "state-preview-card-in-cart-390.png",
+    "bytes": 54258,
+    "sha256": "67430232a86fc099925a00b1b5f0efab3b1b3fa8b8c65e2d229019801e60962e",
+    "width": 390,
+    "height": 844
+  },
+  {
+    "file": "state-preview-card-owned-1440.png",
+    "bytes": 66670,
+    "sha256": "2ca1f664c31cff580cc882f3e92fb5f0e3317a27abe8c2729fe594e08f6b9f7b",
+    "width": 1440,
+    "height": 900
+  },
+  {
+    "file": "state-preview-card-owned-390.png",
+    "bytes": 54258,
+    "sha256": "67430232a86fc099925a00b1b5f0efab3b1b3fa8b8c65e2d229019801e60962e",
+    "width": 390,
+    "height": 844
+  },
+  {
+    "file": "state-preview-card-stale-1440.png",
+    "bytes": 66670,
+    "sha256": "2ca1f664c31cff580cc882f3e92fb5f0e3317a27abe8c2729fe594e08f6b9f7b",
+    "width": 1440,
+    "height": 900
+  },
+  {
+    "file": "state-preview-card-stale-390.png",
+    "bytes": 54258,
+    "sha256": "67430232a86fc099925a00b1b5f0efab3b1b3fa8b8c65e2d229019801e60962e",
+    "width": 390,
+    "height": 844
+  },
+  {
+    "file": "state-preview-card-unavailable-1440.png",
+    "bytes": 66670,
+    "sha256": "2ca1f664c31cff580cc882f3e92fb5f0e3317a27abe8c2729fe594e08f6b9f7b",
+    "width": 1440,
+    "height": 900
+  },
+  {
+    "file": "state-preview-card-unavailable-390.png",
+    "bytes": 54258,
+    "sha256": "67430232a86fc099925a00b1b5f0efab3b1b3fa8b8c65e2d229019801e60962e",
+    "width": 390,
+    "height": 844
+  },
+  {
+    "file": "state-preview-form-error-1440.png",
+    "bytes": 83097,
+    "sha256": "a2c3ac3d04c2dcfe611ceb7dcafb9bc2861c3981a67e8b60f9d3bd550deb3e7e",
+    "width": 1440,
+    "height": 900
+  },
+  {
+    "file": "state-preview-form-error-390.png",
+    "bytes": 62450,
+    "sha256": "3c0d17afbf3d4ad40f06d4e4922b72e42d51719b5dc58f5a3e35e4e19a8d3384",
+    "width": 390,
+    "height": 844
+  },
+  {
+    "file": "state-preview-form-success-1440.png",
+    "bytes": 66670,
+    "sha256": "2ca1f664c31cff580cc882f3e92fb5f0e3317a27abe8c2729fe594e08f6b9f7b",
+    "width": 1440,
+    "height": 900
+  },
+  {
+    "file": "state-preview-form-success-390.png",
+    "bytes": 54258,
+    "sha256": "67430232a86fc099925a00b1b5f0efab3b1b3fa8b8c65e2d229019801e60962e",
+    "width": 390,
+    "height": 844
+  },
+  {
+    "file": "state-recovery-1440.png",
+    "bytes": 251029,
+    "sha256": "c3cbe558c35387264d581d83150b96db87be6957558fb8867ec75b1782a99a08",
+    "width": 1440,
+    "height": 900
+  },
+  {
+    "file": "state-recovery-390.png",
+    "bytes": 59192,
+    "sha256": "385dfdf553e1a8d9f865d642d16ddfb5b09245c36c46c0492902a0b2185646ab",
+    "width": 390,
+    "height": 844
+  },
+  {
+    "file": "state-recovery-unavailable-1440.png",
+    "bytes": 252976,
+    "sha256": "eba7af1556d4b18cd1d4971b6bf8b1be2d693870e1acafc85dfc4d9d6784b500",
+    "width": 1440,
+    "height": 900
+  },
+  {
+    "file": "state-recovery-unavailable-390.png",
+    "bytes": 59555,
+    "sha256": "1ce39fe17b56e1ccbdf5641078a8210090ad32c3ec2781ab3782c6a7fc7b12a0",
+    "width": 390,
+    "height": 844
+  },
+  {
+    "file": "state-reduced-motion-1440.png",
+    "bytes": 80341,
+    "sha256": "a331de134328e595d306220e2732a6b4dbf51c653c138c122b971f5cc3a5c2e8",
+    "width": 1280,
+    "height": 900
+  },
+  {
+    "file": "state-register-1440.png",
+    "bytes": 230621,
+    "sha256": "e7c86aa56b4bc2e8748fadbfb24b50c6d505778fe1ff3469ffaefd567db69155",
+    "width": 1440,
+    "height": 900
+  },
+  {
+    "file": "state-register-390.png",
+    "bytes": 44236,
+    "sha256": "1b8be65051093f5d74fe8cacd484654ef4bbe61c82723300caf966e9c8e91c0d",
+    "width": 390,
+    "height": 844
+  },
+  {
+    "file": "state-register-unavailable-1440.png",
+    "bytes": 229944,
+    "sha256": "99ca5d7a677bf86eb135b9ce020f36e5d2c0507c5a37a7f5f6855e3e2c8c462c",
+    "width": 1440,
+    "height": 900
+  },
+  {
+    "file": "state-register-unavailable-390.png",
+    "bytes": 45394,
+    "sha256": "8bb6c9a5a50df7159897d6140e232e4714d23adcf280b00a01fec5125cbbb2e7",
+    "width": 390,
+    "height": 844
+  },
+  {
+    "file": "state-reviews-next-1440.png",
+    "bytes": 49330,
+    "sha256": "e4ab30649ee4567b8b80c38cc670637e5574bf9330ffff433388820760c12918",
+    "width": 1440,
+    "height": 900
+  },
+  {
+    "file": "state-reviews-next-390.png",
+    "bytes": 30717,
+    "sha256": "89ee738b4e391653254b4a94d308e48279361c3f431031976de3783f6b225dce",
+    "width": 390,
+    "height": 844
+  },
+  {
+    "file": "state-touch-carousel-390.png",
+    "bytes": 39810,
+    "sha256": "481973e0e16c25487dcb51a11803b963e3062b738b1c7ee837619ae119e568e7",
+    "width": 390,
+    "height": 844
+  },
+  {
+    "file": "state-usa-topics-1440.png",
+    "bytes": 53390,
+    "sha256": "9e27c468f63f5ca8353777c320f8fd2a9a6507e7543f409e559511aadb558358",
+    "width": 1440,
+    "height": 900
+  },
+  {
+    "file": "state-usa-topics-390.png",
+    "bytes": 38609,
+    "sha256": "57415ca18d2c00789c7b35f4083cc652674b01765ea26ff9b039870ddec13ff1",
+    "width": 390,
+    "height": 844
+  },
+  {
+    "file": "test-auth-modal/login-1440.png",
+    "bytes": 245548,
+    "sha256": "33e674bd174320824671ce8dc72c8af7e8133a896e9132cb5d612ab956179223",
+    "width": 1440,
+    "height": 900
+  },
+  {
+    "file": "test-catalog/courses-1440.png",
+    "bytes": 605244,
+    "sha256": "d5b8fcc94d01a98677b49cce7603556b8e6ee311c2c1615aaa7beb97701d3739",
+    "width": 1440,
+    "height": 1972
+  },
+  {
+    "file": "test-commerce/development-empty-cart.png",
+    "bytes": 56605,
+    "sha256": "d0d6ed3a8d531ebf3c3254134c1f7baa3b89dcfeb580dc1b70ea3a4f4a12b2e1",
+    "width": 1280,
+    "height": 780
+  },
+  {
+    "file": "test-commerce/production-empty-cart.png",
+    "bytes": 54951,
+    "sha256": "223c50353c78fae352ff513d993d00e498297448911a198ff7b4b7d988eb6dd3",
+    "width": 1280,
+    "height": 780
+  },
+  {
+    "file": "test-learning-offers/builder-1440.png",
+    "bytes": 25235,
+    "sha256": "b56249a7f3e922ab0af528d9faa1ae14ae8e3987331aa6ac67482d8226b9a1a0",
+    "width": 680,
+    "height": 518
+  },
+  {
+    "file": "test-learning-offers/courses-1440-lower.png",
+    "bytes": 41823,
+    "sha256": "747d383cfecaa24ed477c810c463ec23cfc9e119f906838ce2cc5276410e4858",
+    "width": 1440,
+    "height": 900
+  },
+  {
+    "file": "test-learning-offers/courses-1440-viewport.png",
+    "bytes": 41631,
+    "sha256": "d431e817a1c67d1233acfeac92b7f62cc956505cd9306da8f05d214343752135",
+    "width": 1440,
+    "height": 900
+  },
+  {
+    "file": "test-learning-offers/mini-courses-1440-lower.png",
+    "bytes": 64361,
+    "sha256": "726de2a284d93a2b3f2db44ea802f10aca6809e58fe19ef337faf0fc4fe4b585",
+    "width": 1440,
+    "height": 900
+  },
+  {
+    "file": "test-learning-offers/mini-courses-1440-viewport.png",
+    "bytes": 64376,
+    "sha256": "7e1519c0203c83c98da1c3ee01bbe8314edcf503500d441183b2f6dfc8f921ac",
+    "width": 1440,
+    "height": 900
+  },
+  {
+    "file": "test-learning-offers/packages-1440-lower.png",
+    "bytes": 83349,
+    "sha256": "751a5a2e42129b4739840c946923720350543459f9fcc01e92e6c30299ce2943",
+    "width": 1440,
+    "height": 900
+  },
+  {
+    "file": "test-learning-offers/packages-1440-viewport.png",
+    "bytes": 82528,
+    "sha256": "cc5a27bad6e727a972f5e790757bc462a394b3ac27d755cccef8060f51bb4859",
+    "width": 1440,
+    "height": 900
+  },
+  {
+    "file": "test-learning-offers/start-usa-1440-lower.png",
+    "bytes": 50684,
+    "sha256": "c619e7dbd22d0294076cf8f559fa052b4b41e69533bf770d2e5be1315907d1f5",
+    "width": 1440,
+    "height": 900
+  },
+  {
+    "file": "test-learning-offers/start-usa-1440-viewport.png",
+    "bytes": 53012,
+    "sha256": "696b391dddae2a37327c820155776e2f251ec4a60a0f1f540b9b1c7e456d3009",
+    "width": 1440,
+    "height": 900
+  },
+  {
+    "file": "test-public-header/home-filled-1440.png",
+    "bytes": 519287,
+    "sha256": "c6e3aa7d1d99c40ca507a676cdb70ec4a984778114bc703c845f5aca3a7e81ea",
+    "width": 1440,
+    "height": 900
+  },
+  {
+    "file": "test-public-header/home-filled-390.png",
+    "bytes": 124471,
+    "sha256": "8cfae09c7864b3eb7be248ec9736a79ff120272659b5f082a25715e8db9ce9f6",
+    "width": 390,
+    "height": 844
+  },
+  {
+    "file": "test-public-header/home-returning-1440.png",
+    "bytes": 519992,
+    "sha256": "6a089949e2d118f6b60efb7caebb7060d3498d68aa3a9194f78240a3c35f53a3",
+    "width": 1440,
+    "height": 900
+  },
+  {
+    "file": "test-public-header/home-returning-390.png",
+    "bytes": 128425,
+    "sha256": "b416a83d36625ddac5609dcb4460032470351128c8e42b2c16e1ad972ae065df",
+    "width": 390,
+    "height": 844
+  },
+  {
+    "file": "test-public-header/home-top-1440.png",
+    "bytes": 519038,
+    "sha256": "259c29bd3c31f5199ea9f369b1ef94f0120dc65b9a69e14e8c5997cb0cb7a8ed",
+    "width": 1440,
+    "height": 900
+  },
+  {
+    "file": "test-public-header/home-top-390.png",
+    "bytes": 125002,
+    "sha256": "80e09a8bca42bac6d449da58343bcb497b56126684e45f26f1c139d2601e4d18",
+    "width": 390,
+    "height": 844
+  },
+  {
+    "file": "test-public-header/mobile-dropdown-390.png",
+    "bytes": 84379,
+    "sha256": "b1f8e0ad7fc6beec9182df137910c5d6ea11c9b9de933692e579cf15a0142fe9",
+    "width": 390,
+    "height": 844
+  },
+  {
+    "file": "test-public-polish/founder-open-1440.png",
+    "bytes": 474657,
+    "sha256": "b6f7221768e83e51bc53d1c1977395a9d25853d56bb651de024cb9eec26ca76a",
+    "width": 1440,
+    "height": 900
+  },
+  {
+    "file": "test-public-polish/founder-open-360.png",
+    "bytes": 78508,
+    "sha256": "581bf0b13dc8251296163e10a2ceca85b7f1a7f5ec0dbc740b7005a7380e5cdb",
+    "width": 360,
+    "height": 844
+  },
+  {
+    "file": "test-public-polish/founder-open-390.png",
+    "bytes": 87878,
+    "sha256": "0b873d536de0f87ec5656afd9da06b46230c4066565ee073267730ec4d500c8b",
+    "width": 390,
+    "height": 844
+  },
+  {
+    "file": "test-public-polish/founder-open-768.png",
+    "bytes": 268719,
+    "sha256": "d863a04d5b5c859351175d8ca073ebf88fc0aa44478dea8099e82f0cb119aa9e",
+    "width": 768,
+    "height": 900
+  },
+  {
+    "file": "test-public-polish/modal-motion-360.png",
+    "bytes": 61575,
+    "sha256": "378d14c98ea936ac97458dce4f353cc382b2bcaf5bcb498714fcbe1c6a78acf4",
+    "width": 360,
+    "height": 844
+  },
+  {
+    "file": "test-public-polish/switcher-v2-1440.png",
+    "bytes": 64359,
+    "sha256": "579790dcdd02276e37128680a98e36fce2c267ca8204a6fe7eadee949e769f7a",
+    "width": 1440,
+    "height": 900
+  },
+  {
+    "file": "test-public-polish/switcher-v2-360.png",
+    "bytes": 39549,
+    "sha256": "81f998cb9293741cfdc5438d695edd529e6ef8106c28a1db7ce78d7cfe570dd6",
+    "width": 360,
+    "height": 844
+  },
+  {
+    "file": "test-public-polish/switcher-v2-390.png",
+    "bytes": 40683,
+    "sha256": "dc2aba9bad1b95f123099a867853474884e03214710512fff2e1ebf5663ac1b7",
+    "width": 390,
+    "height": 844
+  },
+  {
+    "file": "test-public-polish/switcher-v2-768.png",
+    "bytes": 48159,
+    "sha256": "b593ac7060d27bf98644376aa8322b768a49fc0552d50efd489bc4096da28279",
+    "width": 768,
+    "height": 900
+  },
+  {
+    "file": "test-refinement/about-1440.png",
+    "bytes": 649457,
+    "sha256": "03fb8a4d5fb0eb75ebe369534b4c5fa9791fa16b0d01cb8ea8ee4d42dd8b52f2",
+    "width": 1440,
+    "height": 900
+  },
+  {
+    "file": "test-refinement/about-390.png",
+    "bytes": 106913,
+    "sha256": "60a70e8dcef269fdaab8f1066c5b264dc2e950204e020c1901e6fcab79005c1b",
+    "width": 390,
+    "height": 844
+  },
+  {
+    "file": "test-refinement/founder-1440.png",
+    "bytes": 475495,
+    "sha256": "483ad8f98a0f256d65fceb10c90f8d35c69c88e1f30cdfc04bd151a299c328a1",
+    "width": 1440,
+    "height": 900
+  },
+  {
+    "file": "test-refinement/founder-390.png",
+    "bytes": 80428,
+    "sha256": "04f0db2d065781bd21e31483c8ac145e1f43e897ac9fc7aecfe611b7cf589405",
+    "width": 390,
+    "height": 844
+  },
+  {
+    "file": "test-refinement/home-1440.png",
+    "bytes": 2028421,
+    "sha256": "23289708d0a9fff5a2a221f3a120892ec06d393eea261ccb4077909c5c237baa",
+    "width": 1440,
+    "height": 6749
+  },
+  {
+    "file": "test-refinement/home-360.png",
+    "bytes": 677375,
+    "sha256": "dcb695ce247235f7aad5a109fe95e7f66da997c731e780a447bec9bc6549e4cb",
+    "width": 360,
+    "height": 8423
+  },
+  {
+    "file": "test-refinement/home-390.png",
+    "bytes": 701996,
+    "sha256": "fa78aac3c2ff17a32c49ae66b42b23389b7e5568d44c9c355c2b7cd7e94fce7a",
+    "width": 390,
+    "height": 8226
+  },
+  {
+    "file": "test-refinement/home-768.png",
+    "bytes": 1399852,
+    "sha256": "73a229e7c7794b38ccce7008a88455ef9f6bf18b7a114d806936fafaf5e252bd",
+    "width": 768,
+    "height": 7448
+  },
+  {
+    "file": "test-refinement/learning-offers-1440.png",
+    "bytes": 43689,
+    "sha256": "20fb16e384d28fa192aa530e147bfc275e9cb236e52a6a9bbcb75af12497d03a",
+    "width": 1440,
+    "height": 900
+  },
+  {
+    "file": "test-refinement/learning-offers-390.png",
+    "bytes": 30519,
+    "sha256": "68763f8c01dafa28f54fa0616ec2aa1ab8d246c1378e8d98dc9721ad1f60f212",
+    "width": 390,
+    "height": 844
+  },
+  {
+    "file": "test-refinement/learning-preview-1440.png",
+    "bytes": 75615,
+    "sha256": "f1b7fb434608ff0ae42991488b350a5a4900953ffb541b885096b7f004052409",
+    "width": 1440,
+    "height": 900
+  },
+  {
+    "file": "test-refinement/learning-preview-390.png",
+    "bytes": 50773,
+    "sha256": "dda2567d521352fc4a850729236cc2c4d88ee388574d9b6eb96bec7cb4c0b8ca",
+    "width": 390,
+    "height": 844
+  },
+  {
+    "file": "test-refinement/reviews-1440.png",
+    "bytes": 51326,
+    "sha256": "2b683f7fb9e5bcfff6e90835052c4f44f2e4047073e6fc0980dd3973016ab109",
+    "width": 1440,
+    "height": 900
+  },
+  {
+    "file": "test-refinement/reviews-390.png",
+    "bytes": 34771,
+    "sha256": "64b77a28d43975956d7e9fdfe67a8c0c4f99debe3fa192fcc5db61c057b91f67",
+    "width": 390,
+    "height": 844
+  },
+  {
+    "file": "verification-integrity.json",
+    "bytes": 606,
+    "sha256": "1eab167d131101b8d718178998bb1874217d4e0926ada13b17cd29826472bda9"
+  },
+  {
+    "file": "verified-catalog-no-results-1440.png",
+    "bytes": 77285,
+    "sha256": "2b0e1f695bf3e66f50d89b04271f9edf973812ce23db49433db3edd2b06c8984",
+    "width": 1440,
+    "height": 900
+  },
+  {
+    "file": "verified-catalog-no-results-390.png",
+    "bytes": 42968,
+    "sha256": "bfe8004edfe8ec4d4a9cec513d52f61702b8c940df912d02cb3f50c4b1769206",
+    "width": 390,
+    "height": 844
+  },
+  {
+    "file": "verified-reduced-motion-1440.png",
+    "bytes": 49500,
+    "sha256": "b13cd8cb4b68a8d89f05c660b3d5b13d990756d6dc7b0e822ed907e6ad475cee",
+    "width": 1440,
+    "height": 900
+  },
+  {
+    "file": "verified-reduced-motion-390.png",
+    "bytes": 34805,
+    "sha256": "2198b23a12cf2bc37c635ba7ae502e1c5fff4cb4d8cf50f25fa2b03c3a9a6adf",
+    "width": 390,
+    "height": 844
+  }
+]

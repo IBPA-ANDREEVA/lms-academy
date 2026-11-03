@@ -27,7 +27,7 @@ Read alongside [page structure](./public-page-structure.md), [user flows](./publ
 | [Architecture](./overview.md), [modules](./modules.md), [ADR-0001](../decisions/0001-modular-monolith.md) | Thin routes, module ownership, server authorization and payment authority |
 | [Direction](../design/DIRECTION.md), [system](../design/SYSTEM.md), [screens](../design/SCREENS.md), [components](../design/COMPONENTS.md), [QA](../design/QA.md), [icons](../design/icons/USAGE.md) | Functional hierarchy, accessibility, Russian-first content, selective design signatures |
 | Historical visual references | Retired 2026-10-28 at owner request; selected decisions remain in design docs. New implementations follow user-supplied references. |
-| Local LMS Vault at `/Users/ivanmakovetskyi/Ivan's Vault/Projects/LMS` | Full Project Plan, phase plans, Roadmap, Dashboard, Timeline, epic/task maps and acceptance records; especially LA01–LA14, PM01–PM19, INF16, ST03, ST10 and QA03–QA10 |
+| Local LMS Vault at `/Users/ivanmakovetskyi/Ivan's Vault/Projects/LMS` | Full Project Plan, phase plans, Roadmap, Dashboard, Timeline, epic/task maps and acceptance records; especially LA01–SITE021, PM01–PM19, INF16, LEARN002, ST10 and QA001–QA10 |
 
 The repository documentation and accessible local Vault constitute the available LMS Academy Docs for this review. No separately identified external document or approved legal text was supplied. Vault dates are planning targets, not release promises. Business rules follow the original specification; release allocation follows the repository scope; visual mockups do not advance later features into MVP.
 
@@ -91,14 +91,14 @@ Shells: **Public** = discovery header/footer; **Transaction** = focused commerce
 | `/courses/[slug]` | Assess course, preview and add to cart | MVP; course records, LA07 | Public |
 | `/mini-courses` | Find recorded-only products and their details | MVP behavior; separate listing is IA recommendation | Public |
 | `/mini-courses/[slug]` | Assess mini-course and add to cart | MVP; LA07, completion requirements | Public |
-| `/packages` | Compare/select eligible package configurations | Phase 2; LA12, PM17 | Public |
+| `/packages` | Compare/select eligible package configurations | Phase 2; SALE013, SALE012 | Public |
 | `/packages/[slug]` | Review composition, fixed price, savings; add to cart | Phase 2 behavior; detail route recommended | Public |
 | `/start-in-usa` | Explain module; standalone or package purchase when approved | Proposed standalone purchase route; release TBD (PA-04), not assigned to MVP or Phase 2 | Public |
-| `/cart` | Review selections, remove items, continue to `/checkout` | MVP; LA09, PM07; upgrades/promos Phase 2 | Guest or signed-in cart owner / Transaction |
+| `/cart` | Review selections, remove items, continue to `/checkout` | MVP; LA09, SALE006; upgrades/promos Phase 2 | Guest or signed-in cart owner / Transaction |
 | `/checkout` | Buyer details, all four legal acknowledgments, authoritative USD total, embedded Stripe Payment Element | MVP; PM06–PM10 | Guest or signed-in buyer / Transaction |
 | `/checkout/result` | Read verified payment/fulfillment status, enter `/account` | MVP required outcomes; single route recommended | Authorized buyer/checkout context / Transaction |
-| `/login` | Authenticate and resume allowed destination | MVP; PM02 | Public entry / Identity |
-| `/register` | Voluntary registration, then verification | MVP; PM02, PM05 | Public entry / Identity |
+| `/login` | Authenticate and resume allowed destination | MVP; BASE009 | Public entry / Identity |
+| `/register` | Voluntary registration, then verification | MVP; BASE009, PM05 | Public entry / Identity |
 | `/verify-email` | Verification, sent, expired and resend states | MVP; PM05 | Secure token/session as appropriate / Identity |
 | `/forgot-password` | Request recovery email | MVP; PM05 | Public entry / Identity |
 | `/reset-password` | Set password using valid recovery proof | MVP; PM05 | Valid token required for mutation / Identity |
@@ -140,7 +140,7 @@ Account entry must respect a validated continuation first, then a permitted role
 
 **Recommendation:** one common root layout with nested public, transaction, identity and workspace shells. Route groups can organize shells but do not add URL segments or create authorization. In particular, `(student)/courses/[id]` would collide with the public `/courses/[slug]` pattern: the existing example in modules.md is illustrative, not an adopted route. Reserve a literal `/account` namespace for protected learning (PA-03).
 
-Catalog owns listings, course/mini-course/package content and offer projections. Commerce owns cart, checkout and result state; Identity owns authentication and account resolution; Learning owns dashboard handoff and entitlements; Certificates owns public verification; Notifications owns receipt/access delivery. Generic controls may be shared, but a shared shell must not become a domain-logic layer. PD-006 requires administrator-managed RU/EN policy versions and all four checkout acknowledgments. The implementation owner for policy management still needs agreement in INF03/AD01, alongside Commerce's consent record.
+Catalog owns listings, course/mini-course/package content and offer projections. Commerce owns cart, checkout and result state; Identity owns authentication and account resolution; Learning owns dashboard handoff and entitlements; Certificates owns public verification; Notifications owns receipt/access delivery. Generic controls may be shared, but a shared shell must not become a domain-logic layer. PD-006 requires administrator-managed RU/EN policy versions and all four checkout acknowledgments. ADR-0002 assigns policy version/publication and consent records to Commerce; `src/features/policies` is the planned frontend presentation owner. PL01/SALE003 prepare it; completed INF03 stays historical.
 
 ## Sections instead of unnecessary pages
 
@@ -156,3 +156,7 @@ Catalog owns listings, course/mini-course/package content and offer projections.
 The [review register](./public-open-questions.md) limits current route decisions to **locale URL policy (PA-02)** and **the protected namespace (PA-03)**. The catalog split is retained (PA-01); Start in USA's release remains open and blocks only its publication/navigation (PA-04), not MVP public architecture.
 
 Guest identity, cart reconciliation, payment authorization, legal/pricing rules, support and pending scope corrections remain MVP implementation or launch dependencies. Packages/promotions/localization policies belong to Phase 2; review/verification policies belong to Phase 3; section composition and visual evidence belong to design work. Preserve all existing records in the [product decision register](../product/open-questions.md) and the deferred PA notes. This refinement does not mark any OQ as decided or waive a feature's release prerequisites.
+
+## Current placement overlay · 2026-10-30
+
+The original draft inspection baseline above is historical. Current public UI/fixtures are listed in the frontend registry; no protected server domains are implemented. ADR-0002 preserves frontend features and puts authoritative operations in seven `src/server` domains. PD-011 removes the dedicated manager role and manager-only workspace; referral capabilities use existing authorized account experiences. OQ-091 retains unknown protected-route spellings. No URL is approved by this overlay.

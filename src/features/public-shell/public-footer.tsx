@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { PageContainer } from "./page-container";
 import type { NavigationEntry as Entry, NavigationGroup, NavigationLink } from "./navigation";
+import { BrandLogo } from "./brand-logo";
 import { NavigationEntry } from "./navigation-entry";
 import styles from "./public-footer.module.css";
 
@@ -30,8 +31,8 @@ export function PublicFooter({
       <PageContainer>
         <div className={styles.top}>
           <div className={styles.identity}>
-            <Link className={styles.brand} href={brand.href}>
-              {brand.label}
+            <Link className={styles.brand} href={brand.href} aria-label={brand.label}>
+              <BrandLogo />
             </Link>
             {contact && <Link href={contact.href}>{contact.label}</Link>}
             {issuer && <p>{issuer}</p>}
@@ -44,7 +45,7 @@ export function PublicFooter({
                   <ul>
                     {group.links.map((link) => (
                       <li key={link.label}>
-                        <NavigationEntry entry={link} />
+                        <NavigationEntry entry={link} showPreviewLabel={false} />
                       </li>
                     ))}
                   </ul>
@@ -60,7 +61,7 @@ export function PublicFooter({
                 <ul className={styles.legal}>
                   {legalLinks.map((link) => (
                     <li key={link.label}>
-                      <NavigationEntry entry={link} />
+                      <NavigationEntry entry={link} showPreviewLabel={false} />
                     </li>
                   ))}
                 </ul>

@@ -1,0 +1,40 @@
+[
+  {
+    "name": "desktop course controls correctly hidden",
+    "visible": 0
+  },
+  {
+    "name": "filter click-open then Escape",
+    "width": 1440,
+    "remains": 1
+  },
+  {
+    "name": "filtered single-card controls",
+    "width": 390,
+    "geometry": {
+      "client": 350,
+      "scroll": 350
+    },
+    "controlsVisible": true
+  },
+  {
+    "name": "touch navigation open",
+    "open": 1
+  },
+  {
+    "name": "nested touch swipe",
+    "before": 0,
+    "after": 328,
+    "active": "packages"
+  },
+  {
+    "name": "filter click-open then Escape",
+    "width": 390,
+    "remains": 1
+  },
+  {
+    "name": "filter click-open then Escape",
+    "width": 320,
+    "remains": 1
+  }
+]

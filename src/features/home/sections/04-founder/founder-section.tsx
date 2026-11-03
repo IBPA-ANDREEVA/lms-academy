@@ -1,3 +1,4 @@
+import { FounderStory } from "./components/founder-story";
 import Image from "next/image";
 import founderPortrait from "../../../../../public/ibpa/lдля клиентов 77 3 копія.jpg";
 import { PageContainer } from "@/features/public-shell";
@@ -11,10 +12,10 @@ export function FounderSection() {
       className={styles.section}
       aria-labelledby="founder-title"
     >
-      <div className={styles.photograph}>
+      <div data-motion-photo className={styles.photograph}>
         <Image
           src={founderPortrait}
-          alt="Iuliia Andreeva среди инструментов для работы в сфере красоты"
+          alt="Юлия Андреева среди инструментов для работы в сфере красоты"
           fill
           sizes="(max-width: 600px) 100vw, 54vw"
           className={styles.image}
@@ -22,18 +23,21 @@ export function FounderSection() {
       </div>
       <div className={styles.plumWedge} aria-hidden="true" />
       <div className={styles.edgeLine} aria-hidden="true" />
-      <PageContainer size="wide" className={styles.content}>
+      <PageContainer reveal="portrait" size="wide" className={styles.content}>
         <p className={styles.kicker}>ОСНОВАТЕЛЬ</p>
-        <h2 id="founder-title" className={styles.heading}>
+        <h2 data-motion-item id="founder-title" className={styles.heading}>
           <span>ОПЫТ,</span>
           <span>КОТОРЫЙ СОЗДАЁТ</span>
           <span>ВОЗМОЖНОСТИ</span>
         </h2>
-        <p className={styles.biography}>
-          Iuliia Andreeva объединяет опыт бьюти-практики, преподавания и
-          предпринимательства. Её работа направлена на развитие
-          профессионального сообщества.
-        </p>
+        <div data-motion-item className={styles.biography}>
+          <p><strong>Юлия Андреева</strong> — основательница LMS Academy и президент International Beauty Professionals Association (IBPA).</p>
+          <FounderStory>
+          <p>До бьюти-индустрии 12 лет работала в фармацевтическом бизнесе и дошла до руководителя региона «Москва». Оттуда — системный подход к обучению и внимание к стандартам качества.</p>
+          <p>В 2019 году начала работать лэшмейкером и стала победительницей чемпионатов по наращиванию ресниц. В 2021 году открыла в Москве школу-студию наращивания ресниц «Lashes Room Юлии Андреевой», и в первый же год её оборот составил 6 млн рублей. В 2022 году открыла школу-студию в Турции, в 2024 году — в Роклине, Калифорния.</p>
+          <p>За свою карьеру обучила более 100 учеников по всему миру. В США помогла более чем 500 мастерам получить бьюти-лицензию. Создала профессиональное сообщество IBPA и с 2024 года организует ежегодный Beauty Business Forum для бьюти-мастеров.</p>
+          </FounderStory>
+        </div>
         <FounderMilestones />
       </PageContainer>
     </section>

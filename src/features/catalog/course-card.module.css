@@ -68,3 +68,40 @@
 .compact .title{font-size:19px}.compact .meta{font-size:12px}
 .brutalist .action,.compact .action{justify-self:end}
 @media(max-width:680px){.compact{grid-template-columns:38% 1fr}.compact .content{padding:15px}.compact .title{font-size:17px}}
+
+/* November public-page refinement. */
+
+.card,.brutalist,.compact { clip-path: none; border: 2px solid var(--text); background: var(--surface); color: var(--text); box-shadow: 5px 5px 0 var(--text); transition: transform .22s ease,box-shadow .22s ease,border-color .22s ease; }
+.card .content { padding: 24px; gap: 16px; }
+.brutalist .media { margin: 0; }
+.media { overflow: hidden; border-bottom: 2px solid var(--text); }
+.media img { transition: transform .45s ease; }
+.clickable:hover { transform: translate(-3px,-3px); box-shadow: 9px 9px 0 var(--text); border-color: var(--brand); }
+.clickable:hover .media img { transform: scale(1.035); }
+.title a:hover { text-decoration: none; }
+.clickable:focus-within { outline: 3px solid var(--focus); outline-offset: 4px; box-shadow: 5px 5px 0 var(--text); }
+@media(max-width:600px) { .card .content { padding: 20px; } .compact { display: flex; } .compact .media { aspect-ratio: 16/9; min-height: 0; } }
+@media(prefers-reduced-motion:reduce) { .card,.media img { transition: none; } .clickable:hover,.clickable:hover .media img { transform: none; } }
+
+.card .content { display: flex; flex-direction: column; align-items: stretch; }
+.card .action { margin-top: auto; padding-top: 4px; align-self: flex-end; }
+.card:active:has(a:active) { transform: translate(2px,2px); box-shadow: 2px 2px 0 var(--text); }
+@media(max-width:600px) {
+ .card .content { padding: 16px; gap: 10px; }
+ .brutalist .media { aspect-ratio: 16/9; }
+ .title { font-size: 20px; }
+ .meta { font-size: 13px; }
+ .imageMark { font-size: 30px; }
+}
+@media(prefers-reduced-motion:reduce) { .card:active:has(a:active) { transform: none; } }
+
+/* Touch keeps native swiping; compact cards have less physical weight. */
+@media(hover:hover) and (pointer:fine) {
+  .compact.clickable:hover { transform: translate(-2px,-2px); box-shadow: 7px 7px 0 var(--text); }
+}
+@media(hover:none) {
+  .clickable:hover:not(:active) { transform: none; box-shadow: 5px 5px 0 var(--text); }
+  .clickable:hover .media img { transform: none; }
+}
+.card:active:has(a:active) { transition-duration: .12s; }
+@media(prefers-reduced-motion:reduce) { .compact.clickable:hover { transform: none; } }

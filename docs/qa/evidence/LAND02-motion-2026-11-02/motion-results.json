@@ -1,0 +1,10 @@
+{
+  "checks": [
+    "direct hash selection",
+    "rapid switching and resize settle active height",
+    "Back restores hash panel",
+    "live reduced motion settles panel",
+    "FAQ rapid reversal and live reduced motion"
+  ],
+  "errors": []
+}

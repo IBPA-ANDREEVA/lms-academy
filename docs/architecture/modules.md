@@ -1,5 +1,15 @@
 # Module ownership and workflows
 
+## Implemented presentation versus target domains · 2026-11-02
+
+The seven domain contracts below remain authoritative **architecture**, not delivered server modules. `src/server` does not yet exist. `features/identity` implements an unavailable auth dialog, not sessions/authorization. `features/catalog` implements array-filtered example cards, not approved published records. `features/commerce` implements development-only fixture cart state, not authoritative money/checkout. `home`, `course-detail`, `public-shell` and `component-preview` are implemented presentation owners. Empty `features/{learning,assignments,certificates,notifications}` and `src/db`/`src/lib` are placeholders.
+
+Actual presentation imports: PublicHeader consumes exported Identity.AuthModal and Commerce.CartPreview; home consumes exported Catalog.CourseCard/CategoryNavigation; course-detail derives example DTOs from Catalog's exported fixture lists. The last dependency is demo data coupling, not an approved production Catalog interface. Public shell/layout and page compositions may compose frontend features; no client-facing barrel may expose future server runtime rules. Shared domain-independent controls remain under `src/components/ui`. See [component APIs/consumers](frontend-components.md) and [section owners](frontend-sections.md).
+
+Public Site owns public presentation; Catalog/content administration supplies approved publication data; Commerce owns authoritative cart/quotes/payment and checkout-acceptance evidence; Identity owns authentication; Administration performs approved authoring/approval/publication through appropriate domain interfaces. Policy-publication ownership still requires SALE002 preparation; homework-definition ownership follows the existing Assignments baseline pending SITE009/WORK001. No eighth server domain, manager role or new route is introduced.
+
+Current UI gaps include three acknowledgments instead of PD-006's four, empty published inventories, disabled contact/payment, missing auth/legal/result routes and missing server diagnostics. These are integration/implementation gaps, not changes to module ownership. [LAND01 audit](../qa/LAND01-public-site-audit-2026-11-02.md).
+
 ## Purpose
 
 This document turns the modular-monolith decision into enforceable ownership and
@@ -19,7 +29,7 @@ OQ-037, OQ-048 and OQ-049.
 ## Boundary vocabulary
 
 - A **public interface** is an exported command, query, DTO, or event type from
-  `src/features/<module>/index.ts` or another explicitly documented public entry
+  `src/server/<domain>/index.ts` or another explicitly documented public entry
   point.
 - An **internal implementation** is every other file in a module. It may change
   without coordinating consumers.
@@ -67,10 +77,10 @@ domain dependency.
 
 | Module | Owns authoritative state | Does not own |
 | --- | --- | --- |
-| Identity | Accounts, credentials/provider links, sessions, verification/reset state, block state, roles, profile and locale, certificate-name inputs | Enrollment, purchases, course assignments, manager attribution |
+| Identity | Accounts, credentials/provider links, sessions, verification/reset state, block state, roles and explicit capability grants, profile and locale, certificate-name inputs | Enrollment, purchases, course assignments, referral-partner attribution |
 | Catalog | Directions, products, course and lesson definitions, ordering, localization metadata, publication/sale state, prices/offers, package composition, protected content references | Purchased-price history, enrollment/progress, student submissions |
-| Commerce | Carts, checkout calculations, commercial snapshots, consent evidence, orders and lines, payment attempts/events, refunds, promo usage, manager attribution, manual-enrollment evidence | Course content, account credentials, learning access state |
-| Learning | Enrollments/entitlements, access and support windows, curator assignment for an enrollment, lesson progress, playback position, sequential-access decisions | Catalog definitions, payment records, assignment reviews, certificate files |
+| Commerce | Carts, checkout calculations, commercial snapshots, consent evidence, orders and lines, payment attempts/events, refunds, accepted policy-version references (publication owner pending SALE002), promo usage, partner identity/links, attribution/commission ledgers, manual-enrollment evidence | Course content, account credentials, learning access state |
+| Learning | Enrollments/entitlements, access and support windows, curator assignment for an enrollment, lesson progress, playback position, sequential-access decisions, course-scoped conversations | Catalog definitions, payment records, assignment reviews, certificate files |
 | Assignments | Homework definitions, mandatory status/version, submissions and revisions, private submission assets, reviews, feedback, review assignment and deadlines | Course/lesson content, general enrollment, certificate issuance |
 | Certificates | Eligibility evaluation record, certificate number, issuance snapshot, generated file reference, language/template reference, revocation/supersession history | Source progress, assignment decisions, profile editing |
 | Notifications | Notification intent, templates and localized render versions, recipient/channel preferences when approved, delivery jobs, attempts, provider message IDs and outcomes | The business fact that triggered a message, payment or access state |
@@ -139,8 +149,7 @@ provider event may fulfill an order. PD-002 selects Stripe embedded Payment Elem
 USD and eligible cards/wallets/Klarna one-time purchases; no subscriptions in any
 planned phase. State transitions and other commercial policies remain blocked by
 OQ-029 through OQ-041. Commerce retains immutable legal-version acceptance evidence
-and verifies all four PD-006 acknowledgments before payment. Policy-management
-ownership is an explicit planning gap to resolve in INF03/AD01; it is not a new module.
+and verifies all four PD-006 acknowledgments before payment. Commerce owns checkout acceptance evidence. The owner of policy documents, approval/publication and immutable source versions remains a SALE002 preparation decision within the seven domains. Frontend policy management stays in its own feature; this refactor does not approve the previously proposed ownership choice.
 PD-010 requires automatic Stripe approval/processing of eligible refund requests
 without administrator approval; exceptions/failures escalate to administrators.
 Final eligibility is blocked by OQ-037: the seven-day window remains proposed.
@@ -359,7 +368,7 @@ sequenceDiagram
     A->>L: authorize curator and support action now
     A->>A: Append review decision
     A->>N: HomeworkReviewed
-    A->>Cert: Request eligibility evaluation
+    A->>N: Commit completion fact for eligibility evaluation
     Cert->>L: read lesson-completion facts
     Cert->>A: read mandatory-work facts
     Cert->>Cert: Calculate eligibility and queue administrator review
@@ -368,7 +377,7 @@ sequenceDiagram
     Cert->>N: CertificateIssued
 ```
 
-The request to evaluate may be a direct post-commit call or an outbox-driven job;
+An outbox-driven job requests evaluation through the Certificates public interface;
 eligibility evaluation remains idempotent either way; PD-010 issuance requires
 manual administrator review/authorization. Main/advanced courses require acceptance
 of all mandatory homework; mini-courses require completion of all mandatory lessons.
@@ -450,7 +459,7 @@ Required invariants:
   mutations immediately at server authorization boundaries;
 - commercial and learning history is retained and linked to actor, order, refund,
   enrollment, confirmation, and timestamp;
-- later trainer/manager accrual reversal consumes the confirmed-refund fact;
+- later trainer/partner accrual reversal consumes the confirmed-refund fact;
 - notification or reporting failure does not restore access.
 
 Partial refunds and multi-product allocation are blocked by OQ-036. Refund must
@@ -481,74 +490,39 @@ details, not newly approved routes or a new domain module.
 
 ## Practical folder organization
 
-Start with the smallest folders required by a feature. A mature module may look
-like this; empty layers should not be created speculatively:
+Follow [ADR-0002](../decisions/0002-frontend-server-separation.md). These are placement examples, not a request for scaffolding:
 
 ```text
 src/features/learning/
-  index.ts                         # reviewed public exports only
-  domain/
-    enrollment.ts                 # aggregate/state transitions
-    access-policy.ts              # pure authorization policy
-  application/
-    grant-enrollment.ts           # one use case
-    revoke-enrollment.ts
-    get-lesson-access.ts
-  data/
-    enrollment-repository.ts      # interface used by this module
-    db-enrollment-repository.ts   # server-only implementation
-  integrations/
-    video-playback-port.ts
-    provider-video-playback.ts    # selected provider adapter
-  ui/
-    course-progress.tsx
-    lesson-player.tsx             # Client Component only if interaction needs it
-  __tests__/
-    access-policy.test.ts
-    grant-enrollment.test.ts
+  learning-page.tsx
+  sections/01-course-list/course-list-section.tsx
+  sections/02-lesson/components/lesson-player.tsx
+src/server/learning/
+  index.ts                  # narrow server-only public entry
+  contracts.ts              # safe DTO/input types; no runtime dependencies
+  grant-enrollment.ts       # use case + transaction boundary
+  access-policy.ts          # pure rules when practical
+  enrollment-data.ts        # private owned persistence operations
+src/app/                    # thin routes and delivery adapters only
 ```
 
-App Router entry points compose this module without owning its rules:
-
-```text
-src/app/
-  (student)/courses/[courseId]/page.tsx
-  (student)/courses/[courseId]/loading.tsx
-  (student)/courses/[courseId]/error.tsx
-  api/video/[assetId]/playback/route.ts
-```
-
-A smaller module should remain smaller. For example, a single query may be
-`src/features/catalog/get-public-course.ts` plus a test and an export; it does not
-need empty `domain`, `application`, or `data` directories.
+Keep existing `home`, `catalog`, `course-detail`, `commerce`, `identity` and
+`public-shell` frontend files in place. Frontend features need not mirror server
+domains. Do not create empty layers, generic repositories per table or duplicate UI.
 
 ## Import examples
 
-Allowed:
-
-```ts
-import { getSellableOffer } from "@/features/catalog";
-import { grantEnrollment } from "@/features/learning";
-```
-
-Not allowed:
-
-```ts
-import { catalogDb } from "@/features/catalog/data/catalog-db";
-import { enrollmentTable } from "@/features/learning/internal/schema";
-```
-
-Feature UI may import generic primitives from `@/components/ui`. Generic UI must
-not import a feature. Shared technical code in `src/lib` must not import feature
-modules. `src/db` must not contain business workflows.
-
-Avoid barrel exports inside private folders. The root `index.ts` is a reviewed
-capability boundary, not an export of every module file.
+A Server Component/action/handler may call `@/server/catalog` or
+`@/server/learning`. It may not import `@/server/catalog/internal/...` or another
+domain's tables. Client code may use `import type` from a safe `contracts.ts`,
+never the domain's server entry. Frontend UI imports its existing public feature
+interfaces and generic primitives. Server domains do not import frontend UI.
+`src/lib` and `src/db` must not become business workflow owners.
 
 ## Data and schema rules
 
 Schema files may be physically centralized under `src/db/schema` if required by
-the selected migration tool, but each file and table has one named feature owner.
+the selected migration tool, but each file and table has one named server-domain owner.
 A practical layout is:
 
 ```text
@@ -566,7 +540,7 @@ src/db/
     notifications.ts
 ```
 
-Only the owning feature repository writes the corresponding schema. Foreign keys
+Only the owning server domain writes the corresponding schema. Foreign keys
 may cross ownership boundaries, but cascade deletion must not erase retained
 commercial, educational, audit, or certificate evidence. Cross-module transaction
 coordination passes an opaque transaction context to public commands; it does not
@@ -574,7 +548,7 @@ pass raw tables or query builders.
 
 Audit semantics stay with the action owner. Shared audit persistence may record
 actor, action, target, time, correlation, and safe before/after metadata, but the
-feature defines which action is auditable and which sensitive fields must be
+domain defines which action is auditable and which sensitive fields must be
 omitted. PD-007 fixes routine-error/admin-log retention at 30 days, encrypted
 restricted backups at 30 days, and permanent certificate records/verification
 evidence. Critical audits follow legally required periods. Audit classification
@@ -598,3 +572,25 @@ Before merging a feature change, verify:
 - unresolved product questions are referenced rather than answered in code;
 - tests cover direct unauthorized access, valid state changes, conflicts, and
   replay for critical operations.
+
+## Referral capability and cross-domain preparation
+
+PD-011 removes a dedicated manager role/dashboard. Commerce owns stable partner
+identity/link records, attribution snapshots and commissions. Identity supplies
+explicit authorization capabilities; current role changes never rewrite financial
+history. Trainer/curator/administrator or another explicitly authorized account may
+have referral capabilities. Lead/contact/manual-sale permission is not implied by
+a link. Existing account and administration UI consume narrow Commerce contracts.
+Final percentages, bases, payout rules and consent requirements remain unresolved.
+
+Course publication needs version-matched homework readiness without a Catalog ↔
+Assignments import cycle. The existing Assignments definition ownership remains the
+baseline; a proposed relocation or different readiness projection is not approved
+by this plan. SITE009/WORK001 resolve the implementation contract and record any justified
+ownership change before WORK002/SITE012 implement it. A stale or missing fact cannot
+authorize publication. Certificate evaluation follows committed
+completion facts, not a synchronous Assignments → Certificates reverse import.
+
+## Delivery grouping is not domain ownership
+
+Nine active epics group delivery work, while the seven domains above remain the only backend business owners. Public Website & Catalog also includes later localization/reviews; Commerce & Referrals includes packages and finance; Certificates & Notifications spans two domains; Administration & Operations composes existing owners. Media workers remain technical infrastructure with Catalog/Learning/Assignments authorization. Epic 09 has two release acceptance phases and introduces no server domain. See the [workflow](development-workflow.md) and [current audit](planning-audit-2026-10-30.md).

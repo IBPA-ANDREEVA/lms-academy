@@ -22,7 +22,7 @@ WORKSPACES:
 - Student dashboard: purchased courses and progress; MVP continue-learning priority, homework deadline/status and certificate eligibility/review/issued states under PD-008/PD-010; marketing visual drama absent.
 - Student course/lesson: video first, syllabus/progress, private materials, upload-with-preview, feedback and revision. Honor release boundary for messaging/countdown.
 - Trainer-curator: submission queue/list -> media/review details -> text accept/revision controls. Prioritize density, safety and deadlines; PD-008 SLA/deadline/reminder states and PD-009 course/lesson/material authoring with proposed pricing are MVP. Finance remains Phase 2.
-- Manager: later phase; do not materialize dashboard from original PDF solely for illustration.
+- Referral partner capability: Full phase, displayed in existing authorized account/admin sections. PD-011 removes the dedicated manager role/dashboard and manager-only routes; no new visual direction is approved.
 - Admin: PD-009/PD-010 require full essential MVP category/course authoring and content/price/publication controls, user/access operations, automatic-refund exceptions, certificate evidence review/manual issuance, course/student/request monitoring, persistent notifications and a separate restricted operational-log viewer. Sensitive actions need explanatory confirmation popups. Infrastructure recovery/server management stays outside this UI; later packages/finance/reports are not implicitly promoted. This is scope correction only; no layout, visual reference or literal route is newly approved.
 
 EVERY ROUTE/SECTION MUST DOCUMENT:

@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Beauty Business Academy — логотип (концепции)</title>
+<style>
+  :root { --plum:#782858; --ink:#1D1B1F; --page:#FAF9FA; --muted:#655F67; --border:#E6E0E5; --soft:#F7EFF4; }
+  * { box-sizing: border-box; }
+  body { margin:0; background:var(--page); color:var(--ink); font:16px/1.55 Manrope, system-ui, sans-serif; }
+  main { max-width:1280px; margin:0 auto; padding:56px clamp(20px,4vw,64px) 96px; }
+  header p { color:var(--muted); max-width:62ch; margin:8px 0 0; }
+  h1 { font-size:28px; margin:0; }
+  h2 { font-size:20px; margin:64px 0 4px; }
+  h2 + p { color:var(--muted); margin:0 0 20px; max-width:70ch; }
+  .row { display:grid; gap:16px; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); }
+  .cell { border:1px solid var(--border); background:#fff; display:grid; place-items:center; padding:40px 24px; min-height:220px; }
+  .cell.dark { background:var(--ink); border-color:var(--ink); }
+  .cell.plum { background:var(--plum); border-color:var(--plum); }
+  .cell img { max-width:100%; height:auto; }
+  .mock img { max-width:100%; height:40px; width:auto; }
+  .wide { grid-column:1/-1; }
+  .scale { display:flex; align-items:end; gap:28px; flex-wrap:wrap; }
+  .scale img { display:block; }
+  .mock { grid-column:1/-1; flex-wrap:wrap; background:#fff; border:1px solid var(--border); padding:16px 24px; display:flex; align-items:center; justify-content:space-between; gap:24px; border-radius:16px; }
+  .mock nav { display:flex; flex-wrap:wrap; gap:8px 24px; font-size:14px; font-weight:600; }
+  .tag { display:inline-block; font-size:12px; font-weight:700; letter-spacing:.08em; text-transform:uppercase; color:var(--plum); }
+</style>
+</head>
+<body>
+<main>
+  <header>
+    <span class="tag">Предложение · не утверждено (OD-001 / OQ-006)</span>
+    <h1>Beauty Business Academy — концепции логотипа</h1>
+    <p>Построено только из выбранной системы: Unbounded для знака, Manrope для функциональной строки, палитра plum / charcoal / off-white / blush. Все буквы переведены в контуры из локальных OFL-шрифтов проекта.</p>
+  </header>
+
+  <h2>01 · «Срез» — рекомендуемый основной знак</h2>
+  <p>Монограмма BBA, рассечённая той же диагональю «/», что и граница в hero: левая часть — charcoal (практика), правая — plum (обучение). Один смысловой жест вместо декора.</p>
+  <div class="row">
+    <div class="cell wide"><img src="01-cut-lockup-light.svg" alt="Beauty Business Academy, горизонтальный логотип" width="760"></div>
+    <div class="cell"><img src="01-cut-mark-light.svg" alt="" width="300"></div>
+    <div class="cell plum"><img src="01-cut-mark-plum.svg" alt="" width="300"></div>
+    <div class="cell dark"><img src="01-cut-mark-charcoal.svg" alt="" width="300"></div>
+    <div class="cell dark wide"><img src="01-cut-lockup-charcoal.svg" alt="" width="760"></div>
+    <div class="cell plum wide"><img src="01-cut-lockup-plum.svg" alt="" width="760"></div>
+  </div>
+
+  <h2>02 · «Плитка» — иконка, favicon, аватар</h2>
+  <p>Один срезанный угол с назначением: отрезанная часть возвращается отдельным штрихом, как у кнопки Cut. Для квадратных форматов.</p>
+  <div class="row">
+    <div class="cell"><img src="02-tile-plum.svg" alt="" width="200"></div>
+    <div class="cell"><img src="02-tile-charcoal.svg" alt="" width="200"></div>
+    <div class="cell"><img src="02-tile-blush.svg" alt="" width="200"></div>
+    <div class="cell wide scale">
+      <img src="02-tile-plum.svg" alt="" width="128">
+      <img src="02-tile-plum.svg" alt="" width="64">
+      <img src="02-tile-plum.svg" alt="" width="32">
+      <img src="02-tile-plum.svg" alt="" width="16">
+    </div>
+  </div>
+
+  <h2>03 · «Строка» — шрифтовой логотип</h2>
+  <p>Без монограммы: слэш-параллелограмм между словами несёт фирменный приём и остаётся читаемым на высоте шапки.</p>
+  <div class="row">
+    <div class="cell"><img src="03-wordmark-light.svg" alt="" width="440"></div>
+    <div class="cell dark"><img src="03-wordmark-charcoal.svg" alt="" width="440"></div>
+  </div>
+
+  <h2>В контексте шапки (демонстрация размера)</h2>
+  <p>Пункты меню повторяют текущую шапку только для оценки масштаба.</p>
+  <div class="row">
+    <div class="mock"><img src="01-cut-lockup-light.svg" alt="" height="40"><nav><span>Об академии</span><span>Обучение</span><span>Отзывы</span><span>Контакты</span></nav></div>
+    <div class="mock"><img src="03-wordmark-light.svg" alt="" height="44"><nav><span>Об академии</span><span>Обучение</span><span>Отзывы</span><span>Контакты</span></nav></div>
+  </div>
+</main>
+</body>
+</html>

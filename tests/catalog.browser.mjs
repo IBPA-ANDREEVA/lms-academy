@@ -5,7 +5,7 @@ const require=createRequire(import.meta.url);
 const { chromium }=require(process.env.PLAYWRIGHT_MODULE||"playwright");
 const browser=await chromium.launch({headless:true,channel:"chrome"});
 const page=await browser.newPage();
-const evidence=".catalog-evidence";
+const evidence=process.env.FRONTEND_EVIDENCE || ".catalog-evidence";
 await mkdir(evidence,{recursive:true});
 const failures=[];page.on("pageerror",error=>failures.push(error.message));
 try{
@@ -13,6 +13,7 @@ try{
   await page.setViewportSize({width,height:width<=390?844:900});
   await page.goto(`${process.env.FRONTEND_URL||"http://localhost:3000"}/courses`);
   await page.evaluate(()=>document.fonts.ready);
+  await page.waitForTimeout(700);
   await page.locator('#catalog-panel-courses article').first().waitFor({state:"visible"});
   assert.equal(await page.locator('[role="tabpanel"]:not([aria-hidden="true"])').count(),1);
   assert.equal(await page.locator('#catalog-panel-courses article').count(),4);
@@ -21,8 +22,8 @@ try{
   if(width===1440||width===390){
    await page.locator('#catalog-panel-courses article').first().click({position:{x:20,y:20}});
    await page.waitForURL('**/courses/course-lashes');
-   await page.locator('main[data-kind="course"]').getByText('ДЕМОНСТРАЦИЯ СТРАНИЦЫ · ПРОДУКТ НЕ ОПУБЛИКОВАН').waitFor();
-   assert.ok(await page.locator('main[data-kind="course"]').getByText('ДЕМОНСТРАЦИЯ СТРАНИЦЫ · ПРОДУКТ НЕ ОПУБЛИКОВАН').isVisible());
+   await page.getByRole('heading', {level:1}).waitFor();
+   assert.ok(await page.getByRole('button', {name:'В корзину'}).first().isDisabled());
    await page.goBack();await page.waitForURL('**/courses');
    await page.locator('#catalog-panel-courses article').first().waitFor({state:'visible'});
   }
@@ -35,11 +36,13 @@ try{
   if(width===1440||width===390){
    await page.locator('#catalog-panel-mini-courses article').first().click({position:{x:20,y:20}});
    await page.waitForURL('**/mini-courses/mini-lashes');
-   await page.locator('main[data-kind="mini-course"]').getByText('ДЕМОНСТРАЦИЯ СТРАНИЦЫ · ПРОДУКТ НЕ ОПУБЛИКОВАН').waitFor();
-   assert.ok(await page.locator('main[data-kind="mini-course"]').getByText('ДЕМОНСТРАЦИЯ СТРАНИЦЫ · ПРОДУКТ НЕ ОПУБЛИКОВАН').isVisible());
+   await page.getByRole('heading', {level:1}).waitFor();
+   assert.ok(await page.getByRole('button', {name:'В корзину'}).first().isDisabled());
    await page.goBack();await page.waitForURL('**/mini-courses');
    await page.locator('#catalog-panel-mini-courses article').first().waitFor({state:'visible'});
   }
+  const disclosure=page.locator('#catalog-filters details');
+  if(!await disclosure.evaluate(el=>el.open))await disclosure.locator('summary').click();
   await page.getByRole("button",{name:"Направление Все направления"}).click();
   await page.getByRole("option",{name:"Брови"}).click();
   await page.waitForURL("**/mini-courses?direction=brows");
@@ -49,8 +52,8 @@ try{
   await page.getByRole("tab",{name:"Курсы",exact:true}).focus();
   await page.keyboard.press("ArrowRight");await page.waitForURL("**/mini-courses");
   assert.equal(await page.getByRole("tab",{name:"Мини-курсы"}).getAttribute("aria-selected"),"true");
-  await page.evaluate(()=>scrollTo(0,1000));
-  await page.waitForFunction(()=>scrollY>=990);
+  await page.locator('#catalog-filters').evaluate(el=>scrollTo(0,scrollY+el.getBoundingClientRect().top));
+  await page.waitForTimeout(650);
   const filterTop=await page.locator('#catalog-filters').evaluate(el=>el.getBoundingClientRect().top);
   const headerBottom=await page.locator('header').first().evaluate(el=>el.getBoundingClientRect().bottom);
   assert.ok(Math.abs(filterTop-headerBottom)<3,`sticky filter ${filterTop}, header ${headerBottom}`);

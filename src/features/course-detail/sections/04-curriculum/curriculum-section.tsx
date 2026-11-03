@@ -8,13 +8,13 @@ import styles from "./curriculum-section.module.css";
 export function CurriculumSection({ product }: { product: DetailProduct }) {
   return (
     <section id="curriculum" className={styles.section} aria-labelledby="curriculum-title">
-      <PageContainer size="content" className={styles.grid}>
+      <PageContainer reveal size="content" className={styles.grid}>
         <div className={styles.copy}>
           <SectionLabel>ПРОГРАММА</SectionLabel>
           <SectionHeading id="curriculum-title" display>Путь<br /><span>по темам</span></SectionHeading>
           <p>Публичная программа покажет порядок модулей и уроков. Записи и платные материалы открываются только после покупки.</p>
         </div>
-        <CurriculumAccordion modules={product.modules} />
+        {product.modules?.length ? <CurriculumAccordion modules={product.modules} /> : <p className={styles.unavailable}>Программа пока не опубликована. Вернитесь в <a href={product.kind === "mini-course" ? "/mini-courses" : "/courses"}>каталог</a>, чтобы посмотреть другие примеры обучения.</p>}
       </PageContainer>
     </section>
   );

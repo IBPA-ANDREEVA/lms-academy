@@ -15,19 +15,19 @@
   max-width: 320px;
 }
 .brand {
-  font-size: clamp(24px, 3vw, 40px);
-  line-height: 1.2;
-  font-weight: 700;
-  text-decoration: none;
-  letter-spacing: -1px;
-  overflow-wrap: anywhere;
+  --brand-logo-accent: var(--plum-border);
+  display: block;
+  width: min(100%, 320px);
+  color: var(--surface);
 }
+.brand svg { width: 100%; height: auto; }
 .footer a {
   text-underline-offset: 5px;
 }
 .footer a:hover {
   color: var(--plum-border);
 }
+.footer .brand:hover { color: var(--surface); opacity: .8; }
 .groups {
   flex: 1;
   display: flex;
@@ -90,7 +90,7 @@
   padding-block: 32px;
 }
 .compact .brand {
-  font-size: 22px;
+  width: min(100%, 260px);
 }
 .compact .bottom {
   margin-top: 24px;

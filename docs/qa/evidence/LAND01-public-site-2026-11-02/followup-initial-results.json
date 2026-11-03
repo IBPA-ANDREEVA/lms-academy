@@ -1,0 +1,60 @@
+{
+  "results": [
+    {
+      "name": "popup geometry",
+      "width": 1440,
+      "label": "Направление Все направления",
+      "left": 392.515625,
+      "right": 656.296875,
+      "bottom": 468.59375,
+      "viewportWidth": 1440,
+      "viewportHeight": 900,
+      "documentWidth": 1440,
+      "triggerWidth": 263.78125,
+      "popupWidth": 263.78125
+    },
+    {
+      "name": "popup geometry",
+      "width": 1440,
+      "label": "Язык курса Любой",
+      "left": 672.296875,
+      "right": 936.0625,
+      "bottom": 314.59375,
+      "viewportWidth": 1440,
+      "viewportHeight": 900,
+      "documentWidth": 1440,
+      "triggerWidth": 263.765625,
+      "popupWidth": 263.765625
+    },
+    {
+      "name": "popup geometry",
+      "width": 1440,
+      "label": "Уровень Все уровни",
+      "left": 952.0625,
+      "right": 1215.84375,
+      "bottom": 314.59375,
+      "viewportWidth": 1440,
+      "viewportHeight": 900,
+      "documentWidth": 1440,
+      "triggerWidth": 263.78125,
+      "popupWidth": 263.78125
+    },
+    {
+      "name": "catalog keyboard/reset/history",
+      "width": 1440,
+      "status": "WORKING"
+    },
+    {
+      "name": "reduced-motion rapid panels",
+      "width": 1440,
+      "height": 842.5625,
+      "active": 842.5625
+    },
+    {
+      "name": "component preview states",
+      "width": 1440,
+      "status": "WORKING"
+    }
+  ],
+  "events": []
+}

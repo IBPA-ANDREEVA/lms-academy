@@ -1,5 +1,13 @@
 # LMS architecture overview
 
+## Current implementation snapshot · 2026-11-02
+
+The architecture below is the approved target boundary, not an inventory of delivered services. The current source has eight App Router page templates: `/`, two catalogs, two dynamic detail families, `/cart`, `/checkout`, and `/preview/components` (fourteen concrete URLs with eight detail fixtures). `src/app/layout.tsx` composes Russian/local-font document, one CartProvider, PublicHeader, PublicMotion and pathname-selected PublicSiteFooter. Catalog UI is hosted by a persistent `(catalog)/layout.tsx`; its leaf pages supply metadata and return null. Detail pages resolve only example slugs through local data.
+
+Implemented frontend owners are `home`, `catalog`, `course-detail`, `public-shell`, `identity`, `commerce`, `component-preview`. Generic UI has Button/Link, form controls and SectionHeading. PageContainer is public-shell-owned and client-side because of optional reveal motion. Modules use colocated CSS; global tokens live in `src/app/globals.css`. Only local UI state/fixture storage exists. `src/server` is absent; `src/db`, `src/lib`, `src/app/api` and legacy `features/{learning,assignments,certificates,notifications}` contain placeholder `.gitkeep` files, not persistence, APIs or domain implementation. No server action, route handler, auth/session, payment, media processing, email, order or entitlement service is implemented.
+
+[Frontend registries](frontend-pages.md) and the [LAND01 audit](../qa/LAND01-public-site-audit-2026-11-02.md) record source APIs, real consumers, data status, responsive evidence and test failures. Future server contracts remain under ADR-0002; documentation synchronization does not move files, select tools, settle policy or approve visual direction.
+
 ## Purpose and decision status
 
 This document defines the implementation boundaries for the LMS described in
@@ -11,7 +19,7 @@ architecture for application work; it does not resolve open product policy.
 The following labels distinguish established decisions from design proposals:
 
 - **Approved baseline** — required by the repository instructions or
-  [ADR-0001](../decisions/0001-modular-monolith.md).
+  [ADR-0001](../decisions/0001-modular-monolith.md) and [ADR-0002](../decisions/0002-frontend-server-separation.md).
 - **Proposed technical choice** — recommended here, but requiring confirmation or
   a focused ADR before implementation makes it expensive to change.
 - **Product decision required** — blocked by a question in
@@ -21,7 +29,8 @@ Approved baseline:
 
 - a TypeScript, Next.js App Router application;
 - a feature-based modular monolith deployed as one application;
-- domain code in `src/features`, route entry points in `src/app`, shared database
+- frontend presentation in `src/features`, server business domains in `src/server`,
+  route entry points in `src/app`, shared database
   plumbing in `src/db`, generic UI in `src/components/ui`, and small technical
   utilities in `src/lib`;
 - the seven modules and their contracts described in
@@ -69,9 +78,9 @@ flowchart LR
 
     subgraph Monolith[Deployable modular monolith]
       App --> Entry[Pages, Server Actions, Route Handlers]
-      Entry --> Public[Feature public interfaces]
+      Entry --> Public[Server-domain public interfaces]
       Public --> Services[Application and domain services]
-      Services --> Repos[Module repositories]
+      Services --> Repos[Owned persistence operations]
       Services --> Ports[External-service ports]
       Repos --> DB[(Transactional database)]
       Services --> Outbox[(Transactional outbox)]
@@ -94,10 +103,13 @@ with the persistence and job-runtime decisions.
 
 ## Feature-based modular monolith
 
-Each feature owns its business concepts, state transitions, persistence queries,
-server-only application services, and feature-specific UI. A module exposes a
-small public surface from `src/features/<feature>/index.ts`; code outside the
-module must not import its `internal`, `data`, or implementation files.
+Frontend features own page/section/component composition, presentation and UI state.
+They retain their existing names and numbered sections. Server domains own business
+concepts, authorization, transitions, persistence and use cases under `src/server`.
+A domain exposes a narrow server-only public entry; callers never import its private
+schema, data or implementation files. Safe DTO types may be exposed separately.
+Server Components may compose authorized domain queries; they do not own policy.
+Client-facing feature barrels must not re-export server runtime code.
 
 The monolith shares a process and, initially, a database so critical workflows can
 use local calls and database transactions. Sharing a deployment does not permit
@@ -128,19 +140,19 @@ loading and error boundaries, request/response translation, and composition of
 feature UI. Pages, layouts, Route Handlers, and Server Actions remain thin:
 
 - parse framework inputs;
-- invoke an exported feature query or command;
+- invoke an exported domain query or command;
 - map typed outcomes to UI, redirect, or HTTP response;
 - never contain pricing, entitlement, completion, refund, or authorization rules;
 - never query another module's tables directly.
 
-Server Components should call server-side feature queries directly. They should
+Server Components should call server-domain queries directly. They should
 not make an HTTP request to this application's own Route Handler, which adds an
 unnecessary network boundary and can fail during build-time rendering.
 
 ### Server Components
 
 Server Components are the default for pages and non-interactive composition. They
-may read protected data through authorized feature query functions and pass only
+may read protected data through authorized domain query functions and pass only
 minimal serializable view data to Client Components. They must not pass database
 rows, secrets, provider tokens, internal status metadata, or unnecessary personal
 data to the client.
@@ -167,7 +179,7 @@ Every action is treated as a reachable server endpoint and must:
 
 1. authenticate the actor;
 2. validate and normalize untrusted input;
-3. invoke a feature command that performs resource authorization and business
+3. invoke a domain command that performs resource authorization and business
    validation;
 4. return a narrow, serializable result;
 5. invalidate or refresh only after the transaction commits.
@@ -181,7 +193,7 @@ application.
 Use `route.ts` Route Handlers only when an HTTP boundary is required: provider
 webhooks, authentication callbacks, signed upload/download or playback grants,
 health checks, or an explicitly supported external API. Handlers validate method,
-content type, size, signature, and input before delegating to a feature service.
+content type, size, signature, and input before delegating to a domain use case.
 They do not implement domain rules.
 
 Payment and other webhooks must verify the raw provider payload as required by the
@@ -189,7 +201,7 @@ selected provider, store a deduplication record, and acknowledge only according 
 the provider's retry contract. Browser return URLs are not proof of payment.
 
 Next.js Proxy, if introduced, may perform cheap redirects or optimistic session
-checks. It is never the only authorization layer; the feature service closest to
+checks. It is never the only authorization layer; the domain use case closest to
 the data makes the authoritative decision.
 
 ## Application, domain, validation, and persistence boundaries
@@ -199,7 +211,7 @@ The intended call chain is:
 ```text
 page / Server Action / Route Handler
   -> input schema
-  -> feature command or query
+  -> domain command or query
   -> authentication + resource authorization
   -> domain policy / state transition
   -> owned repository within transaction
@@ -243,7 +255,7 @@ React components and browser bundles never import repositories.
 A public contract should express intent and avoid leaking persistence models:
 
 ```ts
-// src/features/learning/index.ts
+// src/server/learning/index.ts
 export type GrantEnrollment = Readonly<{
   studentId: string;
   productId: string;
@@ -312,7 +324,7 @@ Role presence alone is insufficient. Examples of required resource checks includ
   administrator;
 - a curator is assigned to the relevant enrollment/course and may perform the
   requested transition while support policy permits it;
-- a manager sees only attributed sales or assigned leads;
+- an authorized referral partner sees only permitted own attribution; lead/contact access requires a separate capability;
 - an administrator has the specific administrative capability and the action is
   audited.
 
@@ -437,7 +449,7 @@ publication and must reject incomplete processing while preserving the previous
 published version. Use a persistent queue, initially one concurrent job, three
 automatic retries and manual recovery, with PD-001 errors/diagnostics.
 
-INF03 must specify implementation, encryption-key management, recovery, supported-
+VIDEO001 follows up completed INF03 and must specify implementation, encryption-key management, recovery, supported-
 browser testing, operational verification and worker capacity/provider. Validate
 the $50–$100/month target through capacity testing, not an assumed cost guarantee.
 PD-004/PD-007 govern access and retention. Client progress remains untrusted and
@@ -547,10 +559,10 @@ Import restrictions should initially be documented and reviewed. A lint rule may
 enforce them when concrete violations justify that maintenance cost; no new lint
 plugin is approved by this document.
 
-## Decisions required before implementation
+## Decisions required just before the affected feature
 
 The full product register remains authoritative. These architectural decisions
-must be resolved before their dependent foundation work:
+must be resolved before their dependent implementation slice. This is not a global prerequisite gate; feature preparation narrows the relevant questions:
 
 | Decision | Why architecture needs it | Product dependencies |
 | --- | --- | --- |
@@ -560,7 +572,7 @@ must be resolved before their dependent foundation work:
 | Remaining calendar/overlap and post-expiration rules | PD-004 fixes per-enrollment activation, durations, extensions and pauses; unresolved transitions must not be invented | OQ-048–OQ-049; PD-008 SLA is approved |
 | Lesson completion and sequential-unlock policy | Defines progress storage, authorization, and certificate inputs | OQ-021, OQ-042 |
 | Homework processing/storage implementation and residual media policy | PD-005 fixes formats, limits, normalization, resumability and authorization; implementation must honor them | OQ-043, OQ-044; PD-007 legal verification |
-| Video worker capacity/provider, key management and operational/browser verification | INF03 specifies PD-003 self-managed R2/FFmpeg delivery; residual device/session policy stays open | OQ-084 |
+| Video worker capacity/provider, key management and operational/browser verification | VIDEO001 follows up completed INF03 for PD-003 self-managed R2/FFmpeg delivery; residual device/session policy stays open | OQ-084 |
 | Background job/outbox execution mechanism | Defines durable callback follow-up, reminders, email, media processing, and operations | OQ-069, OQ-080 |
 | Email provider and delivery policy | Defines sender authentication, callback mapping, retry, localization, and operational support | OQ-006, OQ-069, OQ-080 |
 | Audit scope, retention, privacy, and recovery objectives | Defines immutable evidence, deletion exceptions, storage lifecycle, and backup design | OQ-008, OQ-079, OQ-081–OQ-083 |
@@ -574,3 +586,14 @@ Approved product answers must be recorded in
 original OQ IDs, and then reflected in requirements, scope, state machines,
 and tests. Resolved entries leave the active open-question register once their
 full question and approved answer are preserved in the decision record.
+
+## Feature delivery and current evidence
+
+Follow [development workflow](development-workflow.md). The 2026-10-30 audit finds public UI/fixtures and browser-test sources, but no implemented database/authentication/server domains or CI workflow. Completed historical plan records are preserved; implementation gaps receive follow-up tasks. See [planning audit](planning-audit-2026-10-30.md).
+
+
+## Nine-epic delivery overlay · 2026-10-30
+
+The current Vault roadmap contains exactly nine active delivery epics and larger work packages for one developer using Codex. Domain ownership stays at seven; frontend ownership stays in the existing `src/features` tree. Stable contracts permit independent UI/server work followed by explicit integration, capability verification and two final release-acceptance phases. The working-day capacity is owner-confirmed at 10 hours; the unchanged deadlines still have explicit forecast conflicts. See the [workflow](development-workflow.md) and [audit](planning-audit-2026-10-30.md).
+
+This planning change does not implement or relocate application code. Homework-definition ownership proposals are reviewed in SITE009/WORK001 against the existing Assignments baseline; legal-policy publishing ownership is resolved in SALE002, while Commerce retains checkout acceptance. Neither is silently approved by the new epic structure.

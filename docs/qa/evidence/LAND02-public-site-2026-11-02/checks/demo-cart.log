@@ -1,0 +1,26 @@
+TAP version 13
+# (node:96740) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///Users/ivanmakovetskyi/Desktop/Work/lms-academy/src/features/commerce/demo-cart.ts is not specified and it doesn't parse as CommonJS.
+# Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+# To eliminate this warning, add "type": "module" to /Users/ivanmakovetskyi/Desktop/Work/lms-academy/package.json.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: demo restoration preserves unique selections and only uses fixture amounts
+ok 1 - demo restoration preserves unique selections and only uses fixture amounts
+  ---
+  duration_ms: 1.107916
+  type: 'test'
+  ...
+# Subtest: demo amounts use Russian formatting and an explicit illustrative currency
+ok 2 - demo amounts use Russian formatting and an explicit illustrative currency
+  ---
+  duration_ms: 31.898584
+  type: 'test'
+  ...
+1..2
+# tests 2
+# suites 0
+# pass 2
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 135.822291

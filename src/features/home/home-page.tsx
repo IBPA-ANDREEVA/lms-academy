@@ -7,9 +7,11 @@ import { PackagesSection } from "./sections/07-packages/packages-section";
 import { MiniCoursesSection } from "./sections/08-mini-courses/mini-courses-section";
 import { StartUsaSection } from "./sections/09-start-usa/start-usa-section";
 import { ReviewsSection } from "./sections/10-reviews/reviews-section";
+import { FaqSection } from "./sections/12-faq/faq-section";
 import { ContactSection } from "./sections/11-contact/contact-section";
 import { LearningOffersShowcase } from "./learning-offers/learning-offers-showcase";
 import { HomeSectionSeam } from "./composition/home-section-seam";
+import { AcademyStory } from "./composition/academy-story";
 import styles from "./home-page.module.css";
 
 export function HomePage() {
@@ -17,9 +19,7 @@ export function HomePage() {
     <main id="main-content" tabIndex={-1} className={styles.main}>
       <HeroSection />
       <HomeSectionSeam variant="hero" />
-      <AboutSection />
-      <HomeSectionSeam variant="portraits" />
-      <FounderSection />
+      <AcademyStory about={<AboutSection />} seam={<HomeSectionSeam variant="portraits" />} founder={<FounderSection />} />
       <HomeSectionSeam variant="learning" />
       <LearningPreviewSection />
       <LearningOffersShowcase panels={[
@@ -31,6 +31,7 @@ export function HomePage() {
       <ReviewsSection />
       <HomeSectionSeam variant="contact" />
       <ContactSection />
+      <FaqSection />
     </main>
   );
 }

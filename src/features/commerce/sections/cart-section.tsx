@@ -23,7 +23,7 @@ export function CartSection() {
       </div>
       <p className={styles.caption}>Соглашения перед оплатой — на следующем шаге.</p>
     </> : <div className={styles.empty}>
-      <h2>Пока здесь пусто</h2><p>Выберите обучение, к которому хотите вернуться.</p>
+      <h2>Пока здесь пусто</h2><p>Выберите подходящий курс в каталоге.</p>
       <div className={styles.actions}><ButtonLink appearance="cut" href="/courses">Выбрать курс <span aria-hidden="true">→</span></ButtonLink><Link href="/mini-courses">Смотреть мини-курсы</Link></div>
     </div>)}
     <DemoControls />

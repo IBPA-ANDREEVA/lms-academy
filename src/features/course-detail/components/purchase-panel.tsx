@@ -25,7 +25,7 @@ export function PurchasePanel({ product, compact = false }: { product: DetailPro
       <p className={styles.price}>{product.priceLabel ?? "Стоимость уточняется"}</p>
       <p className={styles.status} role={product.offerState === "error" ? "alert" : "status"}>{statusText[product.offerState]}</p>
       <div className={styles.action}>{action}</div>
-      {!compact && <p className={styles.note}>Покупка станет доступна после утверждения продукта и подключения корзины.</p>}
+
     </aside>
   );
 }

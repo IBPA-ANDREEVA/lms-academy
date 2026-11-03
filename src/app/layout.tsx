@@ -1,3 +1,4 @@
+import { PublicMotion } from "@/features/public-shell/public-motion";
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import {
@@ -40,7 +41,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
             showAuth
             showCartPreview
           />
-          {children}
+          <PublicMotion>{children}</PublicMotion>
           <PublicSiteFooter />
         </CartProvider>
       </body>

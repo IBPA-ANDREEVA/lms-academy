@@ -8,6 +8,12 @@
 .heading span:nth-child(2), .heading span:nth-child(3) { color: #f2dbe8; }
 .description { max-width: 360px; margin: 0 0 5px; font-size: 17px; line-height: 1.55; }
 .showcase { min-width: 0; }
+.featuredStage { min-width: 0; }
+.section:has([data-featured-scroll]) { overflow: clip; }
+.featuredStage[data-featured-scroll]::after { content: ""; display: block; height: var(--featured-travel); }
+.featuredStage[data-featured-scroll] > .track { position: sticky; top: 180px; }
+.featuredStage[data-featured-scroll] article img { transition: none; }
+.featuredCard { height: 100%; }
 .previewLabel { margin: 0 0 8px; color: #f2dbe8; font-size: 10px; font-weight: 800; letter-spacing: .08em; }
 .showcase nav { margin: 0 0 22px; }
 .showcase nav ul { gap: 8px; }
@@ -62,3 +68,20 @@
 
 /* The persistent group owns the course surface, including on mobile. */
 @media (max-width: 650px) { .section { color: white; } .heading span:nth-child(2), .heading span:nth-child(3), .previewLabel, .catalogNote { color: var(--soft); } .showcase nav button { color: white; border-color: var(--plum-border); } .showcase nav button[aria-pressed="true"], .showcase nav button:hover { background: white; color: var(--brand); } .dots button::before { border-color: white; } .dots button[aria-current="true"]::before { background: white; } }
+
+.track { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); grid-template-rows: auto; gap: 28px; padding: 8px 10px 16px 0; }
+.cardFrame,.cardFrame:first-child { grid-row: auto; padding: 0; background: transparent; box-shadow: none; }
+.cardFrame article,.cardFrame:first-child article { display: flex; height: 100%; border: 2px solid var(--text); }
+.cardFrame article > div:first-child,.cardFrame:first-child article > div:first-child { height: auto; aspect-ratio: 4/3; flex: none; }
+.cardFrame article > div:nth-child(2),.cardFrame:first-child article > div:nth-child(2) { padding: 24px; gap: 16px; flex: 1; align-content: start; }
+.cardLabel { display: none; }
+@media(max-width:700px) { .track { display: flex; padding-inline: 6px; } .cardFrame,.cardFrame:first-child { flex: 0 0 min(82vw,380px); } }
+
+.showcase nav button { min-height: 44px; font-size: 13px; }
+@media(max-width:700px) {
+ .track { width: 100%; margin: 0; padding: 4px 8px 12px 0; scroll-padding-inline: 0; }
+ .cardFrame, .cardFrame:first-child { flex-basis: calc(100% - 10px); scroll-snap-align: start; }
+ .cardFrame article > div:first-child, .cardFrame:first-child article > div:first-child { aspect-ratio: 16/9; height: auto; }
+ .cardFrame article > div:nth-child(2), .cardFrame:first-child article > div:nth-child(2) { padding: 18px; gap: 12px; min-height: 0; }
+ .carouselControls { margin-top: 0; gap: 12px; }
+}

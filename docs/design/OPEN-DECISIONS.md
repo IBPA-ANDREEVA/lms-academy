@@ -2,7 +2,7 @@
 
 These are unresolved; Codex must not silently choose a permanent answer.
 
-OD-001 — Exact academy name/logo/brand mark. Product OQ-006. All current 'Академия' labels are placeholders.
+OD-001 — Exact academy name/logo/brand mark. Product OQ-006. Update 2026-11-02: logo concept 01 «Срез» is selected for the header/footer under the working name Beauty Business Academy (D-018); the approved name itself, favicon/app icon and other copy still saying 'LMS Academy' remain open.
 OD-002 — Updated 2026-10-28: Unbounded and Manrope OFL assets are installed locally. Russian browser rendering is part of frontend verification; English product localization remains later scope.
 OD-003 — H-001: final Russian hero copy and supporting line. Working copy 'УЧИСЬ. СОЗДАВАЙ.' + 'Выбрать курс' has visual support only.
 OD-004 — H-001: final licensed photo, subject (brow, nail, lash, etc.), crop and whether it may be used commercially. Toni&Guy screenshot is reference-only.

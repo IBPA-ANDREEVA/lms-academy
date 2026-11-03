@@ -14,7 +14,7 @@ export function OrderSummary({ showItems = false }: { showItems?: boolean }) {
     <dl className={styles.totals}>
       <div><dt>Стоимость примера</dt><dd>{pending ? "Пересчёт…" : formatDemoAmount(cart.total)}</dd></div>
       <div><dt>Сборы и налоги</dt><dd>Не рассчитаны</dd></div>
-      <div className={styles.total}><dt>Демо-итог</dt><dd>{pending ? "Пересчёт…" : formatDemoAmount(cart.total)}</dd></div>
+      <div className={styles.total}><dt>Итого</dt><dd>{pending ? "Пересчёт…" : formatDemoAmount(cart.total)}</dd></div>
     </dl>
     <p className={styles.caption}>Итог к оплате пока не рассчитан.</p>
   </section>;

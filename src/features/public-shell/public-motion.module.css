@@ -1,0 +1,11 @@
+.root, .content { min-width: 0; }
+/* Shell navigation stays available above these pointer-transparent surfaces. */
+.wipe, .circle { position: fixed; inset: 0; z-index: 18; pointer-events: none; background: var(--brand); }
+.wipe { display: grid; place-items: center; color: var(--on-brand); }
+.wipe[hidden], .circle[hidden] { display: none; }
+.wipe span { opacity: 0; font-size: 14px; }
+.wipe[data-waiting] span { opacity: 1; }
+.circle { --hole: 0px; }
+.inlineCircle { position: absolute; z-index: 1; }
+.loading { min-height: 65svh; padding-block: 180px 80px; }
+@media (prefers-reduced-motion: reduce) { .wipe, .circle { display: none; } }

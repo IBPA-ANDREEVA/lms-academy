@@ -5,7 +5,7 @@ const require = createRequire(import.meta.url);
 const { chromium } = require(process.env.PLAYWRIGHT_MODULE || "playwright");
 const browser = await chromium.launch({ headless: true, channel: "chrome" });
 const base = process.env.FRONTEND_URL || "http://localhost:3000";
-const evidence = ".commerce-evidence";
+const evidence = process.env.FRONTEND_EVIDENCE || ".commerce-evidence";
 await mkdir(evidence, { recursive: true });
 const context = await browser.newContext();
 const page = await context.newPage();
@@ -16,6 +16,16 @@ const main = page.locator("main");
 const trigger = page.getByRole("button", { name: /^Корзина, продуктов:/ }).first();
 const preview = page.getByRole("region", { name: "Предпросмотр корзины" });
 const isProduction = process.env.COMMERCE_PRODUCTION === "1";
+async function returnToCart() {
+  await page.getByRole("contentinfo").first().getByRole("link", {name:"Корзина",exact:true}).click();
+  await page.waitForURL("**/cart");
+}
+async function demoAction(name) {
+  await page.goto(`${base}/preview/components`);
+  await page.locator("#commerce").getByRole("button", {name,exact:true}).click();
+  await returnToCart();
+}
+
 try {
   await page.goto(`${base}/cart`);
   await page.evaluate(() => document.fonts.ready);
@@ -34,7 +44,7 @@ try {
     await page.goto(base);
     await trigger.hover();
     await preview.waitFor();
-    assert.equal(await trigger.evaluate(el => getComputedStyle(el).color), "rgb(120, 40, 88)");
+    await page.waitForFunction(() => getComputedStyle(document.querySelector('button[aria-label^="Корзина, продуктов:"]')).color === "rgb(120, 40, 88)");
     assert.equal(await preview.getByRole("button", { name: "Закрыть предпросмотр корзины" }).count(), 0);
     const animatedPanel = page.locator('[class*="previewBridge"]').first();
     await page.mouse.move(10, 400);
@@ -53,6 +63,8 @@ try {
     assert.equal(await animatedPanel.evaluate(el => Number(getComputedStyle(el).opacity)), 1);
     await page.emulateMedia({ reducedMotion: "no-preference" });
     await page.goto(`${base}/cart`);
+    await main.getByText("Пока здесь пусто").waitFor();
+    await page.mouse.move(10, 400);
     await trigger.focus();
     await preview.waitFor();
     await page.keyboard.press("Escape");
@@ -64,9 +76,9 @@ try {
     await page.mouse.move(10, 400); await preview.waitFor({ state: "hidden" });
     await trigger.click(); await preview.waitFor();
     await main.locator("h1").click(); await preview.waitFor({ state: "hidden" });
-    await main.getByRole("button", { name: "Добавить тестовый курс", exact: true }).click();
+    await demoAction("Добавить тестовый курс");
     assert.equal(await main.getByRole("list", { name: "Выбранные продукты" }).locator("li").count(), 1);
-    await main.getByRole("button", { name: "Добавить тестовый мини-курс", exact: true }).click();
+    await demoAction("Добавить тестовый мини-курс");
     assert.equal(await trigger.getAttribute("aria-label"), "Корзина, продуктов: 2");
     await page.reload();
     await main.getByRole("heading", { name: "Тестовый мини-курс" }).waitFor();
@@ -76,7 +88,7 @@ try {
     await tab.getByRole("button", { name: "Удалить: Тестовый мини-курс", exact: true }).click();
     await main.getByRole("heading", { name: "Тестовый мини-курс" }).waitFor({ state: "detached" });
     await tab.close();
-    await main.getByRole("button", { name: "Добавить тестовый мини-курс", exact: true }).click();
+    await demoAction("Добавить тестовый мини-курс");
     for (const width of [1440, 768, 390, 320]) {
       await page.setViewportSize({ width, height: width < 500 ? 844 : 900 });
       await page.goto(`${base}/cart`);
@@ -95,24 +107,26 @@ try {
       assert.ok(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), `checkout overflow ${width}`);
       assert.ok(await main.getByRole("button", { name: "Оплата недоступна" }).isDisabled());
       assert.equal(await main.locator('input[type="checkbox"]:disabled:not(:checked)').count(), 3);
-      await main.getByLabel("Email", { exact: true }).fill("invalid");
-      await main.getByLabel("Email", { exact: true }).blur();
-      assert.equal(await main.getByLabel("Email", { exact: true }).getAttribute("aria-invalid"), "true");
-      await main.getByLabel("Email", { exact: true }).fill("demo@example.com");
+      await main.locator('input[name="email"]:visible').fill("invalid");
+      await main.locator('input[name="email"]:visible').blur();
+      assert.equal(await main.locator('input[name="email"]:visible').getAttribute("aria-invalid"), "true");
+      await main.locator('input[name="email"]:visible').fill("demo@example.com");
       await main.getByRole("button", { name: "Уже есть аккаунт? Войти" }).click();
       await page.getByRole("dialog", { name: "Войти в LMS Academy" }).waitFor();
       await page.keyboard.press("Escape");
       await page.getByRole("dialog").first().waitFor({ state: "hidden" });
-      assert.equal(await main.getByLabel("Email", { exact: true }).inputValue(), "demo@example.com");
+      assert.equal(await main.locator('input[name="email"]:visible').inputValue(), "demo@example.com");
       await page.evaluate(() => { document.activeElement?.blur(); window.scrollTo({ top: 0, behavior: "instant" }); });
       await page.waitForFunction(() => scrollY === 0);
       await page.waitForTimeout(100);
       await page.screenshot({ path: `${evidence}/checkout-${width}.png`, fullPage: true });
     }
     await page.goto(`${base}/cart`);
-    await main.getByText("Тестовые состояния интерфейса").click();
     for (const scenario of ["recalculating", "unavailable", "price-changed", "error"]) {
-      await main.getByLabel("Состояние демонстрации").selectOption(scenario);
+      await page.goto(`${base}/preview/components`);
+      await page.locator("#commerce summary").click();
+      await page.locator("#commerce").getByLabel("Состояние демонстрации").selectOption(scenario);
+      await returnToCart();
       await page.screenshot({ path: `${evidence}/state-${scenario}.png`, fullPage: true });
       assert.ok(await main.getByRole("button", { name: "Перейти к оплате" }).isDisabled());
       await trigger.click(); await preview.waitFor();
@@ -120,12 +134,12 @@ try {
       await page.keyboard.press("Escape");
       if (scenario === "error") await main.getByRole("button", { name: "Попробовать снова" }).click();
     }
-    await main.getByRole("button", { name: "Очистить тестовую корзину" }).click();
+    await demoAction("Очистить тестовую корзину");
     await main.getByText("Пока здесь пусто").waitFor();
-    await main.getByRole("button", { name: "Добавить тестовый курс", exact: true }).click();
+    await demoAction("Добавить тестовый курс");
     await trigger.click(); await preview.waitFor();
     await preview.getByRole("button", { name: "Удалить: Тестовый курс", exact: true }).click();
-    await preview.getByText("Ваша корзина пока пуста.").waitFor();
+    await preview.getByRole("heading", { name: "Пока пусто", exact: true }).waitFor();
     assert.equal(await trigger.getAttribute("aria-label"), "Корзина, продуктов: 0");
     await page.keyboard.press("Escape");
     await page.evaluate(() => localStorage.setItem("lms.la09.demo-cart.v1", "malformed"));
@@ -147,7 +161,9 @@ try {
     await touchTrigger.tap();
     const touchPreview = touchPage.getByRole("region", { name: "Предпросмотр корзины" });
     await touchPreview.waitFor();
-    await touchPreview.getByRole("button", { name: "Добавить тестовый курс", exact: true }).tap();
+    await touchPage.goto(`${base}/preview/components`);
+    await touchPage.locator("#commerce").getByRole("button", {name:"Добавить тестовый курс",exact:true}).tap();
+    await touchTrigger.tap();
     await touchPreview.getByRole("heading", { name: "Тестовый курс" }).waitFor();
     await touchPreview.getByRole("link", { name: "Открыть корзину" }).tap();
     await touchPreview.waitFor({ state: "hidden" });

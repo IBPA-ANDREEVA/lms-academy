@@ -1,4 +1,6 @@
 "use client";
+import { CutButtonPreview } from "./cut-button-preview";
+import { MotionPreview } from "./motion-preview";
 
 import { useRef, useState, type ReactNode } from "react";
 import Link from "next/link";
@@ -33,11 +35,12 @@ const components = [
   ["category-navigation", "CategoryNavigation"],
   ["section-heading", "SectionHeading"],
   ["page-container", "PageContainer"],
+  ["motion", "SectionReveal / CircleLoader"],
   ["public-footer", "PublicFooter"],
 ] as const;
 
 // Explicitly illustrative, local-only links. No course inventory or business actions.
-const brand = { label: "LMS Academy", href: "#main-content" };
+const brand = { label: "Beauty Business Academy", href: "#main-content" };
 const navigation = [
   {
     label: "Курсы",
@@ -174,6 +177,7 @@ export function ComponentPreviewPage() {
         <ButtonLink appearance="cut" size="lg" href="#course-card">
           СМОТРЕТЬ ВСЕ КУРСЫ <span aria-hidden="true">→</span>
         </ButtonLink>
+        <CutButtonPreview />
         <div className={styles.buttonFamilies}>
           {(["minimal", "cut", "neoBrutalist"] as const).map((appearance) => (
             <div className={styles.family} key={appearance}>
@@ -472,7 +476,7 @@ export function ComponentPreviewPage() {
         <div className={styles.containers}>
           {(["wide", "content", "reading", "fullBleed"] as const).map(
             (size) => (
-              <PageContainer key={size} size={size}>
+              <PageContainer key={size} size={size} reveal="editorial">
                 <div className={styles.containerSample}>
                   <strong>{size}</strong>
                   <span>
@@ -490,6 +494,10 @@ export function ComponentPreviewPage() {
             ),
           )}
         </div>
+      </PreviewSection>
+
+      <PreviewSection id="motion" name="SectionReveal / CircleLoader" description="Общие компоненты анимации, без имитации загрузки страницы.">
+        <MotionPreview />
       </PreviewSection>
 
       <PreviewSection
