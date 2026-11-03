@@ -11,7 +11,7 @@ export function IntroductionSection() {
         <p className={styles.eyebrow}>КАТАЛОГ ОБУЧЕНИЯ</p>
         <h1 id="catalog-title">ОБУЧЕНИЕ<br /><span>В БЬЮТИ.</span></h1>
         <p className={styles.summary}>Практика с куратором или короткие уроки в записи. Найдите подходящий формат обучения.</p>
-        <ButtonLink href="#catalog-filters" appearance="cut" intent="primary">Смотреть курсы →</ButtonLink>
+        <ButtonLink href="#catalog-filters" appearance="cut" intent="primary">Выбрать обучение →</ButtonLink>
       </div>
     </PageContainer>
     <div className={styles.photo}><Image src={photo} alt="Две женщины читают газеты на бирюзовом фоне" fill priority sizes="(max-width: 760px) 100vw, 52vw" /></div>

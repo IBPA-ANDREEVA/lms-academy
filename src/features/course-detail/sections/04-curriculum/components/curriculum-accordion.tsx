@@ -1,10 +1,15 @@
+"use client";
+import { useRef } from "react";
+import { useDisclosureMotion } from "@/components/ui/use-disclosure-motion";
 import type { DetailModule } from "../../../detail-data";
 import styles from "./curriculum-accordion.module.css";
 
 export function CurriculumAccordion({ modules }: { modules?: DetailModule[] }) {
+  const root = useRef<HTMLDivElement>(null);
+  useDisclosureMotion(root);
   const items = modules ?? [];
   return (
-    <div className={styles.list}>
+    <div ref={root} className={styles.list}>
       {items.map((module, index) => (
         <details key={`${module.title}-${index}`} className={styles.module}>
           <summary><span className={styles.index}>{String(index + 1).padStart(2, "0")}</span><span>{module.title}</span><span className={styles.mark} aria-hidden="true">＋</span></summary>

@@ -71,9 +71,9 @@ export function CourseCard({
           {course.href ? <Link href={course.href}>{course.title}</Link> : course.title}
         </Heading>
         {course.trainer && <p>{course.trainer}</p>}
-        {(course.duration || course.format) && (
+        {(course.duration || (course.format && course.kind !== "mini-course")) && (
           <p className={styles.meta}>
-            {[course.duration, course.format].filter(Boolean).join(" · ")}
+            {[course.duration, course.kind !== "mini-course" ? course.format : undefined].filter(Boolean).join(" · ")}
           </p>
         )}
         {course.kind === "mini-course" && (
@@ -93,7 +93,8 @@ export function CourseCard({
             {course.href ? (
               <ButtonLink
                 href={course.href}
-                appearance="cut"
+                appearance={variant === "compact" ? "neoBrutalist" : "cut"}
+                size={variant === "compact" ? "sm" : "md"}
                 intent="secondary"
                 aria-label={variant === "compact" ? `Открыть мини-курс: ${course.title}` : undefined}
               >

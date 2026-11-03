@@ -5,3 +5,8 @@
 .trigger { clip-path: none; border: 1px solid var(--border); padding: 10px; font-size: 13px; gap: 6px; }
 .list { max-height: min(290px,40dvh); }
 @media(max-width:600px) { .trigger { font-size: 11px; } .list { width: min(260px,calc(100vw - 40px)); } .root:last-of-type .list { left: auto; right: 0; } }
+
+.list { width: 100%; min-width: 0; max-width: 100%; box-sizing: border-box; left: 0; right: auto; box-shadow: 3px 3px 0 var(--text); }
+.list button { min-height: 44px; overflow-wrap: anywhere; white-space: normal; }
+.trigger span:first-child { min-width: 0; overflow-wrap: anywhere; }
+@media(max-width:600px) { .trigger { min-height: 44px; font-size: 13px; } .root:last-of-type .list { left: 0; right: auto; } }

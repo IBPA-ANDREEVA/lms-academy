@@ -43,6 +43,9 @@ export function FilterDropdown({ label, value, options, onChange }: FilterDropdo
     <div
       ref={root}
       className={styles.root}
+      onKeyDown={(event) => {
+        if (event.key === "Escape" && open) { event.preventDefault(); event.stopPropagation(); setOpen(false); trigger.current?.focus({ preventScroll: true }); }
+      }}
       onBlur={(event) => {
         if (!event.currentTarget.contains(event.relatedTarget)) setOpen(false);
       }}
@@ -53,6 +56,7 @@ export function FilterDropdown({ label, value, options, onChange }: FilterDropdo
         type="button"
         className={styles.trigger}
         aria-labelledby={`${id}-label ${id}-value`}
+        aria-haspopup="listbox"
         aria-expanded={open}
         aria-controls={`${id}-list`}
         onClick={() => setOpen(!open)}
@@ -70,7 +74,7 @@ export function FilterDropdown({ label, value, options, onChange }: FilterDropdo
         <ul
           ref={list}
           id={`${id}-list`}
-          role="listbox"
+          data-css-motion="surface" role="listbox"
           aria-labelledby={`${id}-label`}
           className={styles.list}
           onKeyDown={(event) => {

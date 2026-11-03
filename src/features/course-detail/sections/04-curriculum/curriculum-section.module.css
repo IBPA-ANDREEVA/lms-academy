@@ -7,3 +7,5 @@
 .copy > p { max-width: 30ch; margin: 24px 0 0; color: var(--muted); font-size: 15px; }
 :global([data-kind="mini-course"]) .section { background: #f4edf2; }
 @media (max-width: 760px) { .section { padding: 100px 0 90px; } .grid { grid-template-columns: 1fr; gap: 28px; } .copy { padding-top: 0; } .copy > p { max-width: 50ch; } }
+
+.unavailable { margin: 0; padding: 24px; border-left: 2px solid var(--plum-border); color: var(--muted); line-height: 1.7; }

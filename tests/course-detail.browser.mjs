@@ -18,17 +18,15 @@ try {
       await page.goto(`${origin}/${kind}/${slug}`);
       await page.getByRole("heading", { level: 1 }).waitFor();
       await page.evaluate(() => document.fonts.ready);
-      assert.equal(await page.locator("main > section").count(), 6);
+      assert.equal(await page.locator("main > section").count(), 5);
       assert.equal(await page.locator('meta[name="robots"]').getAttribute("content"), "noindex, nofollow");
-      assert.equal(await page.getByRole("button", { name: "В корзину →" }).count(), 2);
-      assert.equal(await page.getByRole("button", { name: "В корзину →" }).first().isDisabled(), true);
-      assert.equal(await page.getByText("Публичное видео пока недоступно").isVisible(), true);
+      assert.equal(await page.getByRole("button", { name: "В корзину" }).count(), 2);
+      assert.equal(await page.getByRole("button", { name: "В корзину" }).first().isDisabled(), true);
+      assert.equal(await page.getByText("Публичное видео пока недоступно", {exact:true}).isVisible(), true);
       assert.ok(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), `${kind} overflow at ${width}`);
-      const first = page.locator("#curriculum summary").first();
-      await first.click();
-      assert.equal(await page.locator("#curriculum details").first().getAttribute("open"), "");
-      await first.press("Enter");
-      assert.equal(await page.locator("#curriculum details").first().getAttribute("open"), null);
+      assert.equal(await page.locator("#curriculum summary").count(), 0);
+      assert.ok(await page.getByText("Программа пока не опубликована.", {exact:false}).isVisible());
+      assert.equal(await page.locator("#trainer").count(), 0);
       if (kind === "mini-courses") {
         assert.equal(await page.getByText("Уроки в записи · без куратора").isVisible(), true);
         assert.equal(await page.getByText("Куратора и проверки домашних работ нет.").isVisible(), true);

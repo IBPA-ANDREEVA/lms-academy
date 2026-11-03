@@ -5,7 +5,7 @@ const require=createRequire(import.meta.url);
 const { chromium }=require(process.env.PLAYWRIGHT_MODULE||"playwright");
 const browser=await chromium.launch({headless:true,channel:"chrome"});
 const page=await browser.newPage();
-const evidence=".catalog-evidence";
+const evidence=process.env.FRONTEND_EVIDENCE || ".catalog-evidence";
 await mkdir(evidence,{recursive:true});
 const failures=[];page.on("pageerror",error=>failures.push(error.message));
 try{
@@ -22,8 +22,8 @@ try{
   if(width===1440||width===390){
    await page.locator('#catalog-panel-courses article').first().click({position:{x:20,y:20}});
    await page.waitForURL('**/courses/course-lashes');
-   await page.locator('main[data-kind="course"]').getByText('ДЕМОНСТРАЦИЯ СТРАНИЦЫ · ПРОДУКТ НЕ ОПУБЛИКОВАН').waitFor();
-   assert.ok(await page.locator('main[data-kind="course"]').getByText('ДЕМОНСТРАЦИЯ СТРАНИЦЫ · ПРОДУКТ НЕ ОПУБЛИКОВАН').isVisible());
+   await page.getByRole('heading', {level:1}).waitFor();
+   assert.ok(await page.getByRole('button', {name:'В корзину'}).first().isDisabled());
    await page.goBack();await page.waitForURL('**/courses');
    await page.locator('#catalog-panel-courses article').first().waitFor({state:'visible'});
   }
@@ -36,11 +36,13 @@ try{
   if(width===1440||width===390){
    await page.locator('#catalog-panel-mini-courses article').first().click({position:{x:20,y:20}});
    await page.waitForURL('**/mini-courses/mini-lashes');
-   await page.locator('main[data-kind="mini-course"]').getByText('ДЕМОНСТРАЦИЯ СТРАНИЦЫ · ПРОДУКТ НЕ ОПУБЛИКОВАН').waitFor();
-   assert.ok(await page.locator('main[data-kind="mini-course"]').getByText('ДЕМОНСТРАЦИЯ СТРАНИЦЫ · ПРОДУКТ НЕ ОПУБЛИКОВАН').isVisible());
+   await page.getByRole('heading', {level:1}).waitFor();
+   assert.ok(await page.getByRole('button', {name:'В корзину'}).first().isDisabled());
    await page.goBack();await page.waitForURL('**/mini-courses');
    await page.locator('#catalog-panel-mini-courses article').first().waitFor({state:'visible'});
   }
+  const disclosure=page.locator('#catalog-filters details');
+  if(!await disclosure.evaluate(el=>el.open))await disclosure.locator('summary').click();
   await page.getByRole("button",{name:"Направление Все направления"}).click();
   await page.getByRole("option",{name:"Брови"}).click();
   await page.waitForURL("**/mini-courses?direction=brows");

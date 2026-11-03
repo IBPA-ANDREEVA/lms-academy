@@ -12,3 +12,6 @@
 :global([data-kind="mini-course"]) .copy > p { color: var(--muted); }
 :global([data-kind="mini-course"]) .media { background: #e7dce3; }
 @media (max-width: 760px) { .section { padding: 74px 0 78px; } .grid { grid-template-columns: 1fr; gap: 30px; } .media { min-height: 220px; } .copy > p { max-width: 52ch; } }
+
+.grid > *, .media { min-width: 0; max-width: 100%; }
+.media { width: 100%; min-height: 0; }
