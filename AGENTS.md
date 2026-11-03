@@ -124,3 +124,9 @@ Owner follow-up (2026-10-30): active epic names and folders are Russian. Tasks u
 
 
 Additional explicit owner authorization (same session): completed notes must also match the new style and titles. The 12 completed records were therefore reformatted with current epic IDs and the same three Russian sections. Preserve their completed status, original estimates, date tags and recorded time ranges. Original byte-identical sources are archived in Vault `Resources/completed-originals.zip`; `ordered-epics.json` records both original and authorized formatted hashes. This supersedes the earlier content/ID immutability restriction only for the authorized formatting migration; do not infer new implementation evidence or reopen completed work.
+
+## Catalog preview and SEO maintenance (LAND03/LAND04)
+
+Read `docs/architecture/catalog-preview-contract.md` before catalog/cart work. `TEST_PREVIEW=true` alone enables isolated browser-local demo data/control; false/missing must use the Catalog server adapter with distinct empty/unavailable outcomes. Never restore a fixture fallback or use NODE_ENV as preview authorization. Demo actions never create payments, orders or enrollment. Rebuild after mode changes.
+
+For every creation, modification, rename or removal of a public/catalog/course route or relevant SEO component, **review `docs/seo/README.md` and follow `docs/seo/verification-checklist.md`**. Update metadata as needed; review canonicals and indexability; verify sitemap behavior and applicable structured data; keep preview/unpublished content non-indexable; run available SEO checks; include SEO changes, results and unresolved issues in the final report. Do not duplicate the guide here or invent the production origin.

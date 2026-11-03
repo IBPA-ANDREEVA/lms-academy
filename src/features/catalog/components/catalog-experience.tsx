@@ -6,7 +6,9 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { FilteringSection, type Filters } from "../sections/02-filtering/filtering-section";
 import { CoursesSection } from "../sections/03-courses/courses-section";
 import { MiniCoursesSection } from "../sections/04-mini-courses/mini-courses-section";
-import { publishedCourses,publishedMiniCourses,courseExamples,miniCourseExamples,directions,type CatalogItem } from "../catalog-data";
+import { directions, type CatalogItem } from "../catalog-data";
+import { useCatalog } from "../catalog-provider";
+import { toCatalogItem } from "../catalog-presentation";
 import styles from "./catalog-experience.module.css";
 gsap.registerPlugin(useGSAP);
 type Kind="courses"|"mini-courses";
@@ -60,13 +62,15 @@ export function CatalogExperience(){
   return () => { preference.removeEventListener("change", settle); window.removeEventListener("resize", settle); observer.disconnect(); settle(); };
  }, { scope: root, dependencies: [kind], revertOnUpdate: true });
 
- const courseDemo=publishedCourses.length===0,miniDemo=publishedMiniCourses.length===0;
- const courseItems=matches(courseDemo?courseExamples:publishedCourses,filters),miniItems=matches(miniDemo?miniCourseExamples:publishedMiniCourses,filters);const filtered=!!(filters.direction||filters.language||filters.level);
+ const catalog = useCatalog();
+ const visible = catalog.products.filter(p => p.publication === "published" && p.approval === "approved");
+ const courseDemo=catalog.enabled,miniDemo=catalog.enabled;
+ const courseItems=matches(visible.filter(p => p.kind === "course").map(toCatalogItem),filters),miniItems=matches(visible.filter(p => p.kind === "mini-course").map(toCatalogItem),filters);const filtered=!!(filters.direction||filters.language||filters.level);
  return <div ref={root} className={styles.root} style={{"--catalog-header-offset":`${offset}px`} as React.CSSProperties}>
   <FilteringSection kind={kind} filters={filters} onFilter={(field,value)=>navigate(kind,{...filters,[field]:value})} onSwitch={next=>{if(next===kind)return;const focused=document.activeElement; if(track.current?.contains(focused))document.getElementById(`catalog-tab-${next}`)?.focus({preventScroll:true});navigate(next,filters);requestAnimationFrame(()=>document.getElementById(`catalog-tab-${next}`)?.focus({preventScroll:true}))}} onReset={()=>navigate(kind,empty)}/>
   <div ref={track} className={styles.track}>
-   <div data-kind="courses" role="tabpanel" id="catalog-panel-courses" aria-labelledby="catalog-tab-courses" aria-hidden={kind!=="courses"} inert={kind!=="courses"} className={styles.panel}><CoursesSection items={courseItems} filtered={filtered} demonstration={courseDemo} onReset={()=>navigate(kind,empty)}/></div>
-   <div data-kind="mini-courses" role="tabpanel" id="catalog-panel-mini-courses" aria-labelledby="catalog-tab-mini-courses" aria-hidden={kind!=="mini-courses"} inert={kind!=="mini-courses"} className={styles.panel}><MiniCoursesSection items={miniItems} filtered={filtered} demonstration={miniDemo} onReset={()=>navigate(kind,empty)}/></div>
+   <div data-kind="courses" role="tabpanel" id="catalog-panel-courses" aria-labelledby="catalog-tab-courses" aria-hidden={kind!=="courses"} inert={kind!=="courses"} className={styles.panel}><CoursesSection status={catalog.status} items={courseItems} filtered={filtered} demonstration={courseDemo} onReset={()=>navigate(kind,empty)}/></div>
+   <div data-kind="mini-courses" role="tabpanel" id="catalog-panel-mini-courses" aria-labelledby="catalog-tab-mini-courses" aria-hidden={kind!=="mini-courses"} inert={kind!=="mini-courses"} className={styles.panel}><MiniCoursesSection status={catalog.status} items={miniItems} filtered={filtered} demonstration={miniDemo} onReset={()=>navigate(kind,empty)}/></div>
   </div>
  </div>
 }

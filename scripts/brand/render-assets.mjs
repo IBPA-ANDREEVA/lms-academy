@@ -1,0 +1,22 @@
+// One-time export with the existing Next.js sharp dependency; no app dependency added.
+import { createRequire } from 'node:module';
+import { readFile, writeFile } from 'node:fs/promises';
+const require = createRequire(import.meta.url);
+const nextRequire = createRequire(require.resolve('next/package.json'));
+const sharp = nextRequire('sharp');
+const mark = await readFile('public/brand/mark.svg');
+const logo = await readFile('public/brand/logo.svg');
+const markSvg = mark.toString().replace('<svg ', '<svg width="64" height="64" ');
+await writeFile('src/app/icon.svg', markSvg);
+await sharp(mark).resize(180,180,{fit:'contain',background:'#faf9fa'}).flatten({background:'#faf9fa'}).png().toFile('src/app/apple-icon.png');
+const icons = await Promise.all([16,32,48].map(size => sharp(mark).resize(size,size,{fit:'contain',background:'#faf9fa'}).flatten({background:'#faf9fa'}).ensureAlpha().png().toBuffer()));
+const header = Buffer.alloc(6 + 16 * icons.length);
+header.writeUInt16LE(1,2); header.writeUInt16LE(icons.length,4);
+let offset = header.length;
+icons.forEach((icon,i) => { const at=6+i*16,size=[16,32,48][i]; header[at]=size; header[at+1]=size; header.writeUInt16LE(1,at+4); header.writeUInt16LE(32,at+6); header.writeUInt32LE(icon.length,at+8); header.writeUInt32LE(offset,at+12); offset+=icon.length; });
+await writeFile('src/app/favicon.ico',Buffer.concat([header,...icons]));
+const rendered = await sharp(logo).resize(1000).png().toBuffer();
+const meta = await sharp(rendered).metadata();
+await sharp({create:{width:1200,height:630,channels:4,background:'#faf9fa'}}).composite([{input:rendered,left:100,top:Math.round((630-meta.height)/2)}]).png().toFile('public/brand/social.png');
+await sharp(logo).resize(1200).flatten({background:'#ffffff'}).png().toFile('/tmp/lms-logo-light.png');
+await sharp('public/brand/logo-dark.svg').resize(1200).flatten({background:'#1d1b1f'}).png().toFile('/tmp/lms-logo-dark.png');

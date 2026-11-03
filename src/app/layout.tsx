@@ -7,6 +7,11 @@ import {
   publicSite,
 } from "@/features/public-shell";
 import "./globals.css";
+import { CatalogProvider } from "@/features/catalog/catalog-provider";
+import { PreviewControl } from "@/features/catalog/preview/preview-control";
+import { fetchPublishedCatalog } from "@/server/catalog";
+import { pageMetadata, siteName } from "@/lib/seo/metadata";
+import { testPreview, siteOrigin } from "@/lib/site-environment";
 import { CartProvider } from "@/features/commerce";
 
 const manrope = localFont({
@@ -23,18 +28,20 @@ const unbounded = localFont({
 });
 
 export const metadata: Metadata = {
-  title: { default: "LMS Academy", template: "%s — LMS Academy" },
-  description: "Обучение в сфере красоты.",
+  ...pageMetadata("Обучение в сфере красоты", "Обучение в сфере красоты в Beauty Business Academy."),
+  metadataBase: siteOrigin() ? new URL(siteOrigin()!) : undefined,
+  applicationName: siteName,
 };
 
-export default function RootLayout({ children }: LayoutProps<"/">) {
+export default async function RootLayout({ children }: LayoutProps<"/">) {
+  const catalog = testPreview ? { status: "empty" as const, products: [] as [] } : await fetchPublishedCatalog();
   return (
     <html lang="ru" className={`${manrope.variable} ${unbounded.variable}`}>
       <body>
         <a className="skip-link" href="#main-content">
           Перейти к содержанию
         </a>
-        <CartProvider>
+        <CatalogProvider enabled={testPreview} initial={catalog}><CartProvider>
           <PublicHeader
             brand={publicSite.brand}
             navigation={publicSite.navigation}
@@ -43,7 +50,8 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           />
           <PublicMotion>{children}</PublicMotion>
           <PublicSiteFooter />
-        </CartProvider>
+        {testPreview && <PreviewControl />}
+        </CartProvider></CatalogProvider>
       </body>
     </html>
   );

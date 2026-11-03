@@ -15,8 +15,8 @@ export function DemoControls({ compact = false }: { compact?: boolean }) {
   return <div className={styles.demo}>
 
     <div className={styles.demoActions}>
-      {!cart.items.some(item => item.id === "demo-course") && <Button intent="secondary" size="sm" onClick={() => cart.addDemo("demo-course")}>Добавить тестовый курс</Button>}
-      {!compact && !cart.items.some(item => item.id === "demo-mini") && <Button intent="secondary" size="sm" onClick={() => cart.addDemo("demo-mini")}>Добавить тестовый мини-курс</Button>}
+      {!cart.items.some(item => item.kind === "Курс") && <Button intent="secondary" size="sm" onClick={() => cart.addDemo("demo-course")}>Добавить тестовый курс</Button>}
+      {!compact && !cart.items.some(item => item.kind === "Мини-курс") && <Button intent="secondary" size="sm" onClick={() => cart.addDemo("demo-mini")}>Добавить тестовый мини-курс</Button>}
       {cart.items.length > 0 && <Button intent="secondary" size="sm" onClick={cart.clear}>Очистить тестовую корзину</Button>}
     </div>
     {!compact && cart.items.length > 0 && <details className={styles.scenarios}><summary>Тестовые состояния интерфейса</summary>

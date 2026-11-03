@@ -1,4 +1,3 @@
-import { courseExamples, miniCourseExamples } from "@/features/catalog";
 import type { ReactNode } from "react";
 import type { ImageProps } from "next/image";
 
@@ -35,20 +34,3 @@ export type DetailProduct = {
   learningHref?: string;
   demonstration?: boolean;
 };
-
-/** OQ-009: these are review-only pages derived from catalog examples, not published offers. */
-export function getDetailProduct(kind: DetailKind, slug: string): DetailProduct | null {
-  const item = (kind === "course" ? courseExamples : miniCourseExamples).find((entry) => entry.id === slug);
-  if (!item) return null;
-
-  return {
-    slug,
-    kind,
-    title: item.course.title,
-    direction: item.course.direction,
-    level: item.course.level,
-    language: item.course.language,
-    offerState: "unavailable",
-    demonstration: true,
-  };
-}

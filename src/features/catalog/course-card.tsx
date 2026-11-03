@@ -57,6 +57,7 @@ export function CourseCard({
       ) : variant !== "default" ? <div className={styles.media} aria-hidden="true"><span className={styles.imageMark}>◇</span></div> : null}
       <div className={styles.content}>
 
+        {demonstration && <p className={styles.meta}>Демо · не продаётся</p>}
         <p className={styles.meta}>
           {[
             course.kind === "mini-course" ? "Мини-курс" : "Курс",

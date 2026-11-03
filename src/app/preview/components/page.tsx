@@ -1,10 +1,7 @@
-import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/seo/metadata";
 import { ComponentPreviewPage } from "@/features/component-preview";
 
-export const metadata: Metadata = {
-  title: "Компоненты — предпросмотр",
-  robots: { index: false, follow: false },
-};
+export const metadata = pageMetadata("Компоненты — предпросмотр", "Внутренняя проверка компонентов интерфейса. Демонстрационные данные.");
 
 export default function ComponentsPreview() {
   return <ComponentPreviewPage />;

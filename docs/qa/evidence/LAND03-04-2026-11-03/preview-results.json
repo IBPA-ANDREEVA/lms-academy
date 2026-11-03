@@ -1,0 +1,132 @@
+{
+  "results": [
+    {
+      "width": 1440,
+      "mode": "preview",
+      "responsive": true
+    },
+    {
+      "width": 390,
+      "mode": "preview",
+      "responsive": true
+    },
+    {
+      "width": 360,
+      "mode": "preview",
+      "responsive": true
+    },
+    {
+      "width": 768,
+      "mode": "preview",
+      "responsive": true
+    },
+    {
+      "path": "/",
+      "status": 200,
+      "title": "Обучение в сфере красоты — Beauty Business Academy",
+      "robots": "noindex, nofollow",
+      "canonical": null,
+      "jsonLd": 0
+    },
+    {
+      "path": "/courses",
+      "status": 200,
+      "title": "Курсы в сфере красоты — Beauty Business Academy",
+      "robots": "noindex, nofollow",
+      "canonical": null,
+      "jsonLd": 0
+    },
+    {
+      "path": "/courses?language=en",
+      "status": 200,
+      "title": "Курсы в сфере красоты — Beauty Business Academy",
+      "robots": "noindex, nofollow",
+      "canonical": null,
+      "jsonLd": 0
+    },
+    {
+      "path": "/mini-courses",
+      "status": 200,
+      "title": "Мини-курсы в записи — Beauty Business Academy",
+      "robots": "noindex, nofollow",
+      "canonical": null,
+      "jsonLd": 0
+    },
+    {
+      "path": "/cart",
+      "status": 200,
+      "title": "Корзина — Beauty Business Academy",
+      "robots": "noindex, nofollow",
+      "canonical": null,
+      "jsonLd": 0
+    },
+    {
+      "path": "/checkout",
+      "status": 200,
+      "title": "Оформление заказа — Beauty Business Academy",
+      "robots": "noindex, nofollow",
+      "canonical": null,
+      "jsonLd": 0
+    },
+    {
+      "path": "/preview/components",
+      "status": 200,
+      "title": "Компоненты — предпросмотр — Beauty Business Academy",
+      "robots": "noindex, nofollow",
+      "canonical": null,
+      "jsonLd": 0
+    },
+    {
+      "path": "/courses/demo-course-0",
+      "status": 200,
+      "title": "Демонстрация программы — Beauty Business Academy",
+      "robots": "noindex, nofollow",
+      "canonical": null,
+      "jsonLd": 0
+    },
+    {
+      "path": "/mini-courses/demo-mini-0",
+      "status": 200,
+      "title": "Демонстрация программы — Beauty Business Academy",
+      "robots": "noindex, nofollow",
+      "canonical": null,
+      "jsonLd": 0
+    },
+    {
+      "path": "/admin",
+      "status": 404,
+      "title": "Обучение в сфере красоты — Beauty Business Academy",
+      "robots": "noindex",
+      "canonical": null,
+      "jsonLd": 0
+    },
+    {
+      "path": "/account",
+      "status": 404,
+      "title": "Обучение в сфере красоты — Beauty Business Academy",
+      "robots": "noindex",
+      "canonical": null,
+      "jsonLd": 0
+    },
+    {
+      "path": "/trainer",
+      "status": 404,
+      "title": "Обучение в сфере красоты — Beauty Business Academy",
+      "robots": "noindex",
+      "canonical": null,
+      "jsonLd": 0
+    },
+    {
+      "path": "/login",
+      "status": 404,
+      "title": "Обучение в сфере красоты — Beauty Business Academy",
+      "robots": "noindex",
+      "canonical": null,
+      "jsonLd": 0
+    }
+  ],
+  "errors": [],
+  "mutations": [],
+  "sitemap": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<urlset xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\">\n</urlset>\n",
+  "robots": "User-Agent: *\nDisallow: /\n\n"
+}

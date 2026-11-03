@@ -1,5 +1,6 @@
 "use client";
 import { CutButtonPreview } from "./cut-button-preview";
+import { CatalogStatesPreview } from "./catalog-states-preview";
 import { MotionPreview } from "./motion-preview";
 
 import { useRef, useState, type ReactNode } from "react";
@@ -32,6 +33,7 @@ const components = [
   ["button", "Button"],
   ["form-controls", "FormControls"],
   ["course-card", "CourseCard"],
+  ["catalog-states", "CatalogState"],
   ["category-navigation", "CategoryNavigation"],
   ["section-heading", "SectionHeading"],
   ["page-container", "PageContainer"],
@@ -327,6 +329,8 @@ export function ComponentPreviewPage() {
           </FormMessage>
         </div>
       </PreviewSection>
+
+      <PreviewSection id="catalog-states" name="CatalogState" description="Пустые результаты, загрузка и ошибка. Демо-состояния; источник данных не меняется."><CatalogStatesPreview /></PreviewSection>
 
       <PreviewSection
         id="course-card"

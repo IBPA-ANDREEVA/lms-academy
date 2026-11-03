@@ -1,0 +1,132 @@
+{
+  "results": [
+    {
+      "width": 1440,
+      "mode": "real",
+      "responsive": true
+    },
+    {
+      "width": 390,
+      "mode": "real",
+      "responsive": true
+    },
+    {
+      "width": 360,
+      "mode": "real",
+      "responsive": true
+    },
+    {
+      "width": 768,
+      "mode": "real",
+      "responsive": true
+    },
+    {
+      "path": "/",
+      "status": 200,
+      "title": "Обучение в сфере красоты — Beauty Business Academy",
+      "robots": "index, follow",
+      "canonical": "https://academy.example.test",
+      "jsonLd": 1
+    },
+    {
+      "path": "/courses",
+      "status": 200,
+      "title": "Курсы в сфере красоты — Beauty Business Academy",
+      "robots": "index, follow",
+      "canonical": "https://academy.example.test/courses",
+      "jsonLd": 0
+    },
+    {
+      "path": "/courses?language=en",
+      "status": 200,
+      "title": "Курсы в сфере красоты — Beauty Business Academy",
+      "robots": "index, follow",
+      "canonical": "https://academy.example.test/courses",
+      "jsonLd": 0
+    },
+    {
+      "path": "/mini-courses",
+      "status": 200,
+      "title": "Мини-курсы в записи — Beauty Business Academy",
+      "robots": "index, follow",
+      "canonical": "https://academy.example.test/mini-courses",
+      "jsonLd": 0
+    },
+    {
+      "path": "/cart",
+      "status": 200,
+      "title": "Корзина — Beauty Business Academy",
+      "robots": "noindex, nofollow",
+      "canonical": null,
+      "jsonLd": 0
+    },
+    {
+      "path": "/checkout",
+      "status": 200,
+      "title": "Оформление заказа — Beauty Business Academy",
+      "robots": "noindex, nofollow",
+      "canonical": null,
+      "jsonLd": 0
+    },
+    {
+      "path": "/preview/components",
+      "status": 200,
+      "title": "Компоненты — предпросмотр — Beauty Business Academy",
+      "robots": "noindex, nofollow",
+      "canonical": null,
+      "jsonLd": 0
+    },
+    {
+      "path": "/courses/demo-course-0",
+      "status": 200,
+      "title": "Программа не найдена — Beauty Business Academy",
+      "robots": "noindex, nofollow",
+      "canonical": null,
+      "jsonLd": 0
+    },
+    {
+      "path": "/mini-courses/demo-mini-0",
+      "status": 200,
+      "title": "Программа не найдена — Beauty Business Academy",
+      "robots": "noindex, nofollow",
+      "canonical": null,
+      "jsonLd": 0
+    },
+    {
+      "path": "/admin",
+      "status": 404,
+      "title": "404: This page could not be found.",
+      "robots": "noindex",
+      "canonical": null,
+      "jsonLd": 0
+    },
+    {
+      "path": "/account",
+      "status": 404,
+      "title": "404: This page could not be found.",
+      "robots": "noindex",
+      "canonical": null,
+      "jsonLd": 0
+    },
+    {
+      "path": "/trainer",
+      "status": 404,
+      "title": "404: This page could not be found.",
+      "robots": "noindex",
+      "canonical": null,
+      "jsonLd": 0
+    },
+    {
+      "path": "/login",
+      "status": 404,
+      "title": "404: This page could not be found.",
+      "robots": "noindex",
+      "canonical": null,
+      "jsonLd": 0
+    }
+  ],
+  "errors": [],
+  "mutations": [],
+  "sitemap": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<urlset xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\">\n<url>\n<loc>https://academy.example.test/</loc>\n</url>\n<url>\n<loc>https://academy.example.test/courses</loc>\n</url>\n<url>\n<loc>https://academy.example.test/mini-courses</loc>\n</url>\n</urlset>\n",
+  "robots": "User-Agent: *\nAllow: /\nDisallow: /api/\nDisallow: /admin/\nDisallow: /account/\nDisallow: /trainer/\n\nSitemap: https://academy.example.test/sitemap.xml\n"
+}

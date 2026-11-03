@@ -1,40 +1,12 @@
-import { useId } from "react";
-import { brandLogoArtwork as art } from "./brand-logo-artwork";
+import { suppliedLogo as art } from "./supplied-logo-artwork";
 import styles from "./brand-logo.module.css";
 
-export type BrandLogoProps = {
-  /** `mark` draws only the cut BBA monogram for narrow slots. */
-  variant?: "lockup" | "mark";
-  className?: string;
-};
-
-/**
- * Concept 01 «Срез» (docs/design/brand/logo-concepts). Decorative only: the
- * owning link supplies the accessible name. The left half and the first line
- * follow `currentColor`; the plum half, rule and ACADEMY follow
- * `--brand-logo-accent` so dark surfaces can switch to the plum border tone.
- */
+export type BrandLogoProps = { variant?: "lockup" | "mark"; className?: string };
+/** Supplied identity traced to paths. The owning link provides the accessible name. */
 export function BrandLogo({ variant = "lockup", className = "" }: BrandLogoProps) {
-  const id = useId();
-  const width = variant === "mark" ? art.markWidth : art.width;
-  return (
-    <svg
-      className={`${styles.logo} ${className}`}
-      viewBox={`0 0 ${width} ${art.height}`}
-      aria-hidden="true"
-      focusable="false"
-    >
-      <defs>
-        <clipPath id={`${id}l`}><polygon points={art.leftClip} /></clipPath>
-        <clipPath id={`${id}r`}><polygon points={art.rightClip} /></clipPath>
-      </defs>
-      <path d={art.mark} fill="currentColor" clipPath={`url(#${id}l)`} />
-      <path d={art.mark} className={styles.accent} clipPath={`url(#${id}r)`} />
-      {variant === "lockup" && <>
-        <rect className={styles.accent} {...art.rule} />
-        <path d={art.line1} fill="currentColor" />
-        <path d={art.line2} className={styles.accent} />
-      </>}
-    </svg>
-  );
+  return <svg className={`${styles.logo} ${className}`} viewBox={(variant === "mark" ? art.markBounds : art.bounds).join(" ")} aria-hidden="true" focusable="false">
+    <g fill="#680a34">{art.paths.plum.map((path, i) => <path key={i} {...path} />)}</g>
+    <g fill="#bfbebf">{art.paths.silver.map((path, i) => <path key={i} {...path} />)}</g>
+    {variant === "lockup" && <g fill="currentColor">{art.paths.wordmark.map((path, i) => <path key={i} {...path} />)}</g>}
+  </svg>;
 }

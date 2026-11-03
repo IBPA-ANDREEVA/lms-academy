@@ -21,9 +21,10 @@ try{
   if(width===1440||width===390)await page.screenshot({path:`${evidence}/courses-${width}.png`,fullPage:true});
   if(width===1440||width===390){
    await page.locator('#catalog-panel-courses article').first().click({position:{x:20,y:20}});
-   await page.waitForURL('**/courses/course-lashes');
+   await page.waitForURL('**/courses/demo-course-0');
    await page.getByRole('heading', {level:1}).waitFor();
-   assert.ok(await page.getByRole('button', {name:'В корзину'}).first().isDisabled());
+   // TEST_PREVIEW now explicitly permits local cart simulation, while payment stays disabled.
+   assert.ok(await page.getByRole('button', {name:'В демо-корзину',exact:false}).first().isEnabled());
    await page.goBack();await page.waitForURL('**/courses');
    await page.locator('#catalog-panel-courses article').first().waitFor({state:'visible'});
   }
@@ -35,9 +36,10 @@ try{
   if(width===1440||width===390)await page.screenshot({path:`${evidence}/mini-${width}.png`,fullPage:true});
   if(width===1440||width===390){
    await page.locator('#catalog-panel-mini-courses article').first().click({position:{x:20,y:20}});
-   await page.waitForURL('**/mini-courses/mini-lashes');
+   await page.waitForURL('**/mini-courses/demo-mini-0');
    await page.getByRole('heading', {level:1}).waitFor();
-   assert.ok(await page.getByRole('button', {name:'В корзину'}).first().isDisabled());
+   // TEST_PREVIEW now explicitly permits local cart simulation, while payment stays disabled.
+   assert.ok(await page.getByRole('button', {name:'В демо-корзину',exact:false}).first().isEnabled());
    await page.goBack();await page.waitForURL('**/mini-courses');
    await page.locator('#catalog-panel-mini-courses article').first().waitFor({state:'visible'});
   }
@@ -62,4 +64,5 @@ try{
  await page.getByRole("tab",{name:"Курсы",exact:true}).click();await page.waitForURL("**/courses");
  assert.equal(await page.locator('#catalog-panel-mini-courses').getAttribute('aria-hidden'),'true');
  assert.deepEqual(failures,[]);
+ console.log("Catalog navigation/filter/history/sticky/reduced-motion checks passed with TEST_PREVIEW data.");
 }finally{await browser.close()}
