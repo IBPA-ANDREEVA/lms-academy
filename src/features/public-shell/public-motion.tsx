@@ -1,23 +1,29 @@
 "use client";
 
-import { useRef, type ReactNode } from "react";
+import { useCallback, useRef, useState, type ReactNode } from "react";
 import { usePathname } from "next/navigation";
-import { gsap } from "gsap";
-import { useGSAP } from "@gsap/react";
+import { PageWipeTransition } from "./page-wipe-transition";
+import { CircleLoader } from "./circle-loader";
+import { RouteLoadingContext } from "./route-loading";
+import styles from "./public-motion.module.css";
 
-gsap.registerPlugin(useGSAP);
-
-/** Animate only this owned element: streamed descendants may not be hydrated yet. */
 export function PublicMotion({ children }: { children: ReactNode }) {
-  const root = useRef<HTMLDivElement>(null);
+  const content = useRef<HTMLDivElement>(null);
   const pathname = usePathname();
-  useGSAP(() => {
-    const media = gsap.matchMedia();
-    media.add("(prefers-reduced-motion: no-preference)", () => {
-      gsap.fromTo(root.current, { opacity: .35 }, { opacity: 1, duration: .35, clearProps: "opacity" });
-    });
-    return () => media.revert();
-  }, { scope: root, dependencies: [pathname], revertOnUpdate: true });
-  // Opacity does not change the containing block of sticky descendants.
-  return <div ref={root} style={{ minWidth: 0 }}>{children}</div>;
+  const [loadingCount, setLoadingCount] = useState(0);
+  const [wipeOwnsLoading, setWipeOwnsLoading] = useState(false);
+  // Circle is a cold-entry loading treatment. Once navigation uses Wipe,
+  // a slow-response watchdog must never start a second fullscreen loader.
+  const onWipeActive = useCallback((active: boolean) => { if (active) setWipeOwnsLoading(true); }, []);
+  const register = useCallback(() => {
+    setLoadingCount(count => count + 1);
+    return () => setLoadingCount(count => Math.max(0, count - 1));
+  }, []);
+  return <RouteLoadingContext value={register}>
+    <div className={styles.root}>
+      <div ref={content} className={styles.content}>{children}</div>
+      <PageWipeTransition content={content} pathname={pathname} loading={loadingCount > 0} onActive={onWipeActive} />
+      <CircleLoader active={loadingCount > 0} suppressed={wipeOwnsLoading} />
+    </div>
+  </RouteLoadingContext>;
 }
