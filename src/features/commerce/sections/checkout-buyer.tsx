@@ -10,13 +10,13 @@ export function CheckoutBuyer() {
   const [email, setEmail] = useState("");
   const [touched, setTouched] = useState(false);
   const login = useRef<HTMLButtonElement>(null);
-  const error = touched && (!email.trim() ? "Укажите email." : !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) ? "Проверьте адрес: например, name@example.com." : undefined);
+  const error = touched && (!email.trim() ? "Укажите электронную почту." : !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) ? "Проверьте адрес: например, name@example.com." : undefined);
   return <>
     <section className={styles.formSection} aria-labelledby="buyer-heading">
       <div className={styles.sectionHeading}><h2 id="buyer-heading">Контактные данные</h2>
         <button ref={login} type="button" className={styles.textButton} onClick={() => setAuthOpen(true)}>Уже есть аккаунт? Войти</button></div>
       <form noValidate onSubmit={event => { event.preventDefault(); setTouched(true); }}>
-        <TextField label="Email" type="email" autoComplete="email" name="email" required value={email} onChange={event => setEmail(event.target.value)} onBlur={() => setTouched(true)} error={error || undefined} hint="Для подтверждения покупки и получения доступа. " />
+        <TextField label="Электронная почта" type="email" autoComplete="email" name="email" required value={email} onChange={event => setEmail(event.target.value)} onBlur={() => setTouched(true)} error={error || undefined} hint="Для подтверждения покупки и получения доступа. " />
       </form>
       <p className={styles.caption}>Можно продолжить как гость — вход необязателен.</p>
     </section>

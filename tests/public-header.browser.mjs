@@ -6,7 +6,7 @@ const require = createRequire(import.meta.url);
 const { chromium } = require(process.env.PLAYWRIGHT_MODULE || "playwright");
 const browser = await chromium.launch({ headless: true, channel: "chrome" });
 const base = process.env.FRONTEND_URL || "http://localhost:3000";
-const evidence = ".header-evidence";
+const evidence = process.env.FRONTEND_EVIDENCE || ".header-evidence";
 await mkdir(evidence, { recursive: true });
 
 try {
@@ -19,7 +19,16 @@ try {
     const header = page.locator("header").first();
     const bar = header.locator("div[class*='bar']").first();
     const nav = header.getByRole("navigation", { name: "Основная навигация" });
-    assert.equal(await header.getByRole("button", { name: "Открыть меню" }).count(), 0);
+    if(width<=760) {
+      assert.equal((await header.boundingBox()).height,68);
+      await header.getByRole("button",{name:"Открыть меню"}).click();
+      const menu=page.getByRole("dialog",{name:"Меню сайта"});await menu.waitFor();
+      assert.ok(await menu.getByRole("link",{name:"Основные курсы"}).isVisible());
+      await page.keyboard.press("Escape");await menu.waitFor({state:"hidden"});
+      assert.ok(await header.getByRole("button",{name:"Открыть меню"}).evaluate(el=>el===document.activeElement));
+      assert.deepEqual(errors,[]);await page.close();continue;
+    }
+    assert.equal(await header.getByRole("button", { name: "Открыть меню" }).isVisible(), false);
     assert.ok(await header.getByRole("button", { name: "Войти", exact: true }).isVisible());
     assert.ok(await header.getByRole("button", { name: /^Корзина, продуктов:/ }).isEnabled());
     assert.equal(await nav.locator(":scope > ul > li").count(), 4);
@@ -62,6 +71,7 @@ try {
     await header.getByRole("button", { name: "Войти", exact: true }).click();
     assert.ok(await page.getByRole("dialog", { name: "Войти в LMS Academy" }).isVisible());
     await page.keyboard.press("Escape");
+    await page.locator("dialog[open]").waitFor({ state: "detached", timeout: 1000 });
     assert.ok(await header.getByRole("button", { name: "Войти", exact: true }).evaluate((element) => element === document.activeElement));
     // Native dialog focus restoration may scroll the document. Re-establish
     // the collapsed state before comparing the return transition geometry.
@@ -100,8 +110,8 @@ try {
 
   const catalog = await browser.newPage({ viewport: { width: 390, height: 844 } });
   await catalog.goto(`${base}/courses`);
-  assert.ok(await catalog.getByRole("navigation", { name: "Основная навигация" }).isVisible());
-  assert.ok(await catalog.getByRole("button", { name: "Войти", exact: true }).isVisible());
+  assert.ok(await catalog.getByRole("button", {name:"Открыть меню"}).isVisible());
+  assert.equal(await catalog.getByRole("button", { name: "Войти", exact: true }).isVisible(),false);
   await catalog.waitForFunction(() => {
     const header = document.querySelector("header");
     const filters = document.querySelector("#catalog-filters");

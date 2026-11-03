@@ -8,6 +8,8 @@ import { useGSAP } from "@gsap/react";
 import { Button, ButtonLink } from "@/components/ui/button";
 import { AuthModal } from "@/features/identity";
 import { CartPreview } from "@/features/commerce";
+import { MobileNavigation } from "./mobile-navigation";
+import { BrandLogo } from "./brand-logo";
 import { NavigationEntry } from "./navigation-entry";
 import { PageContainer } from "./page-container";
 import type { NavigationItem, NavigationLink } from "./navigation";
@@ -31,7 +33,7 @@ function NavigationLinks({ items, pathname, onNavigate }: {
   onNavigate: () => void;
 }) {
   return <ul>{items.map((item) => {
-    const children = item.children?.length ? <ul className={styles.dropdown}>
+    const children = item.children?.length ? <ul data-css-motion="surface" className={styles.dropdown}>
       {item.children.map((child) => <li key={child.label}><NavigationEntry entry={child} onNavigate={onNavigate} showPreviewLabel={false} /></li>)}
     </ul> : null;
     return <li key={item.label}>
@@ -58,7 +60,7 @@ export function PublicHeader({
   const authButton = useRef<HTMLButtonElement>(null);
   function closeDropdowns() {
     root.current
-      ?.querySelectorAll("details[open]")
+      ?.querySelectorAll('nav[aria-label="Основная навигация"] details[open]')
       .forEach((item) => item.removeAttribute("open"));
   }
   function navigate() {
@@ -67,7 +69,7 @@ export function PublicHeader({
 
   useEffect(() => {
     const outside = (event: PointerEvent) => {
-      root.current?.querySelectorAll("details[open]").forEach((item) => {
+      root.current?.querySelectorAll('nav[aria-label="Основная навигация"] details[open]').forEach((item) => {
         if (!item.contains(event.target as Node)) item.removeAttribute("open");
       });
     };
@@ -85,6 +87,7 @@ export function PublicHeader({
       "--header-progress": progress,
       "--header-ink": progress ? "#1d1b1f" : "#ffffff",
       "--header-cart-ink": progress ? "#782858" : "#ffffff",
+      "--header-logo-accent": progress ? "#782858" : "#d9b6ca",
     });
     let target = window.scrollY > 48 ? 1 : 0;
     let frame = 0;
@@ -98,7 +101,7 @@ export function PublicHeader({
       target = next;
       gsap.to(header, {
         ...appearance(next),
-        duration: motion.matches ? 0 : next ? 0.42 : 0.54,
+        duration: motion.matches ? 0 : next ? 0.28 : 0.32,
         ease: next ? "power2.inOut" : "power2.out",
         overwrite: true,
       });
@@ -146,7 +149,7 @@ export function PublicHeader({
       data-home-route={["/", "/courses", "/mini-courses"].includes(pathname)}
       data-home-scrolled={homeScrolled}
       onKeyDown={(event) => {
-        if (event.key !== "Escape") return;
+        if (event.key !== "Escape" || (event.target as HTMLElement).closest("dialog")) return;
         const details = (event.target as HTMLElement).closest("details[open]");
         if (details) {
           event.preventDefault();
@@ -158,8 +161,9 @@ export function PublicHeader({
     >
       <PageContainer>
         <div className={styles.bar}>
-          <Link href={brand.href} className={styles.brand}>
-            {brand.label}
+          <Link href={brand.href} className={styles.brand} aria-label={brand.label}>
+            <BrandLogo className={styles.logoFull} />
+            <BrandLogo variant="mark" className={styles.logoMark} />
           </Link>
           <nav aria-label="Основная навигация" className={styles.navigation}>
             <NavigationLinks
@@ -185,7 +189,7 @@ export function PublicHeader({
               <CartPreview key={pathname} triggerClassName={styles.cart} iconClassName={styles.cartIcon} countClassName={styles.count} />
             ) : null}
             {showAuth ? (
-              <Button ref={authButton} className={styles.signIn} onClick={() => {
+              <Button ref={authButton} className={styles.signIn} onMouseDown={event => { event.preventDefault(); event.currentTarget.focus({ preventScroll: true }); }} onClick={() => {
                 setAuthOpen(true);
               }}>Войти</Button>
             ) : account && (
@@ -193,12 +197,14 @@ export function PublicHeader({
                 {account.label}
               </ButtonLink>
             )}
+            <MobileNavigation navigation={navigation} brand={brand} account={account} showAuth={showAuth} onAuth={() => setAuthOpen(true)} />
           </div>
         </div>
       </PageContainer>
       {showAuth && <AuthModal open={authOpen} onClose={() => {
         setAuthOpen(false);
-        authButton.current?.focus();
+        if (window.matchMedia("(max-width: 760px)").matches) root.current?.querySelector<HTMLButtonElement>("[data-mobile-menu-trigger]")?.focus({ preventScroll: true });
+        else authButton.current?.focus({ preventScroll: true });
       }} />}
     </header>
   );

@@ -17,15 +17,16 @@
   box-shadow: var(--header-shadow);
 }
 .brand {
+  --brand-logo-accent: var(--header-logo-accent, var(--brand));
   flex: none;
+  display: flex;
+  align-items: center;
+  min-height: 44px;
   color: inherit;
-  font-size: 23px;
-  font-weight: 800;
-  letter-spacing: -.04em;
-  line-height: 1.2;
   text-decoration: none;
-  white-space: nowrap;
 }
+.logoFull { height: 26px; }
+.logoMark { display: none; height: 28px; }
 .brand:hover { opacity: .8; }
 .navigation { flex: 1; min-width: 0; }
 .navigation ul { list-style: none; margin: 0; padding: 0; }
@@ -123,6 +124,7 @@
   --header-progress: 0;
   --header-ink: #fff;
   --header-cart-ink: #fff;
+  --header-logo-accent: #d9b6ca;
   height: 84px;
   margin-bottom: -84px;
   padding: calc(10px * var(--header-progress)) 0 0;
@@ -177,9 +179,14 @@
 @media (max-width: 1100px) {
   .header { padding-block: 8px; }
   .bar { gap: 12px; padding-inline: 16px; }
-  .brand { font-size: 21px; }
+  .logoFull { height: 22px; }
   .navigation > ul { gap: 4px; }
   .navigation a, .navigation summary, .navigation [role="link"] { font-size: 13px; }
+}
+/* The single-row tablet bar cannot hold the full lockup and all navigation. */
+@media (max-width: 900px) {
+  .logoFull { display: none; }
+  .logoMark { display: block; height: 26px; }
 }
 @media (max-width: 760px) {
   .bar { flex-wrap: wrap; align-content: center; gap: 2px 12px; min-height: 104px; padding-block: 6px; }
@@ -201,7 +208,8 @@
 }
 @media (max-width: 600px) {
   .bar { gap: 2px 8px; padding-inline: 12px; }
-  .brand { font-size: 19px; }
+  .logoFull { display: none; }
+  .logoMark { display: block; }
   .actions { gap: 4px; }
   .desktopLocale { display: none; }
   .cart { width: 40px; height: 44px; }
@@ -211,7 +219,7 @@
   .header[data-home-route="true"] .bar { padding-inline: calc(12px * (1 - var(--header-progress)) + 18px * var(--header-progress)); }
 }
 @media (max-width: 360px) {
-  .brand { font-size: 17px; }
+  .logoMark { height: 24px; }
   .signIn { min-width: 72px; }
 }
 @media (forced-colors: active) {
@@ -230,6 +238,7 @@
 
 .header[data-catalog-route="true"] .bar { background: var(--surface); color: var(--text); }
 .header[data-catalog-route="true"] .cart { color: var(--brand); }
+.header[data-catalog-route="true"] .brand { --brand-logo-accent: var(--brand); }
 
 .header[data-catalog-route="true"] > div { padding-inline: 16px; }
 .header[data-catalog-route="true"] { padding-top: 10px; }
@@ -239,3 +248,26 @@
 .header[data-offers-docked="true"] .bar { border-radius: 16px 16px 0 0; box-shadow: none; }
 
 .header[data-offers-docked="true"] .bar::after { content: ""; position: absolute; left: 0; right: 0; bottom: calc(-1 * var(--offers-bridge-height, 0px)); height: var(--offers-bridge-height, 0px); background: var(--surface); pointer-events: none; z-index: -1; }
+
+/* LAND02: one compact mobile row; desktop geometry is preserved. */
+@media(max-width:760px) {
+ .header, .header[data-home-route="true"], .header[data-catalog-route="true"] { height: 68px; margin-bottom: 0; padding: 0; background: var(--background); --header-logo-accent: var(--brand); }
+ .header[data-home-route="true"]::before, .header[data-home-route="true"]::after { display: none; }
+ .header > div, .header[data-home-route="true"] > div, .header[data-catalog-route="true"] > div { padding-inline: 16px; }
+ .header .bar, .header[data-home-route="true"] .bar, .header[data-catalog-route="true"] .bar { flex-wrap: nowrap; gap: 8px; min-height: 68px; height: 68px; padding: 0; border-radius: 0; background: var(--background); color: var(--text); box-shadow: none; }
+ .header[data-offers-docked="true"] .bar::after { display: none; }
+ .navigation, .signIn, .desktopLocale { display: none; }
+ .logoFull { display: block; height: 25px; }
+ .logoMark { display: none; }
+ .actions { gap: 4px; }
+ .cart, .header[data-home-route="true"] .cart { width: 44px; color: var(--brand); }
+ .brand { --brand-logo-accent: var(--brand); }
+ .bar { border-bottom: 1px solid var(--border); }
+}
+@media(max-width:360px) { .logoFull { height: 21px; } }
+@media(max-width:760px) {
+ .brand { flex: 1 1 0; min-width: 0; max-width: 280px; }
+ .logoFull { width: 100%; height: auto; max-height: 25px; }
+ .header button, .header a { scroll-margin-top: calc(-1 * var(--anchor-padding)); }
+}
+.header .signIn { scroll-margin-top: calc(-1 * var(--anchor-padding)); }
