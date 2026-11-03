@@ -202,3 +202,5 @@ D-020 visual QA follow-up: HOME-08 `mini-courses-section.module.css` constrains 
 The existing Button, FormControls, PageContainer and motion owners are reused, with no shared primitive API change. CatalogState extraction is justified by actual list/home/detail/preview consumers. Preview facts/prices are demonstrative only. See [contract](catalog-preview-contract.md) and [SEO guide](../seo/README.md). Browser checks are evidence, not human visual approval.
 
 PurchasePanel keeps its existing `product,compact` API and hero/terms consumers. Unavailable copy now says registration is unavailable without falsely claiming a displayed approved/demo price is unpublished; explicit sale-paused examples exercise this state.
+
+Merge repair (2026-11-03): HOME-06 `features/home/sections/06-courses/components/course-showcase.tsx` (`CourseShowcase`, no props; consumed by `CoursesSection` on `/`) removes the stale call to the deleted `useFeaturedCourseScroll` and its unused stage ref. Existing `useOfferSelectionMotion`, `useSnapCarousel`, markup, styles and CatalogProvider states remain unchanged. Real catalog integration remains missing as documented above.
