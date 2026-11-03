@@ -332,3 +332,19 @@
 @media(max-width:360px) { .hero { padding-top: 210px; } .photograph { height: 230px; } .plumTriangle { top: 190px; } }
 
 @media(max-width:600px) { .hero .cta { position: relative; inset: auto; width: calc(100% - 4px); min-height: 54px; padding: 12px 16px; font-size: 14px; line-height: 1.1; } }
+
+/* Owner's photo-first, full-screen mobile composition (2026-11-03). */
+@media(max-width:760px) {
+ .hero { --mobile-photo-height:clamp(270px,40svh,390px); min-height:calc(100svh - 68px); padding-top:calc(var(--mobile-photo-height) - 20px); background:var(--background); }
+ .photograph { inset:0 0 auto; height:var(--mobile-photo-height); clip-path:polygon(0 0,100% 0,100% 94%,0 100%); }
+ .image { top:0 !important; height:100% !important; object-position:50% 38%; }
+ .lightField,.boundaryLine { display:none; }
+ .plumTriangle { display:block; inset:calc(var(--mobile-photo-height) - 44px) 0 auto auto; width:76px; height:66px; clip-path:polygon(0 20%,100% 0,100% 100%); }
+ .content { min-height:calc(100svh - 68px - var(--mobile-photo-height) + 20px); padding-block:34px 48px; }
+ .supporting { position:static; margin:0 0 24px; font-size:11px; line-height:1.5; font-weight:700; }
+ .headline { position:static; text-align:left; line-height:1.14; letter-spacing:-.065em; }
+ .firstLine,.secondLine { margin:0; font-size:clamp(28px,8.2vw,49px); }
+ .thirdLine { margin-top:16px; font-size:clamp(18px,4.8vw,30px); }
+ .hero .cta { position:relative; inset:auto; width:calc(100% - 5px); min-height:60px; margin-top:32px; padding:12px 16px; font-size:14px; line-height:1.2; }
+ .ctaCopy { display:flex; gap:.3em; }
+}

@@ -50,7 +50,6 @@ export function LearningOffersShowcase({ panels }: { panels: [ReactNode, ReactNo
     if (!enhanced || !track || !panel || !group || !contextSafe) return;
     const oldPanel = fromIndex.current === null ? null : track.children.item(fromIndex.current) as HTMLElement | null;
     const media = gsap.matchMedia();
-    let refreshFrame = 0;
     media.add({ reduce: "(prefers-reduced-motion: reduce)", animate: "(prefers-reduced-motion: no-preference)" }, (context) => {
       const mobile = matchMedia("(max-width: 760px)").matches;
       const reduce = context.conditions?.reduce;
@@ -73,8 +72,6 @@ export function LearningOffersShowcase({ panels }: { panels: [ReactNode, ReactNo
           startHeight.current = null;
           fromIndex.current = null;
         }
-        cancelAnimationFrame(refreshFrame);
-        refreshFrame = requestAnimationFrame(() => ScrollTrigger.refresh());
       };
       if (oldPanel && oldPanel !== panel && startHeight.current !== null && !reduce && !pendingAnchor.current) {
         track.dataset.transitioning = "true";
@@ -102,7 +99,7 @@ export function LearningOffersShowcase({ panels }: { panels: [ReactNode, ReactNo
         heightTween?.kill();
         heightTween = gsap.fromTo(track, { height: from }, {
           height, duration: reduce ? 0 : motion.mobilePanel, ease: motion.transitionEase,
-          clearProps: "height", onComplete: () => ScrollTrigger.refresh(),
+          clearProps: "height",
         });
       });
       const observer = new ResizeObserver(resize);
@@ -116,22 +113,39 @@ export function LearningOffersShowcase({ panels }: { panels: [ReactNode, ReactNo
       target?.scrollIntoView({ block: "start", behavior: "instant" });
       pendingAnchor.current = null;
     }
-    const tab = tabsRef.current[activeIndex];
-    const list = tab?.parentElement;
-    if (tab && list) list.scrollTo({ left: tab.offsetLeft - list.offsetLeft - (list.clientWidth - tab.clientWidth) / 2, behavior: "instant" });
     return () => {
       media.revert();
-      cancelAnimationFrame(refreshFrame);
       delete track.dataset.transitioning;
     };
   }, { scope: groupRef, dependencies: [activeIndex, enhanced], revertOnUpdate: true });
+
+  useGSAP(() => {
+    const group = groupRef.current;
+    const track = trackRef.current;
+    if (!group || !track || !enhanced) return;
+    const media = gsap.matchMedia();
+    media.add("(prefers-reduced-motion: no-preference)", () => {
+      // One measured entrance for the persistent group: no pin spacer, card
+      // height mutation or per-tab scroll owner to cancel panel switching.
+      const entrance = gsap.fromTo(track, { y: 32, opacity: .65 }, {
+        y: 0, opacity: 1, ease: "none",
+        scrollTrigger: { trigger: group, start: "top 92%", end: "top 55%", scrub: .25, once: true },
+      });
+      // Panel height does not change this top-to-top entrance geometry. Global
+      // refresh during hash navigation can restore a stale cached scroll value.
+      const refresh = () => entrance.scrollTrigger?.refresh();
+      window.addEventListener("public-layout", refresh);
+      return () => window.removeEventListener("public-layout", refresh);
+    });
+    return () => media.revert();
+  }, { scope: groupRef, dependencies: [enhanced], revertOnUpdate: true });
 
   useEffect(() => {
     const group = groupRef.current;
     const header = document.querySelector("header");
     if (!group || !header) return;
     const updateDock = () => {
-      const nav = group.querySelector('[role="tablist"]');
+      const nav = group.querySelector('[data-offers-dock]');
       const docked = Boolean(nav && group.getBoundingClientRect().top <= header.getBoundingClientRect().bottom + 24 && group.getBoundingClientRect().bottom > header.getBoundingClientRect().bottom + 56);
       header.dataset.offersDocked = String(docked);
       const bar = header.querySelector(':scope > div > div');
@@ -167,6 +181,7 @@ export function LearningOffersShowcase({ panels }: { panels: [ReactNode, ReactNo
       onHash();
     };
     window.addEventListener("hashchange", onHash);
+    window.addEventListener("public-anchor", onHash);
     window.addEventListener("popstate", onHash);
     document.addEventListener("click", onAnchor, true);
     const initialHash = requestAnimationFrame(onHash);
@@ -178,6 +193,7 @@ export function LearningOffersShowcase({ panels }: { panels: [ReactNode, ReactNo
       header.style.removeProperty("--offers-bridge-height");
       cancelAnimationFrame(initialHash);
       window.removeEventListener("hashchange", onHash);
+      window.removeEventListener("public-anchor", onHash);
       window.removeEventListener("popstate", onHash);
       document.removeEventListener("click", onAnchor, true);
     };
@@ -194,11 +210,11 @@ export function LearningOffersShowcase({ panels }: { panels: [ReactNode, ReactNo
   return <div className={styles.group} ref={groupRef} id="learning-offers" data-learning-offers data-enhanced={enhanced} data-active-offer={sections[activeIndex].id} data-flow-section>
     <div className={styles.topGeometry} aria-hidden="true" data-offers-geometry="top" />
     <div className={styles.bottomGeometry} aria-hidden="true" data-offers-geometry="bottom" />
-    <div className={styles.switcher} role="tablist" aria-label="Форматы обучения">
+    <div className={styles.dock} data-offers-dock><div className={styles.switcher} role="tablist" aria-label="Форматы обучения">
       {sections.map((section, index) => <button key={section.id} ref={(node) => { tabsRef.current[index] = node; }} type="button" role="tab" id={`offer-tab-${section.id}`} aria-controls={`offer-panel-${section.id}`} aria-selected={index === activeIndex} tabIndex={index === activeIndex ? 0 : -1} onMouseDown={event => { event.preventDefault(); event.currentTarget.focus({ preventScroll: true }); }} onClick={() => goTo(index)} onKeyDown={(event) => onTabKey(event, index)}>
         <span>{section.label}</span>
       </button>)}
-    </div>
+    </div></div>
     <div ref={trackRef} className={styles.track} data-offers-track>
       {sections.map((section, index) => <div className={styles.panel} key={section.id} id={`offer-panel-${section.id}`} role="tabpanel" aria-labelledby={`offer-tab-${section.id}`} aria-hidden={enhanced && index !== activeIndex} inert={enhanced && index !== activeIndex} tabIndex={0}>
         {panels[index]}

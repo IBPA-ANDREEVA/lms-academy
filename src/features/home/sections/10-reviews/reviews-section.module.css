@@ -48,3 +48,10 @@
 .card { border-radius: 0; }
 
 .pagination button { min-width: 44px; min-height: 44px; }
+.track { scrollbar-width:none; }
+.track::-webkit-scrollbar { display:none; }
+@media(max-width:760px) {
+ .arrows { display:none; }
+ .track { margin:0 calc(-1 * var(--page-gutter)) 0 0; padding:4px 16px 14px 0; }
+ .card { flex-basis:82%; scroll-snap-align:start; }
+}

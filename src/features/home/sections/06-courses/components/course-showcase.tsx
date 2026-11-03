@@ -2,7 +2,6 @@
 
 import { useOfferSelectionMotion } from "../../../learning-offers/use-offer-selection-motion";
 import { useRef, useState } from "react";
-import { useFeaturedCourseScroll } from "./use-featured-course-scroll";
 import { useSnapCarousel } from "../../../learning-offers/use-snap-carousel";
 import { Button } from "@/components/ui/button";
 import { CategoryNavigation, CourseCard } from "@/features/catalog";
@@ -17,7 +16,6 @@ export function CourseShowcase() {
 
   useOfferSelectionMotion(trackRef, selectedId);
   const stageRef = useRef<HTMLDivElement>(null);
-  useFeaturedCourseScroll(stageRef, selectedId);
 
   function selectDirection(id?: string) {
     setSelectedId(id);

@@ -1,5 +1,1 @@
 .story { position: relative; isolation: isolate; }
-.outgoing { position: relative; z-index: 0; }
-.surface { overflow: clip; }
-.incoming { position: relative; z-index: 1; }
-.story[data-sticky-story] .outgoing { position: sticky; top: var(--story-top); }

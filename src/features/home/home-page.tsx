@@ -29,9 +29,9 @@ export function HomePage() {
         <StartUsaSection key="start-usa" />,
       ]} />
       <ReviewsSection />
+      <FaqSection />
       <HomeSectionSeam variant="contact" />
       <ContactSection />
-      <FaqSection />
     </main>
   );
 }

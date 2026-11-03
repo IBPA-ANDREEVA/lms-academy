@@ -39,3 +39,4 @@
 
 /* November public-page refinement. */
 .section { padding-block: clamp(80px,8vw,128px); }
+.section { padding-top:40px; }
