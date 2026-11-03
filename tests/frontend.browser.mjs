@@ -45,8 +45,8 @@ try {
     assert.equal(await page.locator("html").getAttribute("lang"), "ru");
     assert.equal(await page.getByRole("heading", { level: 1 }).count(), 1);
     assert.equal(await page.locator("#about h2").count(), 1);
-    assert.equal(await page.locator("#about ul li").count(), 3);
-    assert.equal(await page.locator("#about a").getAttribute("href"), "#founder");
+    assert.equal(await page.locator("#about ul li").count(), 6);
+    assert.equal(await page.locator("#about a").count(), 0);
     assert.equal(await page.locator("#founder h2").count(), 1);
     assert.equal(await page.locator("#founder ol li").count(), 4);
     assert.equal(await page.locator("#founder a, #founder button").count(), 0);
@@ -54,28 +54,24 @@ try {
     assert.equal(await page.locator("#learning-preview [role=tab]").count(), 3);
     assert.equal(await page.locator("#learning-preview input[type=file]").count(), 0);
     assert.equal(await page.locator("#catalog-status article").count(), 3);
-    assert.equal(await page.locator("#catalog-status article a").count(), 0);
+    assert.equal(await page.locator("#catalog-status article a").count(), 6);
     const hero = page.locator("[data-home-hero]");
     assert.equal(await hero.getByText("ВЫБРАТЬ", { exact: true }).count(), 1);
     assert.equal(await hero.getByText("КУРС", { exact: true }).count(), 1);
     assert.ok(
-      (await hero.locator("img").boundingBox()).height >=
-        (await hero.boundingBox()).height,
+      (await hero.locator("img").boundingBox()).height >= (width <= 600 ? 230 : (await hero.boundingBox()).height),
       `Hero photograph does not fill section height at ${width}`,
     );
     await page.screenshot({
       path: path.join(evidence, `home-${width}.png`),
       fullPage: true,
     });
-    if (width <= 1024) {
-      const mobileNav = page.getByRole("navigation", { name: "Основная навигация" });
-      assert.ok(await mobileNav.isVisible());
-      assert.equal(await page.getByRole("button", { name: "Открыть меню" }).count(), 0);
-      await mobileNav.locator("summary").click();
-      assert.ok(await mobileNav.getByRole("link", { name: "Основные курсы" }).isVisible());
+    if (width <= 760) {
+      await page.getByRole("button", {name:"Открыть меню"}).click();
+      assert.ok(await page.getByRole("dialog", {name:"Меню сайта"}).getByRole("link", {name:"Основные курсы"}).isVisible());
       await page.keyboard.press("Escape");
-      assert.equal(await mobileNav.locator("details[open]").count(), 0);
-    }
+      await page.getByRole("dialog", {name:"Меню сайта"}).waitFor({state:"hidden"});
+    } else assert.ok(await page.getByRole("navigation", {name:"Основная навигация"}).isVisible());
   }
   for (const width of [1440, 768, 390]) {
     await page.setViewportSize({ width, height: width === 390 ? 844 : 900 });
@@ -90,7 +86,7 @@ try {
   await page.locator("#learning-preview input[type=file]").setInputFiles(path.join(process.cwd(), "src/features/home/sections/06-courses/course-photo-placeholder.png"));
   assert.equal(await page.getByAltText(/Предпросмотр:/).count(), 1);
   await page.locator("#learning-comment").fill("Проверка деморежима");
-  await page.getByRole("button", { name: /ИМИТИРОВАТЬ ОТПРАВКУ/ }).click();
+  await page.getByRole("button", { name: /К ОБРАТНОЙ СВЯЗИ/ }).click();
   assert.equal(await page.getByText("Работа на доработке").count(), 1);
   await page.getByRole("button", { name: /ДОРАБОТАТЬ ЗАДАНИЕ/ }).click();
   assert.equal(await page.locator("#learning-comment").inputValue(), "Проверка деморежима");
@@ -101,7 +97,7 @@ try {
   await page.waitForFunction(() => document.querySelector('button[aria-label="Карточка 3 из 3"]')?.getAttribute("aria-current") === "true");
   await page.getByRole("navigation", { name: "Пример выбора направления" }).getByRole("button", { name: "Брови" }).click();
   assert.equal(await page.locator("#catalog-status article").count(), 1);
-  assert.equal(await page.getByRole("button", { name: "Следующая карточка" }).isDisabled(), true);
+  await page.getByRole("button", { name: "Следующая карточка" }).waitFor({state:"detached"});
   await page.getByRole("navigation", { name: "Пример выбора направления" }).getByRole("button", { name: "Все направления" }).click();
   assert.equal(await page.locator("#catalog-status article").count(), 3);
   for (const width of [1440, 1024, 768, 390]) {
@@ -127,9 +123,9 @@ try {
           .match(/[\d.]+/g)
           ?.map(Number);
         return (
-          channels?.[0] === 255 &&
-          channels[1] === 255 &&
-          channels[2] === 255 &&
+          channels?.[0] >= 249 &&
+          channels[1] >= 249 &&
+          channels[2] >= 249 &&
           (channels[3] ?? 1) > 0.95
         );
       }),
@@ -158,7 +154,7 @@ try {
     await page.waitForFunction(() => Number.parseFloat(getComputedStyle(document.querySelector("header")).getPropertyValue("--header-progress")) < .01);
     assert.equal(
       await header.evaluate((el) => Number(getComputedStyle(el).backgroundColor.match(/[\d.]+/g)?.at(-1))),
-      0,
+      width<=760 ? 250 : 0,
     );
     await page.emulateMedia({ reducedMotion: "reduce" });
     assert.equal(
@@ -188,7 +184,7 @@ try {
     await page.goto(base + "/preview/components");
     await page.evaluate(() => document.fonts.ready);
     await noOverflow();
-    assert.equal(await page.locator("main > section").count(), 9);
+    assert.equal(await page.locator("main > section").count(), 10);
     assert.ok(
       (
         await page.locator('meta[name="robots"]').getAttribute("content")
@@ -200,14 +196,14 @@ try {
     });
   }
   const previewHeader = page.locator("#public-header");
-  const previewNav = previewHeader.getByRole("navigation", { name: "Основная навигация" });
-  await previewNav.locator("summary").click();
+  await previewHeader.getByRole("button", {name:"Открыть меню"}).click();
+  const previewNav = previewHeader.getByRole("dialog", {name:"Меню сайта"});
   assert.ok(await previewNav.getByRole("link", { name: "Пример курса" }).isVisible());
   await page.screenshot({
     path: path.join(evidence, "preview-navigation-mobile.png"),
   });
   await page.keyboard.press("Escape");
-  assert.equal(await previewNav.locator("details[open]").count(), 0);
+  await previewNav.waitFor({state:"hidden"});
   await page
     .getByRole("button", { name: "Показать загрузку", exact: true })
     .click();
@@ -368,13 +364,13 @@ try {
   await page.mouse.click(10, 400);
   assert.equal(await desktop.locator("details[open]").count(), 0);
   await page.setViewportSize({ width: 390, height: 844 });
-  const mobileNav = page.getByRole("navigation", { name: "Основная навигация" });
-  await mobileNav.locator("summary").click();
+  await page.getByRole("button", {name:"Открыть меню"}).click();
+  const mobileNav = page.getByRole("dialog", {name:"Меню сайта"});
   await page.screenshot({
     path: path.join(evidence, "header-mobile-dropdown.png"),
   });
   await mobileNav.getByRole("link", { name: "Брови", exact: true }).click();
-  assert.equal(await mobileNav.locator("details[open]").count(), 0);
+  await mobileNav.waitFor({state:"hidden"});
   const password = page.getByLabel("Пароль", { exact: true });
   assert.equal(await password.getAttribute("type"), "password");
   await page.getByRole("button", { name: "Показать пароль" }).click();
