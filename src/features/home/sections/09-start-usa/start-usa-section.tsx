@@ -5,7 +5,7 @@ import styles from "./start-usa-section.module.css";
 
 export function StartUsaSection() {
   return <section id="start-usa" className={styles.section} aria-label="Старт в США">
-    <PageContainer size="wide" className={styles.layout}>
+    <PageContainer reveal="compact" size="wide" className={styles.layout}>
       <div className={styles.intro}>
         <p className={styles.format}>ОДИН МОДУЛЬ · БЕЗ КУРАТОРА</p>
 

@@ -5,11 +5,11 @@ import { Button } from "@/components/ui/button";
 import { useSnapCarousel } from "./use-snap-carousel";
 import styles from "./offer-carousel.module.css";
 
-export function OfferCarousel({ items, label }: { items: { id: string; content: ReactNode }[]; label: string }) {
+export function OfferCarousel({ items, label, mobileGrid = false }: { items: { id: string; content: ReactNode }[]; label: string; mobileGrid?: boolean }) {
   const { trackRef, activeIndex, goTo, syncIndex, canScroll } = useSnapCarousel(items.length);
   const trackId = useId();
   return (
-    <div className={styles.carousel} aria-label={label} role="region" aria-roledescription="карусель">
+    <div className={styles.carousel} data-mobile-grid={mobileGrid} aria-label={label} role="region" aria-roledescription="карусель">
       {canScroll && <div className={styles.controls}>
         <span className={styles.counter} aria-live="polite">{activeIndex + 1} / {items.length}</span>
         <Button intent="secondary" size="sm" aria-controls={trackId} aria-label={`Назад: ${label}`} disabled={activeIndex === 0} onClick={() => goTo(activeIndex - 1)}>←</Button>

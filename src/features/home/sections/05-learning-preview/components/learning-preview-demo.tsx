@@ -77,6 +77,7 @@ export function LearningPreviewDemo() {
         <strong>LMS ACADEMY <span>/ Учебная среда</span></strong>
 
       </div>
+      <noscript><p className={styles.helper}>Сначала изучите урок и материалы, затем выполните практическое задание. На основном курсе куратор проверяет работу и даёт обратную связь. Интерактивный пример доступен с JavaScript.</p><style>{`#learning-preview [role="tablist"], #learning-preview button{display:none!important}`}</style></noscript>
       <div className={styles.tabs} role="tablist" aria-label="Этапы обучения">
         {stages.map((item, index) => (
           <button key={item.id} ref={(node) => { tabsRef.current[index] = node; }} type="button" role="tab" id={`learning-tab-${item.id}`} aria-controls={`learning-panel-${item.id}`} aria-selected={stage === item.id} tabIndex={stage === item.id ? 0 : -1} onClick={() => changeStage(item.id)} onKeyDown={(event) => onTabKeyDown(event, index)}>
@@ -108,7 +109,7 @@ export function LearningPreviewDemo() {
           <p>Добавьте фотографии и комментарий к работе.</p>
           <label className={styles.upload}>
             <span className={styles.plus} aria-hidden="true">+</span>
-            <span><strong>Добавить фотографии</strong><small>Предпросмотр файловрежим</small></span>
+            <span><strong>Добавить фотографии</strong><small>Предпросмотр фотографий</small></span>
             <input type="file" accept="image/*" multiple onChange={addPhotos} disabled={submitted} />
           </label>
           {error && <p className={styles.error} role="alert">{error}</p>}

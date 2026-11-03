@@ -5,7 +5,7 @@ import styles from "./courses-section.module.css";
 export function CoursesSection() {
   return (
     <section id="catalog-status" className={styles.section} aria-label="Основные курсы">
-      <PageContainer size="wide" className={styles.container}>
+      <PageContainer reveal="cards" size="wide" className={styles.container}>
 
         <CourseShowcase />
       </PageContainer>

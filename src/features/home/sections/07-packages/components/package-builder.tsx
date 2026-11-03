@@ -27,7 +27,7 @@ export function PackageBuilder({ initialSize, onClose }: { initialSize: PackageS
   }, []);
   useEffect(() => { if (review) summaryRef.current?.focus(); }, [review]);
 
-  return <dialog ref={dialogRef} className={styles.dialog} aria-labelledby="package-builder-title" aria-describedby="package-builder-note" onClose={(event) => {
+  return <dialog data-css-motion="surface" ref={dialogRef} className={styles.dialog} aria-labelledby="package-builder-title" aria-describedby="package-builder-note" onClose={(event) => {
     // Strict Mode reopens the dialog after its cleanup. Ignore the stale close.
     if (!event.currentTarget.open) onClose();
   }}>

@@ -15,7 +15,7 @@ const initialTouched: Touched = { name: false, email: false, subject: false, mes
 function validate(field: Field, value: string) {
   const text = value.trim();
   if (!text) return "Заполните это поле";
-  if (field === "email" && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(text)) return "Введите корректный email";
+  if (field === "email" && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(text)) return "Введите корректный адрес электронной почты.";
   if (field === "name" && text.length < 2) return "Укажите имя полностью";
   if (field === "message" && text.length < 10) return "Напишите вопрос подробнее";
   return undefined;
@@ -30,15 +30,15 @@ export function ContactForm() {
   const preventSubmission = (event: FormEvent<HTMLFormElement>) => event.preventDefault();
 
   return (
-    <form className={styles.form} onSubmit={preventSubmission} noValidate aria-labelledby="contact-form-title">
+    <form data-motion-item className={styles.form} onSubmit={preventSubmission} noValidate aria-labelledby="contact-form-title">
       <div className={styles.formHeader}><h3 id="contact-form-title">ВАШЕ СООБЩЕНИЕ</h3><span>Поля с * обязательны</span></div>
       <div className={styles.formGrid}>
         <TextField label="Ваше имя *" name="name" autoComplete="name" placeholder="Как к вам обращаться" value={values.name} onChange={change("name")} onBlur={blur("name")} error={error("name")} maxLength={100} />
-        <TextField label="Email *" name="email" type="email" autoComplete="email" inputMode="email" placeholder="name@example.com" value={values.email} onChange={change("email")} onBlur={blur("email")} error={error("email")} maxLength={254} />
+        <TextField label="Электронная почта *" name="email" type="email" autoComplete="email" inputMode="email" placeholder="name@example.com" value={values.email} onChange={change("email")} onBlur={blur("email")} error={error("email")} maxLength={254} />
         <div className={styles.full}><TextField label="Тема обращения *" name="subject" placeholder="О чём ваш вопрос?" value={values.subject} onChange={change("subject")} onBlur={blur("subject")} error={error("subject")} maxLength={120} /></div>
         <div className={styles.full}>
           <label className={styles.messageLabel} htmlFor="contact-message">Сообщение *</label>
-          <textarea id="contact-message" name="message" className={`${styles.textarea} resize-none`} placeholder="Напишите ваш вопрос..." value={values.message} onChange={change("message")} onBlur={blur("message")} aria-invalid={!!error("message")} aria-describedby={error("message") ? "contact-message-error" : undefined} maxLength={2000} />
+          <textarea id="contact-message" name="message" className={`${styles.textarea} resize-none`} placeholder="Напишите ваш вопрос…" value={values.message} onChange={change("message")} onBlur={blur("message")} aria-invalid={!!error("message")} aria-describedby={error("message") ? "contact-message-error" : undefined} maxLength={2000} />
           <div className={styles.messageFeedback}>{error("message") && <p id="contact-message-error" role="alert">{error("message")}</p>}</div>
         </div>
       </div>

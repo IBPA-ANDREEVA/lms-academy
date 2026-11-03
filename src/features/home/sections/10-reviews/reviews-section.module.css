@@ -46,3 +46,5 @@
 .track { cursor: grab; user-select: none; touch-action: pan-x pan-y; }
 .track:active { cursor: grabbing; }
 .card { border-radius: 0; }
+
+.pagination button { min-width: 44px; min-height: 44px; }

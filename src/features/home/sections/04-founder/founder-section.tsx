@@ -12,7 +12,7 @@ export function FounderSection() {
       className={styles.section}
       aria-labelledby="founder-title"
     >
-      <div className={styles.photograph}>
+      <div data-motion-photo className={styles.photograph}>
         <Image
           src={founderPortrait}
           alt="Юлия Андреева среди инструментов для работы в сфере красоты"
@@ -23,14 +23,14 @@ export function FounderSection() {
       </div>
       <div className={styles.plumWedge} aria-hidden="true" />
       <div className={styles.edgeLine} aria-hidden="true" />
-      <PageContainer reveal size="wide" className={styles.content}>
+      <PageContainer reveal="portrait" size="wide" className={styles.content}>
         <p className={styles.kicker}>ОСНОВАТЕЛЬ</p>
-        <h2 id="founder-title" className={styles.heading}>
+        <h2 data-motion-item id="founder-title" className={styles.heading}>
           <span>ОПЫТ,</span>
           <span>КОТОРЫЙ СОЗДАЁТ</span>
           <span>ВОЗМОЖНОСТИ</span>
         </h2>
-        <div className={styles.biography}>
+        <div data-motion-item className={styles.biography}>
           <p><strong>Юлия Андреева</strong> — основательница LMS Academy и президент International Beauty Professionals Association (IBPA).</p>
           <FounderStory>
           <p>До бьюти-индустрии 12 лет работала в фармацевтическом бизнесе и дошла до руководителя региона «Москва». Оттуда — системный подход к обучению и внимание к стандартам качества.</p>

@@ -7,7 +7,7 @@ import styles from "./about-section.module.css";
 export function AboutSection() {
   return (
     <section data-flow-section className={styles.section} aria-labelledby="about-title" id="about">
-      <div className={styles.photograph}>
+      <div data-motion-photo className={styles.photograph}>
         <Image
           src={aboutPortrait}
           alt="Женщина в светло-голубом жакете"
@@ -17,13 +17,13 @@ export function AboutSection() {
         />
       </div>
       <div className={styles.lightField} aria-hidden="true" />
-      <PageContainer reveal size="wide" className={styles.content}>
+      <PageContainer reveal="editorial" size="wide" className={styles.content}>
         <p className={styles.kicker}>ОБ АКАДЕМИИ</p>
-        <h2 id="about-title" className={styles.heading}>
+        <h2 data-motion-item id="about-title" className={styles.heading}>
           <span>ВСЁ ДЛЯ КАРЬЕРЫ</span>
           <span>В БЬЮТИ —</span><span>В ОДНОМ МЕСТЕ</span>
         </h2>
-        <p className={styles.description}>
+        <p data-motion-item className={styles.description}>
           LMS Academy — онлайн-академия для бьюти-мастеров на русском и английском языках. Здесь можно освоить новое направление с нуля, повысить квалификацию и подготовиться к работе в США.
         </p>
         <AcademyBenefits />

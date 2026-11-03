@@ -4,7 +4,7 @@ import styles from "./packages-section.module.css";
 
 export function PackagesSection() {
   return <section id="packages" className={styles.section} aria-label="Пакеты">
-    <PageContainer size="wide" className={styles.content}>
+    <PageContainer reveal="cards" size="wide" className={styles.content}>
       <div className={styles.intro}>
 
       </div>

@@ -320,3 +320,22 @@
 .storyText p:first-child { color: var(--brand); }
 .milestones { gap: 32px 36px; }
 @media(prefers-reduced-motion:no-preference) { .story > button { transition: padding .3s,background .3s; } }
+
+.heading span { white-space: normal; }
+@media(max-width:600px) {
+ .photograph { height: 260px; }
+ .plumWedge { clip-path: polygon(0 260px,100% 213px,100% 230px,0 277px); }
+ .content { padding-top: 290px; padding-bottom: 48px; }
+ .heading { font-size: clamp(23px,7vw,32px); line-height: 1.15; }
+ .biography { margin-top: 20px; }
+ .biography > p { font-size: 17px; }
+ .milestones { margin-top: 28px; gap: 16px; }
+ .milestones li { align-items: start; min-height: 0; }
+ .milestones p { margin-top: 4px; }
+ .storyText { gap: 18px; padding-block: 20px; }
+ .storyText p { padding-left: 14px; font-size: 14px; line-height: 1.65; }
+}
+
+.story > summary { display: flex; justify-content: space-between; align-items: center; min-height: 48px; padding: 12px 0; border-block: 1px solid var(--plum-border); color: var(--brand); font-size: 14px; font-weight: 600; cursor: pointer; list-style: none; }
+.story > summary::-webkit-details-marker { display: none; }
+.story[open] > summary span { rotate: 45deg; }

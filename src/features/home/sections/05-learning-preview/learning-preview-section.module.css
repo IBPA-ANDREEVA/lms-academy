@@ -74,3 +74,15 @@
 
 
 .lessonCard { display: block; }
+
+.lessonCard, .mediaPlaceholder { min-width: 0; max-width: 100%; }
+.mediaPlaceholder { width: 100%; min-height: 0; }
+@media(max-width:600px) {
+ .section { padding-block: 48px; }
+ .layout { gap: 24px; }
+ .demoBody { min-height: 350px; padding: 16px; }
+ .demoBody[data-stage="assignment"] .upload { min-height: 110px; }
+ .feedbackStatus { padding: 18px; margin-block: 18px; }
+ .mediaPlaceholder { min-height: 120px; }
+ .tabs button { font-size: 11px; text-transform: none; }
+}

@@ -13,7 +13,7 @@ export function AcademyBenefits() {
   return (
     <ul className={styles.benefits} aria-label="Об академии">
       {benefits.map((benefit) => (
-        <li key={benefit.title}>
+        <li data-motion-item key={benefit.title}>
           <strong>{benefit.title}</strong>
           <span>{benefit.detail}</span>
         </li>

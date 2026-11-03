@@ -109,12 +109,13 @@ try {
     assert.equal(await page.locator("#usa-topics").evaluate((el) => el === document.activeElement), true);
     await groupTop(page);
     await page.evaluate(() => scrollBy(0, 280));
-    const sticky = await page.evaluate(() => ({ header: document.querySelector("header").getBoundingClientRect().bottom, nav: document.querySelector('[role="tablist"][aria-label="Форматы обучения"]').getBoundingClientRect().top }));
+    const sticky = await page.evaluate(() => ({ header: document.querySelector("header > div > div").getBoundingClientRect().bottom, nav: document.querySelector('[role="tablist"][aria-label="Форматы обучения"]').getBoundingClientRect().top }));
     assert.ok(Math.abs(sticky.header - sticky.nav) < 2, `switcher overlaps header ${width}`);
     if (width === 390) {
       await select(page, 0);
       await swipe(page, page.locator("#catalog-status p").last());
-      await settle(page, 1);
+      await settle(page, 0); // Content swipes leave the selected format unchanged.
+      await select(page, 1);
       await page.getByRole("button", { name: "Все пакеты", exact: true }).click();
       await swipe(page, page.locator("#packages [data-offer-carousel]"));
       await settle(page, 1); // Inner card swipe must not move the outer track.

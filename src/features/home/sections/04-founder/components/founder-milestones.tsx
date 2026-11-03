@@ -11,7 +11,7 @@ export function FounderMilestones() {
   return (
     <ol className={styles.milestones} aria-label="Профессиональный путь">
       {milestones.map((milestone, index) => (
-        <li key={milestone[0]}>
+        <li data-motion-item key={milestone[0]}>
           <span className={styles.number} aria-hidden="true">
             {String(index + 1).padStart(2, "0")}
           </span>
