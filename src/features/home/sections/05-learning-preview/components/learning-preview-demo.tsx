@@ -25,6 +25,7 @@ export function LearningPreviewDemo() {
   const demoRef = useRef<HTMLDivElement>(null);
   const photosRef = useRef<DemoPhoto[]>([]);
   const tabsRef = useRef<(HTMLButtonElement | null)[]>([]);
+  const previousHeight = useRef<number | null>(null);
 
   useEffect(() => {
     photosRef.current = photos;
@@ -32,18 +33,39 @@ export function LearningPreviewDemo() {
   useEffect(() => () => photosRef.current.forEach((photo) => URL.revokeObjectURL(photo.url)), []);
 
   useGSAP(() => {
-    const panel = demoRef.current?.querySelector('[role="tabpanel"]');
-    if (!panel) return;
+    const panel = demoRef.current?.querySelector<HTMLElement>('[role="tabpanel"]');
+    const body = demoRef.current?.querySelector<HTMLElement>(`.${styles.demoBody}`);
+    const curtain = demoRef.current?.querySelector<HTMLElement>(`.${styles.stageCurtain}`);
+    if (!panel || !body || !curtain) return;
     const media = gsap.matchMedia();
     media.add("(prefers-reduced-motion: no-preference)", () => {
-      gsap.fromTo(panel, { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: .3, ease: "power2.out", clearProps: "opacity,transform" });
+      if (previousHeight.current === null) return;
+      const targetHeight = body.getBoundingClientRect().height;
+      const children = gsap.utils.toArray<HTMLElement>(panel.children);
+      body.dataset.learningTransition = "true";
+      const timeline = gsap.timeline({ defaults: { ease: "power3.inOut" }, onComplete: () => { delete body.dataset.learningTransition; } });
+      timeline.fromTo(body, { height: previousHeight.current }, { height: targetHeight, duration: .52, clearProps: "height" }, 0)
+        .fromTo(curtain, { x: 0, xPercent: -105 }, { xPercent: 0, duration: .2 }, 0)
+        .to(curtain, { xPercent: 105, duration: .32, clearProps: "transform" }, .2)
+        .fromTo(children, { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: .42, stagger: .045, ease: "power3.out", clearProps: "opacity,transform" }, .22);
+      const mediaPanel = panel.querySelector(`.${styles.mediaPlaceholder}`);
+      if (mediaPanel) timeline.fromTo(mediaPanel, { clipPath: "inset(0 100% 0 0)" }, { clipPath: "inset(0 0% 0 0)", duration: .5, clearProps: "clipPath" }, .2);
+      const settle = () => { timeline.progress(1); };
+      window.addEventListener("resize", settle);
+      panel.addEventListener("focusin", settle);
+      return () => { window.removeEventListener("resize", settle); panel.removeEventListener("focusin", settle); delete body.dataset.learningTransition; };
     });
     return () => media.revert();
   }, { scope: demoRef, dependencies: [stage], revertOnUpdate: true });
 
   function changeStage(next: Stage) {
+    if (next === stage) return;
+    previousHeight.current = demoRef.current?.querySelector(`.${styles.demoBody}`)?.getBoundingClientRect().height ?? null;
     const panel = demoRef.current?.querySelector('[role="tabpanel"]');
     if (panel?.contains(document.activeElement)) tabsRef.current[stages.findIndex((item) => item.id === next)]?.focus({ preventScroll: true });
+    const tabs = demoRef.current?.querySelector<HTMLElement>('[role="tablist"]');
+    const headerBottom = document.querySelector("header")?.getBoundingClientRect().bottom ?? 80;
+    if (tabs && tabs.getBoundingClientRect().top < headerBottom) tabs.scrollIntoView({ block: "start", behavior: "instant" });
     setStage(next);
   }
 
@@ -81,11 +103,12 @@ export function LearningPreviewDemo() {
       <div className={styles.tabs} role="tablist" aria-label="Этапы обучения">
         {stages.map((item, index) => (
           <button key={item.id} ref={(node) => { tabsRef.current[index] = node; }} type="button" role="tab" id={`learning-tab-${item.id}`} aria-controls={`learning-panel-${item.id}`} aria-selected={stage === item.id} tabIndex={stage === item.id ? 0 : -1} onClick={() => changeStage(item.id)} onKeyDown={(event) => onTabKeyDown(event, index)}>
-            <small>0{index + 1}</small><span>{item.label}</span>
+            <small>0{index + 1}</small><span className={styles.longLabel}>{item.label}</span><span className={styles.shortLabel}>{["Урок", "Задание", "Ответ"][index]}</span>
           </button>
         ))}
       </div>
       <div className={styles.demoBody} data-stage={stage}>
+        <div className={styles.stageCurtain} aria-hidden="true" />
         {stage === "lesson" && <div className={styles.stageContent} role="tabpanel" id="learning-panel-lesson" aria-labelledby="learning-tab-lesson" tabIndex={0}>
         <div className={styles.lessonCard}>
           <div className={styles.mediaPlaceholder} role="img" aria-label="Место для демонстрационного видеоурока">

@@ -1,0 +1,210 @@
+{
+  "viewports": [
+    "1440x900",
+    "768x1024",
+    "390x844",
+    "360x800"
+  ],
+  "fitResults": [
+    {
+      "label": "home390",
+      "document": 375,
+      "issues": [],
+      "width": 390
+    },
+    {
+      "label": "home360",
+      "document": 345,
+      "issues": [],
+      "width": 360
+    },
+    {
+      "label": "courses360",
+      "document": 345,
+      "issues": [],
+      "width": 360
+    },
+    {
+      "label": "Пакеты360",
+      "document": 345,
+      "issues": [],
+      "width": 360
+    },
+    {
+      "label": "Мини-курсы360",
+      "document": 345,
+      "issues": [],
+      "width": 360
+    },
+    {
+      "label": "Старт в США360",
+      "document": 345,
+      "issues": [
+        {
+          "scroll": 110,
+          "text": "Безопасность",
+          "width": 104
+        }
+      ],
+      "width": 360
+    },
+    {
+      "label": "Основные курсы360",
+      "document": 345,
+      "issues": [],
+      "width": 360
+    },
+    {
+      "label": "home-startusa768",
+      "document": 753,
+      "issues": [],
+      "width": 768
+    },
+    {
+      "label": "home768",
+      "document": 753,
+      "issues": [],
+      "width": 768
+    },
+    {
+      "label": "home1440",
+      "document": 1425,
+      "issues": [],
+      "width": 1440
+    },
+    {
+      "label": "learning1440",
+      "document": 1425,
+      "issues": [],
+      "width": 1440
+    },
+    {
+      "label": "preview390",
+      "document": 375,
+      "issues": [],
+      "width": 390
+    },
+    {
+      "label": "checkout390",
+      "document": 375,
+      "issues": [],
+      "width": 390
+    },
+    {
+      "label": "home-minis390-final",
+      "document": 375,
+      "issues": [],
+      "width": 390
+    },
+    {
+      "label": "startusa360-final",
+      "document": 345,
+      "issues": [],
+      "width": 360
+    },
+    {
+      "label": "mini-catalog360-final",
+      "document": 345,
+      "issues": [],
+      "width": 360
+    }
+  ],
+  "rangeResults": [
+    {
+      "label": "mini-detail360",
+      "findings": []
+    },
+    {
+      "label": "home360",
+      "findings": []
+    },
+    {
+      "label": "home-minis360",
+      "findings": []
+    },
+    {
+      "label": "home-minis1440",
+      "findings": []
+    }
+  ],
+  "splashSamples": [
+    {
+      "hidden": false,
+      "ink": "translate3d(0px, 0px, 0px) rotate(-0.7582deg) scale(0.9526, 0.9526)",
+      "mask": "inset(0px 0px 0%)"
+    },
+    {
+      "hidden": false,
+      "ink": "translate(0px, 0px)",
+      "mask": "inset(0px 0px 0%)"
+    },
+    {
+      "hidden": false,
+      "ink": "translate(0px, 0px)",
+      "mask": "inset(0px 0px 19.2297%)"
+    },
+    {
+      "hidden": true,
+      "ink": "",
+      "mask": ""
+    }
+  ],
+  "faqSamples": [
+    {
+      "height": 74,
+      "open": true,
+      "progress": "0.037985",
+      "radius": "8.65814px",
+      "shadow": "rgb(120, 40, 88) 0.189925px 0.189925px 0px 0px"
+    },
+    {
+      "height": 221,
+      "open": true,
+      "progress": "0.974547",
+      "radius": "0.229077px",
+      "shadow": "rgb(120, 40, 88) 4.87274px 4.87274px 0px 0px"
+    },
+    {
+      "height": 224.5625,
+      "open": true,
+      "progress": "",
+      "radius": "0px",
+      "shadow": "rgb(120, 40, 88) 5px 5px 0px 0px"
+    },
+    {
+      "height": 224.5625,
+      "open": true,
+      "progress": "",
+      "radius": "0px",
+      "shadow": "rgb(120, 40, 88) 5px 5px 0px 0px"
+    }
+  ],
+  "interruption": {
+    "hash": "#about",
+    "hidden": true,
+    "top": 96
+  },
+  "crossHash": {
+    "focus": "founder",
+    "hash": "#founder",
+    "top": 95.921875
+  },
+  "history": {
+    "backPath": "http://localhost:3001/courses",
+    "forward": "http://localhost:3001/#founder"
+  },
+  "finalOfferState": {
+    "active": "courses",
+    "activeCount": 1,
+    "heightGap": 0,
+    "geometry": [
+      "none",
+      "none"
+    ]
+  },
+  "notes": [
+    "Initial USA topic overflow corrected; final startusa360-final passed.",
+    "Global/live OS reduced-motion emulation unavailable in Browser; still Cut preview tested.",
+    "No production browser warn/error logs observed; early development timeout warnings retained in browser log."
+  ]
+}

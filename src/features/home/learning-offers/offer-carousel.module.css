@@ -11,10 +11,12 @@
 .pagination [aria-current] span { background: var(--brand); }
 .pagination button:focus-visible { outline: 3px solid var(--focus); outline-offset: -4px; }
 .item[data-active="true"] > :first-child { border-color: var(--plum-border); }
+.track { scrollbar-width:none; }
+.track::-webkit-scrollbar { display:none; }
 @media (max-width: 1000px) { .item { flex-basis: calc((100% - 20px) / 2); } }
 @media (max-width: 650px) {
   .controls { display: none; }
-  .track { gap: 16px; margin-inline: calc(-1 * var(--offers-gutter, 20px)); padding-inline: calc((100% + 2 * var(--offers-gutter, 20px) - min(80vw, 380px)) / 2); }
+  .track { gap:16px; margin:0 calc(-1 * var(--page-gutter)) 0 0; padding:4px 16px 14px 0; }
   .item { flex-basis: min(80vw, 380px); }
 }
 

@@ -20,7 +20,7 @@
   --success: #177245;
   --info: #2455a4;
   --control-radius: 6px;
-  --anchor-padding: 120px;
+  --anchor-padding: 96px;
   --page-gutter: clamp(20px, 4.1667vw, 96px);
   --header-shadow: 0 8px 32px rgb(29 27 31 / 7%);
   --footer-border: #655f67;
@@ -136,3 +136,4 @@ html {
   a:hover, button:hover:not(:disabled), summary:hover { transition-duration: .3s; }
   select, input, textarea { transition: border-color .25s, box-shadow .25s, background-color .25s; }
 }
+@media (max-width: 760px) { :root { --anchor-padding: 80px; } }

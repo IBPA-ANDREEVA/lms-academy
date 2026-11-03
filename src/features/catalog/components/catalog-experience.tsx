@@ -19,7 +19,7 @@ export function CatalogExperience(){
  const pathname=usePathname();const router=useRouter();const search=useSearchParams();const kind:Kind=pathname==="/mini-courses"?"mini-courses":"courses";const filters=readFilters(new URLSearchParams(search.toString()));
  const root=useRef<HTMLDivElement>(null),track=useRef<HTMLDivElement>(null),previous=useRef<Kind>(kind),fromHeight=useRef<number|null>(null);const [offset,setOffset]=useState(112);
  function href(nextKind:Kind,next:Filters){const query=new URLSearchParams();for(const key of ["direction","language","level"] as const)if(next[key])query.set(key,next[key]);return `/${nextKind}${query.size?`?${query}`:""}`}
- function navigate(nextKind:Kind,next:Filters){fromHeight.current=track.current?.getBoundingClientRect().height??null;router.push(href(nextKind,next),{scroll:false})}
+ function navigate(nextKind:Kind,next:Filters){fromHeight.current=track.current?.getBoundingClientRect().height??null;if(nextKind!==kind)root.current?.scrollIntoView({block:"start",behavior:"instant"});router.push(href(nextKind,next),{scroll:false})}
  useEffect(()=>{const header=document.querySelector("header");if(!header)return;const update=()=>setOffset(header.getBoundingClientRect().height);update();const observer=new ResizeObserver(update);observer.observe(header);return()=>observer.disconnect()},[]);
  useGSAP((_, contextSafe) => {
   const container = track.current;
@@ -27,22 +27,28 @@ export function CatalogExperience(){
   if (!container || !active || !contextSafe) return;
   const preference = matchMedia("(prefers-reduced-motion: reduce)");
   const changed = previous.current !== kind;
+  const outgoing = changed ? container.querySelector<HTMLElement>(`[data-kind="${previous.current}"]`) : null;
   let timeline: gsap.core.Timeline | undefined;
   const settle = () => {
    timeline?.kill();
-   active.style.removeProperty("transform");
-   active.style.removeProperty("opacity");
+   for (const element of [active, outgoing]) {
+    element?.style.removeProperty("transform");
+    element?.style.removeProperty("opacity");
+    element?.style.removeProperty("visibility");
+   }
    container.style.removeProperty("height");
    delete container.dataset.animating;
   };
-  if (changed && fromHeight.current !== null && !preference.matches) {
+  if (changed && outgoing && !preference.matches) {
    container.dataset.animating = "true";
-   const mobile = matchMedia("(max-width: 760px)").matches;
    const sign = kind === "mini-courses" ? 1 : -1;
-   timeline = gsap.timeline({ onComplete: settle })
-    .fromTo(container, { height: fromHeight.current }, { height: active.offsetHeight, duration: .36, ease: "power2.inOut" }, 0)
-    .fromTo(active, { x: sign * (mobile ? 10 : 24), opacity: .4 }, { x: 0, opacity: 1, duration: .36, ease: "power2.out", clearProps: "transform,opacity" }, 0);
+   gsap.set(outgoing, { visibility: "visible" });
+   timeline = gsap.timeline({ onComplete: () => { settle(); root.current?.scrollIntoView({ block: "start", behavior: "instant" }); } })
+    .fromTo(container, { height: fromHeight.current ?? outgoing.offsetHeight }, { height: active.offsetHeight, duration: .46, ease: "power2.inOut" }, 0)
+    .fromTo(outgoing, { xPercent: 0, opacity: 1 }, { xPercent: -sign * 12, opacity: 0, duration: .22, ease: "power2.in" }, 0)
+    .fromTo(active, { xPercent: sign * 12, opacity: 0 }, { xPercent: 0, opacity: 1, duration: .34, ease: "power3.out" }, .12);
   }
+  if (changed && preference.matches) root.current?.scrollIntoView({ block: "start", behavior: "instant" });
   // A resize may invalidate the measured endpoint. Natural active height wins.
   let height = active.offsetHeight;
   const observer = new ResizeObserver(() => {

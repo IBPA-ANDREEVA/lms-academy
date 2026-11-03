@@ -11,7 +11,7 @@ gsap.registerPlugin(useGSAP);
 const publicPage = (path: string) => /^\/(?:$|(?:mini-)?courses(?:\/[^/]+)?$)/.test(path);
 const historyKey = "lmsMotionIndex";
 
-type Navigation = { href: string; path: string; direction: number; submitted: boolean; history: boolean; focus: Element | null };
+type Navigation = { href: string; path: string; hash: string; direction: number; submitted: boolean; history: boolean; focus: Element | null; positioned?: boolean; anchorRequested?: boolean; instant?: boolean };
 
 /** Presentation around Next's router. No content fetching, route cache, cloned
  * React trees, history patches, scroll locks, or replacement routing layer. */
@@ -52,17 +52,17 @@ export function PageWipeTransition({ content, pathname, loading, onActive }: {
       navigation = null; revealed = false;
       onActive(false);
     };
-    const visibleContent = () => Array.from(page.querySelectorAll<HTMLElement>("main section"))
+    const visibleContent = () => Array.from(page.querySelectorAll<HTMLElement>("main h1, main h2"))
       .filter(element => {
         const box = element.getBoundingClientRect();
         return box.height > 0 && box.bottom > 0 && box.top < innerHeight
-          && !element.parentElement?.closest("section")
           && !element.closest('[data-learning-offers],[data-sticky-story]');
       });
     const focusDestination = (request: Navigation) => {
       const focused = document.activeElement;
-      if (focused === document.body || focused === request.focus || !focused?.isConnected) {
-        const main = Array.from(page.querySelectorAll<HTMLElement>('main:not([data-route-loading])'))
+      const restoredMenuTrigger = request.focus?.closest("dialog") && focused?.hasAttribute("data-mobile-menu-trigger");
+      if (focused === document.body || focused === request.focus || !focused?.isConnected || restoredMenuTrigger) {
+        const main = (request.hash ? document.getElementById(decodeURIComponent(request.hash.slice(1))) : null) ?? Array.from(page.querySelectorAll<HTMLElement>('main:not([data-route-loading])'))
           .find(element => element.getClientRects().length > 0);
         if (main && !main.hasAttribute("tabindex")) main.tabIndex = -1;
         main?.focus({ preventScroll: true });
@@ -72,11 +72,30 @@ export function PageWipeTransition({ content, pathname, loading, onActive }: {
       const request = navigation;
       if (!request || !request.submitted || revealed || committedPath !== request.path) return;
       if (Array.from(page.querySelectorAll<HTMLElement>("[data-route-loading]")).some(element => element.getClientRects().length > 0)) return;
+      if (request.hash && !request.positioned) {
+        if (!request.anchorRequested) {
+          request.anchorRequested = true;
+          window.dispatchEvent(new Event("public-anchor"));
+        }
+        const destination = document.getElementById(decodeURIComponent(request.hash.slice(1)));
+        // Next may retain the previous route in a hidden Activity tree. A
+        // matching id is not ready until its actual layout has been restored.
+        if (destination && (!destination.getClientRects().length || destination.getBoundingClientRect().height === 0 || destination.closest('[inert],[aria-hidden="true"]'))) {
+          frame = requestAnimationFrame(reveal);
+          return;
+        }
+        destination?.scrollIntoView({ block: "start", behavior: "instant" });
+        request.positioned = true;
+      }
+      if (!request.hash && !request.history && !request.positioned) {
+        window.scrollTo({ top: 0, behavior: "instant" });
+        request.positioned = true;
+      }
       revealed = true;
       clearTimeout(timeout); clearTimeout(waiting);
       delete cover.dataset.waiting;
       timeline?.kill(); clearTargets();
-      if (preference.matches) { finish(); focusDestination(request); return; }
+      if (preference.matches || request.instant) { finish(); focusDestination(request); return; }
       targets = visibleContent();
       timeline = gsap.timeline({ defaults: { duration: motion.wipeReveal, ease: motion.ease }, onComplete: () => { finish(); focusDestination(request); } })
         .to(cover, { xPercent: -100 * request.direction }, 0);
@@ -85,7 +104,10 @@ export function PageWipeTransition({ content, pathname, loading, onActive }: {
     const submit = (request: Navigation) => {
       if (navigation !== request || request.submitted) return;
       request.submitted = true;
-      router.push(request.href);
+      if (request.path === location.pathname && request.hash) {
+        history.pushState({ ...history.state, [historyKey]: ++index }, "", request.href);
+        reveal();
+      } else router.push(request.href, { scroll: !request.hash });
     };
     const begin = contextSafe((request: Navigation) => {
       finish(); navigation = request;
@@ -100,7 +122,14 @@ export function PageWipeTransition({ content, pathname, loading, onActive }: {
       timeout = setTimeout(() => {
         if (navigation !== request) return;
         console.warn({ event: "public_motion_timeout", phase: "navigation", path: request.path });
-        submit(request); finish(); // Return control to native loading/error recovery.
+        request.instant = true;
+        submit(request);
+        reveal();
+        // Leave mounted content usable while Next resolves a slow destination.
+        // Keep the request until commit so hash positioning cannot be discarded.
+        cover.hidden = true;
+        timeline?.kill(); clearTargets();
+        delete page.dataset.routeMotion;
       }, 5000);
       if (request.history) {
         // popstate cannot be delayed. Cover synchronously and mirror the reveal;
@@ -120,21 +149,26 @@ export function PageWipeTransition({ content, pathname, loading, onActive }: {
       if (!anchor || anchor.hasAttribute("download") || (anchor.target && anchor.target !== "_self")) return;
       const url = new URL(anchor.href);
       const excluded = url.origin !== location.origin || !publicPage(location.pathname) || !publicPage(url.pathname)
-        || url.pathname === location.pathname || Boolean(url.hash) || anchor.closest('dialog,[data-motion="none"]');
+        || (url.pathname === location.pathname && !url.hash) || url.hash === "#main-content" || anchor.closest('[data-motion="none"]');
       if (excluded || preference.matches) { if (navigation) finish(); return; }
       event.preventDefault();
-      begin({ href: url.pathname + url.search, path: url.pathname, direction: 1, submitted: false, history: false, focus: anchor });
+      begin({ href: url.pathname + url.search + url.hash, path: url.pathname, hash: url.hash, direction: 1, submitted: false, history: false, focus: anchor });
     });
     const pop = contextSafe((event: PopStateEvent) => {
       const nextIndex = Number(event.state?.[historyKey] ?? index - 1);
       const direction = nextIndex < index ? -1 : 1;
       index = nextIndex;
-      if (!publicPage(committedPath) || !publicPage(location.pathname) || location.pathname === committedPath || location.hash || preference.matches) { finish(); return; }
-      begin({ href: location.pathname + location.search, path: location.pathname, direction, submitted: true, history: true, focus: document.activeElement });
+      if (!publicPage(committedPath) || !publicPage(location.pathname) || preference.matches) { finish(); return; }
+      begin({ href: location.pathname + location.search + location.hash, path: location.pathname, hash: location.hash, direction, submitted: true, history: true, focus: document.activeElement });
     });
     const interrupt = () => {
-      if (navigation) submit(navigation);
-      finish();
+      const request = navigation;
+      if (!request) return;
+      request.instant = true;
+      timeline?.kill(); clearTargets();
+      cover.hidden = true;
+      submit(request);
+      reveal();
     };
     const key = (event: KeyboardEvent) => { if (event.key === "Escape" || event.key === "Tab") interrupt(); };
     const visibility = () => { if (document.hidden) interrupt(); };
@@ -148,19 +182,19 @@ export function PageWipeTransition({ content, pathname, loading, onActive }: {
       cancelAnimationFrame(frame);
       frame = requestAnimationFrame(reveal);
     }) };
-    document.addEventListener("click", click, true);
+    // Window capture precedes feature-local document handlers, so hash links
+    // have one transition owner even when a mounted feature handles anchors.
+    window.addEventListener("click", click, true);
     window.addEventListener("popstate", pop);
     preference.addEventListener("change", interrupt);
-    window.addEventListener("resize", interrupt);
     window.addEventListener("pagehide", interrupt);
     window.addEventListener("keydown", key);
     document.addEventListener("visibilitychange", visibility);
     return () => {
       controls.current = null; finish();
-      document.removeEventListener("click", click, true);
+      window.removeEventListener("click", click, true);
       window.removeEventListener("popstate", pop);
       preference.removeEventListener("change", interrupt);
-      window.removeEventListener("resize", interrupt);
       window.removeEventListener("pagehide", interrupt);
       window.removeEventListener("keydown", key);
       document.removeEventListener("visibilitychange", visibility);

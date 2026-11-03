@@ -37,7 +37,7 @@ const components = [
   ["category-navigation", "CategoryNavigation"],
   ["section-heading", "SectionHeading"],
   ["page-container", "PageContainer"],
-  ["motion", "SectionReveal / CircleLoader"],
+  ["motion", "SectionReveal / SplashLoader"],
   ["public-footer", "PublicFooter"],
 ] as const;
 
@@ -500,7 +500,7 @@ export function ComponentPreviewPage() {
         </div>
       </PreviewSection>
 
-      <PreviewSection id="motion" name="SectionReveal / CircleLoader" description="Общие компоненты анимации, без имитации загрузки страницы.">
+      <PreviewSection id="motion" name="SectionReveal / SplashLoader" description="Общие компоненты анимации, без имитации загрузки страницы.">
         <MotionPreview />
       </PreviewSection>
 

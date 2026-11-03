@@ -9,10 +9,6 @@
 .description { max-width: 360px; margin: 0 0 5px; font-size: 17px; line-height: 1.55; }
 .showcase { min-width: 0; }
 .featuredStage { min-width: 0; }
-.section:has([data-featured-scroll]) { overflow: clip; }
-.featuredStage[data-featured-scroll]::after { content: ""; display: block; height: var(--featured-travel); }
-.featuredStage[data-featured-scroll] > .track { position: sticky; top: 180px; }
-.featuredStage[data-featured-scroll] article img { transition: none; }
 .featuredCard { height: 100%; }
 .previewLabel { margin: 0 0 8px; color: #f2dbe8; font-size: 10px; font-weight: 800; letter-spacing: .08em; }
 .showcase nav { margin: 0 0 22px; }
@@ -84,4 +80,14 @@
  .cardFrame article > div:first-child, .cardFrame:first-child article > div:first-child { aspect-ratio: 16/9; height: auto; }
  .cardFrame article > div:nth-child(2), .cardFrame:first-child article > div:nth-child(2) { padding: 18px; gap: 12px; min-height: 0; }
  .carouselControls { margin-top: 0; gap: 12px; }
+}
+@media(max-width:760px) {
+ .showcase nav ul { flex-wrap:wrap; max-width:100%; overflow:visible; padding-bottom:0; gap:8px; }
+ .showcase nav li { flex:1 1 auto; }
+ .showcase nav button { justify-content:center; width:100%; padding-inline:12px; }
+ .track { display:flex; width:calc(100% + var(--page-gutter)); margin:0; padding:4px 12px 12px 0; gap:16px; overflow-x:auto; scroll-snap-type:x mandatory; scrollbar-width:none; }
+ .track::-webkit-scrollbar { display:none; }
+ .cardFrame,.cardFrame:first-child { flex:0 0 calc(100% - 48px); scroll-snap-align:start; }
+ .carouselControls > button { display:none; }
+ .carouselControls { display:flex; }
 }

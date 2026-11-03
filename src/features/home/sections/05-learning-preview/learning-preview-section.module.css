@@ -74,6 +74,9 @@
 
 
 .lessonCard { display: block; }
+.demoBody { position:relative; overflow:clip; }
+.stageCurtain { position:absolute; z-index:3; inset:0; background:var(--brand); transform:translateX(-105%); pointer-events:none; }
+.shortLabel { display:none; }
 
 .lessonCard, .mediaPlaceholder { min-width: 0; max-width: 100%; }
 .mediaPlaceholder { width: 100%; min-height: 0; }
@@ -85,4 +88,27 @@
  .feedbackStatus { padding: 18px; margin-block: 18px; }
  .mediaPlaceholder { min-height: 120px; }
  .tabs button { font-size: 11px; text-transform: none; }
+}
+
+@media(max-width:760px) {
+ .section { padding-top:0; }
+ .layout { display:block; }
+ .intro { max-width:none; margin-inline:calc(-1 * var(--page-gutter)); padding:40px var(--page-gutter); background:var(--brand); color:var(--on-brand); }
+ .heading { font-size:clamp(32px,8.8vw,52px); line-height:1.12; }
+ .heading span:last-child { color:var(--soft); }
+ .description { margin:24px 0 0; font-size:15px; }
+ .note { margin-top:20px; color:var(--soft); }
+ .note::before { display:none; }
+ .demo { border:0; box-shadow:none; margin-inline:calc(-1 * var(--page-gutter)); padding:16px var(--page-gutter) 0; }
+ .demoHeader { display:none; }
+ .tabs { border-bottom:1px solid var(--plum-border); }
+ .tabs button { flex-direction:row; min-height:56px; border:0; border-bottom:3px solid transparent; background:transparent; font-size:14px; text-transform:none; gap:4px; }
+ .tabs button[aria-selected="true"] { color:var(--brand); border-bottom-color:var(--brand); background:transparent; }
+ .longLabel { display:none; }
+ .shortLabel { display:inline; }
+ .demoBody { padding:20px 0 8px; min-height:380px; }
+ .stageContent h3 { font-size:25px; }
+ .stageContent > button { min-height:56px; font-size:13px; }
+ .stageContent textarea { font-size:16px; }
+ .mediaPlaceholder { min-height:180px; }
 }

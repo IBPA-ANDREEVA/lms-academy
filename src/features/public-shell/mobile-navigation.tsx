@@ -24,10 +24,8 @@ export function MobileNavigation({ navigation, brand, account, showAuth, onAuth 
   const trigger = useRef<HTMLButtonElement>(null);
   const id = useId();
   const closing = useRef(false);
+  const menuMotion = useRef<gsap.core.Timeline | null>(null);
   useScrollLock(open);
-  useEffect(() => {
-    if (open) dialog.current?.showModal(); else dialog.current?.close();
-  }, [open]);
   useEffect(() => {
     const media = matchMedia("(min-width: 761px)");
     const close = () => { if (media.matches) setOpen(false); };
@@ -35,33 +33,36 @@ export function MobileNavigation({ navigation, brand, account, showAuth, onAuth 
     return () => media.removeEventListener("change", close);
   }, []);
   const { contextSafe } = useGSAP(() => {
-    if (!open || !dialog.current) return;
+    const surface = dialog.current;
+    if (!surface) return;
+    if (!open) { surface.close(); return; }
+    surface.showModal();
     closing.current = false;
     const preference = matchMedia("(prefers-reduced-motion: reduce)");
     const settle = () => {
       if (!preference.matches || !dialog.current) return;
-      gsap.killTweensOf(dialog.current);
-      dialog.current.style.removeProperty("opacity");
-      dialog.current.style.removeProperty("transform");
+      menuMotion.current?.progress(1).kill();
+      menuMotion.current = null;
       if (closing.current) setOpen(false);
     };
     preference.addEventListener("change", settle);
     const media = gsap.matchMedia();
     media.add("(prefers-reduced-motion: no-preference)", () => {
-      gsap.fromTo(dialog.current, { opacity: .6, x: 16 }, { opacity: 1, x: 0, duration: .3, ease: "power3.out", clearProps: "opacity,transform" });
-      const items = dialog.current?.querySelectorAll(`.${styles.links} > li`);
-      if (items?.length) gsap.fromTo(items, { opacity: .6, x: 8 }, { opacity: 1, x: 0, duration: .22, stagger: .025, ease: "power2.out", clearProps: "opacity,transform" });
+      const items = surface.querySelectorAll(`.${styles.links} > li`);
+      menuMotion.current = gsap.timeline({ onReverseComplete: () => setOpen(false) })
+        .fromTo(surface, { clipPath: "inset(0 0 100% 0)" }, { clipPath: "inset(0 0 0% 0)", duration: .4, ease: "power3.inOut" }, 0)
+        .fromTo(items, { y: 18, opacity: 0 }, { y: 0, opacity: 1, duration: .28, stagger: .035, ease: "power3.out" }, .12);
     });
-    return () => { preference.removeEventListener("change", settle); media.revert(); };
+    return () => { preference.removeEventListener("change", settle); media.revert(); menuMotion.current = null; };
   }, { scope: root, dependencies: [open], revertOnUpdate: true });
   function closeAnimated() { contextSafe(() => {
     closing.current = true;
     if (matchMedia("(prefers-reduced-motion: reduce)").matches) { setOpen(false); return; }
-    gsap.to(dialog.current, { opacity: 0, duration: .16, overwrite: true, onComplete: () => setOpen(false) });
+    if (menuMotion.current) menuMotion.current.timeScale(1.35).reverse(); else setOpen(false);
   })(); }
   return <div ref={root} className={styles.root}>
     <button ref={trigger} data-mobile-menu-trigger className={styles.trigger} type="button" aria-label="Открыть меню" aria-expanded={open} aria-controls={id} onMouseDown={event => { event.preventDefault(); event.currentTarget.focus({ preventScroll: true }); }} onClick={() => setOpen(true)}><span /><span /><span /></button>
-    <dialog ref={dialog} id={id} className={styles.dialog} aria-label="Меню сайта" onCancel={event => { event.preventDefault(); closeAnimated(); }} onClose={() => { setOpen(false); trigger.current?.focus({ preventScroll: true }); }} onClick={event => { if (event.target === event.currentTarget) closeAnimated(); }}>
+    <dialog ref={dialog} id={id} className={styles.dialog} aria-label="Меню сайта" onCancel={event => { event.preventDefault(); closeAnimated(); }} onClose={() => { if (dialog.current?.open) return; setOpen(false); trigger.current?.focus({ preventScroll: true }); }} onClick={event => { if (event.target === event.currentTarget) closeAnimated(); }}>
       <div className={styles.panel}>
         <div className={styles.heading}><Link href={brand.href} aria-label={brand.label} onClick={() => setOpen(false)}><BrandLogo /></Link><button type="button" aria-label="Закрыть меню" onClick={closeAnimated}>×</button></div>
         <nav aria-label="Мобильная навигация"><MenuLinks navigation={navigation} onNavigate={() => setOpen(false)} /></nav>

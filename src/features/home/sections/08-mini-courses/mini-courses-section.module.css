@@ -60,3 +60,10 @@
  .card :global([class*="action"]) a { min-width: 44px; }
  .explorer nav button { font-size: 13px; }
 }
+@media(max-width:760px) {
+ .explorer nav ul { flex-wrap:wrap; overflow:visible; padding:0; gap:8px; }
+ .explorer nav li { flex:1 1 auto; }
+ .explorer nav button { width:100%; justify-content:center; padding-inline:10px; }
+ .card > article > div:first-child { aspect-ratio:3/2; min-height:0; }
+ .card h3 { overflow-wrap:normal; font-size:16px; }
+}

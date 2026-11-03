@@ -1,5 +1,33 @@
 # Public frontend motion
 
+Current: **D-021 · 2026-11-03**. The owner's Animation Redesign brief supersedes the affected D-020 mechanics preserved below. Exact supplied image mapping and actual verification: [QA report](../qa/animation-redesign-2026-11-03.md). Implementation remains pending human visual review.
+
+## Current owners and behavior
+
+| Pattern | Owner / consumers | Current contract |
+| --- | --- | --- |
+| Public navigation | `public-shell/page-wipe-transition.tsx` via PublicMotion | .24s plum cover, Next commit, .32s reveal. Same-origin public routes **and hashes**, including same-page links and links from the menu. Window capture owns the transition before feature-local hash handlers. Prefetch overlaps the cover. |
+| Destination readiness | Same controller; `learning-offers-showcase.tsx` listens to `public-anchor` | Wait for the committed path, no visible loading boundary, a visible nonzero destination outside inert/hidden panels. Hidden Next Activity trees do not count as ready. Select an inactive offer before positioning. Ordinary forward page navigation starts at top; hash navigation positions its target. Browser history retains Next restoration except an explicit hash target. |
+| Interruptions | Same controller | New intent cancels obsolete work. Tab/Escape, live reduced preference, pagehide/visibility loss settle presentation. Five-second watchdog hides a stalled cover while retaining destination positioning until commit; logs only event/phase/public path. No body lock or pointer interception by overlays. Resize does not cancel routing. |
+| Welcome / pending loading | `public-shell/splash-loader.tsx`; PublicMotion and MotionPreview | Three plum lobes expand .62s with .045s offsets, then a .48s clearing mask. Initial home mount welcomes without pretending to measure network progress. Real pending loading has a 180ms threshold. Pointer/key/wheel/resize can dismiss welcome. Wipe suppresses Splash on its navigation. Hidden SSR and reduced-motion surfaces; no minimum network dwell. |
+| Narrative entrances | `public-shell/section-reveal.tsx` through PageContainer | Visible SSR; enter-once headings .48s desktop/.36s mobile, 12px/6px rise and a short authored-content stagger. Hash presence no longer disables the entire page's entrances. Never translate a structural section, seam or form. HOME-06–09 uses its own group entrance. |
+| Portrait join | `home/composition/academy-story.tsx` | Server composition in normal document flow. About, seam and Founder share stable edges; no shrink, rounding, pin or extra travel. Content-only entrances. |
+| Offers on scroll | `home/learning-offers/learning-offers-showcase.tsx` | One group-owned 32px/.65-opacity entrance over top 92% -> 55% of viewport, .25 scrub, once. All four formats share this owner. No course-only hook, sticky card rows or spacer. Persistent top/bottom geometry never transforms. |
+| Offers switching | Same owner, existing four-panel tuple | .12 pullback, .28 desktop/.22 mobile slide, .16 expansion; outgoing remains inert. Active-height measurement, rapid/resize cancellation, retained per-panel state. Four equal mobile tabs; white desktop pill in a stationary plum dock. |
+| Catalog switching | `catalog/components/catalog-experience.tsx` | Outgoing 12% shift/.22s, incoming 12%/.34s at .12, natural-height .46s; handles both directions and history. Selected results align at the top; root disables browser anchoring during resizing. Query filters stay intact. |
+| Learning demo | Home-local LearningPreviewDemo | .2s cover + .32s curtain exit, .42s content stagger, .5s media clip, .52s measured height. Curtain explicitly resets pixel x before percent travel. Focus/input state retained; tabs are brought into view when a shorter result would otherwise leave the viewport. No actual learning service. |
+| Disclosures | Generic `useDisclosureMotion` with existing consumers | Whole details height and `--disclosure-progress` share .4s power3.inOut. FAQ uses it for 9px->0 corners, border color, 0->5px shadow and plus/minus. Founder uses measured native details. Reversal starts at current height/progress; resize/preference cleanup settles requested state. |
+| Menu | Existing MobileNavigation | Open native dialog before its .4s clip reveal and .28s staggered links. Reverse the same timeline at 1.35 speed to close; preserve focus trap, Escape and scroll lock lifecycle. No overlapping open/close animations. |
+| Cut | Generic Button/ButtonLink CSS, existing API | Solid offset shadow, foreground/label -3px/-3px on hover, depth +5px/+5px, arrow +2px, 240ms. No trailing slash. Stable hit area; disabled/loading/reduced states still; inverse readable. Preview uses actual components. |
+
+All GSAP creation stays in scoped client lifecycles; later creation callbacks are context-safe. Preference/resize/focus cleanup restores normal content. No global GSAP defaults, router replacement, Lenis, new dependency or invented content. Mobile rails retain native touch scrolling and keyboard/dot alternatives with a visible next-card cue; horizontal bars/mobile arrows are explicitly omitted at the owner's request. Transactional forms retain direct behavior.
+
+The historical D-020 text below is retained for provenance, **not current implementation instructions**. The four frontend registries are updated for D-021. Regression source updates cover the new seams, hash destinations, Splash and FAQ endpoints. Actual executed checks and remaining environments are distinguished in the QA report.
+
+---
+
+# Historical D-020 motion specification
+
 Canonical guide · 2026-11-02 · owner brief: **Premium Motion System Redesign**, with the follow-up “use scroll, but not too much, so it won't affect the user flow.” This supersedes the welcome-droplet and blanket no-scroll-timelines portions of D-019. D-020 records the exact new scope. Existing layout, Russian copy, fonts, colors, content approval and release boundaries still apply. Browser evidence is verification, not human visual approval.
 
 ## Reference contract

@@ -226,6 +226,21 @@ Verification and structural blockers are recorded separately in [LAND02 motion r
 
 D-020 visual QA follow-up: HOME-08 `mini-courses-section.module.css` constrains its compact-card media to the assigned grid column (`min-width:0;width:100%`). Existing aspect/min-height sizing could paint over card titles without document overflow. This is local to MiniCourseExplorer; the shared CourseCard API/styles remain unchanged. The premium motion suite checks image/content separation and text ranges at all four motion viewports.
 
+## Current section delta · 2026-11-03 (D-021)
+
+Paths below are relative to `src/features/home`; component APIs not listed remain unchanged. [Reference/verification scope](../qa/animation-redesign-2026-11-03.md).
+
+| Section | Owner / props / consumer | Implemented and missing |
+| --- | --- | --- |
+| HOME-02 | `sections/02-hero/hero-section.tsx` + CSS; no props; HomePage | Mobile photo-first first-screen composition; retained original photo/copy. |
+| HOME-03/04 join | `composition/academy-story.tsx` + CSS; `about,founder,seam: ReactNode`; HomePage | Server composition in document flow. Removed sticky shrink/rounding; shared seam stays attached. Mobile photo-first layout, no invented biography. |
+| HOME-04 disclosure | `sections/04-founder/components/founder-story.tsx`; `children`; FounderSection | Native details enhanced by the canonical `useDisclosureMotion`; measured whole-panel height and reversible plus. |
+| HOME-05 | `sections/05-learning-preview/components/learning-preview-demo.tsx`; no props; LearningPreviewSection | Coordinated curtain, content stagger, media clip, measured height; selected tabs remain visible after shorter/taller step changes. Inputs retained. Local demonstration only; video/upload/review service missing. |
+| HOME-06–09 | `learning-offers/learning-offers-showcase.tsx`; four-panel tuple; HomePage | Sticky dock/pill navigation; one bounded group scroll entrance, no pin or extra travel; bidirectional pullback/slide/expand. Old course-only scroll hook removed. Geometry stationary; active height and inert semantics retained. |
+| HOME-06/07/08 | Existing CourseShowcase, PackagesSection, MiniCourseExplorer and OfferCarousel owners | Mobile rails expose next card, filters fit; packages get the supplied mobile intro relationship; shared compact CourseCard stacks media/content. Existing example inventory only. |
+| HOME-09 | `sections/09-start-usa/start-usa-section.module.css`; StartUsaSection | Topics stack at <=380px to fit long Russian labels. Existing release preview only. |
+| HOME-10 | `sections/10-reviews/components/reviews-carousel.tsx` + CSS; no props; ReviewsSection | Drag/touch/keyboard/dots preserved, horizontal scrollbar hidden, arrows omitted on mobile, next card visible. Four existing empty review placeholders remain. |
+| HOME-12 -> HOME-11 | `sections/12-faq` then `sections/11-contact`; HomePage | FAQ shape and height share one progress value; FAQ now precedes Contact, connected by the existing seam/link. No form delivery or new FAQ policy approval. |
 ## LAND03/LAND04 section ownership override · 2026-11-03
 
 - Catalog 03/04 retain their files and `items,filtered,onReset,demonstration` props; add `status: success|empty|unavailable|loading`. Both compose the new catalog-owned CatalogState instead of duplicate empty JSX, retain CourseCard variants, and announce result counts. CatalogExperience reads CatalogProvider and maps DTOs with catalog-presentation; route/query/motion ownership is unchanged.

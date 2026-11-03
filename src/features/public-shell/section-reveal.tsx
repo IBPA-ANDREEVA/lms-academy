@@ -29,13 +29,14 @@ export function SectionReveal({ treatment = "editorial", ...props }: ComponentPr
         if (!entries.some(entry => entry.isIntersecting) || element.closest('[inert],[aria-hidden="true"]')) return;
         seen.current = true;
         observer.disconnect();
-        if (location.hash || element.closest('[data-transitioning],[data-animating],[data-route-motion]') || element.contains(document.activeElement)) return;
+        if (element.closest('[data-learning-offers],[data-transitioning],[data-animating],[data-route-motion]') || element.contains(document.activeElement)) return;
         const visible = (target: HTMLElement) => target.getBoundingClientRect().height > 0 && !target.closest('[hidden],[inert]');
         const headings = Array.from(element.querySelectorAll<HTMLElement>("h1,h2,[data-motion-heading]")).filter(visible);
-        const explicit = Array.from(element.querySelectorAll<HTMLElement>(treatment === "cards" ? "article" : "[data-motion-item]")).filter(visible);
+        const explicit = Array.from(element.querySelectorAll<HTMLElement>(treatment === "cards" ? "article" : "[data-motion-item], [data-motion-body]")).filter(visible);
         // Animate only the heading and a few authored groups. Forms, disclosures,
         // lists of benefits and every ordinary descendant do not all need entrances.
         const content = explicit.filter(target => !headings.includes(target) && !target.matches("form,li") && !headings.some(heading => target.contains(heading))).slice(0, 4);
+        if (!content.length) content.push(...Array.from(element.children).filter((target): target is HTMLElement => target instanceof HTMLElement && !target.querySelector("h1,h2") && !target.matches("form") && visible(target)).slice(0, 2));
         targets = [...headings, ...content];
         const mobile = matchMedia("(max-width: 760px)").matches;
         timeline = gsap.timeline({ defaults: { ease: motion.ease, duration: mobile ? motion.mobileReveal : motion.reveal } });

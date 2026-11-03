@@ -1,0 +1,16 @@
+{
+  "command": "npx --yes -p @google/design.md designmd lint DESIGN.md",
+  "exitCode": 0,
+  "findings": [
+    {
+      "severity": "warning",
+      "message": "No YAML content found. Expected frontmatter (---) or fenced yaml code blocks."
+    }
+  ],
+  "summary": {
+    "errors": 0,
+    "warnings": 1,
+    "infos": 0
+  },
+  "disposition": "Existing prose-only context retained; authoritative tokens live in docs/design/SYSTEM.md and src/app/globals.css."
+}

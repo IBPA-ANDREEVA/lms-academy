@@ -14,13 +14,9 @@ export const publicMotion = {
   wipeReveal: .32,
   wipePush: 28,
   loaderDelay: 180,
-  circleExpand: .38,
-  circleReveal: .28,
   switchShrink: .12,
   switchSlide: .28,
   switchExpand: .16,
-  storyOverlap: 160,
-  featuredTravel: 120,
 } as const;
 
 export type RevealTreatment = "editorial" | "portrait" | "contact" | "cards" | "compact";

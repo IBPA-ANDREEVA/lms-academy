@@ -306,3 +306,18 @@
  .benefits span { font-size: 13px; line-height: 1.5; }
  .footnote { margin-top: 20px; font-size: 12px; }
 }
+@media(max-width:760px) {
+ .section { min-height:0; }
+ .photograph { inset:0 0 auto; height:280px; }
+ .lightField { clip-path:polygon(0 250px,100% 280px,100% 100%,0 100%); }
+ .content { min-height:0; padding-block:308px 52px; }
+ .kicker { position:absolute; top:16px; left:var(--page-gutter); width:auto; padding:10px 12px; background:var(--background); font-size:12px; }
+ .heading,.description,.benefits,.footnote { width:100%; }
+ .heading { font-size:clamp(26px,7vw,38px); }
+ .description { max-width:none; font-size:16px; color:var(--muted); }
+ .benefits { grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; margin-top:28px; }
+ .benefits li,.benefits li:first-child { padding:16px 12px; border-top:2px solid var(--brand); background:var(--surface); }
+ .benefits strong { font-size:14px; }
+ .benefits span { font-size:13px; line-height:1.55; }
+ .footnote { font-size:12px; }
+}

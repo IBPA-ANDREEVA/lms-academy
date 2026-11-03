@@ -33,7 +33,7 @@
   padding-block: 48px;
   border-top: 1px solid var(--border);
   margin-top: 40px;
-  scroll-margin-top: 120px;
+  scroll-margin-top: calc(120px - var(--anchor-padding));
 }
 .sectionIntro {
   margin-bottom: 32px;
