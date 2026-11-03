@@ -142,7 +142,7 @@
 .cut:active:not(:disabled)::before { background: var(--plum-border); }
 .cut .label { display: flex; align-items: center; justify-content: space-between; gap: 28px; width: 100%; }
 .cut.inverse { --button-ink: var(--surface); }
-.cut.inverse::before { background: transparent; }
+.cut.inverse::before { background: var(--text); }
 .cut.inverse:hover:not(:disabled)::before { background: rgb(255 255 255 / 12%); }
 .cut.destructive { --button-ink: var(--error); }
 .button:disabled {
@@ -173,7 +173,7 @@
   }
 }
 
-/* Parallax Cut: the hit area stays fixed; outline, slash, label and arrow travel separately.
+/* Lift & Shift: one foreground plane lifts from a solid offset shadow.
    data-cut-state / data-cut-reduced-motion are review-only hooks used in /preview/components. */
 .button.cut {
   --cut-body-x: 0px;
@@ -182,11 +182,11 @@
   --cut-label-x: 0px;
   --cut-label-y: 0px;
   --cut-slash-y: 0px;
-  --cut-depth-x: 0px;
+  --cut-depth-x: 4px;
   --cut-arrow-x: 0px;
-  --cut-depth-y: 0px;
-  --cut-depth-opacity: 0;
-  --cut-duration: 300ms;
+  --cut-depth-y: 4px;
+  --cut-depth-opacity: 1;
+  --cut-duration: 240ms;
   --cut-arrow-duration: 210ms;
   overflow: visible;
   transition: none;
@@ -196,6 +196,7 @@
   transition: transform var(--cut-duration) cubic-bezier(.22,1,.36,1);
 }
 .cut::after {
+  display: none;
   transform: translate(var(--cut-slash-x),var(--cut-slash-y)) skewX(-16deg);
   transition: transform var(--cut-duration) cubic-bezier(.22,1,.36,1);
 }
@@ -214,6 +215,7 @@
   z-index: -2;
   inset: 2px 20px 2px 10px;
   border: 2px solid currentColor;
+  background: currentColor;
   transform: translate(var(--cut-depth-x),var(--cut-depth-y)) skewX(-16deg);
   opacity: var(--cut-depth-opacity);
   pointer-events: none;
@@ -221,14 +223,15 @@
 }
 /* Preserve every variant's resting colors on hover/press. */
 .button.cut:is(:hover,:active):not(:disabled)::before { background: var(--surface); }
-.button.cut.inverse:is(:hover,:active):not(:disabled)::before { background: transparent; }
+.button.cut.inverse:is(:hover,:active):not(:disabled)::before { background: var(--text); }
+.button.cut:disabled .cutDepth { opacity:0; }
 @media(hover:hover) and (pointer:fine) {
   .cut:where(:hover,[data-cut-state="hover"]):not(:disabled):not([aria-disabled="true"]):not([aria-busy="true"]) {
-    --cut-body-x: -3px; --cut-body-y: -4px; --cut-slash-x: 6px; --cut-slash-y: -2px; --cut-label-x: -3px; --cut-label-y: -4px; --cut-arrow-x: 5px; --cut-depth-x: 5px; --cut-depth-y: 6px; --cut-depth-opacity: 1;
+    --cut-body-x: -3px; --cut-body-y: -3px; --cut-label-x: -3px; --cut-label-y: -3px; --cut-arrow-x: 2px; --cut-depth-x: 5px; --cut-depth-y: 5px;
   }
 }
 .cut:where(:focus-visible,[data-cut-state="focus"]):not(:disabled):not([aria-disabled="true"]):not([aria-busy="true"]) {
-  --cut-body-x: -3px; --cut-body-y: -4px; --cut-slash-x: 6px; --cut-slash-y: -2px; --cut-label-x: -3px; --cut-label-y: -4px; --cut-arrow-x: 5px; --cut-depth-x: 5px; --cut-depth-y: 6px; --cut-depth-opacity: 1;
+  --cut-body-x: -3px; --cut-body-y: -3px; --cut-label-x: -3px; --cut-label-y: -3px; --cut-arrow-x: 2px; --cut-depth-x: 5px; --cut-depth-y: 5px;
   outline: 3px solid var(--focus); outline-offset: 4px;
 }
 .cut:where(:active,[data-cut-state="pressed"]):not(:disabled):not([aria-disabled="true"]):not([aria-busy="true"]) {

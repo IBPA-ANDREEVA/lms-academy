@@ -1,4 +1,4 @@
-.filters { position: sticky; top: var(--catalog-header-offset,84px); z-index: 15; background: var(--surface); border-block: 1px solid var(--border); scroll-margin-top: 84px; }
+.filters { position: sticky; top: var(--catalog-header-offset,84px); z-index: 15; background: var(--surface); border-block: 1px solid var(--border); scroll-margin-top: calc(var(--catalog-header-offset,84px) - var(--anchor-padding)); }
 .inner { display: flex; align-items: end; gap: 24px; padding: 16px var(--page-gutter); max-width: 1920px; margin: auto; }
 .tabs { display: flex; flex: 0 0 230px; min-height: 50px; border: 1px solid var(--border); border-radius: 10px; padding: 3px; }
 .tabs button { flex: 1; padding: 8px 12px; min-height: 44px; border: 0; border-radius: 7px; background: transparent; color: var(--text); font: 700 14px var(--font-manrope); cursor: pointer; }
