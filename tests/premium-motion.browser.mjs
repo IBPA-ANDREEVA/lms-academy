@@ -10,7 +10,7 @@ const results = [], errors = [];
 const check = (name) => { results.push(name); console.log(`PASS ${name}`); };
 const monitor = page => page.on('pageerror', error => errors.push(error.message));
 async function settled(page) { await page.waitForFunction(()=>!document.querySelector('[data-offers-track]')?.hasAttribute('data-transitioning')); }
-async function noCover(page) { await page.waitForFunction(()=>!document.querySelector('[data-page-wipe]:not([hidden]),[data-circle-visible]')); }
+async function noCover(page) { await page.waitForFunction(()=>!document.querySelector('[data-page-wipe]:not([hidden]),[data-splash-loader]:not([hidden])')); }
 async function scrollToElement(page, selector, offset=0) { await page.locator(selector).evaluate((el,offset)=>scrollTo(0,el.getBoundingClientRect().top+scrollY-offset),offset); await page.waitForTimeout(120); }
 try {
   for (const width of [1440,768,390,360]) {
@@ -24,26 +24,18 @@ try {
     await page.goto(base); await page.evaluate(()=>document.fonts.ready);
     await page.waitForSelector('[data-learning-offers][data-enhanced="true"]');
     assert.equal(await page.locator('[data-public-intro]').count(),0);
-    assert.equal(await page.locator('[data-circle-visible]').count(),0);
-    assert.equal(await page.locator('[data-featured-scroll]').count(),width===1440?1:0);
+    await noCover(page);
+    assert.equal(await page.locator('[data-featured-scroll]').count(),0);
     await page.screenshot({path:`${evidence}/home-${width}.png`});
     const fullHeight=await page.evaluate(()=>document.documentElement.scrollHeight);
-    if(width===1440) {
-      await scrollToElement(page,'#founder',800);
-      const forward=await page.locator('[data-sticky-story] > div:first-child > div').evaluate(el=>({scale:getComputedStyle(el).transform,radius:getComputedStyle(el).borderRadius}));
-      assert.notEqual(forward.radius,'0px');
-      await page.screenshot({path:`${evidence}/story-${width}.png`});
-      await page.evaluate(()=>scrollTo(0,0)); await page.waitForTimeout(100);
-      const reverse=await page.locator('[data-sticky-story] > div:first-child > div').evaluate(el=>getComputedStyle(el).borderRadius);
-      assert.equal(reverse,'0px');
-      await scrollToElement(page,'[data-featured-scroll]',180);
-      const track=page.locator('#catalog-status [data-offer-carousel]');
-      const top1=(await track.boundingBox()).y;
-      await page.evaluate(()=>scrollBy(0,60)); await page.waitForTimeout(100);
-      assert.ok(Math.abs((await track.boundingBox()).y-top1)<2,'featured panel stays sticky for brief travel');
-      await page.screenshot({path:`${evidence}/featured-${width}.png`});
-      check('desktop story reverse scrub; featured 120px CSS sticky beat');
-    }
+    await scrollToElement(page,'#founder',500);
+    const join=await page.evaluate(()=>{
+      const about=document.querySelector('#about'),founder=document.querySelector('#founder');
+      return {gap:founder.getBoundingClientRect().top-about.getBoundingClientRect().bottom,transform:getComputedStyle(about).transform};
+    });
+    assert.ok(Math.abs(join.gap)<1,'portrait surfaces share the same seam');
+    assert.equal(join.transform,'none','geometry never floats through a surface transform');
+    check(`${width}px: integrated portrait seam without pinning`);
     await scrollToElement(page,'[data-learning-offers]',60);
     for (const label of ['Мини-курсы','Пакеты','Старт в США','Основные курсы']) {
       const before=await page.evaluate(()=>scrollY);
@@ -56,7 +48,7 @@ try {
         const defects=await page.locator('#mini-courses article').evaluateAll(cards=>cards.flatMap(card=>{
           const [media,content]=card.children, image=media.getBoundingClientRect(), box=content.getBoundingClientRect();
           const issues=[];
-          if(getComputedStyle(card).display==='grid'&&image.right>box.left+1)issues.push('image overlaps text');
+          if(image.bottom>box.top+1)issues.push('stacked mini image overlaps text');
           for(const target of content.querySelectorAll('h3,p')) {
             const walker=document.createTreeWalker(target,NodeFilter.SHOW_TEXT);
             while(walker.nextNode()) {
@@ -79,7 +71,7 @@ try {
     await page.emulateMedia({reducedMotion:'reduce'});
     await page.getByRole('tab',{name:'Основные курсы',exact:true}).click(); await settled(page);
     assert.equal(await page.locator('[data-sticky-story],[data-featured-scroll]').count(),0);
-    assert.ok(Math.abs(fullHeight-await page.evaluate(()=>document.documentElement.scrollHeight))<=121,'scroll effects add at most 120px');
+    assert.ok(Math.abs(fullHeight-await page.evaluate(()=>document.documentElement.scrollHeight))<=2,'group scroll entrance adds no document height');
     assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),'document overflow');
     await page.screenshot({path:`${evidence}/offers-${width}.png`});
     await page.emulateMedia({reducedMotion:'no-preference'});
@@ -96,19 +88,29 @@ try {
     await page.goForward(); await page.waitForURL('**/courses/course-lashes'); await noCover(page);
     const directions=await page.evaluate(()=>window.__directions);
     assert.ok(directions.includes('back')&&directions.includes('forward'),'history mirrors the wipe direction');
+    await page.locator('footer').getByRole('link',{name:'Основатель',exact:true}).click();
+    await page.waitForURL('**/#founder'); await noCover(page);
+    assert.ok(await page.locator('#founder').evaluate(el=>{const y=el.getBoundingClientRect().top;return y>=60&&y<=120;}),'cached route hash is positioned below header');
+    await page.locator('footer').getByRole('link',{name:'Пакеты',exact:true}).click(); await noCover(page);
+    assert.equal(await page.locator('[data-learning-offers]').getAttribute('data-active-offer'),'packages');
+    const faq=page.locator('#faq details').nth(1);
+    await faq.locator('summary').click();
+    await page.waitForFunction(()=>!document.querySelectorAll('#faq details')[1].style.height);
+    assert.equal(await faq.evaluate(el=>getComputedStyle(el).borderRadius),'0px','FAQ shape reaches its expanded endpoint');
+    check(`${width}px: hash routing, inactive offer deep link and FAQ shape`);
     await page.goto(base+'/checkout'); assert.equal(await page.locator('[data-page-wipe]:not([hidden])').count(),0);
     await page.goto(base+'/preview/components');
     const preview=page.locator('#motion'); await preview.scrollIntoViewIfNeeded();
     await preview.getByRole('button',{name:'Показать ожидание'}).click();
-    await preview.locator('[data-circle-visible]').waitFor();
-    await page.screenshot({path:`${evidence}/circle-${width}.png`});
+    await preview.locator('[data-splash-loader]:not([hidden])').waitFor();
+    await page.screenshot({path:`${evidence}/splash-${width}.png`});
     await preview.getByRole('button',{name:'Завершить ожидание'}).click();
     await noCover(page);
     await page.emulateMedia({reducedMotion:'reduce'});
     await preview.getByRole('button',{name:'Показать ожидание'}).click();
-    await page.waitForTimeout(250); assert.equal(await page.locator('[data-circle-visible]').count(),0);
+    await page.waitForTimeout(250); assert.equal(await page.locator('[data-splash-loader]:not([hidden])').count(),0);
     await preview.getByRole('button',{name:'Завершить ожидание'}).click();
-    check(`${width}px: rapid/keyboard switching, stable scroll/height, reduced motion, routes/history/focus, circle preview`);
+    check(`${width}px: rapid/keyboard switching, stable scroll/height, reduced motion, routes/history/focus, splash preview`);
     await context.close();
   }
   // Delay real RSC requests, preserving the production route data and response.
@@ -119,9 +121,9 @@ try {
       window.__motionEvents=[];
       new MutationObserver(()=>{
         const wipe=document.querySelector('[data-page-wipe]');
-        const circle=document.querySelector('[data-circle-visible]');
-        if(wipe&&!wipe.hidden)window.__motionEvents.push({wipe:true,circle:!!circle,direction:wipe.dataset.direction});
-      }).observe(document,{subtree:true,attributes:true,attributeFilter:['hidden','data-direction','data-circle-visible']});
+        const splash=document.querySelector('[data-splash-loader]:not([hidden])');
+        if(wipe&&!wipe.hidden)window.__motionEvents.push({wipe:true,splash:!!splash,direction:wipe.dataset.direction});
+      }).observe(document,{subtree:true,attributes:true,attributeFilter:['hidden','data-direction']});
     });
     await context.route('**/courses/course-lashes?*',async route=>{
       await new Promise(resolve=>setTimeout(resolve,1600));
@@ -140,7 +142,7 @@ try {
     else await page.waitForURL('**/courses/course-lashes');
     // Next may recover an aborted RSC fetch through a full document navigation.
     const events=[...startedEvents,...await page.evaluate(()=>window.__motionEvents)];
-    assert.ok(events.length>0); assert.ok(events.every(e=>!e.circle),'Wipe and Circle never compete');
+    assert.ok(events.length>0); assert.ok(events.every(e=>!e.splash),'Wipe and Splash never compete');
     assert.ok(await page.locator('main:visible').count()>0);
     check(`navigation ${mode}: latest intent, bounded cleanup, one overlay`);
     await context.close();
@@ -149,7 +151,7 @@ try {
   const context=await browser.newContext({javaScriptEnabled:false,viewport:{width:390,height:844}});
   const page=await context.newPage();
   await page.goto(base); assert.ok(await page.getByRole('heading',{level:1}).isVisible());
-  assert.equal(await page.locator('[data-page-wipe]:not([hidden]),[data-circle-visible]').count(),0);
+  assert.equal(await page.locator('[data-page-wipe]:not([hidden]),[data-splash-loader]:not([hidden])').count(),0);
   assert.equal(await page.locator('[id^="offer-panel-"]:visible').count(),4);
   check('no-JS homepage, all offer panels and unanimated server content'); await context.close();
   assert.deepEqual(errors,[]);

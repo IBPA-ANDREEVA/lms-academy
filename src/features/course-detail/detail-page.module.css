@@ -1,2 +1,2 @@
 .page { overflow: clip; background: var(--background); }
-.page :global(section[id]) { scroll-margin-top: 112px; }
+.page :global(section[id]) { scroll-margin-top: 16px; }

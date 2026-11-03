@@ -12,19 +12,19 @@ const widths = [1920,1440,1280,1024,768,430,390,360,320];
 const routes = ['/', '/courses', '/mini-courses', '/courses/course-lashes', '/mini-courses/mini-lashes', '/cart', '/checkout', '/preview/components'];
 function monitor(page) { page.on('pageerror', e => errors.push(e.message)); }
 try {
- // D-020 replaces the timed welcome with loading-driven Circle/Wipe.
+ // D-021 provides a bounded welcome Splash and loading-driven Splash/Wipe.
  // Dedicated orchestration coverage lives in premium-motion.browser.mjs.
  for (const width of [1440,390]) {
   const ctx=await browser.newContext({viewport:{width,height:width<500?844:900}});
   const page=await ctx.newPage();monitor(page);await page.goto(base);
   await page.waitForSelector('[data-learning-offers][data-enhanced="true"]');
   assert.equal(await page.locator('[data-public-intro]').count(),0);
-  assert.equal(await page.locator('[data-circle-visible]').count(),0);
+  await page.waitForFunction(()=>!document.querySelector('[data-splash-loader]:not([hidden])'));
   assert.equal(await page.evaluate(()=>sessionStorage.getItem('lms.public-intro.v1')),null);
   await page.screenshot({path:`${evidence}/ready-entry-${width}.png`});
-  await page.reload();await page.waitForTimeout(400);
+  await page.reload();await page.waitForFunction(()=>!document.querySelector('[data-splash-loader]:not([hidden])'));
   assert.equal(await page.locator('[data-public-intro]').count(),0);
-  results.push({width,check:'ready entry/reload has no welcome overlay'});await ctx.close();
+  results.push({width,check:'welcome entry/reload settles without a stranded overlay'});await ctx.close();
  }
  // Normal motion at every requested width and every implemented route kind.
  for(const width of widths) {
@@ -54,14 +54,14 @@ try {
   await page.emulateMedia({reducedMotion:'no-preference'});
   if(width<=760) {
    await page.getByRole('button',{name:'Открыть меню'}).click();
-   await page.keyboard.press('Escape'); await page.waitForTimeout(250);
+   await page.keyboard.press('Escape'); await page.locator('dialog[open]').waitFor({state:'hidden'});
    assert.equal(await page.locator('dialog[open]').count(),0);
    await page.getByRole('button',{name:'Открыть меню'}).click();
    await page.emulateMedia({reducedMotion:'reduce'});
    await page.getByRole('button',{name:'Войти в кабинет'}).click();
   } else await page.getByRole('button',{name:'Войти',exact:true}).first().click();
   const auth=page.getByRole('dialog',{name:'Войти в LMS Academy'}); await auth.waitFor();
-  await page.keyboard.press('Escape'); await page.waitForTimeout(250); assert.equal(await page.locator('dialog[open]').count(),0);
+  await page.keyboard.press('Escape'); await page.locator('dialog[open]').waitFor({state:'hidden'}); assert.equal(await page.locator('dialog[open]').count(),0);
   assert.equal(await page.evaluate(()=>document.body.style.position),'');
   results.push({width,check:'disclosure reversal, resize, live reduced motion, immediate menu/auth dismissal'});
   await ctx.close();
@@ -81,7 +81,7 @@ try {
  const reducedPage=await reduced.newPage();monitor(reducedPage);await reducedPage.goto(base);
  await reducedPage.getByRole('contentinfo').getByRole('link',{name:'Основные курсы',exact:true}).click();
  await reducedPage.waitForURL('**/courses');
- assert.equal(await reducedPage.locator('[data-page-wipe]:not([hidden]),[data-circle-visible]').count(),0);
+ assert.equal(await reducedPage.locator('[data-page-wipe]:not([hidden]),[data-splash-loader]:not([hidden])').count(),0);
  results.push({check:'reduced motion navigation has no overlay'});await reduced.close();
  assert.deepEqual(errors,[]);assert.deepEqual(limitations,[],"No-JS content requirements (pre-existing routing blockers)");console.log(`Motion system: ${results.length} checks passed; ${frames.length} live frames.`);
 } finally {await writeFile(`${evidence}/motion-system-results.json`,JSON.stringify({results,errors,frames,limitations},null,2));await browser.close();}

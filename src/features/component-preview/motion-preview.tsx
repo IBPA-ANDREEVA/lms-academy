@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { Button, ButtonLink } from "@/components/ui/button";
-import { CircleLoader } from "@/features/public-shell/circle-loader";
+import { SplashLoader } from "@/features/public-shell/splash-loader";
 import { SectionReveal } from "@/features/public-shell/section-reveal";
 import styles from "./motion-preview.module.css";
 
@@ -17,7 +17,7 @@ export function MotionPreview() {
       <Button size="sm" intent="secondary" onClick={() => setReplay(value => value + 1)}>Повторить появление</Button>
     </div>
     <div className={styles.sample}>
-      <CircleLoader active={pending} inline />
+      <SplashLoader active={pending} inline />
       <SectionReveal key={replay}>
         <h3 data-motion-heading>Пример содержимого</h3>
         <p data-motion-item>Текст остаётся доступным при отключённой анимации.</p>

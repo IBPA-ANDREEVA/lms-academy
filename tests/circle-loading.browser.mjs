@@ -1,3 +1,4 @@
+// Historical filename retained; D-021 now verifies the real Splash loading boundary.
 import assert from 'node:assert/strict';
 import http from 'node:http';
 import { createRequire } from 'node:module';
@@ -46,22 +47,22 @@ try {
   delay=scenario==='fast'?0:1800;
   const context=await browser.newContext({viewport:{width:390,height:844},reducedMotion:scenario==='reduced'?'reduce':'no-preference'});
   const page=await context.newPage();page.on('pageerror',e=>errors.push(e.message));
-  await page.addInitScript(()=>{window.circleCount=0;new MutationObserver(records=>{for(const record of records)if(record.attributeName==='data-circle-visible'&&record.target.hasAttribute('data-circle-visible'))window.circleCount++;}).observe(document,{subtree:true,attributes:true,attributeFilter:['data-circle-visible']});});
+  await page.addInitScript(()=>{window.splashCount=0;new MutationObserver(records=>{for(const record of records)if(record.attributeName==='hidden'&&record.target.matches('[data-splash-loader]')&&!record.target.hidden)window.splashCount++;}).observe(document,{subtree:true,attributes:true,attributeFilter:['hidden']});});
   const navigation=page.goto(origin+'/courses/course-lashes',{waitUntil:'load'}).catch(e=>{if(scenario!=='interrupted')throw e;});
   if(['slow','interrupted','live-reduced'].includes(scenario)) {
-   await page.locator('[data-circle-visible]').waitFor({timeout:10000});
-   assert.ok(await page.locator('[data-route-loading]').isVisible(),'Circle represents the real fallback');
+   await page.locator('[data-splash-loader]:not([hidden])').waitFor({timeout:10000});
+   assert.ok(await page.locator('[data-route-loading]').isVisible(),'Splash represents the real fallback');
    assert.equal(await page.locator('[data-page-wipe]:not([hidden])').count(),0);
-   await page.screenshot({path:`${evidence}/cold-circle-${scenario}.png`});
+   await page.screenshot({path:`${evidence}/cold-splash-${scenario}.png`});
    if(scenario==='interrupted')await page.getByRole('link',{name:'Beauty Business Academy',exact:true}).first().click();
    if(scenario==='live-reduced')await page.emulateMedia({reducedMotion:'reduce'});
   }
   await navigation;
-  await page.waitForFunction(()=>!document.querySelector('[data-circle-visible]'));
+  await page.waitForFunction(()=>!document.querySelector('[data-splash-loader]:not([hidden])'));
   await page.getByRole('heading',{level:1}).first().waitFor();
-  if(scenario==='fast'||scenario==='reduced')assert.equal(await page.evaluate(()=>window.circleCount),0,'No loader flash on fast/reduced entry');
+  if(scenario==='fast'||scenario==='reduced')assert.equal(await page.evaluate(()=>window.splashCount),0,'No loader flash on fast/reduced entry');
   if(scenario==='interrupted')await page.waitForURL(origin+'/');
-  results.push(scenario);console.log(`PASS real streamed Circle: ${scenario}`);await context.close();
+  results.push(scenario);console.log(`PASS real streamed Splash: ${scenario}`);await context.close();
  }
  assert.deepEqual(errors,[]);
-} finally {await writeFile(`${evidence}/circle-results.json`,JSON.stringify({results,errors},null,2));server.closeAllConnections();server.close();await browser.close();}
+} finally {await writeFile(`${evidence}/splash-results.json`,JSON.stringify({results,errors},null,2));server.closeAllConnections();server.close();await browser.close();}
