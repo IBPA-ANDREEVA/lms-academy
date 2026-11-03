@@ -1,0 +1,5 @@
+.state { grid-column: 1 / -1; flex: 1; min-width: 0; padding: clamp(24px, 4vw, 48px); border: 1px solid var(--border); background: var(--surface); max-width: 740px; color: var(--text); }
+.state h3 { margin: 0 0 12px; font: 700 clamp(20px, 3vw, 26px)/1.35 var(--font-manrope); }
+.state p { margin: 0 0 24px; color: var(--muted); }
+.actions { display: flex; flex-wrap: wrap; gap: 12px; }
+.actions a, .actions button { max-width: 100%; white-space: normal; }

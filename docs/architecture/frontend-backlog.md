@@ -85,3 +85,9 @@ Motion owners and values are implemented in [MOTION.md](../design/MOTION.md). Re
 ## Premium motion disposition · 2026-11-02
 
 The owner's new D-020 brief replaces the timed first-session intro with real loading, adds bounded desktop scroll behavior, Carousel-style switching and public Wipe orchestration. [MOTION.md](../design/MOTION.md) records current ownership and constraints; the [verification report](../qa/premium-motion-2026-11-02.md) records actual checks. Remaining: human motion approval, physical-device/Safari/low-end testing, real course-image verification when approved assets/data exist. Existing no-JS streamed detail/PPR limitation is tracked separately and is not treated as completed business/routing work by these animations. No delivery milestone, phase or service capability changed.
+
+## LAND03/LAND04 disposition · 2026-11-03
+
+Implemented: explicit TEST_PREVIEW gating, centralized browser-local catalog/cart examples, labeled demo cards/detail, distinct loading/empty/no-match/unavailable UI, CatalogState reuse, production source boundary/contracts, no production fixture fallback, SEO allowlist/default-noindex/metadata/sitemap/robots/schema conventions, supplied-logo SVG/icon exports and permanent SEO checks. Historical NODE_ENV-only demo and unconditional-empty-array fallback descriptions are superseded.
+
+Still missing: real Catalog persistence and Admin readiness/publication/price/taxonomy flows; actual source error/timeout/request-time/cache invalidation; server Commerce cart/quote/checkout; approved public content/domain/legal/media permissions; live crawler/product-schema verification; human visual approval. No task completion, real database, payment, enrollment, publishing authority or Vault evidence is inferred. CatalogState extraction candidate is now implemented for demonstrated consumers, not generalized into a UI framework.

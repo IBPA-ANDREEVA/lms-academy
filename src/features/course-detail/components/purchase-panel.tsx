@@ -3,7 +3,7 @@ import type { DetailProduct } from "../detail-data";
 import styles from "./purchase-panel.module.css";
 
 const statusText = {
-  unavailable: "Запись и стоимость пока не опубликованы.",
+  unavailable: "Запись на эту программу сейчас недоступна.",
   loading: "Проверяем актуальные условия предложения…",
   error: "Не удалось проверить стоимость и доступность. Попробуйте позже.",
   owned: "Доступ к этому обучению уже оформлен.",

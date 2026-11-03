@@ -225,3 +225,14 @@ Verification and structural blockers are recorded separately in [LAND02 motion r
 [Reference scope, viewport limits and verification](../qa/premium-motion-2026-11-02.md). Ordinary reveals now target selected headings/body/card groups, not every benefit item or form. Existing SectionReveal/PageContainer APIs remain compatible.
 
 D-020 visual QA follow-up: HOME-08 `mini-courses-section.module.css` constrains its compact-card media to the assigned grid column (`min-width:0;width:100%`). Existing aspect/min-height sizing could paint over card titles without document overflow. This is local to MiniCourseExplorer; the shared CourseCard API/styles remain unchanged. The premium motion suite checks image/content separation and text ranges at all four motion viewports.
+
+## LAND03/LAND04 section ownership override · 2026-11-03
+
+- Catalog 03/04 retain their files and `items,filtered,onReset,demonstration` props; add `status: success|empty|unavailable|loading`. Both compose the new catalog-owned CatalogState instead of duplicate empty JSX, retain CourseCard variants, and announce result counts. CatalogExperience reads CatalogProvider and maps DTOs with catalog-presentation; route/query/motion ownership is unchanged.
+- HOME-06 CourseShowcase and HOME-08 MiniCourseExplorer read CatalogProvider, reuse toCatalogItem and CatalogState, keep their local category/carousel owners. The motion selection key includes product/status changes so obsolete timelines revert; stage/track refs remain mounted during empty transitions. Old local course fixtures are no longer consumed.
+- HOME-07 PackagesSection and HOME-09 StartUsaSection gate experimental content on server TEST_PREVIEW; keep their anchors and quiet unavailable copy in real mode. No release expansion. HOME-08 certificate sentence now includes manual administrator evidence review.
+- DetailPage keeps all numbered sections; adds visible demo disclosure. PreviewDetail supplies fictional modules/trainer illustration to exercise existing sections and a safe local cart action only for sale-open preview records. Real DTOs still have disabled purchase action pending Commerce. Root-owned control cannot publish, enroll or pay.
+- Existing cart/checkout section owners remain; CartFeedback identifies demo USD totals and payment unavailability. CatalogState also renders in ProductRoute's unavailable outcome.
+- `/preview/components` adds `catalog-states` section composing `component-preview/catalog-states-preview.tsx` (no props, local state) → canonical CatalogState. No separate gallery/editor route is introduced.
+
+Reference scope: IMG_4590.PNG supplies branding only (D-021). Empty states and compact test panel are bounded extensions of existing Manrope/tokens/Button; no new approved aesthetic is claimed. Screenshots and actions: [LAND03/LAND04 report](../qa/LAND03-04-implementation-2026-11-03.md).

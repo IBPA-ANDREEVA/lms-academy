@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/seo/metadata";
 import { CheckoutPage } from "@/features/commerce";
-export const metadata: Metadata = { title: "Оформление заказа", robots: { index: false, follow: false } };
+export const metadata = pageMetadata("Оформление заказа", "Проверка выбранных программ и условий перед оплатой.");
 export default CheckoutPage;

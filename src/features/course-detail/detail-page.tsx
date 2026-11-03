@@ -11,6 +11,7 @@ import styles from "./detail-page.module.css";
 export function DetailPage({ product }: { product: DetailProduct }) {
   return (
     <main id="main-content" tabIndex={-1} className={styles.page} data-kind={product.kind}>
+      {product.demonstration && <p role="status" style={{ padding: "16px var(--page-gutter)", margin: 0 }}>Демонстрационный курс. Все данные вымышлены. Покупка и обучение недоступны.</p>}
       <HeroPurchaseSection product={product} />
       <DetailSeam variant="preview" />
       <VideoPreviewSection product={product} />

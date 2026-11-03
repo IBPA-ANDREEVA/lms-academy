@@ -1,0 +1,45 @@
+$ next start --port 3124
+▲ Next.js 16.4.3
+- Local:         http://localhost:3124
+- Network:       http://10.1.10.245:3124
+✓ Ready in 174ms
+✓ Running next.config.ts took 77ms
+{"event":"catalog.read.unavailable","diagnosticId":"catalog-adapter-not-connected","reason":"adapter_not_connected","kind":"all","operation":"fetchPublishedCatalog","outcome":"unavailable"}
+{"event":"catalog.read.unavailable","diagnosticId":"catalog-adapter-not-connected","reason":"adapter_not_connected","kind":"all","operation":"fetchPublishedCatalog","outcome":"unavailable"}
+{"event":"catalog.read.unavailable","diagnosticId":"catalog-adapter-not-connected","reason":"adapter_not_connected","kind":"all","operation":"fetchPublishedCatalog","outcome":"unavailable"}
+{"event":"catalog.read.unavailable","diagnosticId":"catalog-adapter-not-connected","reason":"adapter_not_connected","kind":"course","operation":"fetchPublishedCatalog","outcome":"unavailable"}
+{"event":"catalog.read.unavailable","diagnosticId":"catalog-adapter-not-connected","reason":"adapter_not_connected","kind":"course","operation":"fetchPublishedCatalog","outcome":"unavailable"}
+{"event":"catalog.read.unavailable","diagnosticId":"catalog-adapter-not-connected","reason":"adapter_not_connected","kind":"all","operation":"fetchPublishedCatalog","outcome":"unavailable"}
+{"event":"catalog.read.unavailable","diagnosticId":"catalog-adapter-not-connected","reason":"adapter_not_connected","kind":"course","operation":"fetchPublishedCatalog","outcome":"unavailable"}
+{"event":"catalog.read.unavailable","diagnosticId":"catalog-adapter-not-connected","reason":"adapter_not_connected","kind":"course","operation":"fetchPublishedCatalog","outcome":"unavailable"}
+{"event":"catalog.read.unavailable","diagnosticId":"catalog-adapter-not-connected","reason":"adapter_not_connected","kind":"all","operation":"fetchPublishedCatalog","outcome":"unavailable"}
+{"event":"catalog.read.unavailable","diagnosticId":"catalog-adapter-not-connected","reason":"adapter_not_connected","kind":"all","operation":"fetchPublishedCatalog","outcome":"unavailable"}
+{"event":"catalog.read.unavailable","diagnosticId":"catalog-adapter-not-connected","reason":"adapter_not_connected","kind":"all","operation":"fetchPublishedCatalog","outcome":"unavailable"}
+{"event":"catalog.read.unavailable","diagnosticId":"catalog-adapter-not-connected","reason":"adapter_not_connected","kind":"all","operation":"fetchPublishedCatalog","outcome":"unavailable"}
+{"event":"catalog.read.unavailable","diagnosticId":"catalog-adapter-not-connected","reason":"adapter_not_connected","kind":"all","operation":"fetchPublishedCatalog","outcome":"unavailable"}
+{"event":"catalog.read.unavailable","diagnosticId":"catalog-adapter-not-connected","reason":"adapter_not_connected","kind":"all","operation":"fetchPublishedCatalog","outcome":"unavailable"}
+{"event":"catalog.read.unavailable","diagnosticId":"catalog-adapter-not-connected","reason":"adapter_not_connected","kind":"all","operation":"fetchPublishedCatalog","outcome":"unavailable"}
+{"event":"catalog.read.unavailable","diagnosticId":"catalog-adapter-not-connected","reason":"adapter_not_connected","kind":"all","operation":"fetchPublishedCatalog","outcome":"unavailable"}
+{"event":"catalog.read.unavailable","diagnosticId":"catalog-adapter-not-connected","reason":"adapter_not_connected","kind":"all","operation":"fetchPublishedCatalog","outcome":"unavailable"}
+{"event":"catalog.read.unavailable","diagnosticId":"catalog-adapter-not-connected","reason":"adapter_not_connected","kind":"all","operation":"fetchPublishedCatalog","outcome":"unavailable"}
+{"event":"catalog.read.unavailable","diagnosticId":"catalog-adapter-not-connected","reason":"adapter_not_connected","kind":"all","operation":"fetchPublishedCatalog","outcome":"unavailable"}
+{"event":"catalog.read.unavailable","diagnosticId":"catalog-adapter-not-connected","reason":"adapter_not_connected","kind":"all","operation":"fetchPublishedCatalog","outcome":"unavailable"}
+{"event":"catalog.read.unavailable","diagnosticId":"catalog-adapter-not-connected","reason":"adapter_not_connected","kind":"all","operation":"fetchPublishedCatalog","outcome":"unavailable"}
+{"event":"catalog.read.unavailable","diagnosticId":"catalog-adapter-not-connected","reason":"adapter_not_connected","kind":"all","operation":"fetchPublishedCatalog","outcome":"unavailable"}
+{"event":"catalog.read.unavailable","diagnosticId":"catalog-adapter-not-connected","reason":"adapter_not_connected","kind":"all","operation":"fetchPublishedCatalog","outcome":"unavailable"}
+{"event":"catalog.read.unavailable","diagnosticId":"catalog-adapter-not-connected","reason":"adapter_not_connected","kind":"all","operation":"fetchPublishedCatalog","outcome":"unavailable"}
+{"event":"catalog.read.unavailable","diagnosticId":"catalog-adapter-not-connected","reason":"adapter_not_connected","kind":"all","operation":"fetchPublishedCatalog","outcome":"unavailable"}
+{"event":"catalog.read.unavailable","diagnosticId":"catalog-adapter-not-connected","reason":"adapter_not_connected","kind":"all","operation":"fetchPublishedCatalog","outcome":"unavailable"}
+{"event":"catalog.read.unavailable","diagnosticId":"catalog-adapter-not-connected","reason":"adapter_not_connected","kind":"all","operation":"fetchPublishedCatalog","outcome":"unavailable"}
+{"event":"catalog.read.unavailable","diagnosticId":"catalog-adapter-not-connected","reason":"adapter_not_connected","kind":"all","operation":"fetchPublishedCatalog","outcome":"unavailable"}
+{"event":"catalog.read.unavailable","diagnosticId":"catalog-adapter-not-connected","reason":"adapter_not_connected","kind":"all","operation":"fetchPublishedCatalog","outcome":"unavailable"}
+{"event":"catalog.read.unavailable","diagnosticId":"catalog-adapter-not-connected","reason":"adapter_not_connected","kind":"all","operation":"fetchPublishedCatalog","outcome":"unavailable"}
+{"event":"catalog.read.unavailable","diagnosticId":"catalog-adapter-not-connected","reason":"adapter_not_connected","kind":"all","operation":"fetchPublishedCatalog","outcome":"unavailable"}
+{"event":"catalog.read.unavailable","diagnosticId":"catalog-adapter-not-connected","reason":"adapter_not_connected","kind":"all","operation":"fetchPublishedCatalog","outcome":"unavailable"}
+{"event":"catalog.read.unavailable","diagnosticId":"catalog-adapter-not-connected","reason":"adapter_not_connected","kind":"all","operation":"fetchPublishedCatalog","outcome":"unavailable"}
+{"event":"catalog.read.unavailable","diagnosticId":"catalog-adapter-not-connected","reason":"adapter_not_connected","kind":"all","operation":"fetchPublishedCatalog","outcome":"unavailable"}
+{"event":"catalog.read.unavailable","diagnosticId":"catalog-adapter-not-connected","reason":"adapter_not_connected","kind":"all","operation":"fetchPublishedCatalog","outcome":"unavailable"}
+{"event":"catalog.read.unavailable","diagnosticId":"catalog-adapter-not-connected","reason":"adapter_not_connected","kind":"all","operation":"fetchPublishedCatalog","outcome":"unavailable"}
+{"event":"catalog.read.unavailable","diagnosticId":"catalog-adapter-not-connected","reason":"adapter_not_connected","kind":"all","operation":"fetchPublishedCatalog","outcome":"unavailable"}
+{"event":"catalog.read.unavailable","diagnosticId":"catalog-adapter-not-connected","reason":"adapter_not_connected","kind":"all","operation":"fetchPublishedCatalog","outcome":"unavailable"}
+[ELIFECYCLE] Command failed with exit code 143.

@@ -1,0 +1,42 @@
+TAP version 13
+# (node:34429) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///Users/ivanmakovetskyi/Desktop/Work/lms-academy/src/features/catalog/preview/preview-data.ts is not specified and it doesn't parse as CommonJS.
+# Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+# To eliminate this warning, add "type": "module" to /Users/ivanmakovetskyi/Desktop/Work/lms-academy/package.json.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: preview identifiers restore deterministic data and reject stored product/price objects
+ok 1 - preview identifiers restore deterministic data and reject stored product/price objects
+  ---
+  duration_ms: 0.920666
+  type: 'test'
+  ...
+# Subtest: publication and sale are independent; preview records never pass production gate
+ok 2 - publication and sale are independent; preview records never pass production gate
+  ---
+  duration_ms: 0.167458
+  type: 'test'
+  ...
+# (node:34430) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///Users/ivanmakovetskyi/Desktop/Work/lms-academy/src/features/commerce/demo-cart.ts is not specified and it doesn't parse as CommonJS.
+# Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+# To eliminate this warning, add "type": "module" to /Users/ivanmakovetskyi/Desktop/Work/lms-academy/package.json.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: demo restoration accepts unique identifiers and rejects stored money/objects
+ok 3 - demo restoration accepts unique identifiers and rejects stored money/objects
+  ---
+  duration_ms: 1.349541
+  type: 'test'
+  ...
+# Subtest: demo amounts use Russian formatting and an explicit illustrative currency
+ok 4 - demo amounts use Russian formatting and an explicit illustrative currency
+  ---
+  duration_ms: 24.355333
+  type: 'test'
+  ...
+1..4
+# tests 4
+# suites 0
+# pass 4
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 93.205042

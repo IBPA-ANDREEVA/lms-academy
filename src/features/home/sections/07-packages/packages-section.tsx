@@ -1,3 +1,4 @@
+import { testPreview } from "@/lib/site-environment";
 import { PageContainer } from "@/features/public-shell";
 import { PackageExplorer } from "./components/package-explorer";
 import styles from "./packages-section.module.css";
@@ -8,7 +9,7 @@ export function PackagesSection() {
       <div className={styles.intro}>
 
       </div>
-      <PackageExplorer />
+      {testPreview ? <><p>Демонстрация пакетов. Состав и условия вымышлены, покупка недоступна.</p><PackageExplorer /></> : <p>Пакеты пока недоступны. Опубликованные программы можно посмотреть в каталоге курсов.</p>}
     </PageContainer>
   </section>;
 }

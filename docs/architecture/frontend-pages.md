@@ -139,3 +139,19 @@ No new routes or page owners. Root PublicMotion owns first eligible public-entry
 ## Premium motion update · 2026-11-02 (D-020)
 
 Routes, release scope and business data are unchanged. RootLayout still owns PublicMotion. Its new PageWipeTransition coordinates public-link prefetch/cover/commit/reveal using Next's router. The real detail loading entry now renders PublicRouteLoading; CircleLoader is cold-entry only and suppressed after Wipe owns navigation. Cart, checkout, preview, filters, catalog tab buttons, dialogs and hashes retain native/local flow. HomePage composes AcademyStory around existing HOME-03/04; HOME-06 has a large-screen-only 120px featured beat; HOME-06–09 retains its existing group ownership with a Carousel-style switch. `/preview/components` now has ten sections including actual SectionReveal/CircleLoader demonstrations. Props, paths, constraints and verification are in [MOTION.md](../design/MOTION.md) and the [report](../qa/premium-motion-2026-11-02.md). No browser implementation approval or backend completion is claimed.
+
+## LAND03/LAND04 current override · 2026-11-03
+
+This section supersedes earlier fixture-mode/metadata/branding descriptions for the affected routes. [Catalog contract](catalog-preview-contract.md), [SEO architecture](../seo/README.md), [verification](../qa/LAND03-04-implementation-2026-11-03.md).
+
+| Actual route / owner | Current implementation and state | Missing work |
+| --- | --- | --- |
+| Root shell / `src/app/layout.tsx` | Server TEST_PREVIEW + CatalogResult → CatalogProvider → existing CartProvider/header/motion/footer; optional bottom-left PreviewControl. No NODE_ENV demo authorization. New supplied BrandLogo in every shell consumer. | Approved production domain/content; real catalog/Commerce adapters |
+| `/`, home owners unchanged | HOME-06/08 use the same catalog projection as listings; HOME-07/09 fictional package/module previews explicitly gated. Production shows unavailable/empty information, no example product links. | Real published content; package/module release remains separate |
+| `/courses`, `/mini-courses`, persistent CatalogPage | Existing shared filters/cards plus CatalogState; preview true uses browser-local labeled data, false uses server read result. No unconditional fallback arrays. | Actual source; Admin taxonomy/publication |
+| Both product detail routes | Thin routes delegate to `features/course-detail/product-route.tsx` (`kind,slug`), use existing DetailPage. PreviewDetail resolves browser-local state, draft/deleted absent; production rejects demo namespace. Real metadata/schema only from approved published DTO. | Live product read/availability; real purchase actions remain disabled until Commerce integration |
+| `/cart`, `/checkout` | Existing sections/rows/summary use preview catalog IDs and USD cents when enabled; otherwise no local demo data. Empty state retained. Checkout payment disabled. | Authoritative cart/quote/legal/payment/enrollment |
+| `/preview/components` | Still sole component-review route, noindex; new local CatalogStatesPreview renders actual CatalogState. Shell demonstrates supplied BrandLogo; cards/commerce retain real shared implementations. | Human visual review |
+| `/robots.txt`, `/sitemap.xml` | Next metadata routes, not UI pages; explicit static allowlist plus real publication filtering; no URLs without domain/in preview. | Live content invalidation when persistence arrives |
+
+Auth/legal/private routes remain absent. Root metadata is default-noindex; explicit approved static discovery pages opt in only with SITE_URL and preview off. English alternates remain absent.
