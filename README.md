@@ -2,14 +2,14 @@
 
 Russian-first online beauty education platform supporting course discovery and purchase, protected learning, practical assignments, curator review, certificates and administration. English is a planned supported interface language; the [release plan](docs/product/mvp.md) defines when features ship.
 
-> **Status:** shared frontend foundation. The homepage uses the public shell and an unavailable-catalog state. Eight shared component groups are implemented; domain features, providers and final content have **not** been implemented. Do not mistake design specifications or placeholders for working features.
+> **Status:** public frontend and review fixtures: homepage, catalogs, detail previews, auth modal, cart and checkout. No production authentication, database, payments or seven server domains are implemented. Browser-test sources and past visual evidence are not end-to-end release acceptance.
 
 ## Stack
 
 - Next.js 16.4.3 App Router / React 19 / TypeScript
 - Tailwind CSS 4
 - pnpm
-- Accepted architecture: [feature-based modular monolith](docs/decisions/0001-modular-monolith.md)
+- Accepted architecture: [modular monolith](docs/decisions/0001-modular-monolith.md) with [frontend/server separation](docs/decisions/0002-frontend-server-separation.md)
 
 Approved [product decisions](docs/product/decisions.md) select Stripe embedded Payment Element (USD) and self-managed encrypted video using private Cloudflare R2 and separate VPS/VM FFmpeg workers. Database/authentication, notification, application hosting, and remaining implementation choices stay subject to recorded decisions.
 
@@ -41,9 +41,12 @@ Check quality with `pnpm lint`, `pnpm exec next typegen`, `pnpm exec tsc --noEmi
 | Screens and visual verification | [Screens](docs/design/SCREENS.md), [QA](docs/design/QA.md) |
 | Icon asset rules | [Icons](docs/design/icons/USAGE.md) |
 | Frontend implementation | [Pages](docs/architecture/frontend-pages.md), [Sections](docs/architecture/frontend-sections.md), [Shared components](docs/architecture/frontend-components.md), [Backlog](docs/architecture/frontend-backlog.md) |
+| Feature delivery and roadmap audit | [Workflow](docs/architecture/development-workflow.md), [2026-10-30 audit](docs/architecture/planning-audit-2026-10-30.md) |
 | Agent workflow | [AGENTS.md](AGENTS.md) |
 
 The original technical specification and wireframe PDF are stored in `docs/references/`; their example course details and prices are not production catalog data.
+
+The [current planning audit](docs/architecture/planning-audit-2026-10-30.md) records nine active delivery epics, Russian task notes, the preserved completed history and the capacity-based forecast. The nine epics do not change the seven server domains. The owner-confirmed capacity is 50 hours per ordinary week (10 per weekday), with weekends and November 26, December 25 and January 1 excluded. The current conditional forecast is MVP December 18, 2026 and Full January 22, 2027; fixed acceptance deadlines remain December 7 and January 26. The Vault has three entry points: Dashboard, Timeline and Full Project Plan.
 
 ## Language and design
 

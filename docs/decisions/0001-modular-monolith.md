@@ -1,6 +1,6 @@
 # ADR-0001: Feature-based modular monolith
 
-- Status: Accepted
+- Status: Accepted; code placement and UI ownership superseded by [ADR-0002](0002-frontend-server-separation.md)
 - Date: 2026-10-26
 - Owners: Product engineering
 - Scope: Application structure and module boundaries

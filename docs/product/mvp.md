@@ -4,19 +4,19 @@
 
 This document divides the product into MVP, Phase 2, and Phase 3 while preserving the priority order in the original technical specification. It also records the dated delivery overlay from the Vault plans.
 
-The phases describe intended scope boundaries, not a claim that every underlying business decision is complete. All dates in this document are planning targets from the Vault records, contingent on the stated capacity, dependencies, approvals, and content readiness. They are not guaranteed delivery commitments. Unresolved prerequisites remain in [open-questions.md](./open-questions.md), and detailed behavior remains in [requirements.md](./requirements.md).
+The phases describe intended scope boundaries, not a claim that every underlying business decision is complete. PD-012 fixes the MVP and Full acceptance deadlines. Feasibility remains conditional on capacity, dependencies, approvals and content readiness; the current forecast does not establish on-time delivery. Unresolved prerequisites remain in [open-questions.md](./open-questions.md), and detailed behavior remains in [requirements.md](./requirements.md).
 
-Source references: S1 is `ТЗ_онлайн_академия_и_личные_кабинеты.docx`; S2 is `Онлайн_академия_дизайн_платформы.pdf`; P1 is the LMS Vault's `Full Project Plan.md`, phase plans, and `Roadmap.md`; P2 is the LMS Vault's epic task maps and linked task records. S1 defines feature priority, S2 supplies interface evidence, and P1/P2 supply delivery planning and engineering slices. The original attachments are now committed under `docs/references/`; earlier review versions preceded that addition. Vault planning source files are not committed here. Approved PD-002–PD-010 (OQ-001–005, OQ-007–010) supersede affected source/Vault assumptions. PD-004 confirms server-enforced support/access deadlines and revocation on refunds/closure; detailed refund and post-expiry rules remain open. Original estimates and dates have not been recalculated for the approved scope changes.
+Source references: S1 is `ТЗ_онлайн_академия_и_личные_кабинеты.docx`; S2 is `Онлайн_академия_дизайн_платформы.pdf`; P1 is the LMS Vault's `Full Project Plan.md`, phase plans, and `Roadmap.md`; P2 is the LMS Vault's epic task maps and linked task records. S1 defines feature priority, S2 supplies interface evidence, and P1/P2 supply delivery planning and engineering slices. The original attachments are now committed under `docs/references/`; earlier review versions preceded that addition. Vault planning source files are not committed here. Approved PD-002–PD-012 (OQ-001–005, OQ-007–010) supersede affected source/Vault assumptions. PD-004 confirms server-enforced support/access deadlines and revocation on refunds/closure; detailed refund and post-expiry rules remain open. The 2026-10-30 Vault restructuring recalculates remaining effort and conditional dates; see [planning audit](../architecture/planning-audit-2026-10-30.md). Fixed acceptance deadlines follow PD-012; forecast overruns are explicit conflicts.
 
 ## Planning model and source reconciliation
 
 The original specification defines these phase categories, with approved overrides noted:
 
 - **MVP:** core discovery, purchase, learning, review, full essential administration and authoring (PD-009/PD-010), certificates, email, and Russian;
-- **Phase 2:** packages and sales operations, manager and trainer finance, reports, and English;
+- **Phase 2:** packages and sales operations, partner and trainer finance, reports, and English;
 - **Phase 3:** growth and protection features such as QR verification, push, social login, recommendations, and reviews. PD-003 moves moving student-specific watermarking into MVP.
 
-The original Vault schedule targets an MVP production launch for **December 7, 2026**. It targets both original Phase 2 and original Phase 3 feature work for **December 8, 2026 through January 20, 2027**, then reserves **January 21–26, 2027** for fixes, regression, recovery checks, and release preparation, with a target full production release on **January 26, 2027**. These are planning targets, not guaranteed commitments.
+The original Vault schedule targets an MVP production launch for **December 7, 2026**. It targets both original Phase 2 and original Phase 3 feature work for **December 8, 2026 through January 20, 2027**, then reserves **January 21–26, 2027** for fixes, regression, recovery checks, and release preparation, with a target full production release on **January 26, 2027**. PD-012 preserves these acceptance milestones; projected lateness does not move them.
 
 To avoid losing either intent, this document uses the original feature phases below and treats the Vault dates as a delivery overlay:
 
@@ -34,7 +34,7 @@ This differs from the Vault labels, which call all work after December 7 `Пос
 
 The MVP proves the complete paid-learning loop in production: a user can find a course, create an account, pay, receive access, watch lessons, submit homework, receive trainer feedback, complete the course, and obtain a PDF certificate.
 
-The MVP planning target in the Vault is **December 7, 2026**. The Vault baseline estimated 60 MVP tasks and approximately 296.5 hours before its visual-polish additions and this decision synchronization. Those figures are historical: PM14/INF17 now carry MVP tags, required slices have expanded, and capacity/dates still need review. No new estimate or delivery commitment is implied.
+The MVP planning target in the Vault is **December 7, 2026**. The Vault baseline estimated 60 MVP tasks and approximately 296.5 hours before scope expansion. Those figures are historical. The current task-derived workload and explicit milestone conflicts are in the Vault MVP Plan and repository planning audit; no completed UI is counted as working backend.
 
 ### Public site and catalog
 
@@ -70,9 +70,9 @@ Google and Apple login are not MVP.
 - Idempotent payment callbacks and explicit handling of failed checkout.
 - Automatic account resolution, order creation, enrollment, and access after confirmed payment.
 - Payment confirmation, receipt, enrollment invitation, and sign-in instructions by email.
-- Initial manager attribution fields may exist in the data model, but manager tools and commission calculations are not MVP.
+- Referral identity is independent of roles (PD-011). Partner tools, attribution/commission operations remain Full scope; do not introduce manager fields or a manager role as an MVP requirement.
 
-PD-010 requires automatic Stripe approval/processing of eligible refund requests without administrator approval in MVP, escalation of exceptions/failures, and idempotent confirmed-refund access revocation. Final eligibility remains under OQ-037: the supplied seven-day window after payment, regardless of progress, is explicitly proposed and legally conditional. Trainer/manager financial reversals remain with their later modules. PD-002 supersedes the old wallet deferral; payment-method availability is eligibility-dependent and must be verified before launch. OQ-029, OQ-031, OQ-032, OQ-036 and OQ-037 remain unresolved.
+PD-010 requires automatic Stripe approval/processing of eligible refund requests without administrator approval in MVP, escalation of exceptions/failures, and idempotent confirmed-refund access revocation. Final eligibility remains under OQ-037: the supplied seven-day window after payment, regardless of progress, is explicitly proposed and legally conditional. Trainer/partner financial reversals remain with their later modules. PD-002 supersedes the old wallet deferral; payment-method availability is eligibility-dependent and must be verified before launch. OQ-029, OQ-031, OQ-032, OQ-036 and OQ-037 remain unresolved.
 
 ### Student learning
 
@@ -117,7 +117,7 @@ Full trainer course/lesson/material authoring for assigned courses and price pro
 - Administrative audit trail, logging, and backups under PD-007.
 - Administrator video upload/publication controls (PD-003), support/access deadline overrides and pause/restore operations (PD-004), and policy upload/version/approval/publication management (PD-006).
 
-PD-009/PD-010 supersede the earlier minimal-admin/seed-only operating assumption. Existing later-dated authoring, refund, certificate and monitoring task cards now contain required MVP work and need reforecasting. Packages, finance/payout exports, business reports and other separately deferred features are not promoted merely by the phrase essential administration. The scope of course-scoped conversations visible to admins must be reconciled with the still-later student messaging work; no new messaging feature set is inferred.
+PD-009/PD-010 supersede the earlier minimal-admin/seed-only operating assumption. Authoring, refund, certificate and monitoring tasks are included in the revised MVP forecast; any overrun remains a release conflict. Packages, finance/payout exports, business reports and other separately deferred features are not promoted merely by the phrase essential administration. The scope of course-scoped conversations visible to admins must be reconciled with the still-later student messaging work; no new messaging feature set is inferred.
 
 ### Notifications
 
@@ -129,7 +129,7 @@ MVP email infrastructure and reusable templates must cover the events needed for
 - certificate ready;
 - policy changes to affected students (material changes require renewed acknowledgment at next checkout, editorial changes notification only; access continues), and account-deletion requests to administrators (PD-006/PD-007).
 
-Assignment-to-student reminders, support-expiry warning, manager messages, monthly payout summaries and push remain later scope unless separately required. PD-008 review reminders/admin overdue notices and PD-010 refund exceptions/failures are MVP.
+Assignment-to-student reminders, support-expiry warning, authorized commercial-operation messages, monthly payout summaries and push remain later scope unless separately required. PD-008 review reminders/admin overdue notices and PD-010 refund exceptions/failures are MVP.
 
 ### Platform and quality gates
 
@@ -167,7 +167,7 @@ MVP is complete only when:
 
 ### Outcome
 
-Phase 2 makes the academy commercially operable beyond the launch cohort: packages and discounts work, managers and trainers can see attributable money, administrators manage the catalog and operations directly, curator communication is complete, and the product supports Russian and English.
+Phase 2 makes the academy commercially operable beyond the launch cohort: packages and discounts work, authorized referral partners and trainers can see attributable money, administrators manage the catalog and operations directly, curator communication is complete, and the product supports Russian and English.
 
 In the Vault planning schedule, Phase 2 work is interleaved with Phase 3 growth work in the target window from December 8, 2026 through January 20, 2027. The feature boundary below follows the original specification, not the interleaved calendar order. The window is not a guaranteed commitment.
 
@@ -176,11 +176,11 @@ In the Vault planning schedule, Phase 2 work is interleaved with Phase 3 growth 
 - Package builder for 2, 3, and 6 directions plus the Start in the USA module.
 - Fixed package pricing and savings display.
 - Package entitlement and cart upgrade suggestions.
-- Percentage and fixed-amount promo-code engine with validity, limits, manager association, and product restrictions.
-- Manager attribution through promo code, referral link, and manual enrollment.
+- Percentage and fixed-amount promo-code engine with validity, limits, referral-partner association, and product restrictions.
+- Referral-partner attribution through promo code, referral link, and manual enrollment.
 - Recoverable abandoned-cart tracking under approved consent rules.
 - Further payment regression builds on PD-002 eligibility-dependent Stripe methods already included in MVP.
-- Trainer/manager accrual corrections; automatic Stripe refund processing and access revocation are already MVP under PD-010.
+- Trainer/partner accrual corrections; automatic Stripe refund processing and access revocation are already MVP under PD-010.
 
 ### Student account completion
 
@@ -198,24 +198,24 @@ In the Vault planning schedule, Phase 2 work is interleaved with Phase 3 growth 
 - Accrued and paid states, payment dates, refund corrections, and trainer payout history.
 - Optional voice feedback on homework.
 
-### Manager account
+### Referral and commercial capabilities (PD-011)
 
-- Sales dashboard and attributed order list.
+- Authorized attributed-order views in existing account/admin experiences; no separate manager dashboard.
 - Configurable commission calculation after refunds.
 - Leads and consent-compliant abandoned-cart pipeline.
-- Personal promo codes and referral link.
-- Manual enrollment with payment evidence and actor attribution.
+- Personal promo codes and referral links for explicitly authorized accounts, independent of roles.
+- Separately authorized administrative manual sales with payment evidence and actor/partner attribution; a referral link grants no enrollment permission.
 - Commission statement and reconciliation totals.
 
 ### Remaining later administration
 
 - Package CRUD and later localized-content expansion beyond PD-009 MVP category/course/lesson authoring.
-- Finance rate/commission management and later manager manual-enrollment operations.
+- Finance rate/commission management and later authorized manual-enrollment operations.
 - Further refinements beyond PD-010 essential user/access/order/refund, certificate review/issuance, course monitoring and log operations already required in MVP.
 - Certificate correction, revocation and reissuance remain subject to separate decisions, not implied by template or issuance tools.
 - Package administration.
-- Trainer and manager payout reconciliation and Excel-compatible export.
-- Revenue, sales mix, students, trainers, managers, and acquisition-source reports.
+- Trainer and partner payout reconciliation and Excel-compatible export.
+- Revenue, sales mix, students, trainers, referral partners, and acquisition-source reports.
 
 ### Localization and analytics
 
@@ -288,3 +288,7 @@ The following items cannot be treated as implementation-ready merely because a p
 - refund, attribution, discount, tax, and currency edge cases.
 
 See [open-questions.md](./open-questions.md) for the decision register.
+
+## Revised planning workflow · 2026-10-30
+
+PD-011 removes the dedicated manager role/dashboard without deleting Full referral/finance requirements. ADR-0002 separates frontend features from server domains. Every capability epic includes feature preparation, references where needed, frontend/server implementation, real integration and scheduled verification. Existing complete task files remain immutable. Follow the current Vault plans and [audit](../architecture/planning-audit-2026-10-30.md), not historical baseline totals.
