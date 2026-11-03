@@ -1,3 +1,3 @@
-import type { Metadata } from "next";
-export const metadata:Metadata={title:"Курсы"};
-export default function Page(){return null}
+import { staticMetadata } from "@/lib/seo/metadata";
+export const metadata = staticMetadata("/courses");
+export default function Page() { return null; }

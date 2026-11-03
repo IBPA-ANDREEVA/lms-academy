@@ -10,7 +10,8 @@ import "./globals.css";
 import { CatalogProvider } from "@/features/catalog/catalog-provider";
 import { PreviewControl } from "@/features/catalog/preview/preview-control";
 import { fetchPublishedCatalog } from "@/server/catalog";
-import { testPreview } from "@/lib/site-environment";
+import { pageMetadata, siteName } from "@/lib/seo/metadata";
+import { testPreview, siteOrigin } from "@/lib/site-environment";
 import { CartProvider } from "@/features/commerce";
 
 const manrope = localFont({
@@ -27,9 +28,9 @@ const unbounded = localFont({
 });
 
 export const metadata: Metadata = {
-  title: { default: "LMS Academy", template: "%s — LMS Academy" },
-  description: "Обучение в сфере красоты.",
-  ...(testPreview ? { robots: { index: false, follow: false } } : {}),
+  ...pageMetadata("Обучение в сфере красоты", "Обучение в сфере красоты в Beauty Business Academy."),
+  metadataBase: siteOrigin() ? new URL(siteOrigin()!) : undefined,
+  applicationName: siteName,
 };
 
 export default async function RootLayout({ children }: LayoutProps<"/">) {
