@@ -1,0 +1,12 @@
+const ts=require(process.cwd()+'/node_modules/typescript');const fs=require('fs'),path=require('path');
+const cfg=ts.readConfigFile('tsconfig.json',ts.sys.readFile);const options=ts.parseJsonConfigFileContent(cfg.config,ts.sys,process.cwd());const program=ts.createProgram(options.fileNames,options.options),checker=program.getTypeChecker(),records=[];const relative=p=>path.relative(process.cwd(),p);
+for(const sf of program.getSourceFiles().filter(sf=>relative(sf.fileName).startsWith('src/'))){
+ function visit(n){
+ if(ts.isFunctionDeclaration(n)&&n.name&&/^[A-Z]/.test(n.name.text)){
+ const symbol=checker.getSymbolAtLocation(n.name);records.push({name:n.name.text,path:relative(sf.fileName),line:sf.getLineAndCharacterOfPosition(n.pos).line+1,lines:sf.getLineAndCharacterOfPosition(n.end).line-sf.getLineAndCharacterOfPosition(n.pos).line+1,client:/^["']use client["']/.test(sf.text),exported:n.modifiers?.some(m=>m.kind===ts.SyntaxKind.ExportKeyword)||false,props:n.parameters.map(p=>p.type?p.type.getText(sf):checker.typeToString(checker.getTypeAtLocation(p),undefined,ts.TypeFormatFlags.NoTruncation)),symbol,consumers:[]});}
+ ts.forEachChild(n,visit)}visit(sf)
+}
+for(const sf of program.getSourceFiles().filter(sf=>relative(sf.fileName).startsWith('src/'))){function visit(n){if(ts.isJsxOpeningElement(n)||ts.isJsxSelfClosingElement(n)){let sym=checker.getSymbolAtLocation(n.tagName);if(sym?.flags&ts.SymbolFlags.Alias)sym=checker.getAliasedSymbol(sym);const record=records.find(r=>r.symbol===sym);if(record&&!record.consumers.includes(relative(sf.fileName)))record.consumers.push(relative(sf.fileName));}ts.forEachChild(n,visit)}visit(sf)}
+for(const record of records)delete record.symbol;
+fs.writeFileSync('docs/qa/evidence/LAND01-public-site-2026-11-02/source-inventory.json',JSON.stringify(records,null,2));
+console.log(records.filter(r=>r.consumers.length>1).map(r=>`${r.name} (${r.path}; ${r.lines} lines; client=${r.client})\n  ${r.consumers.join('\n  ')}\n  API ${r.props.join('; ')}`).join('\n'));

@@ -1,0 +1,22 @@
+{
+  "AGENTS.md": "b6f1a7fe15c269cf3a709176344defde5f03186ffdfd1b8be21cfc48aaee3ee3",
+  "README.md": "7a20ec6b632ceb0c32e623f9349cb585dbd9935cc9e4e1c86c257b6a7aad544b",
+  "docs/architecture/frontend-backlog.md": "44c6b6a50cab60d7acee19612aee5e76d19ceb07735f336494c463ac3b804788",
+  "docs/architecture/frontend-components.md": "4edfbde5b7208f41def7060db2c405fb2520f368ed9f68c093ed13dfe0af86bd",
+  "docs/architecture/frontend-pages.md": "932ece5cc77c23c4b7bc32a233d88b214d61680f60dfd14fdfd64b427e982ca6",
+  "docs/architecture/frontend-sections.md": "636f2611c24b760821b5e0f83a6670d2fdde2dbf36d5c36dfa57422d5aad2884",
+  "docs/architecture/modules.md": "6caa6049cef393df307f2cd3ca8988f45a4c51716fc6df6c713412e61705dfdd",
+  "docs/architecture/overview.md": "f56050200c64af4f6b89659d11f757cbd7e78663182db42ebdb681d5931cb4e7",
+  "docs/architecture/public-open-questions.md": "5293d5f899822ca508c3e91cd242e4021f2b83672052d71abc24fd1b5f8c66ef",
+  "docs/architecture/public-sitemap.md": "dd294d734e7dc4d4561f2733c98242c1624aa160aabfdfae018c33e9f98268af",
+  "docs/architecture/public-user-flows.md": "286468de6a9273307647775ac7f04f95ceba945bbcae8a84bf66b2c9e5bedb28",
+  "docs/decisions/0001-modular-monolith.md": "4d533fc5e415197c90223ec703cdc9f5426b57aa1bd16e47be29d10aa8115d6e",
+  "docs/design/SCREENS.md": "48cd06b49f5d6743c8044daf3d86f8c1b24c5e173fc7cd1cd41f3bafb6da7226",
+  "docs/product/decisions.md": "d5f6fbd1c79221d33f0f266755dc3a811f6c0f0d5431a77330bc269a2f00c088",
+  "docs/product/mvp.md": "7c1780778c3893fc1f1c1f1ce1c21c4ff9b2151423646225e543ece37b0c530e",
+  "docs/product/open-questions.md": "bbc7128d09070af01b6c4b8a513a3f81cff01d59151fd2fb5e8f5730654a1289",
+  "docs/product/requirements.md": "6886d14313107360df1fb0a44556a966739851489224363e01040a76378b7406",
+  "docs/architecture/development-workflow.md": "44edfbcc24667ed0f713a1c59f11ccdb5305fa7d2888c6eeda802c93cecd2f13",
+  "docs/architecture/planning-audit-2026-10-30.md": "e3fa5c5e46e59884cf52e5399fd5ea332f3dcc3114710524070065ad6f760fd3",
+  "docs/decisions/0002-frontend-server-separation.md": "f9d028360b4a605f5a54a86c2fb5105d00d96fcc1facb53173811f2d50927c27"
+}

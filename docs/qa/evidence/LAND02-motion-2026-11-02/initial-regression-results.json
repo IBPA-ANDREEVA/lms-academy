@@ -1,0 +1,46 @@
+[
+  {
+    "suite": "cut-button",
+    "exitCode": 0
+  },
+  {
+    "suite": "land02-motion",
+    "exitCode": 0
+  },
+  {
+    "suite": "auth-modal",
+    "exitCode": 1
+  },
+  {
+    "suite": "catalog",
+    "exitCode": 0
+  },
+  {
+    "suite": "course-detail",
+    "exitCode": 0
+  },
+  {
+    "suite": "public-header",
+    "exitCode": 1
+  },
+  {
+    "suite": "home-10-11",
+    "exitCode": 1
+  },
+  {
+    "suite": "learning-offers",
+    "exitCode": 0
+  },
+  {
+    "suite": "commerce",
+    "exitCode": 0
+  },
+  {
+    "suite": "public-polish",
+    "exitCode": 0
+  },
+  {
+    "suite": "frontend",
+    "exitCode": 0
+  }
+]

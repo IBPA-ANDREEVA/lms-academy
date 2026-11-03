@@ -1,0 +1,6 @@
+$ next start --port 3109
+▲ Next.js 16.4.3
+- Local:         http://localhost:3109
+- Network:       http://10.1.10.125:3109
+✓ Ready in 694ms
+✓ Running next.config.ts took 161ms

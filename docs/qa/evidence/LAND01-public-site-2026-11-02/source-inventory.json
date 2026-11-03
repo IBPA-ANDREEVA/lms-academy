@@ -1,0 +1,1481 @@
+[
+  {
+    "name": "Button",
+    "path": "src/components/ui/button.tsx",
+    "line": 36,
+    "lines": 39,
+    "client": false,
+    "exported": true,
+    "props": [
+      "ButtonProps"
+    ],
+    "consumers": [
+      "src/features/catalog/course-card.tsx",
+      "src/components/ui/form-controls.tsx",
+      "src/features/commerce/components/cart-feedback.tsx",
+      "src/features/commerce/components/demo-controls.tsx",
+      "src/features/commerce/cart-preview.tsx",
+      "src/features/identity/login-form.tsx",
+      "src/features/identity/register-form.tsx",
+      "src/features/identity/forgot-form.tsx",
+      "src/features/identity/auth-modal.tsx",
+      "src/features/public-shell/public-header.tsx",
+      "src/features/commerce/sections/cart-section.tsx",
+      "src/features/commerce/sections/checkout-payment.tsx",
+      "src/features/component-preview/component-preview-page.tsx",
+      "src/features/home/sections/05-learning-preview/components/learning-preview-demo.tsx",
+      "src/features/home/sections/06-courses/components/course-showcase.tsx",
+      "src/features/home/learning-offers/offer-carousel.tsx",
+      "src/features/home/sections/07-packages/components/package-card.tsx",
+      "src/features/home/sections/07-packages/components/package-builder.tsx",
+      "src/features/home/sections/07-packages/components/package-explorer.tsx",
+      "src/features/home/sections/09-start-usa/components/usa-module-cta.tsx",
+      "src/features/home/sections/10-reviews/components/reviews-carousel.tsx",
+      "src/features/home/sections/11-contact/components/contact-form.tsx",
+      "src/app/(catalog)/error.tsx",
+      "src/app/(details)/error.tsx",
+      "src/features/course-detail/components/purchase-panel.tsx",
+      "src/features/course-detail/sections/02-video-preview/components/preview-player.tsx"
+    ]
+  },
+  {
+    "name": "ButtonLink",
+    "path": "src/components/ui/button.tsx",
+    "line": 76,
+    "lines": 28,
+    "client": false,
+    "exported": true,
+    "props": [
+      "ButtonLinkProps"
+    ],
+    "consumers": [
+      "src/features/catalog/course-card.tsx",
+      "src/features/commerce/cart-preview.tsx",
+      "src/features/public-shell/public-header.tsx",
+      "src/features/commerce/sections/cart-section.tsx",
+      "src/features/commerce/sections/checkout-section.tsx",
+      "src/features/component-preview/component-preview-page.tsx",
+      "src/features/home/sections/02-hero/components/hero-cta.tsx",
+      "src/features/catalog/sections/01-introduction/introduction-section.tsx",
+      "src/app/(details)/error.tsx",
+      "src/features/course-detail/components/detail-not-found.tsx",
+      "src/features/course-detail/components/purchase-panel.tsx",
+      "src/features/course-detail/sections/01-hero-purchase/hero-purchase-section.tsx"
+    ]
+  },
+  {
+    "name": "CourseCard",
+    "path": "src/features/catalog/course-card.tsx",
+    "line": 34,
+    "lines": 77,
+    "client": false,
+    "exported": true,
+    "props": [
+      "CourseCardProps"
+    ],
+    "consumers": [
+      "src/features/component-preview/component-preview-page.tsx",
+      "src/features/home/sections/06-courses/components/course-showcase.tsx",
+      "src/features/home/sections/08-mini-courses/components/mini-course-explorer.tsx",
+      "src/features/catalog/sections/03-courses/courses-section.tsx",
+      "src/features/catalog/sections/04-mini-courses/mini-courses-section.tsx"
+    ]
+  },
+  {
+    "name": "CategoryNavigation",
+    "path": "src/features/catalog/category-navigation.tsx",
+    "line": 12,
+    "lines": 32,
+    "client": false,
+    "exported": true,
+    "props": [
+      "CategoryNavigationProps"
+    ],
+    "consumers": [
+      "src/features/component-preview/component-preview-page.tsx",
+      "src/features/home/sections/06-courses/components/course-showcase.tsx",
+      "src/features/home/sections/07-packages/components/package-explorer.tsx",
+      "src/features/home/sections/08-mini-courses/components/mini-course-explorer.tsx"
+    ]
+  },
+  {
+    "name": "CartProvider",
+    "path": "src/features/commerce/cart-provider.tsx",
+    "line": 24,
+    "lines": 53,
+    "client": true,
+    "exported": true,
+    "props": [
+      "{ children: ReactNode }"
+    ],
+    "consumers": [
+      "src/app/layout.tsx"
+    ]
+  },
+  {
+    "name": "CartItems",
+    "path": "src/features/commerce/components/cart-items.tsx",
+    "line": 6,
+    "lines": 27,
+    "client": true,
+    "exported": true,
+    "props": [
+      "{ compact?: boolean; removable?: boolean }"
+    ],
+    "consumers": [
+      "src/features/commerce/cart-preview.tsx",
+      "src/features/commerce/components/order-summary.tsx",
+      "src/features/commerce/sections/cart-section.tsx",
+      "src/features/commerce/components/commerce-components-preview.tsx"
+    ]
+  },
+  {
+    "name": "FieldFeedback",
+    "path": "src/components/ui/form-controls.tsx",
+    "line": 16,
+    "lines": 23,
+    "client": true,
+    "exported": false,
+    "props": [
+      "{ id: string } & Omit<Feedback, \"label\">"
+    ],
+    "consumers": [
+      "src/components/ui/form-controls.tsx"
+    ]
+  },
+  {
+    "name": "TextField",
+    "path": "src/components/ui/form-controls.tsx",
+    "line": 51,
+    "lines": 34,
+    "client": true,
+    "exported": true,
+    "props": [
+      "TextFieldProps"
+    ],
+    "consumers": [
+      "src/features/identity/login-form.tsx",
+      "src/features/identity/register-form.tsx",
+      "src/features/identity/forgot-form.tsx",
+      "src/features/commerce/sections/checkout-buyer.tsx",
+      "src/features/component-preview/component-preview-page.tsx",
+      "src/features/home/sections/11-contact/components/contact-form.tsx"
+    ]
+  },
+  {
+    "name": "PasswordField",
+    "path": "src/components/ui/form-controls.tsx",
+    "line": 84,
+    "lines": 47,
+    "client": true,
+    "exported": true,
+    "props": [
+      "Omit<TextFieldProps, \"type\">"
+    ],
+    "consumers": [
+      "src/features/identity/login-form.tsx",
+      "src/features/identity/register-form.tsx",
+      "src/features/component-preview/component-preview-page.tsx"
+    ]
+  },
+  {
+    "name": "Checkbox",
+    "path": "src/components/ui/form-controls.tsx",
+    "line": 133,
+    "lines": 35,
+    "client": true,
+    "exported": true,
+    "props": [
+      "CheckboxProps"
+    ],
+    "consumers": [
+      "src/features/commerce/sections/checkout-agreements.tsx",
+      "src/features/component-preview/component-preview-page.tsx",
+      "src/features/home/sections/07-packages/components/package-builder.tsx"
+    ]
+  },
+  {
+    "name": "SelectField",
+    "path": "src/components/ui/form-controls.tsx",
+    "line": 169,
+    "lines": 35,
+    "client": true,
+    "exported": true,
+    "props": [
+      "SelectFieldProps"
+    ],
+    "consumers": [
+      "src/features/commerce/components/demo-controls.tsx",
+      "src/features/component-preview/component-preview-page.tsx"
+    ]
+  },
+  {
+    "name": "FormMessage",
+    "path": "src/components/ui/form-controls.tsx",
+    "line": 203,
+    "lines": 18,
+    "client": true,
+    "exported": true,
+    "props": [
+      "{\n  children: ReactNode;\n  tone?: \"info\" | \"error\" | \"success\";\n}"
+    ],
+    "consumers": [
+      "src/features/commerce/components/cart-feedback.tsx",
+      "src/features/identity/login-form.tsx",
+      "src/features/identity/register-form.tsx",
+      "src/features/identity/forgot-form.tsx",
+      "src/features/component-preview/component-preview-page.tsx"
+    ]
+  },
+  {
+    "name": "CartFeedback",
+    "path": "src/features/commerce/components/cart-feedback.tsx",
+    "line": 5,
+    "lines": 21,
+    "client": true,
+    "exported": true,
+    "props": [],
+    "consumers": [
+      "src/features/commerce/cart-preview.tsx",
+      "src/features/commerce/sections/cart-section.tsx",
+      "src/features/commerce/sections/checkout-section.tsx",
+      "src/features/commerce/components/commerce-components-preview.tsx"
+    ]
+  },
+  {
+    "name": "DemoControls",
+    "path": "src/features/commerce/components/demo-controls.tsx",
+    "line": 8,
+    "lines": 23,
+    "client": true,
+    "exported": true,
+    "props": [
+      "{ compact?: boolean }"
+    ],
+    "consumers": [
+      "src/features/commerce/cart-preview.tsx",
+      "src/features/commerce/sections/cart-section.tsx",
+      "src/features/commerce/sections/checkout-section.tsx",
+      "src/features/commerce/components/commerce-components-preview.tsx"
+    ]
+  },
+  {
+    "name": "CartPreview",
+    "path": "src/features/commerce/cart-preview.tsx",
+    "line": 16,
+    "lines": 93,
+    "client": true,
+    "exported": true,
+    "props": [
+      "{\n  triggerClassName?: string; iconClassName?: string; countClassName?: string;\n}"
+    ],
+    "consumers": [
+      "src/features/public-shell/public-header.tsx"
+    ]
+  },
+  {
+    "name": "PageContainer",
+    "path": "src/features/public-shell/page-container.tsx",
+    "line": 10,
+    "lines": 20,
+    "client": true,
+    "exported": true,
+    "props": [
+      "PageContainerProps"
+    ],
+    "consumers": [
+      "src/features/public-shell/public-header.tsx",
+      "src/features/public-shell/public-footer.tsx",
+      "src/features/commerce/cart-page.tsx",
+      "src/features/commerce/checkout-page.tsx",
+      "src/features/component-preview/component-preview-page.tsx",
+      "src/features/home/sections/02-hero/hero-section.tsx",
+      "src/features/home/sections/03-about/about-section.tsx",
+      "src/features/home/sections/04-founder/founder-section.tsx",
+      "src/features/home/sections/05-learning-preview/learning-preview-section.tsx",
+      "src/features/home/sections/06-courses/courses-section.tsx",
+      "src/features/home/sections/07-packages/packages-section.tsx",
+      "src/features/home/sections/08-mini-courses/mini-courses-section.tsx",
+      "src/features/home/sections/09-start-usa/start-usa-section.tsx",
+      "src/features/home/sections/10-reviews/reviews-section.tsx",
+      "src/features/home/sections/11-contact/contact-section.tsx",
+      "src/app/(catalog)/error.tsx",
+      "src/features/catalog/sections/01-introduction/introduction-section.tsx",
+      "src/features/catalog/sections/03-courses/courses-section.tsx",
+      "src/features/catalog/sections/04-mini-courses/mini-courses-section.tsx",
+      "src/app/(details)/error.tsx",
+      "src/app/(details)/loading.tsx",
+      "src/features/course-detail/components/detail-not-found.tsx",
+      "src/features/course-detail/sections/01-hero-purchase/hero-purchase-section.tsx",
+      "src/features/course-detail/sections/02-video-preview/video-preview-section.tsx",
+      "src/features/course-detail/sections/03-about-course/about-course-section.tsx",
+      "src/features/course-detail/sections/04-curriculum/curriculum-section.tsx",
+      "src/features/course-detail/sections/05-trainer/trainer-section.tsx",
+      "src/features/course-detail/sections/06-purchase-terms/purchase-terms-section.tsx"
+    ]
+  },
+  {
+    "name": "SocialActions",
+    "path": "src/features/identity/social-actions.tsx",
+    "line": 1,
+    "lines": 17,
+    "client": false,
+    "exported": true,
+    "props": [],
+    "consumers": [
+      "src/features/identity/login-form.tsx",
+      "src/features/identity/register-form.tsx"
+    ]
+  },
+  {
+    "name": "LoginForm",
+    "path": "src/features/identity/login-form.tsx",
+    "line": 8,
+    "lines": 16,
+    "client": true,
+    "exported": true,
+    "props": [
+      "{ onViewChange: (view: AuthView) => void }"
+    ],
+    "consumers": [
+      "src/features/identity/auth-modal.tsx"
+    ]
+  },
+  {
+    "name": "RegisterForm",
+    "path": "src/features/identity/register-form.tsx",
+    "line": 8,
+    "lines": 21,
+    "client": true,
+    "exported": true,
+    "props": [
+      "{ onViewChange: (view: AuthView) => void }"
+    ],
+    "consumers": [
+      "src/features/identity/auth-modal.tsx"
+    ]
+  },
+  {
+    "name": "ForgotForm",
+    "path": "src/features/identity/forgot-form.tsx",
+    "line": 7,
+    "lines": 14,
+    "client": true,
+    "exported": true,
+    "props": [
+      "{ onViewChange: (view: AuthView) => void }"
+    ],
+    "consumers": [
+      "src/features/identity/auth-modal.tsx"
+    ]
+  },
+  {
+    "name": "AuthModal",
+    "path": "src/features/identity/auth-modal.tsx",
+    "line": 21,
+    "lines": 54,
+    "client": true,
+    "exported": true,
+    "props": [
+      "Props"
+    ],
+    "consumers": [
+      "src/features/public-shell/public-header.tsx",
+      "src/features/commerce/sections/checkout-buyer.tsx"
+    ]
+  },
+  {
+    "name": "NavigationEntry",
+    "path": "src/features/public-shell/navigation-entry.tsx",
+    "line": 3,
+    "lines": 14,
+    "client": false,
+    "exported": true,
+    "props": [
+      "{\n  entry: Entry;\n  current?: boolean;\n  onNavigate?: () => void;\n  showPreviewLabel?: boolean;\n}"
+    ],
+    "consumers": [
+      "src/features/public-shell/public-header.tsx",
+      "src/features/public-shell/public-footer.tsx"
+    ]
+  },
+  {
+    "name": "NavigationLinks",
+    "path": "src/features/public-shell/public-header.tsx",
+    "line": 26,
+    "lines": 17,
+    "client": true,
+    "exported": false,
+    "props": [
+      "{\n  items: readonly NavigationItem[];\n  pathname: string;\n  onNavigate: () => void;\n}"
+    ],
+    "consumers": [
+      "src/features/public-shell/public-header.tsx"
+    ]
+  },
+  {
+    "name": "PublicHeader",
+    "path": "src/features/public-shell/public-header.tsx",
+    "line": 42,
+    "lines": 164,
+    "client": true,
+    "exported": true,
+    "props": [
+      "PublicHeaderProps"
+    ],
+    "consumers": [
+      "src/features/component-preview/component-preview-page.tsx",
+      "src/app/layout.tsx"
+    ]
+  },
+  {
+    "name": "PublicFooter",
+    "path": "src/features/public-shell/public-footer.tsx",
+    "line": 16,
+    "lines": 60,
+    "client": false,
+    "exported": true,
+    "props": [
+      "PublicFooterProps"
+    ],
+    "consumers": [
+      "src/features/public-shell/public-site-footer.tsx",
+      "src/features/component-preview/component-preview-page.tsx"
+    ]
+  },
+  {
+    "name": "PublicSiteFooter",
+    "path": "src/features/public-shell/public-site-footer.tsx",
+    "line": 5,
+    "lines": 8,
+    "client": true,
+    "exported": true,
+    "props": [],
+    "consumers": [
+      "src/app/layout.tsx"
+    ]
+  },
+  {
+    "name": "OrderSummary",
+    "path": "src/features/commerce/components/order-summary.tsx",
+    "line": 6,
+    "lines": 16,
+    "client": true,
+    "exported": true,
+    "props": [
+      "{ showItems?: boolean }"
+    ],
+    "consumers": [
+      "src/features/commerce/sections/cart-section.tsx",
+      "src/features/commerce/sections/checkout-section.tsx",
+      "src/features/commerce/components/commerce-components-preview.tsx"
+    ]
+  },
+  {
+    "name": "CartSection",
+    "path": "src/features/commerce/sections/cart-section.tsx",
+    "line": 10,
+    "lines": 22,
+    "client": true,
+    "exported": true,
+    "props": [],
+    "consumers": [
+      "src/features/commerce/cart-page.tsx"
+    ]
+  },
+  {
+    "name": "CartPage",
+    "path": "src/features/commerce/cart-page.tsx",
+    "line": 4,
+    "lines": 11,
+    "client": false,
+    "exported": true,
+    "props": [],
+    "consumers": []
+  },
+  {
+    "name": "CheckoutBuyer",
+    "path": "src/features/commerce/sections/checkout-buyer.tsx",
+    "line": 6,
+    "lines": 24,
+    "client": true,
+    "exported": true,
+    "props": [],
+    "consumers": [
+      "src/features/commerce/sections/checkout-section.tsx"
+    ]
+  },
+  {
+    "name": "CheckoutAgreements",
+    "path": "src/features/commerce/sections/checkout-agreements.tsx",
+    "line": 2,
+    "lines": 15,
+    "client": false,
+    "exported": true,
+    "props": [],
+    "consumers": [
+      "src/features/commerce/sections/checkout-section.tsx"
+    ]
+  },
+  {
+    "name": "CheckoutPayment",
+    "path": "src/features/commerce/sections/checkout-payment.tsx",
+    "line": 2,
+    "lines": 12,
+    "client": false,
+    "exported": true,
+    "props": [],
+    "consumers": [
+      "src/features/commerce/sections/checkout-section.tsx"
+    ]
+  },
+  {
+    "name": "CheckoutSection",
+    "path": "src/features/commerce/sections/checkout-section.tsx",
+    "line": 12,
+    "lines": 15,
+    "client": true,
+    "exported": true,
+    "props": [],
+    "consumers": [
+      "src/features/commerce/checkout-page.tsx"
+    ]
+  },
+  {
+    "name": "CheckoutPage",
+    "path": "src/features/commerce/checkout-page.tsx",
+    "line": 4,
+    "lines": 9,
+    "client": false,
+    "exported": true,
+    "props": [],
+    "consumers": []
+  },
+  {
+    "name": "CommerceComponentsPreview",
+    "path": "src/features/commerce/components/commerce-components-preview.tsx",
+    "line": 7,
+    "lines": 10,
+    "client": true,
+    "exported": true,
+    "props": [],
+    "consumers": [
+      "src/features/component-preview/component-preview-page.tsx"
+    ]
+  },
+  {
+    "name": "SectionHeading",
+    "path": "src/components/ui/section-heading.tsx",
+    "line": 11,
+    "lines": 19,
+    "client": false,
+    "exported": true,
+    "props": [
+      "SectionHeadingProps"
+    ],
+    "consumers": [
+      "src/features/component-preview/component-preview-page.tsx",
+      "src/features/course-detail/sections/02-video-preview/video-preview-section.tsx",
+      "src/features/course-detail/sections/03-about-course/about-course-section.tsx",
+      "src/features/course-detail/sections/04-curriculum/curriculum-section.tsx",
+      "src/features/course-detail/sections/05-trainer/trainer-section.tsx",
+      "src/features/course-detail/sections/06-purchase-terms/purchase-terms-section.tsx"
+    ]
+  },
+  {
+    "name": "PreviewSection",
+    "path": "src/features/component-preview/component-preview-page.tsx",
+    "line": 66,
+    "lines": 32,
+    "client": true,
+    "exported": false,
+    "props": [
+      "{\n  id: string;\n  name: string;\n  description: string;\n  children: ReactNode;\n  fullWidth?: boolean;\n}"
+    ],
+    "consumers": [
+      "src/features/component-preview/component-preview-page.tsx"
+    ]
+  },
+  {
+    "name": "ComponentPreviewPage",
+    "path": "src/features/component-preview/component-preview-page.tsx",
+    "line": 97,
+    "lines": 443,
+    "client": true,
+    "exported": true,
+    "props": [],
+    "consumers": [
+      "src/app/preview/components/page.tsx"
+    ]
+  },
+  {
+    "name": "HeroHeading",
+    "path": "src/features/home/sections/02-hero/components/hero-heading.tsx",
+    "line": 1,
+    "lines": 11,
+    "client": false,
+    "exported": true,
+    "props": [],
+    "consumers": [
+      "src/features/home/sections/02-hero/hero-section.tsx"
+    ]
+  },
+  {
+    "name": "HeroCta",
+    "path": "src/features/home/sections/02-hero/components/hero-cta.tsx",
+    "line": 2,
+    "lines": 19,
+    "client": false,
+    "exported": true,
+    "props": [],
+    "consumers": [
+      "src/features/home/sections/02-hero/hero-section.tsx"
+    ]
+  },
+  {
+    "name": "HeroSection",
+    "path": "src/features/home/sections/02-hero/hero-section.tsx",
+    "line": 6,
+    "lines": 30,
+    "client": false,
+    "exported": true,
+    "props": [],
+    "consumers": [
+      "src/features/home/home-page.tsx"
+    ]
+  },
+  {
+    "name": "AcademyBenefits",
+    "path": "src/features/home/sections/03-about/components/academy-benefits.tsx",
+    "line": 10,
+    "lines": 14,
+    "client": false,
+    "exported": true,
+    "props": [],
+    "consumers": [
+      "src/features/home/sections/03-about/about-section.tsx"
+    ]
+  },
+  {
+    "name": "AboutSection",
+    "path": "src/features/home/sections/03-about/about-section.tsx",
+    "line": 5,
+    "lines": 30,
+    "client": false,
+    "exported": true,
+    "props": [],
+    "consumers": [
+      "src/features/home/home-page.tsx"
+    ]
+  },
+  {
+    "name": "FounderStory",
+    "path": "src/features/home/sections/04-founder/components/founder-story.tsx",
+    "line": 6,
+    "lines": 25,
+    "client": true,
+    "exported": true,
+    "props": [
+      "{ children: ReactNode }"
+    ],
+    "consumers": [
+      "src/features/home/sections/04-founder/founder-section.tsx"
+    ]
+  },
+  {
+    "name": "FounderMilestones",
+    "path": "src/features/home/sections/04-founder/components/founder-milestones.tsx",
+    "line": 8,
+    "lines": 16,
+    "client": false,
+    "exported": true,
+    "props": [],
+    "consumers": [
+      "src/features/home/sections/04-founder/founder-section.tsx"
+    ]
+  },
+  {
+    "name": "FounderSection",
+    "path": "src/features/home/sections/04-founder/founder-section.tsx",
+    "line": 6,
+    "lines": 40,
+    "client": false,
+    "exported": true,
+    "props": [],
+    "consumers": [
+      "src/features/home/home-page.tsx"
+    ]
+  },
+  {
+    "name": "LearningPreviewDemo",
+    "path": "src/features/home/sections/05-learning-preview/components/learning-preview-demo.tsx",
+    "line": 17,
+    "lines": 124,
+    "client": true,
+    "exported": true,
+    "props": [],
+    "consumers": [
+      "src/features/home/sections/05-learning-preview/learning-preview-section.tsx"
+    ]
+  },
+  {
+    "name": "LearningPreviewSection",
+    "path": "src/features/home/sections/05-learning-preview/learning-preview-section.tsx",
+    "line": 3,
+    "lines": 21,
+    "client": false,
+    "exported": true,
+    "props": [],
+    "consumers": [
+      "src/features/home/home-page.tsx"
+    ]
+  },
+  {
+    "name": "CourseShowcase",
+    "path": "src/features/home/sections/06-courses/components/course-showcase.tsx",
+    "line": 8,
+    "lines": 33,
+    "client": true,
+    "exported": true,
+    "props": [],
+    "consumers": [
+      "src/features/home/sections/06-courses/courses-section.tsx"
+    ]
+  },
+  {
+    "name": "CoursesSection",
+    "path": "src/features/home/sections/06-courses/courses-section.tsx",
+    "line": 3,
+    "lines": 12,
+    "client": false,
+    "exported": true,
+    "props": [],
+    "consumers": [
+      "src/features/home/home-page.tsx"
+    ]
+  },
+  {
+    "name": "OfferCarousel",
+    "path": "src/features/home/learning-offers/offer-carousel.tsx",
+    "line": 6,
+    "lines": 21,
+    "client": true,
+    "exported": true,
+    "props": [
+      "{ items: { id: string; content: ReactNode }[]; label: string }"
+    ],
+    "consumers": [
+      "src/features/home/sections/07-packages/components/package-explorer.tsx",
+      "src/features/home/sections/08-mini-courses/components/mini-course-explorer.tsx"
+    ]
+  },
+  {
+    "name": "OfferMediaPlaceholder",
+    "path": "src/features/home/learning-offers/offer-media-placeholder.tsx",
+    "line": 1,
+    "lines": 5,
+    "client": false,
+    "exported": true,
+    "props": [
+      "{ label: string }"
+    ],
+    "consumers": [
+      "src/features/home/sections/07-packages/components/package-card.tsx",
+      "src/features/home/sections/09-start-usa/components/usa-module-preview.tsx"
+    ]
+  },
+  {
+    "name": "PackageCard",
+    "path": "src/features/home/sections/07-packages/components/package-card.tsx",
+    "line": 4,
+    "lines": 13,
+    "client": false,
+    "exported": true,
+    "props": [
+      "{ size: PackageSize; onExplore: () => void }"
+    ],
+    "consumers": [
+      "src/features/home/sections/07-packages/components/package-explorer.tsx"
+    ]
+  },
+  {
+    "name": "PackageBuilder",
+    "path": "src/features/home/sections/07-packages/components/package-builder.tsx",
+    "line": 7,
+    "lines": 43,
+    "client": true,
+    "exported": true,
+    "props": [
+      "{ initialSize: PackageSize; onClose: () => void }"
+    ],
+    "consumers": [
+      "src/features/home/sections/07-packages/components/package-explorer.tsx"
+    ]
+  },
+  {
+    "name": "PackageExplorer",
+    "path": "src/features/home/sections/07-packages/components/package-explorer.tsx",
+    "line": 10,
+    "lines": 17,
+    "client": true,
+    "exported": true,
+    "props": [],
+    "consumers": [
+      "src/features/home/sections/07-packages/packages-section.tsx"
+    ]
+  },
+  {
+    "name": "PackagesSection",
+    "path": "src/features/home/sections/07-packages/packages-section.tsx",
+    "line": 3,
+    "lines": 12,
+    "client": false,
+    "exported": true,
+    "props": [],
+    "consumers": [
+      "src/features/home/home-page.tsx"
+    ]
+  },
+  {
+    "name": "MiniCourseExplorer",
+    "path": "src/features/home/sections/08-mini-courses/components/mini-course-explorer.tsx",
+    "line": 12,
+    "lines": 13,
+    "client": true,
+    "exported": true,
+    "props": [],
+    "consumers": [
+      "src/features/home/sections/08-mini-courses/mini-courses-section.tsx"
+    ]
+  },
+  {
+    "name": "MiniCoursesSection",
+    "path": "src/features/home/sections/08-mini-courses/mini-courses-section.tsx",
+    "line": 3,
+    "lines": 11,
+    "client": false,
+    "exported": true,
+    "props": [],
+    "consumers": [
+      "src/features/home/home-page.tsx"
+    ]
+  },
+  {
+    "name": "UsaModulePreview",
+    "path": "src/features/home/sections/09-start-usa/components/usa-module-preview.tsx",
+    "line": 4,
+    "lines": 10,
+    "client": false,
+    "exported": true,
+    "props": [],
+    "consumers": [
+      "src/features/home/sections/09-start-usa/start-usa-section.tsx"
+    ]
+  },
+  {
+    "name": "UsaModuleCta",
+    "path": "src/features/home/sections/09-start-usa/components/usa-module-cta.tsx",
+    "line": 4,
+    "lines": 9,
+    "client": true,
+    "exported": true,
+    "props": [],
+    "consumers": [
+      "src/features/home/sections/09-start-usa/start-usa-section.tsx"
+    ]
+  },
+  {
+    "name": "StartUsaSection",
+    "path": "src/features/home/sections/09-start-usa/start-usa-section.tsx",
+    "line": 4,
+    "lines": 14,
+    "client": false,
+    "exported": true,
+    "props": [],
+    "consumers": [
+      "src/features/home/home-page.tsx"
+    ]
+  },
+  {
+    "name": "ReviewsCarousel",
+    "path": "src/features/home/sections/10-reviews/components/reviews-carousel.tsx",
+    "line": 8,
+    "lines": 42,
+    "client": true,
+    "exported": true,
+    "props": [],
+    "consumers": [
+      "src/features/home/sections/10-reviews/reviews-section.tsx"
+    ]
+  },
+  {
+    "name": "ReviewsSection",
+    "path": "src/features/home/sections/10-reviews/reviews-section.tsx",
+    "line": 3,
+    "lines": 21,
+    "client": false,
+    "exported": true,
+    "props": [],
+    "consumers": [
+      "src/features/home/home-page.tsx"
+    ]
+  },
+  {
+    "name": "ContactForm",
+    "path": "src/features/home/sections/11-contact/components/contact-form.tsx",
+    "line": 22,
+    "lines": 30,
+    "client": true,
+    "exported": true,
+    "props": [],
+    "consumers": [
+      "src/features/home/sections/11-contact/contact-section.tsx"
+    ]
+  },
+  {
+    "name": "ContactSection",
+    "path": "src/features/home/sections/11-contact/contact-section.tsx",
+    "line": 3,
+    "lines": 17,
+    "client": false,
+    "exported": true,
+    "props": [],
+    "consumers": [
+      "src/features/home/home-page.tsx"
+    ]
+  },
+  {
+    "name": "LearningOffersShowcase",
+    "path": "src/features/home/learning-offers/learning-offers-showcase.tsx",
+    "line": 15,
+    "lines": 174,
+    "client": true,
+    "exported": true,
+    "props": [
+      "{ panels: [ReactNode, ReactNode, ReactNode, ReactNode] }"
+    ],
+    "consumers": [
+      "src/features/home/home-page.tsx"
+    ]
+  },
+  {
+    "name": "HomeSectionSeam",
+    "path": "src/features/home/composition/home-section-seam.tsx",
+    "line": 1,
+    "lines": 6,
+    "client": false,
+    "exported": true,
+    "props": [
+      "{ variant: \"hero\" | \"portraits\" | \"learning\" | \"contact\" }"
+    ],
+    "consumers": [
+      "src/features/home/home-page.tsx"
+    ]
+  },
+  {
+    "name": "HomePage",
+    "path": "src/features/home/home-page.tsx",
+    "line": 13,
+    "lines": 24,
+    "client": false,
+    "exported": true,
+    "props": [],
+    "consumers": [
+      "src/app/page.tsx"
+    ]
+  },
+  {
+    "name": "PublicMotion",
+    "path": "src/features/public-shell/public-motion.tsx",
+    "line": 8,
+    "lines": 16,
+    "client": true,
+    "exported": true,
+    "props": [
+      "{ children: ReactNode }"
+    ],
+    "consumers": [
+      "src/app/layout.tsx"
+    ]
+  },
+  {
+    "name": "RootLayout",
+    "path": "src/app/layout.tsx",
+    "line": 28,
+    "lines": 23,
+    "client": false,
+    "exported": true,
+    "props": [
+      "LayoutProps<\"/\">"
+    ],
+    "consumers": []
+  },
+  {
+    "name": "Home",
+    "path": "src/app/page.tsx",
+    "line": 1,
+    "lines": 5,
+    "client": false,
+    "exported": true,
+    "props": [],
+    "consumers": []
+  },
+  {
+    "name": "CatalogError",
+    "path": "src/app/(catalog)/error.tsx",
+    "line": 3,
+    "lines": 4,
+    "client": true,
+    "exported": true,
+    "props": [
+      "{error:Error;reset:()=>void}"
+    ],
+    "consumers": []
+  },
+  {
+    "name": "IntroductionSection",
+    "path": "src/features/catalog/sections/01-introduction/introduction-section.tsx",
+    "line": 5,
+    "lines": 15,
+    "client": false,
+    "exported": true,
+    "props": [],
+    "consumers": [
+      "src/features/catalog/catalog-page.tsx"
+    ]
+  },
+  {
+    "name": "FilterDropdown",
+    "path": "src/features/catalog/sections/02-filtering/components/filter-dropdown.tsx",
+    "line": 13,
+    "lines": 97,
+    "client": true,
+    "exported": true,
+    "props": [
+      "FilterDropdownProps"
+    ],
+    "consumers": [
+      "src/features/catalog/sections/02-filtering/filtering-section.tsx"
+    ]
+  },
+  {
+    "name": "FilteringSection",
+    "path": "src/features/catalog/sections/02-filtering/filtering-section.tsx",
+    "line": 5,
+    "lines": 15,
+    "client": false,
+    "exported": true,
+    "props": [
+      "{kind:\"courses\"|\"mini-courses\";filters:Filters;onFilter:(field:keyof Filters,value:string)=>void;onSwitch:(kind:\"courses\"|\"mini-courses\")=>void;onReset:()=>void}"
+    ],
+    "consumers": [
+      "src/features/catalog/components/catalog-experience.tsx"
+    ]
+  },
+  {
+    "name": "CoursesSection",
+    "path": "src/features/catalog/sections/03-courses/courses-section.tsx",
+    "line": 4,
+    "lines": 4,
+    "client": false,
+    "exported": true,
+    "props": [
+      "{items:CatalogItem[];filtered:boolean;onReset:()=>void;demonstration:boolean}"
+    ],
+    "consumers": [
+      "src/features/catalog/components/catalog-experience.tsx"
+    ]
+  },
+  {
+    "name": "MiniCoursesSection",
+    "path": "src/features/catalog/sections/04-mini-courses/mini-courses-section.tsx",
+    "line": 4,
+    "lines": 4,
+    "client": false,
+    "exported": true,
+    "props": [
+      "{items:CatalogItem[];filtered:boolean;onReset:()=>void;demonstration:boolean}"
+    ],
+    "consumers": [
+      "src/features/catalog/components/catalog-experience.tsx"
+    ]
+  },
+  {
+    "name": "CatalogExperience",
+    "path": "src/features/catalog/components/catalog-experience.tsx",
+    "line": 15,
+    "lines": 18,
+    "client": true,
+    "exported": true,
+    "props": [],
+    "consumers": [
+      "src/features/catalog/catalog-page.tsx"
+    ]
+  },
+  {
+    "name": "CatalogPage",
+    "path": "src/features/catalog/catalog-page.tsx",
+    "line": 2,
+    "lines": 5,
+    "client": false,
+    "exported": true,
+    "props": [],
+    "consumers": [
+      "src/app/(catalog)/layout.tsx"
+    ]
+  },
+  {
+    "name": "CatalogLayout",
+    "path": "src/app/(catalog)/layout.tsx",
+    "line": 1,
+    "lines": 2,
+    "client": false,
+    "exported": true,
+    "props": [
+      "{children:React.ReactNode}"
+    ],
+    "consumers": []
+  },
+  {
+    "name": "Page",
+    "path": "src/app/(catalog)/courses/page.tsx",
+    "line": 2,
+    "lines": 2,
+    "client": false,
+    "exported": true,
+    "props": [],
+    "consumers": []
+  },
+  {
+    "name": "Page",
+    "path": "src/app/(catalog)/mini-courses/page.tsx",
+    "line": 2,
+    "lines": 2,
+    "client": false,
+    "exported": true,
+    "props": [],
+    "consumers": []
+  },
+  {
+    "name": "DetailError",
+    "path": "src/app/(details)/error.tsx",
+    "line": 5,
+    "lines": 5,
+    "client": true,
+    "exported": true,
+    "props": [
+      "{ error: Error; retry: () => void }"
+    ],
+    "consumers": []
+  },
+  {
+    "name": "DetailLoading",
+    "path": "src/app/(details)/loading.tsx",
+    "line": 2,
+    "lines": 5,
+    "client": false,
+    "exported": true,
+    "props": [],
+    "consumers": []
+  },
+  {
+    "name": "DetailNotFound",
+    "path": "src/features/course-detail/components/detail-not-found.tsx",
+    "line": 4,
+    "lines": 16,
+    "client": false,
+    "exported": true,
+    "props": [
+      "{ kind: DetailKind }"
+    ],
+    "consumers": [
+      "src/app/(details)/courses/[slug]/not-found.tsx",
+      "src/app/(details)/mini-courses/[slug]/not-found.tsx"
+    ]
+  },
+  {
+    "name": "CourseNotFound",
+    "path": "src/app/(details)/courses/[slug]/not-found.tsx",
+    "line": 1,
+    "lines": 3,
+    "client": false,
+    "exported": true,
+    "props": [],
+    "consumers": []
+  },
+  {
+    "name": "DetailSeam",
+    "path": "src/features/course-detail/components/detail-seam.tsx",
+    "line": 1,
+    "lines": 6,
+    "client": false,
+    "exported": true,
+    "props": [
+      "{ variant: \"preview\" | \"trainer\" }"
+    ],
+    "consumers": [
+      "src/features/course-detail/detail-page.tsx"
+    ]
+  },
+  {
+    "name": "MediaPlaceholder",
+    "path": "src/features/course-detail/components/media-placeholder.tsx",
+    "line": 1,
+    "lines": 10,
+    "client": false,
+    "exported": true,
+    "props": [
+      "{ label: string; portrait?: boolean }"
+    ],
+    "consumers": [
+      "src/features/course-detail/sections/01-hero-purchase/hero-purchase-section.tsx",
+      "src/features/course-detail/sections/05-trainer/trainer-section.tsx"
+    ]
+  },
+  {
+    "name": "PurchasePanel",
+    "path": "src/features/course-detail/components/purchase-panel.tsx",
+    "line": 11,
+    "lines": 21,
+    "client": false,
+    "exported": true,
+    "props": [
+      "{ product: DetailProduct; compact?: boolean }"
+    ],
+    "consumers": [
+      "src/features/course-detail/sections/01-hero-purchase/hero-purchase-section.tsx",
+      "src/features/course-detail/sections/06-purchase-terms/purchase-terms-section.tsx"
+    ]
+  },
+  {
+    "name": "ProductFacts",
+    "path": "src/features/course-detail/sections/01-hero-purchase/components/product-facts.tsx",
+    "line": 2,
+    "lines": 20,
+    "client": false,
+    "exported": true,
+    "props": [
+      "{ product: DetailProduct }"
+    ],
+    "consumers": [
+      "src/features/course-detail/sections/01-hero-purchase/hero-purchase-section.tsx"
+    ]
+  },
+  {
+    "name": "HeroPurchaseSection",
+    "path": "src/features/course-detail/sections/01-hero-purchase/hero-purchase-section.tsx",
+    "line": 9,
+    "lines": 32,
+    "client": false,
+    "exported": true,
+    "props": [
+      "{ product: DetailProduct }"
+    ],
+    "consumers": [
+      "src/features/course-detail/detail-page.tsx"
+    ]
+  },
+  {
+    "name": "SectionLabel",
+    "path": "src/features/course-detail/components/section-label.tsx",
+    "line": 2,
+    "lines": 5,
+    "client": false,
+    "exported": true,
+    "props": [
+      "{ children: ReactNode }"
+    ],
+    "consumers": [
+      "src/features/course-detail/sections/02-video-preview/video-preview-section.tsx",
+      "src/features/course-detail/sections/03-about-course/about-course-section.tsx",
+      "src/features/course-detail/sections/04-curriculum/curriculum-section.tsx",
+      "src/features/course-detail/sections/05-trainer/trainer-section.tsx",
+      "src/features/course-detail/sections/06-purchase-terms/purchase-terms-section.tsx"
+    ]
+  },
+  {
+    "name": "PreviewPlayer",
+    "path": "src/features/course-detail/sections/02-video-preview/components/preview-player.tsx",
+    "line": 5,
+    "lines": 22,
+    "client": true,
+    "exported": true,
+    "props": [
+      "{ src?: string; captions?: string }"
+    ],
+    "consumers": [
+      "src/features/course-detail/sections/02-video-preview/video-preview-section.tsx"
+    ]
+  },
+  {
+    "name": "VideoPreviewSection",
+    "path": "src/features/course-detail/sections/02-video-preview/video-preview-section.tsx",
+    "line": 6,
+    "lines": 16,
+    "client": false,
+    "exported": true,
+    "props": [
+      "{ product: DetailProduct }"
+    ],
+    "consumers": [
+      "src/features/course-detail/detail-page.tsx"
+    ]
+  },
+  {
+    "name": "CourseOutcomes",
+    "path": "src/features/course-detail/sections/03-about-course/components/course-outcomes.tsx",
+    "line": 2,
+    "lines": 15,
+    "client": false,
+    "exported": true,
+    "props": [
+      "{ product: DetailProduct }"
+    ],
+    "consumers": [
+      "src/features/course-detail/sections/03-about-course/about-course-section.tsx"
+    ]
+  },
+  {
+    "name": "AboutCourseSection",
+    "path": "src/features/course-detail/sections/03-about-course/about-course-section.tsx",
+    "line": 6,
+    "lines": 16,
+    "client": false,
+    "exported": true,
+    "props": [
+      "{ product: DetailProduct }"
+    ],
+    "consumers": [
+      "src/features/course-detail/detail-page.tsx"
+    ]
+  },
+  {
+    "name": "CurriculumAccordion",
+    "path": "src/features/course-detail/sections/04-curriculum/components/curriculum-accordion.tsx",
+    "line": 2,
+    "lines": 20,
+    "client": false,
+    "exported": true,
+    "props": [
+      "{ modules?: DetailModule[] }"
+    ],
+    "consumers": [
+      "src/features/course-detail/sections/04-curriculum/curriculum-section.tsx"
+    ]
+  },
+  {
+    "name": "CurriculumSection",
+    "path": "src/features/course-detail/sections/04-curriculum/curriculum-section.tsx",
+    "line": 6,
+    "lines": 16,
+    "client": false,
+    "exported": true,
+    "props": [
+      "{ product: DetailProduct }"
+    ],
+    "consumers": [
+      "src/features/course-detail/detail-page.tsx"
+    ]
+  },
+  {
+    "name": "TrainerSection",
+    "path": "src/features/course-detail/sections/05-trainer/trainer-section.tsx",
+    "line": 7,
+    "lines": 27,
+    "client": false,
+    "exported": true,
+    "props": [
+      "{ product: DetailProduct }"
+    ],
+    "consumers": [
+      "src/features/course-detail/detail-page.tsx"
+    ]
+  },
+  {
+    "name": "TermsList",
+    "path": "src/features/course-detail/sections/06-purchase-terms/components/terms-list.tsx",
+    "line": 2,
+    "lines": 13,
+    "client": false,
+    "exported": true,
+    "props": [
+      "{ product: DetailProduct }"
+    ],
+    "consumers": [
+      "src/features/course-detail/sections/06-purchase-terms/purchase-terms-section.tsx"
+    ]
+  },
+  {
+    "name": "PurchaseTermsSection",
+    "path": "src/features/course-detail/sections/06-purchase-terms/purchase-terms-section.tsx",
+    "line": 8,
+    "lines": 22,
+    "client": false,
+    "exported": true,
+    "props": [
+      "{ product: DetailProduct }"
+    ],
+    "consumers": [
+      "src/features/course-detail/detail-page.tsx"
+    ]
+  },
+  {
+    "name": "DetailPage",
+    "path": "src/features/course-detail/detail-page.tsx",
+    "line": 9,
+    "lines": 16,
+    "client": false,
+    "exported": true,
+    "props": [
+      "{ product: DetailProduct }"
+    ],
+    "consumers": [
+      "src/app/(details)/courses/[slug]/page.tsx",
+      "src/app/(details)/mini-courses/[slug]/page.tsx"
+    ]
+  },
+  {
+    "name": "CourseDetailRoute",
+    "path": "src/app/(details)/courses/[slug]/page.tsx",
+    "line": 12,
+    "lines": 7,
+    "client": false,
+    "exported": true,
+    "props": [
+      "Props"
+    ],
+    "consumers": []
+  },
+  {
+    "name": "MiniCourseNotFound",
+    "path": "src/app/(details)/mini-courses/[slug]/not-found.tsx",
+    "line": 1,
+    "lines": 3,
+    "client": false,
+    "exported": true,
+    "props": [],
+    "consumers": []
+  },
+  {
+    "name": "MiniCourseDetailRoute",
+    "path": "src/app/(details)/mini-courses/[slug]/page.tsx",
+    "line": 12,
+    "lines": 7,
+    "client": false,
+    "exported": true,
+    "props": [
+      "Props"
+    ],
+    "consumers": []
+  },
+  {
+    "name": "ComponentsPreview",
+    "path": "src/app/preview/components/page.tsx",
+    "line": 7,
+    "lines": 5,
+    "client": false,
+    "exported": true,
+    "props": [],
+    "consumers": []
+  }
+]

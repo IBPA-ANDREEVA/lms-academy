@@ -1,0 +1,24 @@
+[
+  {
+    "name": "storage failure",
+    "width": 1440,
+    "warning": true,
+    "items": 1
+  },
+  {
+    "name": "cross-tab fixture removal",
+    "width": 1440,
+    "status": "WORKING"
+  },
+  {
+    "name": "storage failure",
+    "width": 390,
+    "warning": true,
+    "items": 1
+  },
+  {
+    "name": "cross-tab fixture removal",
+    "width": 390,
+    "status": "WORKING"
+  }
+]
