@@ -11,7 +11,7 @@ gsap.registerPlugin(useGSAP);
 const publicPage = (path: string) => /^\/(?:$|(?:mini-)?courses(?:\/[^/]+)?$)/.test(path);
 const historyKey = "lmsMotionIndex";
 
-type Navigation = { href: string; path: string; hash: string; direction: number; submitted: boolean; history: boolean; focus: Element | null; positioned?: boolean; anchorRequested?: boolean; instant?: boolean };
+type Navigation = { href: string; path: string; hash: string; direction: number; submitted: boolean; history: boolean; focus: Element | null; positioned?: boolean; anchorRequested?: boolean; instant?: boolean; vertical?: boolean };
 
 /** Presentation around Next's router. No content fetching, route cache, cloned
  * React trees, history patches, scroll locks, or replacement routing layer. */
@@ -48,6 +48,7 @@ export function PageWipeTransition({ content, pathname, loading, onActive }: {
       cover.removeAttribute("style");
       delete cover.dataset.waiting;
       delete cover.dataset.direction;
+      delete cover.dataset.axis;
       delete page.dataset.routeMotion;
       navigation = null; revealed = false;
       onActive(false);
@@ -98,8 +99,8 @@ export function PageWipeTransition({ content, pathname, loading, onActive }: {
       if (preference.matches || request.instant) { finish(); focusDestination(request); return; }
       targets = visibleContent();
       timeline = gsap.timeline({ defaults: { duration: motion.wipeReveal, ease: motion.ease }, onComplete: () => { finish(); focusDestination(request); } })
-        .to(cover, { xPercent: -100 * request.direction }, 0);
-      if (targets.length) timeline.fromTo(targets, { x: request.direction * (innerWidth < 761 ? 12 : motion.wipePush) }, { x: 0, clearProps: "transform" }, 0);
+        .to(cover, request.vertical ? { yPercent: 100 } : { xPercent: -100 * request.direction }, 0);
+      if (targets.length) timeline.fromTo(targets, request.vertical ? { y: -12 } : { x: request.direction * motion.wipePush }, { x: 0, y: 0, clearProps: "transform" }, 0);
     });
     const submit = (request: Navigation) => {
       if (navigation !== request || request.submitted) return;
@@ -111,10 +112,13 @@ export function PageWipeTransition({ content, pathname, loading, onActive }: {
     };
     const begin = contextSafe((request: Navigation) => {
       finish(); navigation = request;
+      // Freeze the axis for this navigation so a resize cannot turn a wipe diagonal.
+      request.vertical = matchMedia("(max-width: 760px)").matches;
       onActive(true);
       page.dataset.routeMotion = "wipe";
       cover.hidden = false;
       cover.dataset.direction = request.direction === 1 ? "forward" : "back";
+      cover.dataset.axis = request.vertical ? "vertical" : "horizontal";
       // Prefetch runs alongside the outgoing animation, using Next's own cache.
       // Commit is requested at the covered frame; no invented loading dwell.
       if (!request.history) router.prefetch(request.href);
@@ -134,13 +138,13 @@ export function PageWipeTransition({ content, pathname, loading, onActive }: {
       if (request.history) {
         // popstate cannot be delayed. Cover synchronously and mirror the reveal;
         // Next retains complete ownership of scroll restoration and history.
-        gsap.set(cover, { xPercent: 0 });
+        gsap.set(cover, { xPercent: 0, yPercent: 0 });
         frame = requestAnimationFrame(reveal);
       } else {
         targets = visibleContent();
         timeline = gsap.timeline({ defaults: { duration: motion.wipeCover, ease: motion.transitionEase }, onComplete: () => submit(request) })
-          .fromTo(cover, { xPercent: 100 * request.direction }, { xPercent: 0 }, 0);
-        if (targets.length) timeline.to(targets, { x: -request.direction * (innerWidth < 761 ? 12 : motion.wipePush) }, 0);
+          .fromTo(cover, { xPercent: request.vertical ? 0 : 100 * request.direction, yPercent: request.vertical ? -100 : 0 }, { xPercent: 0, yPercent: 0 }, 0);
+        if (targets.length) timeline.to(targets, request.vertical ? { y: 12 } : { x: -request.direction * motion.wipePush }, 0);
       }
     });
     const click = contextSafe((event: MouseEvent) => {

@@ -1,6 +1,6 @@
 .root, .content { min-width: 0; }
-/* Shell navigation stays available above these pointer-transparent surfaces. */
-.wipe { position: fixed; inset: 0; z-index: 18; pointer-events: none; background: var(--brand); }
+/* Full-viewport curtains cover the sticky shell as well as route content. */
+.wipe { position: fixed; inset: 0; z-index: 80; pointer-events: none; background: var(--brand); }
 .wipe { display: grid; place-items: center; color: var(--on-brand); }
 .wipe[hidden] { display: none; }
 .wipe span { opacity: 0; font-size: 14px; }
@@ -8,11 +8,12 @@
 
 
 .loading { min-height: 65svh; padding-block: 180px 80px; }
-.splash { position: fixed; inset: 0; z-index: 18; pointer-events: none; overflow: clip; }
+.splash { position: fixed; inset: 0; z-index: 80; pointer-events: none; overflow: clip; background: var(--brand); }
 .splash[hidden] { display: none; }
-.splash span { position: absolute; width: 210vmax; height: 210vmax; left: calc(50% - 105vmax); top: calc(50% - 105vmax); border-radius: 46% 54% 57% 43%; background: var(--brand); transform-origin: 50% 50%; }
-.splash span:nth-child(2) { left: calc(35% - 105vmax); top: calc(60% - 105vmax); border-radius: 57% 43% 48% 52%; }
-.splash span:nth-child(3) { left: calc(65% - 105vmax); top: calc(40% - 105vmax); }
 .inlineSplash { position: absolute; z-index: 1; }
 @media (prefers-reduced-motion: reduce) { .splash { display: none; } }
 @media (prefers-reduced-motion: reduce) { .wipe { display: none; } }
+
+/* If hydration fails, leave the document readable. No-JS skips the entrance. */
+.splash[data-welcome-splash] { animation: splash-failsafe 0s 5s forwards; }
+@keyframes splash-failsafe { to { visibility: hidden; } }
