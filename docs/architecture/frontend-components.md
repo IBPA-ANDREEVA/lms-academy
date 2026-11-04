@@ -235,6 +235,8 @@ CourseCard (`@/features/catalog`, `features/catalog/course-card.tsx`): remove ac
 | Owner / import path | API / consumers | Status and missing work |
 | --- | --- | --- |
 | `features/catalog/catalog-view-types.ts` | Type-only CatalogProduct, ProductKind, Locale, CatalogQuery, CatalogResult, ProductResult; provider, preview-data, presentation mapping, CatalogState, course/mini sections, preview-detail, product-route, SEO helpers, catalog-source | Temporary frontend/preview data shapes; not generated or authoritative. Replace transport assumptions with generated FastAPI contracts at integration. |
+
+Build repair (2026-11-04): `CatalogProvider` imports its types directly from `./catalog-view-types`, replacing the stale removed server-contract import. Provider props, consumers and runtime behavior are unchanged. Verified with lint (four existing test-import warnings), Next type generation, TypeScript checking and a production build with `TEST_PREVIEW=false`.
 | `features/catalog/catalog-source.ts` | Server-only `fetchPublishedCatalog(query?)`, `fetchPublishedProduct(kind, slug)`; root layout, sitemap, course-detail ProductRoute/metadata | Existing disconnected handling relocated; unavailable diagnostic, reserved demo/invalid slug rejection. No I/O/service. Real HTTP integration missing. |
 | `lib/seo/product-indexability.ts` | `isIndexableProduct(product)`; metadata, structured-data, sitemap | Existing defensive exclusion behavior retained for SEO only. No publication/purchase authority; Python owns those rules. |
 
