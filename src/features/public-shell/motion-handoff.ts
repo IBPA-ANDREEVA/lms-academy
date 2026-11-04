@@ -13,3 +13,6 @@ export function motionCoverBlocking() {
     .some(surface => !surface.hidden && surface.dataset.motionPhase !== "revealing"
       && getComputedStyle(surface).visibility !== "hidden" && getComputedStyle(surface).display !== "none");
 }
+
+export const navigationStartEvent = "public-navigation-start";
+export const navigationEndEvent = "public-navigation-end";

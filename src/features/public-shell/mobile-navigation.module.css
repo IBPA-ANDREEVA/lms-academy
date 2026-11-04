@@ -33,3 +33,6 @@
 .trigger[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
 .trigger[aria-expanded="true"] span:last-child { transform: translateY(-7px) rotate(-45deg); }
 @media(prefers-reduced-motion:reduce) { .trigger span { transition: none; } }
+
+/* Retain the modal until completion; reveal the new page once the curtain covers it. */
+.dialog[data-navigation-covered], .dialog[data-navigation-covered]::backdrop { visibility: hidden; }
