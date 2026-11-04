@@ -146,11 +146,9 @@ export function LearningOffersShowcase({ panels }: { panels: [ReactNode, ReactNo
     if (!group || !header) return;
     const updateDock = () => {
       const nav = group.querySelector('[data-offers-dock]');
-      const docked = Boolean(nav && group.getBoundingClientRect().top <= header.getBoundingClientRect().bottom + 24 && group.getBoundingClientRect().bottom > header.getBoundingClientRect().bottom + 56);
+      const docked = Boolean(nav && group.getBoundingClientRect().top <= header.getBoundingClientRect().bottom + 1 && group.getBoundingClientRect().bottom > header.getBoundingClientRect().bottom + nav.getBoundingClientRect().height);
       header.dataset.offersDocked = String(docked);
-      const bar = header.querySelector(':scope > div > div');
-      const gap = nav && bar ? Math.max(0, nav.getBoundingClientRect().top - bar.getBoundingClientRect().bottom) : 0;
-      header.style.setProperty("--offers-bridge-height", `${Math.min(24, gap)}px`);
+
     };
     window.addEventListener("scroll", updateDock, { passive: true });
     window.addEventListener("resize", updateDock);
@@ -190,7 +188,6 @@ export function LearningOffersShowcase({ panels }: { panels: [ReactNode, ReactNo
       window.removeEventListener("scroll", updateDock);
       window.removeEventListener("resize", updateDock);
       delete header.dataset.offersDocked;
-      header.style.removeProperty("--offers-bridge-height");
       cancelAnimationFrame(initialHash);
       window.removeEventListener("hashchange", onHash);
       window.removeEventListener("public-anchor", onHash);

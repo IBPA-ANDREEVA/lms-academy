@@ -79,7 +79,7 @@ export function PublicHeader({
 
   useGSAP((_, contextSafe) => {
     const header = root.current;
-    if (!header || !contextSafe || !["/", "/courses", "/mini-courses"].includes(pathname)) {
+    if (!header || !contextSafe || pathname !== "/") {
       return;
     }
     const motion = window.matchMedia("(prefers-reduced-motion: reduce)");
@@ -145,8 +145,7 @@ export function PublicHeader({
     <header
       ref={root}
       className={styles.header}
-      data-catalog-route={["/courses", "/mini-courses"].includes(pathname)}
-      data-home-route={["/", "/courses", "/mini-courses"].includes(pathname)}
+      data-home-route={pathname === "/"}
       data-home-scrolled={homeScrolled}
       onKeyDown={(event) => {
         if (event.key !== "Escape" || (event.target as HTMLElement).closest("dialog")) return;
