@@ -1,7 +1,7 @@
 "use client";
 
 import { createContext, useContext, useEffect, useRef, useState, type ReactNode } from "react";
-import type { CatalogProduct, CatalogResult, ProductKind } from "@/server/catalog/contracts";
+import type { CatalogProduct, CatalogResult, ProductKind } from "@/features/catalog/catalog-view-types";
 import { initialPreviewIds, PREVIEW_KEY, previewProduct, readPreviewIds } from "./preview/preview-data";
 
 type CatalogContextValue = {

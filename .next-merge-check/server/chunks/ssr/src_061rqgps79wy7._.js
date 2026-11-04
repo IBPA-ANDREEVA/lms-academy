@@ -1,3 +1,0 @@
-module.exports=[31081,a=>{a.v({description:"_1PGl5G_description",display:"_1PGl5G_display",group:"_1PGl5G_group",heading:"_1PGl5G_heading"})},80037,a=>{"use strict";var b=a.i(90688),c=a.i(31081);a.s(["f",0,function({children:a,id:d,as:e="h2",display:f=!1,description:g,className:h=""}){return(0,b.jsxs)("div",{className:`${c.default.group} ${h}`,children:[(0,b.jsx)(e,{id:d,className:f?c.default.display:c.default.heading,children:a}),g&&(0,b.jsx)("div",{className:c.default.description,children:g})]})}])},52996,a=>{a.v({actions:"d9NyzG_actions",main:"d9NyzG_main"})}];
-
-//# sourceMappingURL=src_061rqgps79wy7._.js.map

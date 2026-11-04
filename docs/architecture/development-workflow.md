@@ -1,6 +1,6 @@
 # Feature delivery workflow
 
-Authority: owner restructuring request (2026-10-30); [ADR-0002](../decisions/0002-frontend-server-separation.md). This is a planning workflow, not implementation or blanket visual approval. The operational source is the existing LMS Obsidian project; [audit](planning-audit-2026-10-30.md) records provenance and verification.
+Authority: owner restructuring request (2026-10-30); [ADR-0002](../decisions/0002-frontend-server-separation.md), with runtime/code placement superseded by [ADR-0003](../decisions/0003-python-backend-architecture.md). This is a planning workflow, not implementation or blanket visual approval. The operational source is the existing LMS Obsidian project; [audit](planning-audit-2026-10-30.md) records provenance and verification.
 
 ## Prepare one feature
 
@@ -8,7 +8,7 @@ Keep preparation within the coherent capability epic. Read only relevant require
 
 1. Technical approach and rationale using existing tools where possible.
 2. Owned entities/relationships, a small ER diagram if useful, constraints/indexes, transactions and immutable history.
-3. Public query/command input/output contracts, server-only operations and resource authorization.
+3. Public Python query/command contracts, versioned HTTP/Pydantic request/response contracts and OpenAPI compatibility, resource authorization and session propagation.
 4. Business states/transitions and edge cases.
 5. Failure/recovery, durable jobs where necessary and risk-based tests.
 6. Exact product decisions blocking specific slices, approved answers, concise recommendations/alternatives for remaining questions.
@@ -20,9 +20,17 @@ Ready means the unblocked slices can be implemented without significant architec
 
 UI planning specifies route, user goal, ordered sections, interactions, shared versus local components, data/contracts, all relevant states and mobile behavior. Update the frontend registries. Follow **sections → components → supplied references → implementation**. Missing references remain pending and block final visual implementation; no new aesthetic is declared approved here.
 
-Preserve existing `src/features` ownership and numbered sections. `src/app` composes routes and delivery adapters. The seven `src/server` domains own business behavior. Stable contracts permit frontend fixture implementation and backend implementation to proceed independently. Prefer reviewing the visual interface before final wiring; do not build the entire backend before any usable frontend. UI fixtures are clearly labeled and do not claim authentication, payment or persistence.
+Preserve existing `src/features` ownership and numbered sections. `src/app` composes routes and delivery adapters. The seven Python `backend/app/modules` domains own business behavior; Next.js and FastAPI communicate over HTTP rather than local TypeScript calls. Stable contracts permit frontend fixture implementation and backend implementation to proceed independently. Prefer reviewing the visual interface before final wiring; do not build the entire backend before any usable frontend. UI fixtures are clearly labeled and do not claim authentication, payment or persistence.
 
-Integration replaces fixtures with authorized queries/mutations; validates input; tests state, error, persistence and transaction behavior; removes obsolete demonstration data only in integrated paths; preserves UI boundaries. Reuse actual shared components and maintain their preview when they change.
+Integration uses generated TypeScript contracts from FastAPI OpenAPI and replaces fixtures with authorized HTTP queries/mutations; validates input; tests state, error, persistence and transaction behavior; removes obsolete demonstration data only in integrated paths; preserves UI boundaries. Reuse actual shared components and maintain their preview when they change.
+
+## Cross-runtime implementation and verification
+
+Root AGENTS applies throughout; backend/AGENTS additionally governs Python. The current backend is empty structure only. A separate initialization task selects/pins Python, dependencies, static checker (mypy recommended), database driver, auth/session transport and contract-generation tools, and creates runnable commands. Implement neither fake endpoints nor speculative layers to satisfy a plan.
+
+Feature contracts name both frontend consumers and Python owners, allowed version overlap, transaction boundaries, privacy-safe errors/correlation, and required worker behavior. Export OpenAPI and review generated types/client changes; never hand-copy Python schemas into TypeScript. Keep fixtures explicitly preview-only until real integration passes. Next.js never accesses authoritative tables.
+
+Run frontend lint/type/build and affected browser/SEO checks; once configured, run uv/Ruff/static-checker/pytest checks, PostgreSQL migration/transaction/concurrency tests, API authorization/contract checks and actual integration checks. No backend tests are runnable from empty directories. Deployments are independent: migrations must support the API/worker compatibility window, and HTTP contracts must support overlapping frontend/backend versions. Record missing implementation separately from failed checks.
 
 ## Finish a capability
 

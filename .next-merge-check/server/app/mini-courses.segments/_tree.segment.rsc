@@ -1,9 +1,0 @@
-:HL["/_next/static/chunks/3fzef2bdp118n.css","style"]
-:HL["/_next/static/chunks/30214-9taqar8.css","style"]
-:HL["/_next/static/chunks/10tg6yyfh2-o6.css","style"]
-:HL["/_next/static/media/Manrope-s.p.3rjk17h6oms_8.ttf","font",{"crossOrigin":"","type":"font/ttf"}]
-:HL["/_next/static/media/Unbounded-s.p.2o0w_6rj3qjvh.ttf","font",{"crossOrigin":"","type":"font/ttf"}]
-3:[["children",{"s":"__PAGE__","h":49314}]]
-2:[["children",{"s":"mini-courses","h":49218,"c":"$Q3"}]]
-1:[["children",{"s":"(catalog)","h":49186,"c":"$Q2"}]]
-0:{"b":"E7N2zQhoR3o83-6094dax","t":{"t":{"s":"","h":49234,"c":"$Q1"}}}

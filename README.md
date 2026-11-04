@@ -2,16 +2,17 @@
 
 Russian-first online beauty education platform supporting course discovery and purchase, protected learning, practical assignments, curator review, certificates and administration. English is a planned supported interface language; the [release plan](docs/product/mvp.md) defines when features ship.
 
-> **Status:** public frontend and review fixtures: homepage, catalogs, detail previews, auth modal, cart and checkout. No production authentication, database, payments or seven server domains are implemented. Browser-test sources and past visual evidence are not end-to-end release acceptance.
+> **Status:** public frontend and review fixtures: homepage, catalogs, detail previews, auth modal, cart and checkout. No production authentication, database, payments or Python business domains are implemented. `backend/` contains documentation and empty directories only; the retired TypeScript Catalog adapter was disconnected, not a production service. Browser-test sources and past visual evidence are not end-to-end release acceptance.
 
 ## Stack
 
 - Next.js 16.4.3 App Router / React 19 / TypeScript
 - Tailwind CSS 4
 - pnpm
-- Accepted architecture: [modular monolith](docs/decisions/0001-modular-monolith.md) with [frontend/server separation](docs/decisions/0002-frontend-server-separation.md)
+- Approved backend target: Python / FastAPI, Pydantic v2, SQLAlchemy 2, Alembic, PostgreSQL (Neon intended), uv, pytest and Ruff; mypy is the proposed static checker. No Python runtime/dependencies initialized.
+- Accepted architecture: [ADR-0003](docs/decisions/0003-python-backend-architecture.md), one Python modular monolith and an independently deployed Next.js frontend in this repository. Seven business domains remain intact; HTTP/JSON REST + OpenAPI connects the runtimes. [Backend guide](backend/README.md).
 
-Approved [product decisions](docs/product/decisions.md) select Stripe embedded Payment Element (USD) and self-managed encrypted video using private Cloudflare R2 and separate VPS/VM FFmpeg workers. Database/authentication, notification, application hosting, and remaining implementation choices stay subject to recorded decisions.
+Approved [product decisions](docs/product/decisions.md) select Stripe embedded Payment Element (USD) and self-managed encrypted video using private Cloudflare R2 and separate VPS/VM FFmpeg workers. PostgreSQL/SQLAlchemy/Alembic are selected; Neon is intended hosting. Authentication, notification provider, job executor, application hosting and remaining implementation choices stay subject to recorded decisions.
 
 ## Local setup
 
@@ -26,6 +27,10 @@ Development server: http://localhost:3000
 
 Frontend work happens directly in the application. Start with the [frontend registry](docs/architecture/frontend-pages.md), reuse [shared components](docs/architecture/frontend-components.md), and update the registry after every UI change. The development planning routes and reference gallery have been retired. Inspect live shared components at [Component previews](http://localhost:3000/preview/components) while running `pnpm dev`.
 
+Python startup/install commands are intentionally absent until a separate initialization task creates its manifest and runtime. Future backend workflow is in [backend/README.md](backend/README.md); [integration contracts](docs/architecture/frontend-backend-integration.md) and [recommendations](docs/architecture/python-backend-recommendations.md) distinguish approved boundaries from pending selections.
+
+`TEST_PREVIEW=true` alone enables browser-local examples. False/missing leaves Catalog unavailable until the real API exists; no fixture fallback, purchase or enrollment is created. Rebuild after mode changes.
+
 Check quality with `pnpm lint`, `pnpm exec next typegen`, `pnpm exec tsc --noEmit`, and `pnpm build`. Component and browser checks are documented in `docs/architecture/frontend-verification.md`.
 
 ## Documentation
@@ -35,7 +40,7 @@ Check quality with `pnpm lint`, `pnpm exec next typegen`, `pnpm exec tsc --noEmi
 | Product behavior | [Requirements](docs/product/requirements.md) |
 | Release phases and MVP | [MVP / phases](docs/product/mvp.md) |
 | Unresolved product decisions | [Open questions](docs/product/open-questions.md) |
-| Architecture and ownership | [Overview](docs/architecture/overview.md), [Modules](docs/architecture/modules.md), [ADR-0001](docs/decisions/0001-modular-monolith.md) |
+| Architecture and ownership | [Overview](docs/architecture/overview.md), [Modules](docs/architecture/modules.md), [ADR-0003](docs/decisions/0003-python-backend-architecture.md), [integration](docs/architecture/frontend-backend-integration.md) |
 | Visual identity and signatures | [Design direction](docs/design/DIRECTION.md) |
 | Design tokens and components | [System](docs/design/SYSTEM.md), [Components](docs/design/COMPONENTS.md) |
 | Screens and visual verification | [Screens](docs/design/SCREENS.md), [QA](docs/design/QA.md) |
@@ -56,4 +61,4 @@ The [current planning audit](docs/architecture/planning-audit-2026-10-30.md) rec
 - Reuse the icon assets already present under `public/icons/`; do not invent alternate icon families.
 - Visual references must be explicitly approved before being treated as implementation targets.
 
-Read `AGENTS.md` before agent-driven frontend work.
+Read root `AGENTS.md` before work and `backend/AGENTS.md` for all backend work. Historical ADR-0001/0002 retain their original reasoning; ADR-0003 supersedes runtime/code placement only.

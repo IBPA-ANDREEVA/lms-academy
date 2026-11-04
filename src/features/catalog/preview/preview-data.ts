@@ -1,4 +1,4 @@
-import type { CatalogProduct, ProductKind } from "@/server/catalog/contracts";
+import type { CatalogProduct, ProductKind } from "@/features/catalog/catalog-view-types";
 
 export const PREVIEW_KEY = "lms.catalog.preview.v1";
 export const initialPreviewIds = [0, 1, 2, 3].flatMap(index => [`demo-course-${index}`, `demo-mini-${index}`]);

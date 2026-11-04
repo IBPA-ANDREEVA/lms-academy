@@ -2,7 +2,7 @@ import { PageContainer } from "@/features/public-shell";
 import { CourseCard } from "../../course-card";
 import { CatalogState } from "../../components/catalog-state";
 import type { CatalogItem } from "../../catalog-data";
-import type { CatalogResult } from "@/server/catalog/contracts";
+import type { CatalogResult } from "@/features/catalog/catalog-view-types";
 import styles from "../03-courses/courses-section.module.css";
 
 type Props = {

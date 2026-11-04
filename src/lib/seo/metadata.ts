@@ -1,8 +1,8 @@
 import "server-only";
 import type { Metadata } from "next";
 import { siteOrigin, testPreview } from "../site-environment";
-import type { CatalogProduct } from "@/server/catalog/contracts";
-import { isPublicProduct } from "@/server/catalog/policy";
+import type { CatalogProduct } from "@/features/catalog/catalog-view-types";
+import { isIndexableProduct } from "@/lib/seo/product-indexability";
 
 export const siteName = "Beauty Business Academy";
 export const staticPublicPages = [
@@ -30,7 +30,7 @@ export function staticMetadata(path: string) {
   return pageMetadata(page.title, page.description, page.path, true);
 }
 export function productMetadata(product: CatalogProduct): Metadata {
-  if (!isPublicProduct(product)) return pageMetadata("Страница недоступна", "Вернитесь в каталог доступных программ.");
+  if (!isIndexableProduct(product)) return pageMetadata("Страница недоступна", "Вернитесь в каталог доступных программ.");
   return pageMetadata(product.content.ru!.title, product.content.ru!.description,
     `/${product.kind === "course" ? "courses" : "mini-courses"}/${product.slug}`, true);
 }

@@ -1,14 +1,12 @@
 # Module ownership and workflows
 
-## Implemented presentation versus target domains · 2026-11-02
+## Implemented presentation versus target domains · 2026-11-03
 
-The seven domain contracts below remain authoritative **architecture**, not delivered server modules. `src/server` does not yet exist. `features/identity` implements an unavailable auth dialog, not sessions/authorization. `features/catalog` implements array-filtered example cards, not approved published records. `features/commerce` implements development-only fixture cart state, not authoritative money/checkout. `home`, `course-detail`, `public-shell` and `component-preview` are implemented presentation owners. Empty `features/{learning,assignments,certificates,notifications}` and `src/db`/`src/lib` are placeholders.
+[ADR-0003](../decisions/0003-python-backend-architecture.md) moves the planned backend to Python without changing the seven ownership boundaries below. `backend/app/modules` contains empty directories only. No authoritative authentication, database, payment, access, media, review or notification service exists.
 
-Actual presentation imports: PublicHeader consumes exported Identity.AuthModal and Commerce.CartPreview; home consumes exported Catalog.CourseCard/CategoryNavigation; course-detail derives example DTOs from Catalog's exported fixture lists. The last dependency is demo data coupling, not an approved production Catalog interface. Public shell/layout and page compositions may compose frontend features; no client-facing barrel may expose future server runtime rules. Shared domain-independent controls remain under `src/components/ui`. See [component APIs/consumers](frontend-components.md) and [section owners](frontend-sections.md).
+Existing presentation owners remain `home`, `catalog`, `course-detail`, `public-shell`, `identity`, `commerce`, `component-preview`. PublicHeader consumes AuthModal/CartPreview; home consumes CourseCard/CategoryNavigation and shared CatalogProvider state; details map preview records into existing DetailProduct presentation. These are frontend dependencies, not domain APIs. Demo data/control requires `TEST_PREVIEW=true`; false/missing stays unavailable. The retired TypeScript Catalog contained only types, checks and an unconnected source. Temporary view types/disconnected handling now live in the Catalog feature; defensive indexability lives under SEO. See [migration evidence](../qa/python-backend-migration-2026-11-03.md).
 
-Public Site owns public presentation; Catalog/content administration supplies approved publication data; Commerce owns authoritative cart/quotes/payment and checkout-acceptance evidence; Identity owns authentication; Administration performs approved authoring/approval/publication through appropriate domain interfaces. Policy-publication ownership still requires SALE002 preparation; homework-definition ownership follows the existing Assignments baseline pending SITE009/WORK001. No eighth server domain, manager role or new route is introduced.
-
-Current UI gaps include three acknowledgments instead of PD-006's four, empty published inventories, disabled contact/payment, missing auth/legal/result routes and missing server diagnostics. These are integration/implementation gaps, not changes to module ownership. [LAND01 audit](../qa/LAND01-public-site-audit-2026-11-02.md).
+Public Site owns presentation; Catalog supplies approved publication data; Commerce owns authoritative cart/quotes/payment and checkout-acceptance evidence; Identity owns authentication. Administration uses existing domain interfaces, never direct table writes. Policy-publication ownership requires SALE002; homework-definition ownership keeps the Assignments baseline pending SITE009/WORK001. No eighth domain, manager role, new route or production integration is introduced. Frontend fixtures and historical audits do not establish release acceptance.
 
 ## Purpose
 
@@ -29,8 +27,7 @@ OQ-037, OQ-048 and OQ-049.
 ## Boundary vocabulary
 
 - A **public interface** is an exported command, query, DTO, or event type from
-  `src/server/<domain>/index.ts` or another explicitly documented public entry
-  point.
+  `backend/app/modules/<domain>` through a documented narrow Python entry (for example `public.py` when actual consumers require it). HTTP clients use FastAPI/OpenAPI, not Python imports.
 - An **internal implementation** is every other file in a module. It may change
   without coordinating consumers.
 - A **command** asks the owning module to change its state.
@@ -251,7 +248,7 @@ rules remain open under OQ-069 and OQ-070. MVP templates are limited by
 
 ## Allowed dependencies
 
-The table lists synchronous imports. `Public` means only the target's public entry
+The table lists synchronous Python module imports; frontend access is HTTP only. `Public` means only the target's public entry
 point; `No` means compose at an entry point/read model or introduce a reviewed
 public contract rather than importing internals.
 
@@ -266,7 +263,7 @@ public contract rather than importing internals.
 | Notifications | Public recipient/locale projection only | No | No | No | No | No | — |
 
 Identity actor types used everywhere should be exported from Identity or a tiny
-shared type-only contract. Consumers must not import session storage or role-table
+shared dependency-light Python contract. Consumers must not import session storage or role-table
 implementations.
 
 An application entry point may compose read-only queries from multiple public
@@ -304,7 +301,7 @@ Commerce owns this workflow.
 ```mermaid
 sequenceDiagram
     actor Buyer
-    participant UI as App Router
+    participant UI as Next.js / HTTP client
     participant C as Commerce
     participant Cat as Catalog
     participant I as Identity
@@ -313,7 +310,7 @@ sequenceDiagram
     participant O as Outbox
 
     Buyer->>UI: Submit checkout and consent
-    UI->>C: createCheckout(validated input)
+    UI->>C: FastAPI validates HTTP input, delegates checkout
     C->>Cat: getSellableOffer(product IDs)
     C->>I: resolve buyer contract
     C->>C: Recalculate totals and snapshot terms
@@ -336,7 +333,7 @@ Required invariants:
 - failed, cancelled, incomplete, unsigned, or merely browser-reported payments do
   not grant access;
 - the order, payment confirmation, enrollment, and outbox facts commit atomically
-  when the selected persistence technology permits the proposed shared transaction;
+  within the shared PostgreSQL transaction;
 - email delivery occurs after commit and may retry independently.
 
 PD-002 and unresolved OQ-029, OQ-031, OQ-032 and OQ-037 must shape the final
@@ -490,61 +487,41 @@ details, not newly approved routes or a new domain module.
 
 ## Practical folder organization
 
-Follow [ADR-0002](../decisions/0002-frontend-server-separation.md). These are placement examples, not a request for scaffolding:
+Follow [ADR-0003](../decisions/0003-python-backend-architecture.md). The [backend tree](../../backend/README.md#directory-conventions) is currently empty. Future placement examples, not files to scaffold:
 
 ```text
 src/features/learning/
   learning-page.tsx
   sections/01-course-list/course-list-section.tsx
   sections/02-lesson/components/lesson-player.tsx
-src/server/learning/
-  index.ts                  # narrow server-only public entry
-  contracts.ts              # safe DTO/input types; no runtime dependencies
-  grant-enrollment.ts       # use case + transaction boundary
-  access-policy.ts          # pure rules when practical
-  enrollment-data.ts        # private owned persistence operations
-src/app/                    # thin routes and delivery adapters only
+backend/app/modules/learning/
+  router.py                 # thin FastAPI HTTP mapping
+  schemas.py                # Pydantic input/output schemas
+  models.py                 # owned SQLAlchemy mappings
+  service.py                # operations and explicit transaction participation
+  policies.py               # framework-independent rules where practical
+  persistence.py            # optional focused private query/write adapter
+  public.py                 # optional narrow entry for actual module consumers
+backend/app/api/             # version/router composition
+backend/app/db/              # engine/session/transaction/metadata plumbing
+backend/app/jobs/            # durable execution wiring, not policy
+backend/alembic/versions/    # reviewed schema history with domain owners
+src/app/                    # Next.js routes and optional thin transport adapters
 ```
 
-Keep existing `home`, `catalog`, `course-detail`, `commerce`, `identity` and
-`public-shell` frontend files in place. Frontend features need not mirror server
-domains. Do not create empty layers, generic repositories per table or duplicate UI.
+Create only files with real responsibilities. Keep frontend paths/numbered sections in place; frontend features need not mirror backend domains. No generic repositories per table, mandatory base services or empty layers. Scope and future testing instructions live in [backend/AGENTS.md](../../backend/AGENTS.md).
 
-## Import examples
+## Import and API boundaries
 
-A Server Component/action/handler may call `@/server/catalog` or
-`@/server/learning`. It may not import `@/server/catalog/internal/...` or another
-domain's tables. Client code may use `import type` from a safe `contracts.ts`,
-never the domain's server entry. Frontend UI imports its existing public feature
-interfaces and generic primitives. Server domains do not import frontend UI.
-`src/lib` and `src/db` must not become business workflow owners.
+A Python Commerce operation may call Catalog's documented public offer query or Learning's public enrollment command using the workflow transaction. It must not import another domain's models, persistence helpers or private adapters. Domain policies should not depend on FastAPI or SQLAlchemy where practical. Technical core/db/jobs helpers do not become workflow owners.
+
+Next.js Server Components/actions call FastAPI HTTP operations using future generated contracts, never Python functions or authoritative tables. Client-facing UI barrels cannot re-export server credential/transport code. Existing temporary Catalog view types are presentation/preview compatibility; generated OpenAPI contracts replace transport assumptions at real integration. See [frontend/backend integration](frontend-backend-integration.md).
 
 ## Data and schema rules
 
-Schema files may be physically centralized under `src/db/schema` if required by
-the selected migration tool, but each file and table has one named server-domain owner.
-A practical layout is:
+Domain `models.py` owns SQLAlchemy mappings; `backend/app/db` assembles shared metadata and session infrastructure without moving record ownership. Alembic revisions under `backend/alembic/versions` name affected owners and preserve a coordinated schema history. Do not use `src/db` for authoritative persistence. PostgreSQL is selected; Neon is intended hosting, with driver/pooling configuration still pending.
 
-```text
-src/db/
-  client.ts
-  transaction.ts
-  migrations/
-  schema/
-    identity.ts
-    catalog.ts
-    commerce.ts
-    learning.ts
-    assignments.ts
-    certificates.ts
-    notifications.ts
-```
-
-Only the owning server domain writes the corresponding schema. Foreign keys
-may cross ownership boundaries, but cascade deletion must not erase retained
-commercial, educational, audit, or certificate evidence. Cross-module transaction
-coordination passes an opaque transaction context to public commands; it does not
-pass raw tables or query builders.
+Only the owning domain writes its records. Foreign keys may cross ownership boundaries, but cascades must not erase retained commercial, educational, audit or certificate evidence. Cross-domain transactions pass an explicit context to public commands, not raw tables/query builders; participating operations do not independently commit. Keep external effects outside long transactions and commit durable facts atomically with state. Use database constraints and concurrency checks for duplicate/conflicting operations.
 
 Audit semantics stay with the action owner. Shared audit persistence may record
 actor, action, target, time, correlation, and safe before/after metadata, but the
@@ -565,7 +542,7 @@ Before merging a feature change, verify:
 - external callers use the owner's public entry point;
 - the initiating entry point is thin and all untrusted input is validated;
 - authentication and resource authorization occur at the protected operation;
-- no browser code imports server-only persistence or provider code;
+- neither Next.js nor browser code accesses authoritative tables or imports backend persistence/provider code;
 - no module writes another module's tables;
 - synchronous consistency is not delegated to a best-effort event;
 - external side effects happen after commit and are idempotent;

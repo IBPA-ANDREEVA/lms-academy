@@ -1,12 +1,16 @@
 # LMS architecture overview
 
-## Current implementation snapshot · 2026-11-02
+## Current implementation snapshot · 2026-11-03
 
-The architecture below is the approved target boundary, not an inventory of delivered services. The current source has eight App Router page templates: `/`, two catalogs, two dynamic detail families, `/cart`, `/checkout`, and `/preview/components` (fourteen concrete URLs with eight detail fixtures). `src/app/layout.tsx` composes Russian/local-font document, one CartProvider, PublicHeader, PublicMotion and pathname-selected PublicSiteFooter. Catalog UI is hosted by a persistent `(catalog)/layout.tsx`; its leaf pages supply metadata and return null. Detail pages resolve only example slugs through local data.
+The frontend is implemented; the Python backend is **empty structural preparation**, not a running service. Eight App Router page templates cover `/`, two catalogs, two dynamic detail families, `/cart`, `/checkout` and `/preview/components`. Root layout composes CatalogProvider, CartProvider, PublicHeader, PublicMotion and PublicSiteFooter. Catalog leaves return null under their persistent group layout; both detail kinds share ProductRoute/DetailPage. Existing frontend owners and UI remain in place.
 
-Implemented frontend owners are `home`, `catalog`, `course-detail`, `public-shell`, `identity`, `commerce`, `component-preview`. Generic UI has Button/Link, form controls and SectionHeading. PageContainer is public-shell-owned and client-side because of optional reveal motion. Modules use colocated CSS; global tokens live in `src/app/globals.css`. Only local UI state/fixture storage exists. `src/server` is absent; `src/db`, `src/lib`, `src/app/api` and legacy `features/{learning,assignments,certificates,notifications}` contain placeholder `.gitkeep` files, not persistence, APIs or domain implementation. No server action, route handler, auth/session, payment, media processing, email, order or entitlement service is implemented.
+Presentation owners are `home`, `catalog`, `course-detail`, `public-shell`, `identity`, `commerce`, `component-preview`. Generic UI remains Button/Link, form controls and SectionHeading; PageContainer belongs to public-shell. Styles/fonts and numbered sections are unchanged. `TEST_PREVIEW=true` alone enables browser-local fixtures. False/missing returns unavailable, not invented inventory; auth and purchases remain unavailable.
 
-[Frontend registries](frontend-pages.md) and the [LAND01 audit](../qa/LAND01-public-site-audit-2026-11-02.md) record source APIs, real consumers, data status, responsive evidence and test failures. Future server contracts remain under ADR-0002; documentation synchronization does not move files, select tools, settle policy or approve visual direction.
+The former `src/server/catalog/{index,contracts,policy}.ts` contained a disconnected read adapter, DTO types and pure read/purchase checks, with no database. They are retired. Existing disconnected UI handling and temporary view types remain in `src/features/catalog/catalog-source.ts` and `catalog-view-types.ts`; defensive SEO exclusion is in `src/lib/seo/product-indexability.ts`. These are not an authoritative backend or new mock API. See [migration evidence](../qa/python-backend-migration-2026-11-03.md).
+
+`backend/` has instructions and `.gitkeep` directories only. There are no Python entry points, dependencies, schemas, models, migrations, services, endpoints, auth or workers. Existing empty `src/db` is a retired placeholder; it must not gain authoritative database access. Empty `src/app/api` is retained only for a future justified thin transport boundary. Empty legacy frontend feature folders are not implemented domains. `src/lib` now contains actual frontend environment/SEO utilities, not just placeholders.
+
+[Frontend registries](frontend-pages.md) locate real owners/consumers. The dated [LAND01 audit](../qa/LAND01-public-site-audit-2026-11-02.md) and LAND03/04 evidence remain historical, not current backend implementation or visual approval.
 
 ## Purpose and decision status
 
@@ -19,7 +23,7 @@ architecture for application work; it does not resolve open product policy.
 The following labels distinguish established decisions from design proposals:
 
 - **Approved baseline** — required by the repository instructions or
-  [ADR-0001](../decisions/0001-modular-monolith.md) and [ADR-0002](../decisions/0002-frontend-server-separation.md).
+  [ADR-0003](../decisions/0003-python-backend-architecture.md), preserving the domain/frontend principles from ADR-0001/0002.
 - **Proposed technical choice** — recommended here, but requiring confirmation or
   a focused ADR before implementation makes it expensive to change.
 - **Product decision required** — blocked by a question in
@@ -27,20 +31,20 @@ The following labels distinguish established decisions from design proposals:
 
 Approved baseline:
 
-- a TypeScript, Next.js App Router application;
-- a feature-based modular monolith deployed as one application;
-- frontend presentation in `src/features`, server business domains in `src/server`,
-  route entry points in `src/app`, shared database
-  plumbing in `src/db`, generic UI in `src/components/ui`, and small technical
-  utilities in `src/lib`;
-- the seven modules and their contracts described in
-  [modules.md](./modules.md).
+- one repository with independently deployable Next.js 16 / React / TypeScript / Tailwind frontend and Python FastAPI backend;
+- one Python modular monolith, with seven domain owners under `backend/app/modules`, not independently deployed domain services;
+- Pydantic v2 validation, SQLAlchemy 2 persistence, Alembic migrations, PostgreSQL primary database and Neon as intended hosting;
+- uv, pytest, Ruff and a configured static checker; mypy is recommended, with exact Python/dependency versions and driver selected at initialization;
+- frontend presentation in `src/features`, thin routes in `src/app`, generic UI in `src/components/ui`, small frontend technical utilities in `src/lib`;
+- versioned HTTP/JSON REST and generated OpenAPI contracts between runtimes; no frontend access to authoritative business tables;
+- separate Python workers for durable background work and the approved separate FFmpeg runtime;
+- the seven modules and detailed contracts in [modules.md](modules.md).
 
 PD-002 selects Stripe embedded Payment Element and the existing US-entity account,
 with USD pricing/charges/payouts and eligible cards, Apple Pay, Google Pay and Klarna
 for one-time purchases. Subscriptions are excluded from all planned phases.
 PD-003 selects self-managed encrypted HLS, private Cloudflare R2 and separate
-VPS/VM FFmpeg workers. Database/ORM, authentication, email, job-runtime technology,
+VPS/VM FFmpeg workers. Authentication, email, job-runtime technology,
 application hosting, and video-worker provider/capacity remain implementation decisions.
 The separate media runtime does not change the seven domain-module boundaries.
 
@@ -62,8 +66,8 @@ The foundation must:
    safe to retry;
 5. preserve the MVP boundary while leaving explicit seams for approved later
    phases;
-6. stay deployable as one application and avoid infrastructure that the product
-   does not yet require.
+6. keep one coherent Python backend with independently deployable frontend and
+   avoid infrastructure that the product does not require.
 
 Non-goals are microservices, a generic enterprise framework, a repository per
 database table, a universal event bus, and abstractions created only for possible
@@ -73,211 +77,72 @@ future reuse.
 
 ```mermaid
 flowchart LR
-    Browser[Browser] --> App[Next.js App Router]
-    Provider[External callbacks] --> App
-
-    subgraph Monolith[Deployable modular monolith]
-      App --> Entry[Pages, Server Actions, Route Handlers]
-      Entry --> Public[Server-domain public interfaces]
-      Public --> Services[Application and domain services]
-      Services --> Repos[Owned persistence operations]
-      Services --> Ports[External-service ports]
-      Repos --> DB[(Transactional database)]
-      Services --> Outbox[(Transactional outbox)]
+    Browser[Browser] --> Frontend[Next.js presentation]
+    Browser -->|HTTP/JSON| API[FastAPI versioned REST]
+    Frontend -->|HTTP/JSON| API
+    Provider[Stripe / external callbacks] --> API
+    subgraph Backend[Python modular monolith]
+      API --> Public[Domain public operations]
+      Public --> Rules[Policies and owned persistence]
+      Rules --> DB[(PostgreSQL)]
+      Rules --> Outbox[(Durable outbox)]
     end
-
-    Ports --> Files[Private object storage]
-    Ports --> Video[Self-managed encrypted HLS / private R2]
-    Ports --> Payment[Stripe Payment Element]
-    Ports --> Email[Email provider]
-    Outbox --> Workers[Worker or scheduled invocations]
-    Workers --> Ports
-    Media[Separate VPS/VM FFmpeg workers] --> Video
+    Outbox --> Workers[Separate Python workers]
+    Workers --> Public
+    Workers --> External[Stripe / email / private R2 adapters]
+    Media[Separate VPS/VM FFmpeg workers] --> R2[Private R2 encrypted HLS]
 ```
 
-The database, outbox, and worker boxes describe logical responsibilities, not
-selected products. A relational transactional primary store and a database-backed
-outbox are **proposed technical choices** because the core workflows span several
-owned records and must be atomic and retryable. They require confirmation together
-with the persistence and job-runtime decisions.
+Browser-to-API transport may use same-origin ingress or a justified thin Next.js BFF; topology/session details remain recommendations in the [integration contract](frontend-backend-integration.md). PostgreSQL is selected and Neon is intended hosting. Durable processing is required; a PostgreSQL transactional outbox is the proposed mechanism, not an implemented table or selected job executor.
 
 ## Feature-based modular monolith
 
-Frontend features own page/section/component composition, presentation and UI state.
-They retain their existing names and numbered sections. Server domains own business
-concepts, authorization, transitions, persistence and use cases under `src/server`.
-A domain exposes a narrow server-only public entry; callers never import its private
-schema, data or implementation files. Safe DTO types may be exposed separately.
-Server Components may compose authorized domain queries; they do not own policy.
-Client-facing feature barrels must not re-export server runtime code.
+Frontend features retain page/section/component composition and UI state. Python domains own rules, resource authorization, use cases, state and persistence under `backend/app/modules`. Each exposes narrow local public commands/queries; callers do not import private ORM models, repositories or provider adapters. Cross-domain calls remain in-process with explicit transactions; only the owning domain writes its records. The frontend crosses HTTP, not Python imports or shared database access.
 
-The monolith shares a process and, initially, a database so critical workflows can
-use local calls and database transactions. Sharing a deployment does not permit
-sharing arbitrary tables or importing internal code. Ownership is a code rule:
-only the owning module writes its records. Cross-module reads and commands go
-through its exported interface.
-
-`src/lib` is not a miscellaneous business layer. It may contain narrowly scoped
-technical helpers such as clocks, identifiers, result types, logging adapters, and
-cryptographic primitives. `src/db` owns connection, transaction, migration, and
-schema infrastructure, not domain queries or business rules. Generic visual
-primitives belong in `src/components/ui`; feature components remain with their
-feature.
-
-For detailed module ownership and dependency rules, see
-[modules.md](./modules.md).
+`backend/app/core` contains small technical configuration/logging/clock helpers; `backend/app/db` owns engine/session/transaction plumbing. ORM mappings belong to domain owners; Alembic revisions live under `backend/alembic/versions`. `backend/app/api` composes thin versioned routers; `backend/app/jobs` wires execution and does not own business policy. No folder is an eighth domain. `src/lib` remains frontend technical/SEO helpers, never a hidden business layer.
 
 ## Next.js App Router boundary
 
-The repository uses Next.js 16.4 with Cache Components and partial prefetching
-enabled. The implementation must follow the installed guides under
-`node_modules/next/dist/docs/`, not assumptions from earlier Next.js versions.
+The repository uses installed Next.js 16.4.3 with Cache Components and partial prefetching. Read `node_modules/next/dist/docs/` before affected work. Framework permission to query a database does not override this project's HTTP-only authoritative-data boundary.
 
-### `src/app` responsibilities
+### Routes and Server Components
 
-`src/app` is the delivery layer. It owns URL structure, layouts, route metadata,
-loading and error boundaries, request/response translation, and composition of
-feature UI. Pages, layouts, Route Handlers, and Server Actions remain thin:
+`src/app` owns URLs/layouts, metadata, loading/error boundaries and feature composition. Server Components use future generated API contracts to request authorized FastAPI projections, map outcomes and pass minimal serializable view data to Client Components. They do not issue direct SQL, implement policy, or call their own Route Handler as an unnecessary intermediary. Internal service origins, session credentials and private diagnostics remain server-only.
 
-- parse framework inputs;
-- invoke an exported domain query or command;
-- map typed outcomes to UI, redirect, or HTTP response;
-- never contain pricing, entitlement, completion, refund, or authorization rules;
-- never query another module's tables directly.
-
-Server Components should call server-domain queries directly. They should
-not make an HTTP request to this application's own Route Handler, which adds an
-unnecessary network boundary and can fail during build-time rendering.
-
-### Server Components
-
-Server Components are the default for pages and non-interactive composition. They
-may read protected data through authorized domain query functions and pass only
-minimal serializable view data to Client Components. They must not pass database
-rows, secrets, provider tokens, internal status metadata, or unnecessary personal
-data to the client.
-
-With Cache Components enabled, session and request-dependent reads must stay
-behind an appropriate `Suspense` boundary. Shared caching must not contain
-user-private or authorization-dependent results unless the cache key and scope
-make that isolation explicit. Authorization is always re-evaluated at the protected
-data or mutation boundary; a cached UI decision is not authorization.
+Session-dependent reads require the appropriate request/Suspense boundary. Never share-cache private or authorization-dependent results across users. Public caching must account for publication/price invalidation across list/detail/home/SEO consumers. The backend always re-authorizes protected operations; cached UI decisions confer no rights. Outage, empty, missing and denied outcomes stay distinct.
 
 ### Client Components
 
-Client Components are opt-in interaction islands for browser APIs, local state,
-event handlers, upload progress, media controls, or other interactivity. Keep the
-`"use client"` boundary as low as practical. Client Components may request an
-operation but may never decide roles, ownership, price, entitlement, progress,
-certificate eligibility, or refund effects.
+Keep interaction islands small and preserve existing feature owners. Client code may request operations but never decides roles, ownership, authoritative price, entitlement, progress/completion, certificate eligibility or refund effects. Preview fixtures remain explicit browser-local demonstration only. Generate API types/client from OpenAPI during real integration, rather than duplicating Python schemas by hand.
 
-### Server Actions
+### Optional Server Actions and Route Handlers
 
-Use Server Actions for first-party UI mutations whose caller is this Next.js
-application, such as submitting a form or recording a lesson-progress update.
-Every action is treated as a reachable server endpoint and must:
+Actions/handlers may forward validated requests, agreed session credentials, safe responses and presentation composition when there is a concrete need. They cannot become authoritative authentication, payment, catalog or learning layers. `src/app/api/.gitkeep` is intentionally empty; same-origin ingress may remove the need for a BFF. Domain operations, Stripe webhooks, upload authorization and durable jobs belong to Python.
 
-1. authenticate the actor;
-2. validate and normalize untrusted input;
-3. invoke a domain command that performs resource authorization and business
-   validation;
-4. return a narrow, serializable result;
-5. invalidate or refresh only after the transaction commits.
+Treat every action/handler as reachable; enforce transport limits/CSRF where appropriate and never trust identity headers supplied by a browser. Backend resource authorization remains mandatory. Forward only allowed headers to a fixed backend origin. Refresh UI only after confirmed backend success; a timed-out mutation may have committed and needs reconciliation. Next.js Proxy may make optimistic redirects, never final authorization decisions.
 
-Do not use a Server Action for payment webhooks, file delivery, provider
-callbacks, public integrations, or an API contract consumed outside the rendered
-application.
-
-### Route Handlers (API routes)
-
-Use `route.ts` Route Handlers only when an HTTP boundary is required: provider
-webhooks, authentication callbacks, signed upload/download or playback grants,
-health checks, or an explicitly supported external API. Handlers validate method,
-content type, size, signature, and input before delegating to a domain use case.
-They do not implement domain rules.
-
-Payment and other webhooks must verify the raw provider payload as required by the
-selected provider, store a deduplication record, and acknowledge only according to
-the provider's retry contract. Browser return URLs are not proof of payment.
-
-Next.js Proxy, if introduced, may perform cheap redirects or optimistic session
-checks. It is never the only authorization layer; the domain use case closest to
-the data makes the authoritative decision.
-
-## Application, domain, validation, and persistence boundaries
+## Application, domain, validation and persistence boundaries
 
 The intended call chain is:
 
 ```text
-page / Server Action / Route Handler
-  -> input schema
-  -> domain command or query
-  -> authentication + resource authorization
-  -> domain policy / state transition
-  -> owned repository within transaction
-  -> narrow result / DTO
+Next.js SSR / browser -> versioned FastAPI HTTP API
+  -> Pydantic boundary validation + trusted actor context
+  -> owning Python operation + resource authorization
+  -> business policy / state transition
+  -> owned SQLAlchemy persistence in an explicit transaction
+  -> safe response schema -> generated TypeScript contract -> UI view mapping
 ```
 
-### Validation
+Workers and provider callbacks invoke the same domain operations through their respective validated entry points. Pydantic v2 validates untrusted inputs; syntactic validation is separate from current-state/business validation. Response schemas expose only approved fields, not ORM models or secrets. Pure policies should remain independent of FastAPI and SQLAlchemy where practical.
 
-Validation occurs in two stages:
+Use `router.py` for HTTP mapping, `schemas.py` for Pydantic transport models, `models.py` for owned SQLAlchemy mappings, `service.py` for use cases/transaction coordination and `policies.py` for rules. Optional focused persistence adapters separate nontrivial queries when useful. These are future conventions, not mandatory files/layers; all current backend directories are empty. See [backend README](../../backend/README.md) and mandatory [backend instructions](../../backend/AGENTS.md).
 
-- **Boundary validation** checks shape, type, length, file metadata, content type,
-  and syntactic constraints for all request, action, callback, and job inputs.
-- **Business validation** checks current state and policy, such as price caps,
-  publication status, support activity, allowed assignment transitions, refund
-  eligibility, or certificate eligibility.
-
-The same command service performs business validation regardless of whether it is
-called by a Server Action, Route Handler, administration UI, or job. The validation
-library is deliberately not selected yet.
-
-### Services
-
-Application services describe use cases and transaction boundaries. Domain
-functions model business decisions and should be pure where practical. Services
-may call another module only through that module's public interface. Do not create
-a service class for a simple function solely to satisfy a pattern.
-
-### Repositories
-
-Repositories belong to the module whose data they access. They expose use-case
-operations, not generic CRUD, and accept an explicit transaction context for
-multi-record workflows. A repository returns domain records or narrow internal
-projections, never an ORM query builder to callers.
-
-Only server-only modules may import the database client. Add a server-only guard
-to persistence and provider-adapter entry points once the implementation begins.
-React components and browser bundles never import repositories.
-
-### Public module contracts
-
-A public contract should express intent and avoid leaking persistence models:
-
-```ts
-// src/server/learning/index.ts
-export type GrantEnrollment = Readonly<{
-  studentId: string;
-  productId: string;
-  sourceOrderLineId: string;
-}>;
-
-export interface LearningCommands {
-  grantEnrollment(input: GrantEnrollment, context: TransactionContext): Promise<void>;
-  revokeEnrollmentByOrderLine(
-    orderLineId: string,
-    context: TransactionContext,
-  ): Promise<void>;
-}
-```
-
-`TransactionContext` above is a small shared database primitive, not permission to
-issue arbitrary cross-module queries. The exact API depends on the selected
-persistence tool.
+Application services name the workflow/transaction owner; participating domain commands must not independently commit. Use narrow typed inputs/results instead of ORM objects or query builders across domains. Public Python contracts may accept an explicit transaction context for atomic operations such as enrollment grant/revocation; that context does not permit cross-domain table writes. The exact concrete API follows the selected driver/session design at initialization.
 
 ## Database access and consistency
 
-The following rules apply independently of the selected database library:
+PostgreSQL, SQLAlchemy 2 and Alembic are selected; driver/pool/session configuration remains to be implemented. The following rules apply:
 
 - use opaque identifiers and explicit foreign keys between module-owned records;
 - enforce uniqueness and invariants in the database where possible;
@@ -304,18 +169,11 @@ supports it, but it does not replace application authorization.
 
 Authentication establishes a session and a stable user identifier. Authorization
 is deny-by-default and evaluates both role capability and resource relationship.
-The authentication provider and session strategy are **proposed-decision gaps**;
+The authentication provider and session strategy are **proposed-decision gaps**; the [integration contract](frontend-backend-integration.md) recommends one-origin ingress and Identity-owned revocable HttpOnly cookie sessions, without initializing them.
 OQ-032 also blocks the guest-checkout account matching policy.
 
-Every protected command or query constructs or accepts a narrow actor context:
-
-```ts
-type ActorContext = Readonly<{
-  userId: string;
-  roleIds: readonly RoleId[];
-  sessionId: string;
-}>;
-```
+Every protected command or query constructs or accepts a narrow actor context.
+The trusted Python actor contract carries a stable user identifier, verified capabilities/roles and session reference. It is constructed by Identity, never from unverified browser claims. Its concrete typed representation is an implementation detail; HTTP response schemas expose only needed fields.
 
 Role presence alone is insufficient. Examples of required resource checks include:
 
@@ -342,9 +200,7 @@ for entitlements.
 
 Expected domain outcomes use explicit typed results or known domain errors, for
 example `NOT_AUTHENTICATED`, `NOT_AUTHORIZED`, `INVALID_TRANSITION`,
-`SUPPORT_EXPIRED`, or `CONFLICT`. Entry points translate them consistently to
-form feedback, `notFound`, redirects, or HTTP status codes. Unexpected errors
-are shown through the nearest App Router error boundary.
+`SUPPORT_EXPIRED`, or `CONFLICT`. FastAPI entry points translate them into the shared sanitized HTTP error contract. Next.js maps those outcomes to form feedback, `notFound`, redirects or error boundaries. Unknown failures retain a safe correlation reference, never raw backend details.
 
 **Approved product decision PD-001:** [failure messages and traceable logging](../product/decisions.md#pd-001--clear-failure-messages-and-traceable-diagnostics).
 Each failed operation must have two appropriately separated representations:
@@ -499,10 +355,10 @@ Tests follow risk and boundary, not a fixed pyramid quota:
   assignment transitions, completion, refund effects, and authorization matrices.
 - **Application tests** exercise services with real validation and controlled
   repository/integration doubles, including rollback and idempotent replay.
-- **Repository integration tests** run against the selected database engine and
+- **Repository integration tests** run against isolated PostgreSQL and
   verify constraints, locking/concurrency behavior, transaction rollback, and
   migrations.
-- **Boundary tests** call Server Actions and Route Handlers with malformed,
+- **Boundary tests** call FastAPI endpoints and any justified thin frontend adapters with malformed,
   unauthenticated, unauthorized, duplicate, oversized, and forged inputs.
 - **Contract tests** replay representative signed provider callbacks and validate
   adapter mapping without depending on production systems.
@@ -518,9 +374,11 @@ with the open-question ID; they must not encode a guess.
 
 ## Deployment and operations
 
-The application, database migrations, and background processing must be versioned
-and observable as one release even when the hosting platform runs them as separate
-process types. Deployment must support:
+Next.js and the Python API are independently deployable runtimes in one repository.
+API/worker schema compatibility, generated HTTP contract versions and a controlled
+Alembic release step coordinate safe overlapping rollout; seven domains are not
+seven deployments. Separate Python workers and VPS/VM FFmpeg remain operational
+processes with shared domain ownership. Deployment must support:
 
 - HTTPS and secret storage outside source control;
 - separate development, test, staging, and production configuration;
@@ -534,7 +392,9 @@ process types. Deployment must support:
 - tested database and private-media backups with approved recovery objectives;
 - a rollback runbook that does not reverse an already-applied destructive schema
   change;
-- explicit runtime declarations when code depends on Node.js-only provider SDKs.
+- pinned frontend/Python runtime requirements and provider adapters inside Python owners;
+- one controlled Alembic migration step, never migrations on every API/worker startup;
+- database credentials only in backend processes, never Next.js/browser environments.
 
 The hosting platform, job invocation mechanism, observability provider, recovery
 objectives, and alert thresholds remain decisions. OQ-078 and OQ-080 block the
@@ -566,7 +426,7 @@ must be resolved before their dependent implementation slice. This is not a glob
 
 | Decision | Why architecture needs it | Product dependencies |
 | --- | --- | --- |
-| Primary database and persistence/migration tool | Defines transaction API, constraints, tests, and deployment | OQ-078, OQ-081 |
+| PostgreSQL/SQLAlchemy/Alembic initialization and Neon deployment details | Stack selected in ADR-0003; driver, pool limits, topology and migration operation remain to be configured | OQ-078, OQ-081 |
 | Authentication library/provider and session model | Defines account/session storage, verification, blocking, and multi-role actor context | OQ-013, OQ-016, OQ-032 |
 | Stripe entity/settlement/method eligibility verification and authoritative event states | PD-002 selects provider/account/currency; verify launch configuration and resolve payment/refund state rules | OQ-029, OQ-031, OQ-032, OQ-036, OQ-037 |
 | Remaining calendar/overlap and post-expiration rules | PD-004 fixes per-enrollment activation, durations, extensions and pauses; unresolved transitions must not be invented | OQ-048–OQ-049; PD-008 SLA is approved |
@@ -586,6 +446,10 @@ Approved product answers must be recorded in
 original OQ IDs, and then reflected in requirements, scope, state machines,
 and tests. Resolved entries leave the active open-question register once their
 full question and approved answer are preserved in the decision record.
+
+## Backend initialization and tooling
+
+Only structure/instructions are delivered now. Initialization is a separate task: select supported Python/dependency versions, create uv manifest/lockfile, configure Ruff/pytest/static checking (mypy recommended), choose sync/async driver, and document actual startup/test commands. No backend check can run against `.gitkeep` files. Future CI exports OpenAPI, checks compatibility and generated TypeScript drift, runs Python checks/PostgreSQL integration tests and verifies affected frontend consumers. [Recommendations](python-backend-recommendations.md) prioritize remaining technical decisions.
 
 ## Feature delivery and current evidence
 

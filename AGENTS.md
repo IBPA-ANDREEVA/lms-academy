@@ -18,6 +18,9 @@ AUTHORITATIVE SOURCES. Read only the ones relevant to the task:
 - `docs/product/open-questions.md`: only unresolved product questions. Never resolve these by guessing.
 - `docs/product/decisions.md`: confirmed product decisions; never place approved decisions or binding implementation instructions in the open-question register.
 - `docs/architecture/overview.md`, `modules.md`: application boundaries.
+- `docs/decisions/0003-python-backend-architecture.md`: accepted two-runtime architecture; supersedes earlier runtime/code-placement provisions.
+- `docs/architecture/frontend-backend-integration.md`: HTTP/OpenAPI, session, upload and job boundaries.
+- `backend/AGENTS.md`, `backend/README.md`: required Python instructions and current empty implementation status.
 - `docs/architecture/public-sitemap.md`, `public-page-structure.md`, `public-user-flows.md`, `public-open-questions.md`: public routes, page contents, transitions, unresolved URL/policy details.
 - `docs/design/README.md`: DESIGN ENTRY POINT. Follow its source precedence for visual work.
 - `docs/design/DECISIONS.md`: selected visual direction with exact approval scope.
@@ -48,11 +51,13 @@ PRODUCT SAFETY:
 ARCHITECTURE:
 - `src/app`: routes and entry points only.
 - `src/features/<feature>`: frontend pages, numbered sections, components, presentation and UI state. Preserve existing owners; do not migrate into route-local or backend-domain folders.
-- `src/server/{identity,catalog,commerce,learning,assignments,certificates,notifications}`: authoritative business rules, resource authorization, use cases and owned persistence operations; use narrow server-only public interfaces. No React UI or generic service/repository per table.
-- Server Components may compose domain DTOs; frontend code never owns pricing, access, refund, completion or other server policy. Client code imports only safe type contracts, never server runtime exports. See `docs/decisions/0002-frontend-server-separation.md`.
+- `backend/app/modules/{identity,catalog,commerce,learning,assignments,certificates,notifications}`: Python authoritative business rules, resource authorization, use cases and owned persistence operations. Preserve the domain mapping and narrow local public interfaces; no React UI or generic service/repository per table.
+- Next.js Server Components consume FastAPI HTTP/JSON contracts and compose safe view data. Frontend/Next.js code never accesses authoritative tables or owns pricing, access, refunds, completion, authentication authority or other backend policy. Generate TypeScript API types/client from FastAPI OpenAPI when integration begins; do not manually duplicate Python API schemas. Temporary existing Catalog view types are presentation/preview compatibility, not an authoritative API. See ADR-0003 and the integration contract.
 - `src/components/ui`: truly generic reusable primitives. Shared product-specific components belong in a clearly documented shared feature/composition layer; do not put commerce rules in `ui`.
-- `src/db`: database plumbing; `src/lib`: small technical utilities.
-- Modular monolith, Next.js App Router, TypeScript, Tailwind 4, pnpm. Keep dependencies justified; do not introduce architectural changes for design alone.
+- `backend/app/db`: SQLAlchemy connection/session/transaction plumbing; domain mappings stay with their owners; `backend/alembic`: reviewed migrations. The existing empty `src/db` placeholder is retired, not permission for Next.js database access. `src/lib` contains small frontend technical/SEO utilities.
+- `backend/app/api` mounts thin FastAPI endpoints. `backend/app/jobs` wires durable Python workers; domain rules remain with their owners. Keep `src/app/api` only for a justified thin transport/session-forwarding boundary, never a competing business API or Stripe webhook owner.
+- One repository, independently deployable Next.js 16 / React / TypeScript / Tailwind 4 / pnpm frontend and Python FastAPI modular monolith. Backend: Pydantic v2, SQLAlchemy 2, Alembic, PostgreSQL (Neon intended), uv, pytest, Ruff and a configured static checker (mypy proposed). No Python runtime/dependencies are initialized yet. Preserve separate Python workers and PD-003 FFmpeg runtime; the seven domains are not microservices. Keep dependencies justified.
+- Root instructions apply project-wide; `backend/AGENTS.md` additionally governs every backend implementation. Cross-runtime tasks read both and relevant contracts, coordinate schema compatibility, and verify affected consumers. Do not apply Next.js conventions to Python or move frontend owners during integration.
 
 PAGE → SECTION → COMPONENT HIERARCHY:
 - Divide each page into clearly owned sections. Page files should primarily compose sections rather than contain their full implementations.
@@ -78,7 +83,7 @@ ICON RULE: `public/icons/{line,filled,duoline,duotone,mono,broken}/...svg` conta
 GENERAL WORKFLOW:
 - Inspect code and diff first. Make focused changes; preserve unrelated work.
 - Read installed `node_modules/next/dist/docs/` for affected Next.js APIs per the auto-generated block.
-- Run appropriate `pnpm lint`, `pnpm exec tsc --noEmit`, `pnpm build`, and feature tests where possible; disclose skipped checks.
+- Run appropriate frontend `pnpm lint`, `pnpm exec next typegen`, `pnpm exec tsc --noEmit`, `pnpm build`, and feature tests; disclose skipped checks. After Python initialization, run configured uv/Ruff/static-checker/pytest checks plus PostgreSQL migration/integration tests where affected. Contract changes require OpenAPI compatibility/generation and affected frontend checks. Empty backend structure has no runnable backend checks.
 - Do not delete source documentation, artwork, student data or unrelated files on your own.
 - Do not commit, merge, deploy or force-push without explicit authorization.
 
@@ -94,11 +99,11 @@ FRONTEND WORKFLOW (MANDATORY):
 
 
 CURRENT FRONTEND DISCOVERY AND SHARED-CHANGE SAFETY (source audit 2026-11-02):
-- Start with `rg --files src/app src/features src/components/ui` and the four frontend registries; verify imports/JSX consumers, not only filenames or old test assertions. Current presentation features are `home`, `catalog`, `course-detail`, `public-shell`, `identity`, `commerce`, `component-preview`; `src/server` is still planned. Empty `.gitkeep` directories are not implementations.
+- Start with `rg --files src/app src/features src/components/ui` and the four frontend registries; verify imports/JSX consumers, not only filenames or old test assertions. Current presentation features are `home`, `catalog`, `course-detail`, `public-shell`, `identity`, `commerce`, `component-preview`; the Python backend under `backend/` is still empty. The retired TypeScript Catalog boundary has frontend-only disconnected handling/types in `features/catalog`; it is not an implemented service. Empty `.gitkeep` directories are not implementations.
 - Root layout owns CartProvider → PublicHeader → PublicMotion(route children) → PublicSiteFooter. Catalog leaves return null and their persistent route-group layout composes CatalogPage. Both detail route kinds share DetailPage; conditional sections may not render. Do not add duplicate route-local page implementations.
 - Generic controls: Button/ButtonLink, FormControls and SectionHeading in `src/components/ui`. PageContainer and shell compositions stay in `features/public-shell`; CourseCard/CategoryNavigation in catalog; cart rows/summary/preview in commerce; AuthModal in identity. Home carousel mechanics stay home-local; detail anatomy stays detail-local.
 - Before changing a shared API/style, list its actual consumers, inspect default and special variants, preserve server/client boundaries, and verify affected routes plus `/preview/components`. Record props/import path/consumers/status in the registry. A single repeated element or visual resemblance alone does not justify extraction.
-- Distinguish WORKING UI mechanics, DEMO fixture behavior, MISSING service, BROKEN behavior, NOT VERIFIED paths and OUT OF SCOPE phases. Current catalog/detail fixtures have no visible badges under the recorded owner follow-up; this does not approve their production publication. Commerce demo actions render only in development on `/preview/components`.
+- Distinguish WORKING UI mechanics, DEMO fixture behavior, MISSING service, BROKEN behavior, NOT VERIFIED paths and OUT OF SCOPE phases. Current catalog/detail fixtures have no visible badges under the recorded owner follow-up; this does not approve their production publication. Commerce demo actions render only when `TEST_PREVIEW=true`, including on `/preview/components`; NODE_ENV is not authorization.
 - Verify both document overflow and clipped descendants/text ranges at narrow widths; `overflow: clip/hidden` can hide defects while `scrollWidth <= innerWidth` passes. Old test expectations can be stale; report exact failure and current-source evidence rather than silently changing product behavior.
 - Keep audit recommendations separate from implementation. The current evidence/report is `docs/qa/LAND01-public-site-audit-2026-11-02.md`; browser captures do not establish human visual approval.
 
@@ -127,6 +132,6 @@ Additional explicit owner authorization (same session): completed notes must als
 
 ## Catalog preview and SEO maintenance (LAND03/LAND04)
 
-Read `docs/architecture/catalog-preview-contract.md` before catalog/cart work. `TEST_PREVIEW=true` alone enables isolated browser-local demo data/control; false/missing must use the Catalog server adapter with distinct empty/unavailable outcomes. Never restore a fixture fallback or use NODE_ENV as preview authorization. Demo actions never create payments, orders or enrollment. Rebuild after mode changes.
+Read `docs/architecture/catalog-preview-contract.md` before catalog/cart work. `TEST_PREVIEW=true` alone enables isolated browser-local demo data/control; false/missing uses the disconnected frontend Catalog read boundary and remains unavailable until real FastAPI integration, preserving distinct empty/unavailable outcomes. No TypeScript business backend or fixture fallback may be restored. Never use NODE_ENV as preview authorization. Demo actions never create payments, orders or enrollment. Rebuild after mode changes.
 
 For every creation, modification, rename or removal of a public/catalog/course route or relevant SEO component, **review `docs/seo/README.md` and follow `docs/seo/verification-checklist.md`**. Update metadata as needed; review canonicals and indexability; verify sitemap behavior and applicable structured data; keep preview/unpublished content non-indexable; run available SEO checks; include SEO changes, results and unresolved issues in the final report. Do not duplicate the guide here or invent the production origin.

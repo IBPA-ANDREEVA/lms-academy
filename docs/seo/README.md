@@ -16,7 +16,7 @@ Actual public page allowlist: `/`, `/courses`, `/mini-courses`. Catalog query pa
 
 `src/app/robots.ts` uses the file convention. Preview or missing origin disallows crawling everywhere in addition to page noindex. A real configured site allows public crawling, including public noindex utilities so bots can read their directives, while discouraging crawling of private namespaces/API. Robots is not confidentiality or authorization. Never use a robots Disallow as a substitute for noindex, and remember blocking crawling can prevent a crawler from observing noindex. A leaked preview deployment requires removal/access restriction procedures, not a claim that robots guarantees erasure.
 
-`src/app/sitemap.ts` includes only the three implemented static discovery pages plus `selectPublished` real records from Catalog. Source unavailability retains static routes. No fixture slugs, query variants, cart, auth, private, preview or absent legal URLs appear. Missing domain or preview emits no URLs. Product lastModified uses content updatedAt; do not fabricate freshness for static pages. Backend integration must implement actual publication/unpublication cache invalidation/request-time reads before real records can change; see the catalog contract.
+`src/app/sitemap.ts` includes only the three implemented static discovery pages plus real Catalog projections passing the defensive `isIndexableProduct` SEO check. Source unavailability retains static routes. No fixture slugs, query variants, cart, auth, private, preview or absent legal URLs appear. Missing domain or preview emits no URLs. Product lastModified uses content updatedAt; do not fabricate freshness for static pages. Backend integration must implement actual publication/unpublication cache invalidation/request-time reads before real records can change; see the catalog contract.
 
 ## Structured data
 
@@ -39,3 +39,7 @@ Document lang remains ru and OG locale ru_RU. Course language availability is no
 ## Mandatory maintenance behavior
 
 For every public route, catalog/detail, metadata, structured-data, sitemap or relevant component change: read this guide, inventory real routes and consumers, update meaningful metadata, verify canonical/indexing, review sitemap and schema, ensure unpublished/preview content remains excluded, execute available SEO checks, and record results/blockers in the task summary. See the checklist for exact commands and rendered-HTML checks. Build success alone proves neither crawler indexing nor human visual approval.
+
+## Python backend boundary · 2026-11-03
+
+ADR-0003 removes TypeScript backend policy. `src/lib/seo/product-indexability.ts` owns only defensive metadata/schema/sitemap exclusion; it does not authorize publication, sale or access. Temporary input shapes come from `src/features/catalog/catalog-view-types.ts`; the disconnected `catalog-source.ts` supplies no real products. Future FastAPI Catalog owns the authoritative public projection; generated OpenAPI integration must preserve this guide and implement invalidation. Routes, canonicals, noindex rules and configured-origin requirements remain unchanged.

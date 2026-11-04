@@ -1,3 +1,0 @@
-module.exports=[63696,a=>{"use strict";var b=a.i(90688),c=a.i(99570);a.i(70724);var d=a.i(47188);a.s(["default",0,function({reset:a}){return(0,b.jsx)("main",{id:"main-content",children:(0,b.jsx)(d.f,{size:"content",children:(0,b.jsxs)("section",{role:"alert",style:{paddingBlock:"80px 120px"},children:[(0,b.jsx)("h1",{children:"Не удалось загрузить каталог"}),(0,b.jsx)("p",{children:"Попробуйте ещё раз. Выбранные фильтры останутся в адресе страницы."}),(0,b.jsx)(c.K,{appearance:"cut",onClick:a,children:"Повторить"})]})})})}])}];
-
-//# sourceMappingURL=src_app_%28catalog%29_error_tsx_1a_4h20x5dta_._.js.map

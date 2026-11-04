@@ -1,5 +1,7 @@
 # ADR-0002: Frontend features and server business domains
 
+> 2026-11-03 status update: [ADR-0003](0003-python-backend-architecture.md) supersedes the Next.js/TypeScript backend runtime, backend code placement and direct frontend/domain calls below. Seven-domain ownership, security, consistency and frontend separation remain. The original decision body is retained as history; use ADR-0003 for current implementation.
+
 - Status: Accepted
 - Date: 2026-10-30
 - Authority: explicit owner request, “LMS Academy: Architecture & Development Plan Restructuring”, sections 3–8.

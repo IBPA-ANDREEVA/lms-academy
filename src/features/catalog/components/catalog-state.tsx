@@ -2,7 +2,7 @@
 import { useRouter } from "next/navigation";
 import { useTransition } from "react";
 import { Button, ButtonLink } from "@/components/ui/button";
-import type { CatalogResult } from "@/server/catalog/contracts";
+import type { CatalogResult } from "@/features/catalog/catalog-view-types";
 import styles from "./catalog-state.module.css";
 
 /** Shared by catalog result sections, home discovery and unavailable detail. */

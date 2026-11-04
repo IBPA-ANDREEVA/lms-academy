@@ -53,3 +53,22 @@ Static SEO evidence confirms: normal-mode canonicals for the three discovery rou
 ## Remaining work
 
 Python initialization, authentication/session decision, real Catalog publication/readiness/persistence and API integration, generated contracts, Commerce pricing/payment/enrollment, worker runtime and production operations are missing implementation. The existing frontend reports unavailable until that integration exists; it does not hide the dependency with fixtures. Product-policy gaps, legal/content approvals, actual production origin and deployment/crawler verification remain unchanged. Preserve `TEST_PREVIEW=true` as the sole demo switch and rebuild on mode changes.
+
+
+## Branch consolidation follow-up — 2026-11-04
+
+Owner explicitly requested switching to `feat/backend-setup`, applying the saved migration, resolving conflicts, committing and pushing. The branch already contained the new migration files in `565247f`; the remaining 31 tracked-file changes were saved in stash `19b3c8a5b8ba62baae2d530204d5269584d5d8b4` on `codex/base02-a-entity-map`.
+
+Applied that stash and resolved the sole conflict in `modules.md`. The BASE02-A/PD-013 paragraph was unchanged between the stash parent and stash content and referenced entity-map work absent from this branch. It remains on its original branch; the resolution retains the Python migration snapshot without importing unrelated policy work or broken links. Verified every restored file against the stash, allowing only removal of that inherited paragraph.
+
+Removed all 478 accidentally committed `.next-merge-check` files from the Git index with `git rm --cached`, preserving local copies. Added `/.next-*/` to Git ignores and `.next-*/**` to ESLint ignores for isolated generated builds. No build artifacts remain tracked in the resulting tree. This is an additive cleanup commit, not a history rewrite: earlier artifact blobs remain in Git history. The stash is retained as a recovery copy.
+
+Fresh verification on the consolidated branch:
+
+- `pnpm lint`: PASS with the permanent generated-output ignore rule.
+- `node --test tests/catalog-contract.test.mjs tests/demo-cart.test.mjs tests/product-indexability.test.mjs`: PASS, four tests; existing Node module-type warnings only.
+- `pnpm build`: PASS separately for `TEST_PREVIEW=false` and `true`, using `.next-migration-restore-real` / `.next-migration-restore-preview` and reserved test origin `https://academy.example.test`.
+- `pnpm exec next typegen` and `pnpm exec tsc --noEmit`: PASS; verification-only tsconfig additions restored afterward.
+- Static artifacts: PASS for canonical/noindex/schema/demo-control behavior across 12 static pages, sitemap exclusion and preview robots. No production origin was inferred.
+- Conflict/import/structure audit and `git diff --cached --check`: PASS. All migration changes are together; no TypeScript server imports or backend Python implementation exists.
+- Live browser checks/screenshots were not rerun; the earlier server-start policy restriction and resulting coverage limits remain recorded above. No new UI/style changes or visual-approval claims.
