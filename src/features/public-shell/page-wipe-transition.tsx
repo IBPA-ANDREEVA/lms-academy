@@ -6,6 +6,7 @@ import { gsap } from "gsap";
 import { useGSAP } from "@gsap/react";
 import { publicMotion as motion } from "./motion-tokens";
 import styles from "./public-motion.module.css";
+import { motionReadyEvent, releaseMotionCover } from "./motion-handoff";
 
 gsap.registerPlugin(useGSAP);
 const publicPage = (path: string) => /^\/(?:$|(?:mini-)?courses(?:\/[^/]+)?$)/.test(path);
@@ -57,7 +58,7 @@ export function PageWipeTransition({ content, pathname, loading, onActive }: {
       .filter(element => {
         const box = element.getBoundingClientRect();
         return box.height > 0 && box.bottom > 0 && box.top < innerHeight
-          && !element.closest('[data-learning-offers],[data-sticky-story]');
+          && !element.closest('[data-learning-offers],[data-sticky-story],[data-home-entrances],[data-motion-reveal]');
       });
     const focusDestination = (request: Navigation) => {
       const focused = document.activeElement;
@@ -73,6 +74,8 @@ export function PageWipeTransition({ content, pathname, loading, onActive }: {
       const request = navigation;
       if (!request || !request.submitted || revealed || committedPath !== request.path) return;
       if (Array.from(page.querySelectorAll<HTMLElement>("[data-route-loading]")).some(element => element.getClientRects().length > 0)) return;
+      const home = Array.from(page.querySelectorAll<HTMLElement>("[data-home-entrances]")).find(element => element.getClientRects().length > 0);
+      if (home && home.dataset.homeMotionReady !== "true") return;
       if (request.hash && !request.positioned) {
         if (!request.anchorRequested) {
           request.anchorRequested = true;
@@ -96,6 +99,7 @@ export function PageWipeTransition({ content, pathname, loading, onActive }: {
       clearTimeout(timeout); clearTimeout(waiting);
       delete cover.dataset.waiting;
       timeline?.kill(); clearTargets();
+      releaseMotionCover(cover);
       if (preference.matches || request.instant) { finish(); focusDestination(request); return; }
       targets = visibleContent();
       timeline = gsap.timeline({ defaults: { duration: motion.wipeReveal, ease: motion.ease }, onComplete: () => { finish(); focusDestination(request); } })
@@ -117,6 +121,7 @@ export function PageWipeTransition({ content, pathname, loading, onActive }: {
       onActive(true);
       page.dataset.routeMotion = "wipe";
       cover.hidden = false;
+      cover.dataset.motionPhase = "covering";
       cover.dataset.direction = request.direction === 1 ? "forward" : "back";
       cover.dataset.axis = request.vertical ? "vertical" : "horizontal";
       // Prefetch runs alongside the outgoing animation, using Next's own cache.
@@ -132,6 +137,7 @@ export function PageWipeTransition({ content, pathname, loading, onActive }: {
         // Leave mounted content usable while Next resolves a slow destination.
         // Keep the request until commit so hash positioning cannot be discarded.
         cover.hidden = true;
+        releaseMotionCover(cover);
         timeline?.kill(); clearTargets();
         delete page.dataset.routeMotion;
       }, 5000);
@@ -171,6 +177,7 @@ export function PageWipeTransition({ content, pathname, loading, onActive }: {
       request.instant = true;
       timeline?.kill(); clearTargets();
       cover.hidden = true;
+      releaseMotionCover(cover);
       submit(request);
       reveal();
     };
@@ -190,6 +197,7 @@ export function PageWipeTransition({ content, pathname, loading, onActive }: {
     // have one transition owner even when a mounted feature handles anchors.
     window.addEventListener("click", click, true);
     window.addEventListener("popstate", pop);
+    window.addEventListener(motionReadyEvent, reveal);
     preference.addEventListener("change", interrupt);
     window.addEventListener("pagehide", interrupt);
     window.addEventListener("keydown", key);
@@ -198,6 +206,7 @@ export function PageWipeTransition({ content, pathname, loading, onActive }: {
       controls.current = null; finish();
       window.removeEventListener("click", click, true);
       window.removeEventListener("popstate", pop);
+      window.removeEventListener(motionReadyEvent, reveal);
       preference.removeEventListener("change", interrupt);
       window.removeEventListener("pagehide", interrupt);
       window.removeEventListener("keydown", key);

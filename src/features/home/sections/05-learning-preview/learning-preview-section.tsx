@@ -11,7 +11,7 @@ export function LearningPreviewSection() {
           <h2 id="learning-preview-title" className={styles.heading}>
             <span>КАК ЭТО</span><span>РАБОТАЕТ</span>
           </h2>
-          <p className={styles.description}>
+          <p data-motion-body className={styles.description}>
             Посмотрите пример урока, добавьте фото работы и узнайте, как выглядит обратная связь куратора.
           </p>
         </div>

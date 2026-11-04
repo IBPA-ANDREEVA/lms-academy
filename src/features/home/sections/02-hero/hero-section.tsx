@@ -22,7 +22,7 @@ export function HeroSection() {
       <div className={styles.plumTriangle} aria-hidden="true" />
       <div className={styles.boundaryLine} aria-hidden="true" />
       <PageContainer size="wide" className={styles.content}>
-        <p className={styles.supporting}>
+        <p data-home-supporting className={styles.supporting}>
           ПРОФЕССИОНАЛЬНОЕ<br />
           БЬЮТИ-ОБУЧЕНИЕ<br />
           НА РУССКОМ И АНГЛИЙСКОМ

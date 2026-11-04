@@ -120,7 +120,7 @@ export function LearningPreviewDemo() {
   }
 
   return (
-    <div className={styles.demo} ref={demoRef}>
+    <div className={styles.demo} ref={demoRef} data-home-learning-demo>
       <div className={styles.stageCurtain} data-learning-curtain aria-hidden="true" />
       <noscript><p className={styles.helper}>Сначала изучите урок и материалы, затем выполните практическое задание. На основном курсе куратор проверяет работу и даёт обратную связь. Интерактивный пример доступен с JavaScript.</p><style>{`#learning-preview [role="tablist"], #learning-preview button{display:none!important}`}</style></noscript>
       <div className={styles.tabs} role="tablist" aria-label="Этапы обучения">
