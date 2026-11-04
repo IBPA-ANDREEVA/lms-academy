@@ -82,12 +82,15 @@
  .carouselControls { margin-top: 0; gap: 12px; }
 }
 @media(max-width:760px) {
- .showcase nav ul { flex-wrap:wrap; max-width:100%; overflow:visible; padding-bottom:0; gap:8px; }
- .showcase nav li { flex:1 1 auto; }
- .showcase nav button { justify-content:center; width:100%; padding-inline:12px; }
- .track { display:flex; width:calc(100% + var(--page-gutter)); margin:0; padding:4px 12px 12px 0; gap:16px; overflow-x:auto; scroll-snap-type:x mandatory; scrollbar-width:none; }
+ .showcase nav ul { flex-wrap:nowrap; max-width:100%; overflow-x:auto; padding:3px 3px 8px; gap:8px; scrollbar-width:thin; }
+ .showcase nav li { flex:0 0 auto; }
+ .showcase nav button { justify-content:center; width:auto; padding-inline:12px; white-space:nowrap; }
+ .track { display:flex; width:calc(100% + 2 * var(--page-gutter)); margin-inline:calc(-1 * var(--page-gutter)); padding:4px var(--page-gutter) 12px; scroll-padding-inline:var(--page-gutter); gap:16px; overflow-x:auto; scroll-snap-type:x mandatory; scrollbar-width:none; }
  .track::-webkit-scrollbar { display:none; }
- .cardFrame,.cardFrame:first-child { flex:0 0 calc(100% - 48px); scroll-snap-align:start; }
+ .cardFrame,.cardFrame:first-child { flex:0 0 calc(100% - 16px); scroll-snap-align:start; }
  .carouselControls > button { display:none; }
  .carouselControls { display:flex; }
 }
+
+.seeAll { display: flex; justify-content: flex-end; margin-top: 28px; }
+@media(max-width:760px) { .seeAll { justify-content: flex-start; margin-top: 20px; } }

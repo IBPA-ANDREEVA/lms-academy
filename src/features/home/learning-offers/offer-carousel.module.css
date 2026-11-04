@@ -16,7 +16,7 @@
 @media (max-width: 1000px) { .item { flex-basis: calc((100% - 20px) / 2); } }
 @media (max-width: 650px) {
   .controls { display: none; }
-  .track { gap:16px; margin:0 calc(-1 * var(--page-gutter)) 0 0; padding:4px 16px 14px 0; }
+  .track { gap:16px; margin-inline:calc(-1 * var(--page-gutter)); padding:4px var(--page-gutter) 14px; scroll-padding-inline:var(--page-gutter); }
   .item { flex-basis: min(80vw, 380px); }
 }
 
