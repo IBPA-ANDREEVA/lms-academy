@@ -1,7 +1,5 @@
 import Image, { type ImageProps } from "next/image";
 import Link from "next/link";
-import type { ReactNode } from "react";
-import { Button, ButtonLink } from "@/components/ui/button";
 import styles from "./course-card.module.css";
 
 export type CourseCardProps = {
@@ -20,7 +18,6 @@ export type CourseCardProps = {
   };
   headingLevel?: "h2" | "h3";
   status?: "available" | "owned" | "in-cart" | "unavailable" | "stale";
-  action?: ReactNode;
   variant?: "default" | "brutalist" | "compact";
   demonstration?: boolean;
 };
@@ -33,18 +30,17 @@ const statusLabels = {
   stale: "Условия изменились. Проверьте их на странице курса.",
 };
 
-/** Presentation only. Commerce supplies an authorized action and server-formatted price. */
+/** Presentation only: one full-card detail link and server-formatted facts. */
 export function CourseCard({
   course,
   headingLevel: Heading = "h3",
   status = "available",
-  action,
   variant = "default",
   demonstration = false,
 }: CourseCardProps) {
   const detailPreview = Boolean(course.href);
   return (
-    <article className={`${styles.card} ${styles[variant]} ${detailPreview ? styles.clickable : ""}`}>
+    <article data-demonstration={demonstration || undefined} className={`${styles.card} ${styles[variant]} ${detailPreview ? styles.clickable : ""}`}>
       {course.image ? (
         <div className={styles.media}>
           <Image
@@ -57,7 +53,6 @@ export function CourseCard({
       ) : variant !== "default" ? <div className={styles.media} aria-hidden="true"><span className={styles.imageMark}>◇</span></div> : null}
       <div className={styles.content}>
 
-        {demonstration && <p className={styles.meta}>Демо · не продаётся</p>}
         <p className={styles.meta}>
           {[
             course.kind === "mini-course" ? "Мини-курс" : "Курс",
@@ -86,26 +81,7 @@ export function CourseCard({
         {status !== "available" && (
           <p className={styles.meta}>{statusLabels[status]}</p>
         )}
-        {status === "available" && action && !demonstration && (
-          <div className={styles.action}>{action}</div>
-        )}
-        {demonstration && (
-          <div className={styles.action}>
-            {course.href ? (
-              <ButtonLink
-                href={course.href}
-                appearance={variant === "compact" ? "neoBrutalist" : "cut"}
-                size={variant === "compact" ? "sm" : "md"}
-                intent="secondary"
-                aria-label={variant === "compact" ? `Открыть мини-курс: ${course.title}` : undefined}
-              >
-                {variant === "compact" ? "→" : "Подробнее →"}
-              </ButtonLink>
-            ) : (
-              <Button appearance="cut" intent="secondary" disabled>После публикации</Button>
-            )}
-          </div>
-        )}
+
       </div>
     </article>
   );

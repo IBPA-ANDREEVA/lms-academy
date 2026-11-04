@@ -144,7 +144,6 @@ function Fixture() {
                   "Очень длинное русское название учебного курса для проверки переноса текста",
               }}
               status="owned"
-              action={<Button>Не должно отображаться</Button>}
             />
           </div>
         </PageContainer>

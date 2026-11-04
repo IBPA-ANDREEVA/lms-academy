@@ -1,9 +1,12 @@
-.section{padding-block:55px 100px;min-height:500px}.heading{display:flex;align-items:end;justify-content:space-between;gap:18px;margin-bottom:30px}.heading h2{margin:0;font:800 clamp(40px,5vw,72px)/1.1 var(--font-unbounded)}.heading p{margin:0;color:var(--muted)}.grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:20px}.empty{border:2px solid var(--text);padding:clamp(26px,5vw,64px);max-width:740px}.empty h3{margin:0 0 10px;font-size:25px}.empty p{color:var(--muted)}.empty button{background:none;border:0;border-bottom:1px solid;cursor:pointer;font:700 15px var(--font-manrope);padding:4px 0}
-@media(max-width:1200px){.grid{grid-template-columns:repeat(3,1fr)}}@media(max-width:800px){.grid{grid-template-columns:repeat(2,1fr)}}@media(max-width:550px){.heading{display:block}.heading h2{font-size:36px}.grid{grid-template-columns:1fr}.section{padding-block:36px 70px}}
+.section{padding-block:28px 80px;min-height:500px}.heading{display:flex;align-items:end;justify-content:space-between;gap:18px;margin-bottom:16px}.heading :is(h1,h2){margin:0;font:700 clamp(24px,2.5vw,32px)/1.2 var(--font-manrope)}.heading p{margin:0;color:var(--muted)}.grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:20px}.empty{border:2px solid var(--text);padding:clamp(26px,5vw,64px);max-width:740px}.empty h3{margin:0 0 10px;font-size:25px}.empty p{color:var(--muted)}.empty button{background:none;border:0;border-bottom:1px solid;cursor:pointer;font:700 15px var(--font-manrope);padding:4px 0}
+@media(max-width:1200px){.grid{grid-template-columns:repeat(3,1fr)}}@media(max-width:800px){.grid{grid-template-columns:repeat(2,1fr)}}@media(max-width:550px){.heading{display:block}.heading :is(h1,h2){font-size:24px}.grid{grid-template-columns:1fr}.section{padding-block:24px 64px}}
 @media(max-width:600px) {
  .miniGrid { grid-template-columns:repeat(2,minmax(0,1fr)); gap:22px 14px; padding-right:5px; }
  .miniGrid article > div:nth-child(2) { padding:12px; }
  .miniGrid h3 { font-size:17px; overflow-wrap:normal; }
  .miniGrid article p { font-size:12px; }
- .heading h2 { font-size:clamp(26px,8.2vw,40px); overflow-wrap:anywhere; }
+ .heading :is(h1,h2) { font-size:24px; overflow-wrap:normal; }
 }
+
+.heading :is(h1,h2) { font-size: clamp(32px, 4vw, 52px); letter-spacing: -.045em; line-height: 1.15; }
+.resultCount { margin: 0 0 24px; color: var(--muted); font-size: 13px; }

@@ -1,19 +1,11 @@
-import Image from "next/image";
-import photo from "../../../../../public/ibpa/catalog-newspaper-reference.png";
 import { PageContainer } from "@/features/public-shell";
-import { ButtonLink } from "@/components/ui/button";
 import styles from "./introduction-section.module.css";
 
+/** Compact catalog entry; format and filter controls follow immediately. */
 export function IntroductionSection() {
-  return <section className={styles.hero} aria-labelledby="catalog-title">
-    <PageContainer reveal size="wide" className={styles.content}>
-      <div className={styles.copy}>
-        <p className={styles.eyebrow}>КАТАЛОГ ОБУЧЕНИЯ</p>
-        <h1 id="catalog-title">ОБУЧЕНИЕ<br /><span>В БЬЮТИ.</span></h1>
-        <p className={styles.summary}>Практика с куратором или короткие уроки в записи. Найдите подходящий формат обучения.</p>
-        <ButtonLink href="#catalog-filters" appearance="cut" intent="primary">Выбрать обучение →</ButtonLink>
-      </div>
+  return <section className={styles.introduction} aria-labelledby="catalog-title">
+    <PageContainer size="wide">
+      <h1 id="catalog-title">Каталог обучения</h1>
     </PageContainer>
-    <div className={styles.photo}><Image src={photo} alt="Две женщины читают газеты на бирюзовом фоне" fill priority sizes="(max-width: 760px) 100vw, 52vw" /></div>
   </section>;
 }

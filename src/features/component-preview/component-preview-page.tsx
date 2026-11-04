@@ -148,7 +148,7 @@ export function ComponentPreviewPage() {
       <PreviewSection
         id="public-header"
         name="PublicHeader"
-        description="Откройте «Курсы», проверьте Tab и Escape. На узком экране навигация переходит во вторую строку."
+        description="Откройте «Обучение», проверьте Tab и Escape. На мобильном экране откройте меню: направления собраны в карточки без дополнительных меток."
         fullWidth
       >
         <div className={styles.headerStage}>
@@ -364,11 +364,6 @@ export function ComponentPreviewPage() {
               language: "RU",
             }}
             status={courseStatus}
-            action={
-              <Button appearance="cut" onClick={() => setCourseStatus("in-cart")}>
-                Добавить — демо
-              </Button>
-            }
           />
           <CourseCard
             variant="compact"
@@ -380,16 +375,10 @@ export function ComponentPreviewPage() {
               language: "RU",
             }}
             status={courseStatus}
-            action={
-              <Button appearance="cut" onClick={() => setCourseStatus("in-cart")}>
-                Добавить — демо
-              </Button>
-            }
           />
         </div>
         <p id="course-note" className={styles.note}>
-          Кнопка меняет только состояние примера. Покупка и добавление в
-          реальную корзину не выполняются.
+          Карточка целиком открывает ссылку. Состояние примера меняется переключателем выше; покупка не выполняется.
         </p>
       </PreviewSection>
 
