@@ -1,9 +1,10 @@
 import Link from "next/link";
-import { Children, type ComponentProps, type ReactNode } from "react";
+import { Children, isValidElement, type ComponentProps, type ReactNode } from "react";
 import styles from "./button.module.css";
 
 type Appearance = {
   appearance?: "neoBrutalist" | "cut" | "minimal";
+  cutVariant?: "line" | "soft";
   intent?: "primary" | "secondary" | "destructive";
   size?: "sm" | "md" | "lg";
   inverse?: boolean;
@@ -13,6 +14,7 @@ type Appearance = {
 
 function appearanceClasses({
   appearance = "minimal",
+  cutVariant = "line",
   intent = "primary",
   size = "md",
   inverse,
@@ -22,6 +24,7 @@ function appearanceClasses({
   return [
     styles.button,
     styles[appearance],
+    appearance === "cut" && styles[cutVariant === "soft" ? "cutSoft" : "cutLine"],
     styles[intent],
     styles[size],
     inverse && styles.inverse,
@@ -34,11 +37,18 @@ function appearanceClasses({
 
 /** Give text-supplied terminal arrows the same independent layer as explicit arrow spans. */
 function CutContent({ children }: { children: ReactNode }) {
-  return Children.map(children, child => {
-    if (typeof child !== "string") return child;
-    const match = child.match(/^([\s\S]*?)([→↗←↘↙])\s*$/);
-    return match ? <>{match[1]}<span aria-hidden="true" className={styles.arrow}>{match[2]}</span></> : child;
+  const parts = Children.toArray(children).map(child => {
+    if (isValidElement<{ "aria-hidden"?: boolean | "true" }>(child) && child.props["aria-hidden"]) return { text: null, arrow: child };
+    if (typeof child !== "string") return { text: child };
+    const match = child.match(/^([\s\S]*?)([→↗←↘↙↓↑])\s*$/);
+    return match ? { text: match[1].trimEnd(), arrow: match[2] } : { text: child };
   });
+  return <><span className={styles.cutText}>{parts.map(part => part.text)}</span><span aria-hidden="true" className={styles.arrow}>{parts.find(part => part.arrow)?.arrow ?? "→"}</span></>;
+}
+
+/** One semantic label shared by both reference-based Cut treatments. */
+function CutSurface({ children }: { children: ReactNode }) {
+  return <span className={styles.label}><CutContent>{children}</CutContent></span>;
 }
 
 export type ButtonProps = ComponentProps<"button"> &
@@ -46,6 +56,7 @@ export type ButtonProps = ComponentProps<"button"> &
 
 export function Button({
   appearance,
+  cutVariant,
   intent,
   size,
   inverse,
@@ -63,6 +74,7 @@ export function Button({
       type={type}
       className={appearanceClasses({
         appearance,
+        cutVariant,
         intent,
         size,
         inverse,
@@ -72,8 +84,7 @@ export function Button({
       disabled={disabled || loading}
       aria-busy={loading || undefined}
     >
-      <span className={styles.label}>{appearance === "cut" ? <CutContent>{children}</CutContent> : children}</span>
-      {appearance === "cut" && <span className={styles.cutDepth} aria-hidden="true" />}
+      {appearance === "cut" ? <CutSurface>{children}</CutSurface> : <span className={styles.label}>{children}</span>}
       {loading && (
         <span className={styles.pending} aria-hidden="true">
           …
@@ -87,6 +98,7 @@ export type ButtonLinkProps = ComponentProps<typeof Link> & Appearance;
 
 export function ButtonLink({
   appearance,
+  cutVariant,
   intent,
   size,
   inverse,
@@ -100,6 +112,7 @@ export function ButtonLink({
       {...props}
       className={appearanceClasses({
         appearance,
+        cutVariant,
         intent,
         size,
         inverse,
@@ -107,8 +120,7 @@ export function ButtonLink({
         className,
       })}
     >
-      <span className={styles.label}>{appearance === "cut" ? <CutContent>{children}</CutContent> : children}</span>
-      {appearance === "cut" && <span className={styles.cutDepth} aria-hidden="true" />}
+      {appearance === "cut" ? <CutSurface>{children}</CutSurface> : <span className={styles.label}>{children}</span>}
     </Link>
   );
 }

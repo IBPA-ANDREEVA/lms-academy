@@ -120,7 +120,7 @@ export function LearningPreviewDemo() {
   }
 
   return (
-    <div className={styles.demo} ref={demoRef}>
+    <div className={styles.demo} ref={demoRef} data-home-learning-demo>
       <div className={styles.stageCurtain} data-learning-curtain aria-hidden="true" />
       <noscript><p className={styles.helper}>Сначала изучите урок и материалы, затем выполните практическое задание. На основном курсе куратор проверяет работу и даёт обратную связь. Интерактивный пример доступен с JavaScript.</p><style>{`#learning-preview [role="tablist"], #learning-preview button{display:none!important}`}</style></noscript>
       <div className={styles.tabs} role="tablist" aria-label="Этапы обучения">
@@ -146,7 +146,7 @@ export function LearningPreviewDemo() {
           <p className={styles.status}>ШАГ 01 / ПРОСМОТР УРОКА</p>
           <h3>Сначала изучите материал</h3>
 
-          <Button appearance="cut" onClick={() => changeStage("assignment")}>К ЗАДАНИЮ <span aria-hidden="true">→</span></Button>
+          <Button appearance="cut" cutVariant="soft" onClick={() => changeStage("assignment")}>К ЗАДАНИЮ <span aria-hidden="true">→</span></Button>
         </div>
         <div inert={stage !== "assignment"} aria-hidden={stage !== "assignment"} className={styles.stageContent} role="tabpanel" id="learning-panel-assignment" aria-labelledby="learning-tab-assignment" tabIndex={0}>
           <p className={styles.status}>{submitted ? "РАБОТА ГОТОВА К ПРОВЕРКЕ" : "ШАГ 02 / МОЯ РАБОТА"}</p>
@@ -169,7 +169,7 @@ export function LearningPreviewDemo() {
           </ul>}
           <label className={styles.commentLabel} htmlFor="learning-comment">КОММЕНТАРИЙ К РАБОТЕ</label>
           <textarea style={{ resize: "none" }} id="learning-comment" value={comment} onChange={(event) => setComment(event.target.value)} placeholder="Расскажите, что получилось и что вызвало сложности." rows={3} disabled={submitted} />
-          {submitted ? <Button appearance="cut" intent="secondary" onClick={() => changeStage("feedback")}>ПОСМОТРЕТЬ ОТВЕТ <span aria-hidden="true">→</span></Button> : <Button appearance="cut" onClick={() => { setSubmitted(true); changeStage("feedback"); }} disabled={!photos.length && !comment.trim()}>К ОБРАТНОЙ СВЯЗИ <span aria-hidden="true">↗</span></Button>}
+          {submitted ? <Button appearance="cut" cutVariant="soft" intent="secondary" onClick={() => changeStage("feedback")}>ПОСМОТРЕТЬ ОТВЕТ <span aria-hidden="true">→</span></Button> : <Button appearance="cut" cutVariant="soft" onClick={() => { setSubmitted(true); changeStage("feedback"); }} disabled={!photos.length && !comment.trim()}>К ОБРАТНОЙ СВЯЗИ <span aria-hidden="true">↗</span></Button>}
           {!submitted && <small className={styles.helper}>Добавьте фото или комментарий, чтобы продолжить.</small>}
         </div>
         <div inert={stage !== "feedback"} aria-hidden={stage !== "feedback"} className={styles.stageContent} role="tabpanel" id="learning-panel-feedback" aria-labelledby="learning-tab-feedback" tabIndex={0}>
@@ -177,7 +177,7 @@ export function LearningPreviewDemo() {
           <h3>{submitted ? "Работа на доработке" : "Как выглядит обратная связь"}</h3>
           <p>«Хорошее начало. Обратите внимание на симметрию и повторите упражнение, затем отправьте обновлённое фото».</p>
           <div className={styles.feedbackStatus}><strong>Нужна доработка</strong><span>После обратной связи работу можно изменить и отправить снова.</span></div>
-          <Button appearance="cut" onClick={() => { setSubmitted(false); changeStage("assignment"); }}>ДОРАБОТАТЬ ЗАДАНИЕ <span aria-hidden="true">→</span></Button>
+          <Button appearance="cut" cutVariant="soft" onClick={() => { setSubmitted(false); changeStage("assignment"); }}>ДОРАБОТАТЬ ЗАДАНИЕ <span aria-hidden="true">→</span></Button>
         </div>
       </div>
 

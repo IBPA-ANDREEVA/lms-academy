@@ -1,0 +1,2 @@
+
+Layout-shift control (Chrome, 1440x900): normal motion yielded no layout-shift entries; reduced-motion yielded 0.0027813357 for the existing header bar, whose height changed 140px to130px during scroll docking. Entrance geometry test separately confirmed identical document/seam dimensions before/after animation. Header docking was not changed by this task.

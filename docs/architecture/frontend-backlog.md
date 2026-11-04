@@ -116,3 +116,35 @@ Owner follow-up reverses HOME-05 step motion: advancing sweeps left, returning s
 ## Preview and motion refinement · 2026-11-03
 
 Implemented the owner's preview simplification, full-card navigation, catalog heading hierarchy, actual popup scrollbar hit-zone repair, flat-rest Cut, server-visible welcome splash, downward mobile wipe and bidirectional dock fade. Preserve missing real services/content/domain/legal approvals. Remaining: human appearance/motion review, physical touch/Safari/low-end QA, existing no-JS streamed detail limitation, generated-output lint hygiene, legacy test expectations for removed heading/home filters/upward wipe. No capability epic or Vault completion inferred. [Reference scope, contracts and evidence](../qa/preview-refinement-2026-11-03.md).
+
+
+## Landing refinements - 2026-11-04
+
+Completed in owner-requested preview scope: stable outgoing upload height, repeated dropdown animation, Contact inversion/removals, top-right catalog links, review drag affordance and canonical Double Cut + Panel. Package preview now shares catalog/cart IDs and state controls; PackageBuilder is unconsumed historical source, not production integration. Production package contracts/pricing/overlap policy, Commerce, contact delivery, real reviews and human visual review remain pending at their existing phase/owners. No missing backend capability is counted as delivered. [Verification](../qa/landing-refinements-2026-11-04.md).
+
+
+## Homepage appearance motion - 2026-11-04
+
+Owner-requested homepage entrance implementation is available on codex/homepage-section-motion. Authored typography/photo/card sequences and interruption/state/viewport tests replace prior generic homepage entry treatment; no backend capability, new page or future-phase feature delivered. Existing visual-review, authentic-content/service/legal readiness dependencies remain. [Research and evidence](../qa/homepage-section-motion-2026-11-04.md).
+
+## Entrance lifecycle correction - 2026-11-04
+
+Resolved the owner-reported visible-to-hidden flicker, post-loader scheduling gap, late scroll trigger, stale completed-style restoration and selection replay. Tests now sample the complete lifecycle, not only final positions. Existing human visual review, physical Safari/touch, real content/services/legal and production-origin dependencies remain; no delivery epic is marked complete. [Audit and evidence](../qa/animation-synchronization-2026-11-04.md).
+
+## Homepage entrance visibility - 2026-11-04
+
+Existing `/` -> HomePage -> home/composition/HomeEntranceMotion (`children,className?`) and home-entrance-scenes retain all fourteen home section owners/consumers. The owner-requested visibility adjustment changes only the viewport entry line (85% desktop / 90% mobile) and local timeline pacing/easing; prepared states, loader handoff, interaction/cancellation, data and natural geometry remain. Shared SectionReveal/control timings are unchanged. Status: implemented; human appearance review and existing content/service dependencies remain. [Paths, timing and verification](../qa/homepage-motion-visibility-2026-11-04.md).
+
+## Public controls follow-up · 2026-11-04
+
+Owner references replace Double Cut + Panel with `Button`/`ButtonLink` (`@/components/ui/button`) `appearance="cut", cutVariant?: "line" | "soft"` (default line), preserving existing intent/size/inverse/fullWidth/loading/native props. Line uses an extending underline; soft uses an inset accent. Both have white-ink inverse styles for plum and reduced-motion feedback. HOME-05 uses soft; home catalog links, identity, commerce, detail and `/preview/components` reuse the canonical family. The preview shows both versions and inverse/interaction states.
+
+`public-shell/mobile-navigation.tsx` and `page-wipe-transition.tsx` keep the native menu open through navigation, release its scroll lock at start, cover it with the existing curtain in the top layer, and close at the completion event. During reveal the still-open menu is visually suppressed under the curtain; destination focus is restored at completion. No additional loading surface or delay.
+
+`catalog/components/catalog-experience.tsx` remains the persistent `/courses` and `/mini-courses` owner (no props). Optimistic kind selection immediately starts one simultaneous 360ms panel/height transition; Next still owns URL, metadata and history. Generic SectionReveal defers to this owner. Interrupted poses, reduced motion and resize settle cleanly. HOME-08 `MiniCourseExplorer` keeps the existing CourseCard/OfferCarousel, removes the requested certificate label and aligns the remaining format note with the catalog link in a wrapping toolbar. No service, route or product policy changes.
+
+Status: implemented and browser-verified; human visual approval, physical Safari testing and existing real-catalog/service readiness remain. [Reference scope, root causes and verification](../qa/public-controls-followup-2026-11-04.md).
+
+## Catalog switcher flash correction · 2026-11-04
+
+`CatalogExperience` (`src/features/catalog/components/catalog-experience.tsx`, no props; persistent CatalogPage consumer on `/courses` and `/mini-courses`) replaces the overlapping transparent panel transition with two opaque adjacent surfaces driven by one progress tween. The scoped GSAP controller persists across kind updates; a plain layout effect redirects it, preserving current position on rapid reversal instead of reverting/rebuilding DOM tweens. Duration remains 360ms, with coordinated power2.inOut translation/height. CSS ownership remains `catalog-experience.module.css`; no new shared component or route. Optimistic selection, URL/filter/history ownership, inert panels and natural settled height remain. Resize/live reduced motion settle; observers/listeners/tween/styles clean up on unmount. Status: verified in optimized browser builds; human visual review and physical Safari remain unverified. [Cause and frame regression evidence](../qa/catalog-switcher-flash-2026-11-04.md).

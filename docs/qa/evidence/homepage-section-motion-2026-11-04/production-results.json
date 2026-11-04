@@ -1,0 +1,119 @@
+{
+  "errors": [],
+  "results": [
+    {
+      "width": 1440,
+      "heroFrame": [
+        {
+          "transform": "translate(0%, 0.3481%) translate3d(0px, 0px, 0px)",
+          "clip": "inset(-11.913% -3.971% -11.1877%)",
+          "opacity": "0.9927"
+        },
+        {
+          "transform": "translate(0%, 1.2807%) translate3d(0px, 0px, 0px)",
+          "clip": "inset(-11.6798% -3.8933% -9.0116%)",
+          "opacity": "0.9733"
+        },
+        {
+          "transform": "translate(0%, 3.5963%) translate3d(0px, 0px, 0px)",
+          "clip": "inset(-11.1009% -3.7003% -3.6087%)",
+          "opacity": "0.9251"
+        }
+      ],
+      "before": {
+        "height": 7599,
+        "seams": [
+          {
+            "top": -48,
+            "left": 0,
+            "width": 1426,
+            "height": 168
+          },
+          {
+            "top": 784,
+            "left": 0,
+            "width": 1426,
+            "height": 180
+          }
+        ],
+        "pins": 0
+      },
+      "after": {
+        "height": 7599,
+        "seams": [
+          {
+            "top": -48,
+            "left": 0,
+            "width": 1426,
+            "height": 168
+          },
+          {
+            "top": 784,
+            "left": 0,
+            "width": 1426,
+            "height": 180
+          }
+        ],
+        "pins": 0
+      },
+      "states": "all 14 scenes completed, no replay, no extra geometry"
+    },
+    {
+      "width": 390,
+      "heroFrame": [
+        {
+          "transform": "translate(0%, 0.7013%) translate3d(0px, 0px, 0px)",
+          "clip": "inset(-11.6493% -3.8831% -8.7272%)",
+          "opacity": "0.9708"
+        },
+        {
+          "transform": "translate(0%, 1.7104%) translate3d(0px, 0px, 0px)",
+          "clip": "inset(-11.1448% -3.7149% -4.0179%)",
+          "opacity": "0.9287"
+        },
+        {
+          "transform": "translate(0%, 3.6442%) translate3d(0px, 0px, 0px)",
+          "clip": "inset(-10.1779% -3.3926% 5.0061%)",
+          "opacity": "0.8482"
+        }
+      ],
+      "before": {
+        "height": 8952,
+        "seams": [
+          {
+            "top": -32,
+            "left": 0,
+            "width": 376,
+            "height": 108
+          },
+          {
+            "top": 604,
+            "left": 0,
+            "width": 376,
+            "height": 112
+          }
+        ],
+        "pins": 0
+      },
+      "after": {
+        "height": 8952,
+        "seams": [
+          {
+            "top": -32,
+            "left": 0,
+            "width": 376,
+            "height": 108
+          },
+          {
+            "top": 604,
+            "left": 0,
+            "width": 376,
+            "height": 112
+          }
+        ],
+        "pins": 0
+      },
+      "states": "all 14 scenes completed, no replay, no extra geometry"
+    }
+  ]
+}

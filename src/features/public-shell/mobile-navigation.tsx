@@ -1,6 +1,8 @@
 "use client";
 import Link from "next/link";
 import { useEffect, useId, useRef, useState } from "react";
+import { flushSync } from "react-dom";
+import { navigationStartEvent, navigationEndEvent, motionRevealEvent } from "./motion-handoff";
 import { gsap } from "gsap";
 import { useGSAP } from "@gsap/react";
 import { Button, ButtonLink } from "@/components/ui/button";
@@ -25,7 +27,39 @@ export function MobileNavigation({ navigation, brand, account, showAuth, onAuth 
   const id = useId();
   const closing = useRef(false);
   const menuMotion = useRef<gsap.core.Timeline | null>(null);
-  useScrollLock(open);
+  const [navigating, setNavigating] = useState(false);
+  const pendingNavigation = useRef(false);
+  const navigationClose = useRef(false);
+  useScrollLock(open && !navigating);
+  useEffect(() => {
+    const start = (event: Event) => {
+      if ((event as CustomEvent).detail !== dialog.current || !dialog.current?.open) return;
+      pendingNavigation.current = true;
+      menuMotion.current?.progress(1).pause();
+      // Release the fixed-body lock before the router positions the destination.
+      flushSync(() => setNavigating(true));
+    };
+    const reveal = () => {
+      if (pendingNavigation.current) dialog.current?.setAttribute("data-navigation-covered", "");
+    };
+    const end = () => {
+      if (!pendingNavigation.current) return;
+      pendingNavigation.current = false;
+      navigationClose.current = true;
+      dialog.current?.close();
+      setOpen(false);
+      setNavigating(false);
+    };
+    window.addEventListener(motionRevealEvent, reveal);
+    window.addEventListener(navigationStartEvent, start);
+    window.addEventListener(navigationEndEvent, end);
+    return () => {
+      window.removeEventListener(motionRevealEvent, reveal);
+      window.removeEventListener(navigationStartEvent, start);
+      window.removeEventListener(navigationEndEvent, end);
+    };
+  }, []);
+  const closeOnNavigate = () => { if (!pendingNavigation.current) setOpen(false); };
   useEffect(() => {
     const media = matchMedia("(min-width: 761px)");
     const close = () => { if (media.matches) setOpen(false); };
@@ -36,8 +70,10 @@ export function MobileNavigation({ navigation, brand, account, showAuth, onAuth 
     const surface = dialog.current;
     if (!surface) return;
     if (!open) { surface.close(); return; }
+    surface.removeAttribute("data-navigation-covered");
     surface.showModal();
     closing.current = false;
+    navigationClose.current = false;
     const preference = matchMedia("(prefers-reduced-motion: reduce)");
     const settle = () => {
       if (!preference.matches || !dialog.current) return;
@@ -62,11 +98,11 @@ export function MobileNavigation({ navigation, brand, account, showAuth, onAuth 
   })(); }
   return <div ref={root} className={styles.root}>
     <button ref={trigger} data-mobile-menu-trigger className={styles.trigger} type="button" aria-label="Открыть меню" aria-expanded={open} aria-controls={id} onMouseDown={event => { event.preventDefault(); event.currentTarget.focus({ preventScroll: true }); }} onClick={() => setOpen(true)}><span /><span /><span /></button>
-    <dialog ref={dialog} id={id} className={styles.dialog} aria-label="Меню сайта" onCancel={event => { event.preventDefault(); closeAnimated(); }} onClose={() => { if (dialog.current?.open) return; setOpen(false); trigger.current?.focus({ preventScroll: true }); }} onClick={event => { if (event.target === event.currentTarget) closeAnimated(); }}>
+    <dialog ref={dialog} id={id} className={styles.dialog} aria-label="Меню сайта" onCancel={event => { event.preventDefault(); closeAnimated(); }} onClose={() => { if (dialog.current?.open) return; setOpen(false); if (navigationClose.current) { navigationClose.current = false; return; } trigger.current?.focus({ preventScroll: true }); }} onClick={event => { if (event.target === event.currentTarget) closeAnimated(); }}>
       <div className={styles.panel}>
-        <div className={styles.heading}><Link href={brand.href} aria-label={brand.label} onClick={() => setOpen(false)}><BrandLogo /></Link><button type="button" aria-label="Закрыть меню" onClick={closeAnimated}>×</button></div>
-        <nav aria-label="Мобильная навигация"><MenuLinks navigation={navigation} onNavigate={() => setOpen(false)} /></nav>
-        {showAuth ? <Button className={styles.login} onClick={() => { setOpen(false); onAuth(); }}>Войти в кабинет</Button> : account ? <ButtonLink href={account.href} onClick={() => setOpen(false)} className={styles.login}>{account.label}</ButtonLink> : null}
+        <div className={styles.heading}><Link href={brand.href} aria-label={brand.label} onClick={closeOnNavigate}><BrandLogo /></Link><button type="button" aria-label="Закрыть меню" onClick={closeAnimated}>×</button></div>
+        <nav aria-label="Мобильная навигация"><MenuLinks navigation={navigation} onNavigate={closeOnNavigate} /></nav>
+        {showAuth ? <Button className={styles.login} onClick={() => { setOpen(false); onAuth(); }}>Войти в кабинет</Button> : account ? <ButtonLink href={account.href} onClick={closeOnNavigate} className={styles.login}>{account.label}</ButtonLink> : null}
       </div>
     </dialog>
     <noscript><details className={styles.fallback}><summary>Меню</summary><nav aria-label="Мобильная навигация"><MenuLinks navigation={navigation} /></nav></details><style>{`[data-mobile-menu-trigger]{display:none!important}`}</style></noscript>

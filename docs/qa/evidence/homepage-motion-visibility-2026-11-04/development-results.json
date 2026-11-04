@@ -1,0 +1,180 @@
+{
+  "results": [
+    {
+      "label": "visible-entry-1440",
+      "visibleBeat": {
+        "opacity": 0.5802,
+        "transform": "translate(0%, 20.1512%) translate3d(0px, 0px, 0px)"
+      }
+    },
+    {
+      "label": "scroll-1440",
+      "firstReveal": {
+        "time": 1671.300000000745,
+        "phase": "revealing",
+        "hidden": false,
+        "ready": "true",
+        "hero": "playing",
+        "opacity": 0,
+        "clip": "inset(0px 0px 100%)"
+      },
+      "drops": [],
+      "layoutShift": 0.0000923356588648834,
+      "frames": 1178
+    },
+    {
+      "label": "hard-refresh-1440",
+      "firstReveal": {
+        "time": 390.4000000022352,
+        "phase": "revealing",
+        "hidden": false,
+        "ready": "true",
+        "hero": "playing",
+        "opacity": 0,
+        "clip": "inset(0px 0px 100%)"
+      },
+      "drops": [],
+      "layoutShift": 0,
+      "frames": 363
+    },
+    {
+      "label": "visible-entry-390",
+      "visibleBeat": {
+        "opacity": 0.6391,
+        "transform": "translate(0%, 8.6627%) translate3d(0px, 0px, 0px)"
+      }
+    },
+    {
+      "label": "scroll-390",
+      "firstReveal": {
+        "time": 652.8999999985099,
+        "phase": "revealing",
+        "hidden": false,
+        "ready": "true",
+        "hero": "playing",
+        "opacity": 0,
+        "clip": "inset(0px 0px 100%)"
+      },
+      "drops": [],
+      "layoutShift": 0,
+      "frames": 1072
+    },
+    {
+      "label": "hard-refresh-390",
+      "firstReveal": {
+        "time": 368.6000000014901,
+        "phase": "revealing",
+        "hidden": false,
+        "ready": "true",
+        "hero": "playing",
+        "opacity": 0,
+        "clip": "inset(0px 0px 100%)"
+      },
+      "drops": [],
+      "layoutShift": 0,
+      "frames": 318
+    },
+    {
+      "label": "visible-entry-360",
+      "visibleBeat": {
+        "opacity": 0.6295,
+        "transform": "translate(0%, 8.8918%) translate3d(0px, 0px, 0px)"
+      }
+    },
+    {
+      "label": "scroll-360",
+      "firstReveal": {
+        "time": 631.1999999992549,
+        "phase": "revealing",
+        "hidden": false,
+        "ready": "true",
+        "hero": "playing",
+        "opacity": 0,
+        "clip": "inset(0px 0px 100%)"
+      },
+      "drops": [],
+      "layoutShift": 0,
+      "frames": 1076
+    },
+    {
+      "label": "hard-refresh-360",
+      "firstReveal": {
+        "time": 442.5,
+        "phase": "revealing",
+        "hidden": false,
+        "ready": "true",
+        "hero": "playing",
+        "opacity": 0,
+        "clip": "inset(0px 0px 100%)"
+      },
+      "drops": [],
+      "layoutShift": 0,
+      "frames": 313
+    },
+    {
+      "label": "visible-entry-768",
+      "visibleBeat": {
+        "opacity": 0.5736,
+        "transform": "translate(0%, 20.4668%) translate3d(0px, 0px, 0px)"
+      }
+    },
+    {
+      "label": "scroll-768",
+      "firstReveal": {
+        "time": 839.1999999992549,
+        "phase": "revealing",
+        "hidden": false,
+        "ready": "true",
+        "hero": "playing",
+        "opacity": 0,
+        "clip": "inset(0px 0px 100%)"
+      },
+      "drops": [],
+      "layoutShift": 0.0008081431447723766,
+      "frames": 1203
+    },
+    {
+      "label": "hard-refresh-768",
+      "firstReveal": {
+        "time": 416,
+        "phase": "revealing",
+        "hidden": false,
+        "ready": "true",
+        "hero": "playing",
+        "opacity": 0,
+        "clip": "inset(0px 0px 100%)"
+      },
+      "drops": [],
+      "layoutShift": 0,
+      "frames": 368
+    },
+    {
+      "label": "cpu-4x",
+      "firstReveal": {
+        "time": 2525.199999999255,
+        "phase": "revealing",
+        "hidden": false,
+        "ready": "true",
+        "hero": "playing",
+        "opacity": 0,
+        "clip": "inset(0px 0px 100%)"
+      },
+      "drops": [],
+      "layoutShift": 0,
+      "frames": 384
+    },
+    {
+      "label": "no-js",
+      "readable": true
+    },
+    {
+      "label": "blocked-js",
+      "readable": true
+    },
+    {
+      "label": "late-js",
+      "readable": true
+    }
+  ],
+  "errors": []
+}

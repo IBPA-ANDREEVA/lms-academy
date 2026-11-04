@@ -11,6 +11,9 @@
 .carousel { min-width: 0; }
 .carouselHeader { display: flex; align-items: center; justify-content: space-between; gap: 16px; min-height: 52px; margin-bottom: 18px; }
 .carouselHeader p { margin: 0; color: #d2cbd0; font-size: 12px; letter-spacing: .12em; }
+.dragHint { display: inline-flex; align-items: center; gap: 10px; color: var(--soft); font-size: 12px; }
+.dragHint > span { font-size: 26px; line-height: 1; }
+@media(max-width:1000px) { .carouselHeader { align-items: flex-start; flex-direction: column; gap: 10px; } }
 .arrows { display: flex; gap: 10px; }
 .arrows button { width: 46px; height: 46px; padding: 0; border: 1px solid #ba8fa9; border-radius: 50%; background: transparent; color: white; }
 .arrows button:not(:disabled):last-child { background: var(--brand); border-color: var(--brand); }

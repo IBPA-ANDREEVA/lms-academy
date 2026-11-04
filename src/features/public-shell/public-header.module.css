@@ -71,6 +71,21 @@
 }
 .navigation .dropdown a { white-space: normal; overflow-wrap: anywhere; }
 .navigation .dropdown a:hover { background: var(--soft); }
+.navigation .dropdown {
+  opacity: 0;
+  transform: translateY(-8px);
+  transform-origin: top left;
+  pointer-events: none;
+  transition: opacity 260ms cubic-bezier(.22,1,.36,1), transform 260ms cubic-bezier(.22,1,.36,1);
+}
+.navigation details[open] .dropdown { opacity: 1; transform: translateY(0); pointer-events: auto; }
+.navigation details::details-content { transition: content-visibility 260ms allow-discrete; }
+@starting-style {
+  .navigation details[open] .dropdown { opacity: 0; transform: translateY(-8px); }
+}
+@media(prefers-reduced-motion:reduce) {
+  .navigation .dropdown, .navigation details::details-content { transition: none; }
+}
 .chevron,
 .cartIcon {
   display: block;

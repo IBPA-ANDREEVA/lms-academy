@@ -1,0 +1,180 @@
+{
+  "results": [
+    {
+      "label": "visible-entry-1440",
+      "visibleBeat": {
+        "opacity": 0.5723,
+        "transform": "translate(0%, 20.5303%) translate3d(0px, 0px, 0px)"
+      }
+    },
+    {
+      "label": "scroll-1440",
+      "firstReveal": {
+        "time": 473.19999999925494,
+        "phase": "revealing",
+        "hidden": false,
+        "ready": "true",
+        "hero": "playing",
+        "opacity": 0,
+        "clip": "inset(0px 0px 100%)"
+      },
+      "drops": [],
+      "layoutShift": 0.0014638960557055898,
+      "frames": 1166
+    },
+    {
+      "label": "hard-refresh-1440",
+      "firstReveal": {
+        "time": 150.60000000149012,
+        "phase": "revealing",
+        "hidden": false,
+        "ready": "true",
+        "hero": "playing",
+        "opacity": 0,
+        "clip": "inset(0px 0px 100%)"
+      },
+      "drops": [],
+      "layoutShift": 0,
+      "frames": 362
+    },
+    {
+      "label": "visible-entry-390",
+      "visibleBeat": {
+        "opacity": 0.6458,
+        "transform": "translate(0%, 8.5014%) translate3d(0px, 0px, 0px)"
+      }
+    },
+    {
+      "label": "scroll-390",
+      "firstReveal": {
+        "time": 589.1999999992549,
+        "phase": "revealing",
+        "hidden": false,
+        "ready": "true",
+        "hero": "playing",
+        "opacity": 0,
+        "clip": "inset(0px 0px 100%)"
+      },
+      "drops": [],
+      "layoutShift": 0,
+      "frames": 1101
+    },
+    {
+      "label": "hard-refresh-390",
+      "firstReveal": {
+        "time": 139.90000000223517,
+        "phase": "revealing",
+        "hidden": false,
+        "ready": "true",
+        "hero": "playing",
+        "opacity": 0,
+        "clip": "inset(0px 0px 100%)"
+      },
+      "drops": [],
+      "layoutShift": 0,
+      "frames": 317
+    },
+    {
+      "label": "visible-entry-360",
+      "visibleBeat": {
+        "opacity": 0.6377,
+        "transform": "translate(0%, 8.6951%) translate3d(0px, 0px, 0px)"
+      }
+    },
+    {
+      "label": "scroll-360",
+      "firstReveal": {
+        "time": 318.19999999925494,
+        "phase": "revealing",
+        "hidden": false,
+        "ready": "true",
+        "hero": "playing",
+        "opacity": 0,
+        "clip": "inset(0px 0px 100%)"
+      },
+      "drops": [],
+      "layoutShift": 0,
+      "frames": 1082
+    },
+    {
+      "label": "hard-refresh-360",
+      "firstReveal": {
+        "time": 104.19999999925494,
+        "phase": "revealing",
+        "hidden": false,
+        "ready": "true",
+        "hero": "playing",
+        "opacity": 0,
+        "clip": "inset(0px 0px 100%)"
+      },
+      "drops": [],
+      "layoutShift": 0,
+      "frames": 318
+    },
+    {
+      "label": "visible-entry-768",
+      "visibleBeat": {
+        "opacity": 0.5736,
+        "transform": "translate(0%, 20.4668%) translate3d(0px, 0px, 0px)"
+      }
+    },
+    {
+      "label": "scroll-768",
+      "firstReveal": {
+        "time": 307,
+        "phase": "revealing",
+        "hidden": false,
+        "ready": "true",
+        "hero": "playing",
+        "opacity": 0,
+        "clip": "inset(0px 0px 100%)"
+      },
+      "drops": [],
+      "layoutShift": 0,
+      "frames": 1190
+    },
+    {
+      "label": "hard-refresh-768",
+      "firstReveal": {
+        "time": 107.60000000149012,
+        "phase": "revealing",
+        "hidden": false,
+        "ready": "true",
+        "hero": "playing",
+        "opacity": 0,
+        "clip": "inset(0px 0px 100%)"
+      },
+      "drops": [],
+      "layoutShift": 0,
+      "frames": 364
+    },
+    {
+      "label": "cpu-4x",
+      "firstReveal": {
+        "time": 1293,
+        "phase": "revealing",
+        "hidden": false,
+        "ready": "true",
+        "hero": "playing",
+        "opacity": 0,
+        "clip": "inset(0px 0px 100%)"
+      },
+      "drops": [],
+      "layoutShift": 0,
+      "frames": 304
+    },
+    {
+      "label": "no-js",
+      "readable": true
+    },
+    {
+      "label": "blocked-js",
+      "readable": true
+    },
+    {
+      "label": "late-js",
+      "readable": true
+    }
+  ],
+  "errors": []
+}

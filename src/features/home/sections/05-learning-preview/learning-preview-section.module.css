@@ -69,7 +69,7 @@
 .stageContent { width: 100%; max-width: 680px; margin-inline: auto; }
 .feedbackStatus { padding: 32px; margin-block: 32px; border-left: 3px solid var(--brand); }
 .demoBody[data-stage="feedback"] { display: flex; align-items: center; background: var(--soft); }
-.demoBody[data-stage="assignment"] .upload { min-height: 150px; }
+.upload { min-height: 150px; }
 @media(max-width:900px) { .layout { grid-template-columns: 1fr; } .intro { max-width: 560px; } }
 @media(max-width:600px) { .demoBody { padding: 20px; min-height: 440px; } .demo { box-shadow: 6px 6px 0 var(--text); } .mediaPlaceholder { min-height: 170px; } .tabs button { flex-direction: column; } }
 
@@ -85,7 +85,7 @@
  .section { padding-block: 48px; }
  .layout { gap: 24px; }
  .demoBody { min-height: 350px; padding: 16px; }
- .demoBody[data-stage="assignment"] .upload { min-height: 110px; }
+ .upload { min-height: 110px; }
  .feedbackStatus { padding: 18px; margin-block: 18px; }
  .mediaPlaceholder { min-height: 120px; }
  .tabs button { font-size: 11px; text-transform: none; }

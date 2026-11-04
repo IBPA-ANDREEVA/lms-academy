@@ -1,0 +1,93 @@
+{
+  "results": [
+    {
+      "variant": "line",
+      "tone": "default",
+      "rest": {
+        "background": "rgb(255, 255, 255)",
+        "color": "rgb(120, 40, 88)",
+        "radius": "3px",
+        "outline": "none",
+        "x": 0,
+        "line": "matrix(0.72, 0, 0, 1, 0, 0)",
+        "stripe": "none"
+      },
+      "hover": {
+        "background": "rgb(247, 239, 244)",
+        "color": "rgb(120, 40, 88)",
+        "radius": "3px",
+        "outline": "none",
+        "x": 3,
+        "line": "matrix(1, 0, 0, 1, 0, 0)",
+        "stripe": "none"
+      }
+    },
+    {
+      "variant": "line",
+      "tone": "inverse",
+      "rest": {
+        "background": "rgba(0, 0, 0, 0)",
+        "color": "rgb(255, 255, 255)",
+        "radius": "3px",
+        "outline": "none",
+        "x": 0,
+        "line": "matrix(0.72, 0, 0, 1, 0, 0)",
+        "stripe": "none"
+      },
+      "hover": {
+        "background": "rgba(255, 255, 255, 0.12)",
+        "color": "rgb(255, 255, 255)",
+        "radius": "3px",
+        "outline": "none",
+        "x": 3,
+        "line": "matrix(1, 0, 0, 1, 0, 0)",
+        "stripe": "none"
+      }
+    },
+    {
+      "variant": "soft",
+      "tone": "default",
+      "rest": {
+        "background": "rgb(247, 239, 244)",
+        "color": "rgb(120, 40, 88)",
+        "radius": "14px",
+        "outline": "none",
+        "x": 0,
+        "line": "none",
+        "stripe": "matrix(1, 0, 0, 0, 0, 0)"
+      },
+      "hover": {
+        "background": "color(srgb 0.936471 0.898824 0.921412)",
+        "color": "rgb(120, 40, 88)",
+        "radius": "14px",
+        "outline": "none",
+        "x": 3,
+        "line": "none",
+        "stripe": "matrix(1, 0, 0, 1, 0, 0)"
+      }
+    },
+    {
+      "variant": "soft",
+      "tone": "inverse",
+      "rest": {
+        "background": "rgba(255, 255, 255, 0.1)",
+        "color": "rgb(255, 255, 255)",
+        "radius": "14px",
+        "outline": "none",
+        "x": 0,
+        "line": "none",
+        "stripe": "matrix(1, 0, 0, 0, 0, 0)"
+      },
+      "hover": {
+        "background": "rgba(255, 255, 255, 0.2)",
+        "color": "rgb(255, 255, 255)",
+        "radius": "14px",
+        "outline": "none",
+        "x": 3,
+        "line": "none",
+        "stripe": "matrix(1, 0, 0, 1, 0, 0)"
+      }
+    }
+  ],
+  "errors": []
+}

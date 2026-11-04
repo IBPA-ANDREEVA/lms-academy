@@ -22,7 +22,7 @@ export function CourseShowcase() {
 
   return (
     <div className={styles.showcase}>
-
+      <div className={styles.seeAll}><ButtonLink href="/courses" appearance="cut" inverse>Все курсы →</ButtonLink></div>
       <div className={styles.featuredStage}>
       <div className={styles.track} ref={trackRef} onScroll={syncIndex} data-offer-carousel aria-label="Карточки курсов">
         {!showProducts ? <CatalogState status={catalog.status} /> : visibleCourses.map(({ id, course }) => <div className={styles.cardFrame} key={id}>
@@ -40,7 +40,6 @@ export function CourseShowcase() {
         <Button appearance="neoBrutalist" intent="secondary" size="sm" onClick={() => goTo(activeIndex + 1)} disabled={activeIndex === visibleCourses.length - 1} aria-label="Следующая карточка">→</Button>
       </div>}
 
-      <div className={styles.seeAll}><ButtonLink href="/courses" appearance="cut">Все курсы →</ButtonLink></div>
     </div>
   );
 }

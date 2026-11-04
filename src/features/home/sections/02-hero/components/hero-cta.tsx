@@ -9,6 +9,7 @@ export function HeroCta() {
       size="lg"
       className={styles.cta}
       aria-label="Выбрать курс"
+      data-home-cta
     >
       <span className={styles.ctaCopy}>
         <span>ВЫБРАТЬ</span>

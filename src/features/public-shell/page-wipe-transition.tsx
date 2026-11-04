@@ -6,6 +6,7 @@ import { gsap } from "gsap";
 import { useGSAP } from "@gsap/react";
 import { publicMotion as motion } from "./motion-tokens";
 import styles from "./public-motion.module.css";
+import { motionReadyEvent, releaseMotionCover, navigationStartEvent, navigationEndEvent } from "./motion-handoff";
 
 gsap.registerPlugin(useGSAP);
 const publicPage = (path: string) => /^\/(?:$|(?:mini-)?courses(?:\/[^/]+)?$)/.test(path);
@@ -41,10 +42,16 @@ export function PageWipeTransition({ content, pathname, loading, onActive }: {
       targets.forEach(target => target.style.removeProperty("transform"));
       targets = [];
     };
-    const finish = () => {
+    const endNavigation = () => window.dispatchEvent(new Event(navigationEndEvent));
+    const hideCover = () => {
+      if (cover.matches(":popover-open")) cover.hidePopover();
+      cover.hidden = true;
+    };
+    const finish = (notify = true) => {
       clearTimeout(timeout); clearTimeout(waiting); cancelAnimationFrame(frame);
       timeline?.kill(); clearTargets();
-      cover.hidden = true;
+      if (navigation && notify) endNavigation();
+      hideCover();
       cover.removeAttribute("style");
       delete cover.dataset.waiting;
       delete cover.dataset.direction;
@@ -57,7 +64,7 @@ export function PageWipeTransition({ content, pathname, loading, onActive }: {
       .filter(element => {
         const box = element.getBoundingClientRect();
         return box.height > 0 && box.bottom > 0 && box.top < innerHeight
-          && !element.closest('[data-learning-offers],[data-sticky-story]');
+          && !element.closest('[data-learning-offers],[data-sticky-story],[data-home-entrances],[data-motion-reveal]');
       });
     const focusDestination = (request: Navigation) => {
       const focused = document.activeElement;
@@ -73,6 +80,8 @@ export function PageWipeTransition({ content, pathname, loading, onActive }: {
       const request = navigation;
       if (!request || !request.submitted || revealed || committedPath !== request.path) return;
       if (Array.from(page.querySelectorAll<HTMLElement>("[data-route-loading]")).some(element => element.getClientRects().length > 0)) return;
+      const home = Array.from(page.querySelectorAll<HTMLElement>("[data-home-entrances]")).find(element => element.getClientRects().length > 0);
+      if (home && home.dataset.homeMotionReady !== "true") return;
       if (request.hash && !request.positioned) {
         if (!request.anchorRequested) {
           request.anchorRequested = true;
@@ -96,6 +105,7 @@ export function PageWipeTransition({ content, pathname, loading, onActive }: {
       clearTimeout(timeout); clearTimeout(waiting);
       delete cover.dataset.waiting;
       timeline?.kill(); clearTargets();
+      releaseMotionCover(cover);
       if (preference.matches || request.instant) { finish(); focusDestination(request); return; }
       targets = visibleContent();
       timeline = gsap.timeline({ defaults: { duration: motion.wipeReveal, ease: motion.ease }, onComplete: () => { finish(); focusDestination(request); } })
@@ -111,12 +121,17 @@ export function PageWipeTransition({ content, pathname, loading, onActive }: {
       } else router.push(request.href, { scroll: !request.hash });
     };
     const begin = contextSafe((request: Navigation) => {
-      finish(); navigation = request;
+      finish(false); navigation = request;
+      window.dispatchEvent(new CustomEvent(navigationStartEvent, { detail: request.focus?.closest("dialog") }));
       // Freeze the axis for this navigation so a resize cannot turn a wipe diagonal.
       request.vertical = matchMedia("(max-width: 760px)").matches;
       onActive(true);
       page.dataset.routeMotion = "wipe";
       cover.hidden = false;
+      // The existing curtain must share the native menu's top layer.
+      // It stays above the dialog until the destination is fully revealed.
+      cover.showPopover?.();
+      cover.dataset.motionPhase = "covering";
       cover.dataset.direction = request.direction === 1 ? "forward" : "back";
       cover.dataset.axis = request.vertical ? "vertical" : "horizontal";
       // Prefetch runs alongside the outgoing animation, using Next's own cache.
@@ -131,7 +146,9 @@ export function PageWipeTransition({ content, pathname, loading, onActive }: {
         reveal();
         // Leave mounted content usable while Next resolves a slow destination.
         // Keep the request until commit so hash positioning cannot be discarded.
-        cover.hidden = true;
+        endNavigation();
+        hideCover();
+        releaseMotionCover(cover);
         timeline?.kill(); clearTargets();
         delete page.dataset.routeMotion;
       }, 5000);
@@ -170,7 +187,9 @@ export function PageWipeTransition({ content, pathname, loading, onActive }: {
       if (!request) return;
       request.instant = true;
       timeline?.kill(); clearTargets();
-      cover.hidden = true;
+      endNavigation();
+      hideCover();
+      releaseMotionCover(cover);
       submit(request);
       reveal();
     };
@@ -190,6 +209,7 @@ export function PageWipeTransition({ content, pathname, loading, onActive }: {
     // have one transition owner even when a mounted feature handles anchors.
     window.addEventListener("click", click, true);
     window.addEventListener("popstate", pop);
+    window.addEventListener(motionReadyEvent, reveal);
     preference.addEventListener("change", interrupt);
     window.addEventListener("pagehide", interrupt);
     window.addEventListener("keydown", key);
@@ -198,6 +218,7 @@ export function PageWipeTransition({ content, pathname, loading, onActive }: {
       controls.current = null; finish();
       window.removeEventListener("click", click, true);
       window.removeEventListener("popstate", pop);
+      window.removeEventListener(motionReadyEvent, reveal);
       preference.removeEventListener("change", interrupt);
       window.removeEventListener("pagehide", interrupt);
       window.removeEventListener("keydown", key);
@@ -208,5 +229,5 @@ export function PageWipeTransition({ content, pathname, loading, onActive }: {
   // contextSafe callback in another useGSAP context would make that context
   // revert the entire navigation controller on every pathname update.
   useLayoutEffect(() => { controls.current?.committed(pathname); }, [pathname, loading]);
-  return <div ref={panel} hidden className={styles.wipe} data-page-wipe aria-hidden="true"><span>Загружаем страницу…</span></div>;
+  return <div ref={panel} popover="manual" hidden className={styles.wipe} data-page-wipe aria-hidden="true"><span>Загружаем страницу…</span></div>;
 }

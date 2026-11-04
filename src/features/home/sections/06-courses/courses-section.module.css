@@ -92,5 +92,5 @@
  .carouselControls { display:flex; }
 }
 
-.seeAll { display: flex; justify-content: flex-end; margin-top: 28px; }
-@media(max-width:760px) { .seeAll { justify-content: flex-start; margin-top: 20px; } }
+.seeAll { display: flex; justify-content: flex-end; margin-bottom: 24px; }
+@media(max-width:760px) { .seeAll { margin-bottom: 20px; } }

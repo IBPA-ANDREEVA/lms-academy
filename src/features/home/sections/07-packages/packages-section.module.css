@@ -11,14 +11,27 @@
 .explorer nav ul { gap: 8px; }
 .explorer nav button { padding: 10px 18px; border: 1px solid var(--plum-border); font-size: 12px; min-height: 44px; }
 .explorer nav button[aria-pressed="true"] { background: var(--brand); color: white; border-color: var(--brand); }
-.card { display: flex; flex-direction: column; padding: 10px; border: 1px solid var(--border); background: var(--surface); }
-.cardContent { display: flex; flex-direction: column; flex: 1; padding: 18px 12px 12px; }
+.card { position: relative; display: flex; flex-direction: column; padding: 0; border: 2px solid var(--text); background: var(--surface); box-shadow: 5px 5px 0 var(--text); transition: box-shadow .2s ease, border-color .2s ease; }
+.packageCover { display: flex; align-items: flex-end; justify-content: space-between; gap: 12px; min-height: 220px; padding: 24px; border-bottom: 2px solid var(--text); background: var(--soft); color: var(--brand); }
+.packageCover > span:first-child { font-family: var(--font-unbounded),sans-serif; font-size: clamp(64px,7vw,108px); line-height: .95; letter-spacing: -.08em; }
+.packageCover > span:last-child { padding-bottom: 4px; font-size: 10px; font-weight: 800; line-height: 1.6; }
+.cardAction { display: block; padding: 0; border: 0; background: transparent; color: inherit; font: inherit; text-align: left; cursor: pointer; }
+.cardAction::after { content: ""; position: absolute; z-index: 1; inset: 0; }
+.cardAction:focus-visible { outline: none; }
+.card:has(.cardAction:focus-visible) { outline: 3px solid var(--focus); outline-offset: -5px; }
+.card:has(.cardAction:hover:not(:disabled):not([aria-disabled="true"])) { border-color: var(--brand); box-shadow: 5px 5px 0 var(--brand); }
+.cardAction:is(:disabled,[aria-disabled="true"]) { cursor: default; }
+.card[data-in-cart="true"] { border-color: var(--brand); box-shadow: 5px 5px 0 var(--brand); }
+.cardDescription { margin: 20px 0 24px; color: var(--muted); font-size: 13px; line-height: 1.6; }
+.cardStatus { font-size: 11px; }
+.cardContent { display: flex; flex-direction: column; flex: 1; padding: 24px; }
 .tag { align-self: flex-start; margin: 0 0 14px; padding: 5px 8px; color: var(--brand); background: var(--soft); font-size: 10px; font-weight: 800; }
 .card h3 { margin: 0; font-size: 24px; font-weight: 800; line-height: 1.15; }
 .card ul { margin: 18px 0 24px; padding: 0; list-style: none; font-size: 13px; line-height: 1.6; color: var(--muted); }
 .card li + li { margin-top: 6px; }
 .cardFooter { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: auto; padding-top: 16px; color: var(--brand); font-size: 13px; font-weight: 700; }
 .cardFooter button { min-width: 44px; padding-inline: 10px; }
+@media(prefers-reduced-motion:reduce) { .card { transition: none; } }
 .builderCallout { display: flex; align-items: center; gap: 22px; margin: 18px 4px 5px 0; padding: 18px; border: 1px solid var(--border); background: var(--surface); box-shadow: 5px 5px 0 var(--brand); }
 .plus { display: grid; place-items: center; flex: 0 0 64px; width: 64px; height: 64px; background: var(--soft); color: var(--brand); font-size: 36px; }
 .builderCallout p { margin: 0 0 5px; font-size: 10px; font-weight: 800; letter-spacing: .08em; color: var(--brand); }
