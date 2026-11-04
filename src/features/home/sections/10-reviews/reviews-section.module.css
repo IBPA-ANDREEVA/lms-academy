@@ -52,6 +52,13 @@
 .track::-webkit-scrollbar { display:none; }
 @media(max-width:760px) {
  .arrows { display:none; }
- .track { margin:0 calc(-1 * var(--page-gutter)) 0 0; padding:4px 16px 14px 0; }
+ .track { margin-inline:calc(-1 * var(--page-gutter)); padding:4px var(--page-gutter) 14px; scroll-padding-inline:var(--page-gutter); }
  .card { flex-basis:82%; scroll-snap-align:start; }
+}
+
+/* Desktop rails continue to the viewport, beyond the wide container cap.
+   Padding preserves the last card's resting alignment without clipping early. */
+@media(min-width:761px) {
+ .section { container-type: inline-size; }
+ .track { margin-right: calc(-1 * max(var(--page-gutter), (100cqw - 1920px) / 2)); padding-right: max(var(--page-gutter), (100cqw - 1920px) / 2); }
 }

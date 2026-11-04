@@ -7,7 +7,7 @@ import styles from "./start-usa-section.module.css";
 export function StartUsaSection() {
   return <section id="start-usa" className={styles.section} aria-label="Старт в США">
     <PageContainer reveal="compact" size="wide" className={styles.layout}>
-      {testPreview ? <><p>Демонстрационный модуль. Содержание и условия не опубликованы.</p><div className={styles.intro}>
+      {testPreview ? <><div className={styles.intro}>
         <p className={styles.format}>ОДИН МОДУЛЬ · БЕЗ КУРАТОРА</p>
 
         <UsaModuleCta />

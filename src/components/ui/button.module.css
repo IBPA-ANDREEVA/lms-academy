@@ -182,10 +182,10 @@
   --cut-label-x: 0px;
   --cut-label-y: 0px;
   --cut-slash-y: 0px;
-  --cut-depth-x: 4px;
+  --cut-depth-x: 0px;
   --cut-arrow-x: 0px;
-  --cut-depth-y: 4px;
-  --cut-depth-opacity: 1;
+  --cut-depth-y: 0px;
+  --cut-depth-opacity: 0;
   --cut-duration: 240ms;
   --cut-arrow-duration: 210ms;
   overflow: visible;
@@ -227,11 +227,11 @@
 .button.cut:disabled .cutDepth { opacity:0; }
 @media(hover:hover) and (pointer:fine) {
   .cut:where(:hover,[data-cut-state="hover"]):not(:disabled):not([aria-disabled="true"]):not([aria-busy="true"]) {
-    --cut-body-x: -3px; --cut-body-y: -3px; --cut-label-x: -3px; --cut-label-y: -3px; --cut-arrow-x: 2px; --cut-depth-x: 5px; --cut-depth-y: 5px;
+    --cut-body-x: -3px; --cut-body-y: -3px; --cut-label-x: -3px; --cut-label-y: -3px; --cut-arrow-x: 2px; --cut-depth-x: 5px; --cut-depth-y: 5px; --cut-depth-opacity: 1;
   }
 }
 .cut:where(:focus-visible,[data-cut-state="focus"]):not(:disabled):not([aria-disabled="true"]):not([aria-busy="true"]) {
-  --cut-body-x: -3px; --cut-body-y: -3px; --cut-label-x: -3px; --cut-label-y: -3px; --cut-arrow-x: 2px; --cut-depth-x: 5px; --cut-depth-y: 5px;
+  --cut-body-x: -3px; --cut-body-y: -3px; --cut-label-x: -3px; --cut-label-y: -3px; --cut-arrow-x: 2px; --cut-depth-x: 5px; --cut-depth-y: 5px; --cut-depth-opacity: 1;
   outline: 3px solid var(--focus); outline-offset: 4px;
 }
 .cut:where(:active,[data-cut-state="pressed"]):not(:disabled):not([aria-disabled="true"]):not([aria-busy="true"]) {

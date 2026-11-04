@@ -25,10 +25,10 @@
   --header-shadow: 0 8px 32px rgb(29 27 31 / 7%);
   --footer-border: #655f67;
   --overlay: rgb(29 27 31 / 24%);
-  --scrollbar-thumb: #aca5ad;
-  --scrollbar-track: #f4f1f3;
-  --scrollbar-hover: #655f67;
-  --scrollbar-active: #782858;
+  --scrollbar-thumb: var(--brand);
+  --scrollbar-track: var(--soft);
+  --scrollbar-hover: var(--brand-hover);
+  --scrollbar-active: var(--brand-pressed);
 }
 @theme inline {
   --color-background: var(--background);
@@ -87,7 +87,7 @@ html {
 ::-webkit-scrollbar-thumb {
   background: var(--scrollbar-thumb);
   border: 2px solid var(--scrollbar-track);
-  border-radius: 5px;
+  border-radius: 8px;
 }
 ::-webkit-scrollbar-thumb:hover {
   background: var(--scrollbar-hover);
@@ -137,3 +137,18 @@ html {
   select, input, textarea { transition: border-color .25s, box-shadow .25s, background-color .25s; }
 }
 @media (max-width: 760px) { :root { --anchor-padding: 80px; } }
+
+/* Keep the main rail substantial enough to grab; overflow menus inherit the palette. */
+html { scrollbar-width: auto; }
+html::-webkit-scrollbar { width: 14px; }
+html::-webkit-scrollbar-thumb { border-width: 3px; }
+
+/* Chromium/WebKit use the authored track/thumb geometry; Firefox keeps the
+   standards-based plum baseline above. Explicit swipe-rail exceptions still win. */
+@supports selector(::-webkit-scrollbar) {
+  html, body, body * { scrollbar-color: auto; }
+}
+@media (forced-colors: active) {
+  ::-webkit-scrollbar-track { background: Canvas; }
+  ::-webkit-scrollbar-thumb { background: ButtonText; border-color: Canvas; }
+}

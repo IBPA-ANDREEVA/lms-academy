@@ -204,3 +204,23 @@ The existing Button, FormControls, PageContainer and motion owners are reused, w
 PurchasePanel keeps its existing `product,compact` API and hero/terms consumers. Unavailable copy now says registration is unavailable without falsely claiming a displayed approved/demo price is unpublished; explicit sale-paused examples exercise this state.
 
 Merge repair (2026-11-03): HOME-06 `features/home/sections/06-courses/components/course-showcase.tsx` (`CourseShowcase`, no props; consumed by `CoursesSection` on `/`) removes the stale call to the deleted `useFeaturedCourseScroll` and its unused stage ref. Existing `useOfferSelectionMotion`, `useSnapCarousel`, markup, styles and CatalogProvider states remain unchanged. Real catalog integration remains missing as documented above.
+
+
+## Public UI fixes · 2026-11-03
+
+PublicHeader API unchanged (`brand,navigation,account?,cart?,locales?,showAuth?,showCartPreview?`), imported from `@/features/public-shell` by RootLayout and ComponentPreviewPage. MobileNavigation remains internal to PublicHeader (`navigation,brand,account?,showAuth,onAuth`); NavigationEntry's existing `showPreviewLabel=false` is now also used there. BrandLogo artwork remains `supplied-logo-artwork.ts`; header sizing changes are consumer-local, preserving footer artwork/sizing. CourseCard and CategoryNavigation APIs/source unchanged; home filters/rails are section-owned CSS. OfferCarousel CSS applies only to its home consumers (packages, minis, USA), preserving `mobileGrid`. `/preview/components` header description updated. [Paths, screenshots, props and remaining review](../qa/public-ui-fixes-2026-11-03.md).
+
+
+## Catalog and sticky-layout follow-up · 2026-11-03
+
+PublicHeader props/import/RootLayout + ComponentPreviewPage consumers unchanged; its docked style keeps all rounded corners. LearningOffersShowcase (`panels`, HomePage) removes the measured white bridge. PageWipeTransition (`content,pathname,loading,onActive`, PublicMotion) snapshots mobile vertical vs desktop horizontal axis per request. ReviewsCarousel (no props, ReviewsSection) keeps native interaction and extends its desktop scroll viewport. IntroductionSection (no props, CatalogPage) now renders a compact heading. No shared extraction or API change. [Paths, reference scope and verification](../qa/catalog-layout-followup-2026-11-03.md).
+
+
+## Learning wipe coverage correction · 2026-11-03
+
+Owner follow-up reverses HOME-05 step motion: advancing sweeps left, returning sweeps right. `home/sections/05-learning-preview/components/learning-preview-demo.tsx` (LearningPreviewDemo, no props; LearningPreviewSection consumer) places the existing plum curtain at the demo root so it covers the entire interactive surface, including its top step pickers/header. Pickers receive the same outgoing/incoming horizontal push, with the return beginning under the fully covered frame. The owning `.demo` clips the wipe; no page-navigation or inter-section motion changes. Existing form state, hidden/inert panels, keyboard focus and reduced-motion lifecycle remain. Numerical visual treatment awaits owner review. Regression checks now assert reversed direction and that the curtain spans the pickers.
+
+
+## Preview and motion refinement · 2026-11-03
+
+CourseCard (`@/features/catalog`, `features/catalog/course-card.tsx`): remove action prop/internal buttons; retain course,headingLevel,status,variant,demonstration; full card has one native detail link. Consumers verified: home course/mini explorers, catalog course/mini sections, component preview, frontend fixture. Canonical Button/ButtonLink Cut rests without depth and lifts/shadows on hover/focus; all identity/commerce/detail/home/preview consumers preserved. FilterDropdown keeps label/value/options/onChange and fixes null-blur scrollbar dismissal. PublicHeader, PageWipeTransition, SplashLoader and PublicMotion APIs unchanged; overlay now covers header, welcome SSR-visible, mobile wipe downward, header backing animated both ways. No new shared primitive. See report for source paths, props, consumer list and verification. [Reference scope, contracts and evidence](../qa/preview-refinement-2026-11-03.md).

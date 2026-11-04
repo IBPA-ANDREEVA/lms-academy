@@ -81,3 +81,23 @@ SectionReveal renders visible server content. Only selected heading/content grou
 ## Verification and limits
 
 See [implementation report](../qa/premium-motion-2026-11-02.md) and `tests/premium-motion.browser.mjs` for current evidence. No complete browser implementation is human-approved. Existing course fixtures have no real course photography, so independent image motion is implemented conditionally without inventing images. No production inventory, auth, payment, upload or learning service is added. Real-device Safari/touch and low-end hardware still require review.
+
+
+## HOME-05 follow-up · 2026-11-03
+
+LearningPreviewDemo now uses the public Wipe timings/easing with a real outgoing panel, midpoint content handoff and incoming horizontal push. Increasing step index sweeps right; decreasing sweeps left, including direct 01↔03 jumps. Inputs remain mounted; inactive panels are hidden/inert/aria-hidden. Scoped dependency cleanup and resize/focus/live reduced-motion settling prevent stale animations; preference restoration never replays the previous action. This replaces only the old internal stagger/upward/media-clip choreography. Public navigation, inter-section entrances and offer transitions are unchanged. [Verification](../qa/public-ui-fixes-2026-11-03.md).
+
+
+## Mobile navigation axis · 2026-11-03 owner follow-up
+
+Public Wipe uses a bottom-to-top cover/reveal at <=760px for routes, hashes and history, with a 12px vertical content push. Desktop retains its horizontal history-sensitive direction. The navigation captures its axis at intent time; resize keeps that axis until completion, while existing reduced-motion/keyboard interruption settles safely. Timings and readiness logic are unchanged. HOME-05's ordered right/left wipe and offer-panel switching remain independent. [Verification](../qa/catalog-layout-followup-2026-11-03.md).
+
+
+## Learning wipe coverage correction · 2026-11-03
+
+Owner follow-up reverses HOME-05 step motion: advancing sweeps left, returning sweeps right. `home/sections/05-learning-preview/components/learning-preview-demo.tsx` (LearningPreviewDemo, no props; LearningPreviewSection consumer) places the existing plum curtain at the demo root so it covers the entire interactive surface, including its top step pickers/header. Pickers receive the same outgoing/incoming horizontal push, with the return beginning under the fully covered frame. The owning `.demo` clips the wipe; no page-navigation or inter-section motion changes. Existing form state, hidden/inert panels, keyboard focus and reduced-motion lifecycle remain. Numerical visual treatment awaits owner review. Regression checks now assert reversed direction and that the curtain spans the pickers.
+
+
+## Downward wipe and first-frame splash · 2026-11-03
+
+The latest owner request supersedes bottom-to-top mobile navigation: PageWipeTransition covers from yPercent -100 to 0, reveals toward +100, with matching 12px content push. History shares this vertical direction; desktop horizontal/history direction stays unchanged. Fullscreen wipe/splash z-index 80 covers header 20. SplashLoader welcomes from server-visible solid plum and clears with an 800ms diagonal polygon from top to bottom; no lobe expansion after hydration. No-JS/reduced-motion skip, CSS pre-hydration failsafe, input/resize cleanup and genuine pending-loader ownership remain. PublicMotion renders its splash before route content. Desktop header backing transitions both ways in 320ms; Cut default depth is zero, existing hover/focus lift reveals depth. HOME-05 existing left-forward/right-back wipe is unchanged; only its internal heading was removed and step numbers stacked above labels. [Evidence and remaining review](../qa/preview-refinement-2026-11-03.md).

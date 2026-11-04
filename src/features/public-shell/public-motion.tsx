@@ -21,9 +21,9 @@ export function PublicMotion({ children }: { children: ReactNode }) {
   }, []);
   return <RouteLoadingContext value={register}>
     <div className={styles.root}>
+      <SplashLoader active={loadingCount > 0} suppressed={wipeOwnsLoading} welcome={pathname === "/"} />
       <div ref={content} className={styles.content}>{children}</div>
       <PageWipeTransition content={content} pathname={pathname} loading={loadingCount > 0} onActive={onWipeActive} />
-      <SplashLoader active={loadingCount > 0} suppressed={wipeOwnsLoading} welcome={pathname === "/"} />
     </div>
   </RouteLoadingContext>;
 }

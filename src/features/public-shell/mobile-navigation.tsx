@@ -14,7 +14,7 @@ gsap.registerPlugin(useGSAP);
 type Props = { navigation: readonly NavigationItem[]; brand: NavigationLink; account?: NavigationLink; showAuth: boolean; onAuth: () => void };
 function MenuLinks({ navigation, onNavigate }: { navigation: Props["navigation"]; onNavigate?: () => void }) {
   return <ul className={styles.links}>{navigation.map(item => <li key={item.label}>
-    {item.children?.length ? <details open><summary>{item.label}<span aria-hidden="true">⌃</span></summary><ul>{item.children.map(child => <li key={child.label}><NavigationEntry entry={child} onNavigate={onNavigate} /></li>)}</ul></details> : <NavigationEntry entry={item} onNavigate={onNavigate} />}
+    {item.children?.length ? <div className={styles.learningGroup}><p className={styles.groupTitle}>{item.label}</p><ul>{item.children.map(child => <li key={child.label}><NavigationEntry entry={child} onNavigate={onNavigate} showPreviewLabel={false} /></li>)}</ul></div> : <NavigationEntry entry={item} onNavigate={onNavigate} showPreviewLabel={false} />}
   </li>)}</ul>;
 }
 export function MobileNavigation({ navigation, brand, account, showAuth, onAuth }: Props) {
@@ -66,7 +66,7 @@ export function MobileNavigation({ navigation, brand, account, showAuth, onAuth 
       <div className={styles.panel}>
         <div className={styles.heading}><Link href={brand.href} aria-label={brand.label} onClick={() => setOpen(false)}><BrandLogo /></Link><button type="button" aria-label="Закрыть меню" onClick={closeAnimated}>×</button></div>
         <nav aria-label="Мобильная навигация"><MenuLinks navigation={navigation} onNavigate={() => setOpen(false)} /></nav>
-        {showAuth ? <Button className={styles.login} onClick={() => { setOpen(false); onAuth(); }}>Войти в кабинет ↗</Button> : account ? <ButtonLink href={account.href} onClick={() => setOpen(false)} className={styles.login}>{account.label} ↗</ButtonLink> : null}
+        {showAuth ? <Button className={styles.login} onClick={() => { setOpen(false); onAuth(); }}>Войти в кабинет</Button> : account ? <ButtonLink href={account.href} onClick={() => setOpen(false)} className={styles.login}>{account.label}</ButtonLink> : null}
       </div>
     </dialog>
     <noscript><details className={styles.fallback}><summary>Меню</summary><nav aria-label="Мобильная навигация"><MenuLinks navigation={navigation} /></nav></details><style>{`[data-mobile-menu-trigger]{display:none!important}`}</style></noscript>

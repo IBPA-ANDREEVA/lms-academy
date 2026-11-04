@@ -47,7 +47,9 @@ export function FilterDropdown({ label, value, options, onChange }: FilterDropdo
         if (event.key === "Escape" && open) { event.preventDefault(); event.stopPropagation(); setOpen(false); trigger.current?.focus({ preventScroll: true }); }
       }}
       onBlur={(event) => {
-        if (!event.currentTarget.contains(event.relatedTarget)) setOpen(false);
+        // Native scrollbar interaction may blur to null; outside pointerdown
+        // and real focus moves own dismissal, not scrollbar dragging.
+        if (event.relatedTarget && !event.currentTarget.contains(event.relatedTarget)) setOpen(false);
       }}
     >
       <span className={styles.label} id={`${id}-label`}>{label}</span>

@@ -251,3 +251,23 @@ Paths below are relative to `src/features/home`; component APIs not listed remai
 - `/preview/components` adds `catalog-states` section composing `component-preview/catalog-states-preview.tsx` (no props, local state) → canonical CatalogState. No separate gallery/editor route is introduced.
 
 Reference scope: IMG_4590.PNG supplies branding only (D-021). Empty states and compact test panel are bounded extensions of existing Manrope/tokens/Button; no new approved aesthetic is claimed. Screenshots and actions: [LAND03/LAND04 report](../qa/LAND03-04-implementation-2026-11-03.md).
+
+
+## Public UI fixes · 2026-11-03
+
+HOME-01/public-shell: opaque non-home header, enlarged left-aligned mobile lockup, native menu card grouping. HOME-05 retains LearningPreviewDemo (no props) with ordered directional wipe and mounted hidden/inert panels. HOME-06 CourseShowcase and HOME-08 MiniCourseExplorer (no props) reuse CategoryNavigation with one mobile filter row; HOME-06/HOME-10 rails and home-local OfferCarousel span both mobile gutters. Actual paths/consumers and reference limits: [public UI fixes](../qa/public-ui-fixes-2026-11-03.md). Existing section order and inter-section/offer motion remain intact. Implementation pending human review; demo services remain local.
+
+
+## Catalog and sticky-layout follow-up · 2026-11-03
+
+HOME-01 + HOME-06–09 docking now uses one continuous plum background with a rounded white header and no white bridge. HOME-10 desktop rail reaches the viewport beyond the content cap. CATALOG-01 IntroductionSection (no props, `catalog/sections/01-introduction`) is a compact H1; CATALOG result sections retain owners and use smaller functional headings. Existing HOME-05 and offer-panel transitions remain unchanged. [Paths, reference scope and verification](../qa/catalog-layout-followup-2026-11-03.md).
+
+
+## Learning wipe coverage correction · 2026-11-03
+
+Owner follow-up reverses HOME-05 step motion: advancing sweeps left, returning sweeps right. `home/sections/05-learning-preview/components/learning-preview-demo.tsx` (LearningPreviewDemo, no props; LearningPreviewSection consumer) places the existing plum curtain at the demo root so it covers the entire interactive surface, including its top step pickers/header. Pickers receive the same outgoing/incoming horizontal push, with the return beginning under the fully covered frame. The owning `.demo` clips the wipe; no page-navigation or inter-section motion changes. Existing form state, hidden/inert panels, keyboard focus and reduced-motion lifecycle remain. Numerical visual treatment awaits owner review. Regression checks now assert reversed direction and that the curtain spans the pickers.
+
+
+## Preview and motion refinement · 2026-11-03
+
+HOME-03 hides its kicker on mobile. HOME-05 LearningPreviewDemo removes the environment header, places step numbers above labels. HOME-06 CourseShowcase and HOME-08 MiniCourseExplorer (no props, respective numbered section consumers) cap eligible source records at three, remove filters and add catalog links. HOME-07 PackagesSection/PackageExplorer remove introduction, size filters and bottom builder callout; per-card modal retained. HOME-09 removes standalone demo description. HOME-12 removes its contact prompt. Catalog IntroductionSection is no longer consumed; CoursesSection/MiniCoursesSection accept active and render H1 only when active. Implementation paths and complete contracts are in the linked report. [Reference scope, contracts and evidence](../qa/preview-refinement-2026-11-03.md).

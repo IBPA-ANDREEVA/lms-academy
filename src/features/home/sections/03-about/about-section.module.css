@@ -321,3 +321,5 @@
  .benefits span { font-size:13px; line-height:1.55; }
  .footnote { font-size:12px; }
 }
+
+@media(max-width:760px) { .kicker { display:none; } }

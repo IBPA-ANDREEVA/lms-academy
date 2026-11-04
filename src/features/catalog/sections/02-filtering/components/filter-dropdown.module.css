@@ -10,3 +10,6 @@
 .list button { min-height: 44px; overflow-wrap: anywhere; white-space: normal; }
 .trigger span:first-child { min-width: 0; overflow-wrap: anywhere; }
 @media(max-width:600px) { .trigger { min-height: 44px; font-size: 13px; } .root:last-of-type .list { left: 0; right: auto; } }
+
+.list { overflow-y: auto; overflow-x: hidden; scrollbar-gutter: stable; scrollbar-width: auto; overscroll-behavior: contain; border: 1px solid var(--plum-border); box-shadow: 0 8px 24px rgb(29 27 31 / 10%); }
+.root:has(.list) { z-index: 2; }

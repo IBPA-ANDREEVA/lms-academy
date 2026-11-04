@@ -4,23 +4,25 @@
 .dialog { position: fixed; inset: 0 0 0 auto; width: min(100%,480px); height: 100dvh; max-width: 100%; max-height: 100dvh; margin: 0; padding: 0; border: 0; background: var(--brand); color: white; overscroll-behavior: contain; animation: none !important; }
 .dialog::backdrop { background: rgb(29 27 31 / 45%); }
 .panel { min-height: 100%; padding: max(20px,env(safe-area-inset-top)) 24px max(32px,env(safe-area-inset-bottom)); }
-.heading { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding-bottom: 24px; border-bottom: 1px solid rgb(255 255 255 / 30%); }
-.heading a { --brand-logo-accent: #d9b6ca; color: white; min-width: 0; flex: 1; }
-.heading a > svg { height: auto; width: 100%; max-height: 26px; max-width: 250px; }
-.heading button { flex: none; width: 44px; height: 44px; border: 0; background: none; color: white; font: 400 36px/1 var(--font-manrope); cursor: pointer; }
+.heading { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding-bottom: 28px; }
+.heading a { color: white; min-width: 0; }
+.heading a > svg { height: 36px; width: auto; max-width: 100%; }
+.heading button { flex: none; width: 44px; height: 44px; border: 1px solid rgb(255 255 255 / 35%); border-radius: 50%; background: transparent; color: white; font: 400 32px/1 var(--font-manrope); cursor: pointer; }
 .links, .links ul { list-style: none; margin: 0; padding: 0; }
-.links { padding-block: 20px 32px; }
-.links > li { border-bottom: 1px solid rgb(255 255 255 / 25%); }
-.links a, .links summary, .links [role=link] { display: flex; align-items: center; justify-content: space-between; gap: 12px; min-height: 60px; padding-block: 16px; color: inherit; text-decoration: none; font-size: clamp(20px,6vw,27px); font-weight: 700; }
-.links small { color: #f0cfe2; font-size: 12px; font-weight: 500; }
-.links summary { list-style: none; cursor: pointer; }
-.links summary::-webkit-details-marker { display: none; }
-.links details:not([open]) summary > span { rotate: 180deg; }
-.links ul { padding: 4px 0 12px 18px; }
-.links ul a, .links ul [role=link] { min-height: 48px; padding-block: 10px; font-size: 18px; font-weight: 500; }
-.login { display: flex; width: 100%; min-height: 54px; margin-top: 4px; background: white; color: var(--brand); border-color: white; }
-.login:hover:not(:disabled) { background: var(--soft); color: var(--brand); }
-.links a:focus-visible, .links summary:focus-visible, .heading button:focus-visible { outline: 3px solid white; outline-offset: -3px; }
+.links { display: grid; gap: 10px; padding-bottom: 24px; }
+.links a, .links [role=link] { display: flex; align-items: center; min-height: 64px; padding: 18px 20px; border: 1px solid rgb(255 255 255 / 30%); color: inherit; text-decoration: none; font-size: 22px; font-weight: 600; line-height: 1.3; }
+.learningGroup { padding: 20px; background: var(--soft); color: var(--brand); }
+.groupTitle { margin: 0 0 16px; font-size: 22px; font-weight: 700; }
+.links ul { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+.links ul a, .links ul [role=link] { height: 100%; min-height: 76px; padding: 12px; border-color: var(--plum-border); background: var(--surface); font-size: 16px; }
+.links [aria-disabled=true] { opacity: .6; }
+.panel .login { display: flex; width: 100%; min-height: 54px; margin-top: 0; background: white; color: var(--brand); border-color: white; }
+.panel .login:hover:not(:disabled) { background: var(--soft); color: var(--brand); }
+.links a:hover, .heading button:hover { background: rgb(255 255 255 / 14%); }
+.links ul a:hover { background: var(--plum-border); }
+.links a:focus-visible, .heading a:focus-visible, .heading button:focus-visible { outline: 3px solid white; outline-offset: 3px; }
+.links ul a:focus-visible { outline-color: var(--brand); outline-offset: -3px; }
+@media(max-width:360px) { .panel { padding-inline:16px; } .heading a > svg { height:32px; } .learningGroup { padding:16px; } .links ul a { font-size:15px; } }
 .fallback { position: relative; }
 .fallback summary { padding: 12px; color: var(--brand); }
 .fallback nav { position: fixed; inset: 68px 0 0; padding: 20px; overflow: auto; background: var(--brand); color: white; }
