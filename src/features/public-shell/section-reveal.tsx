@@ -14,7 +14,7 @@ export function SectionReveal({ treatment = "editorial", ...props }: ComponentPr
   const seen = useRef(false);
   useGSAP((_, contextSafe) => {
     const element = root.current;
-    if (!element || !contextSafe || element.closest("[data-home-entrances]")) return;
+    if (!element || !contextSafe || element.closest("[data-home-entrances],[data-catalog-experience]")) return;
     const media = gsap.matchMedia();
     media.add({ reduce: "(prefers-reduced-motion: reduce)", animate: "(prefers-reduced-motion: no-preference)" }, context => {
       if (seen.current) return;
