@@ -29,3 +29,14 @@ Mobile hero fills the available first screen below the 68px header. Hero, About 
 Cut uses a solid offset shadow with a small lift/shift; its hit area stays still. The welcome splash uses the existing `--brand: #782858`, then clears; real pending loading and navigation retain separate ownership. Normal document flow owns the portrait join. HOME-06–09 owns one bounded scroll entrance for every format and cancels obsolete switching motion. Section entrances animate authored content, never the structural seam. Existing working-form/checkout semantics stay direct.
 
 The tokens remain `docs/design/SYSTEM.md` -> `src/app/globals.css` -> existing CSS modules. No new brand colors, typography, photography, routes, prices or server capabilities. Selected reference direction is not human approval of the resulting screenshots.
+
+
+2026-11-03 owner corrections: opaque shell on every non-home route; larger intrinsic-width header logo aligned to the mobile gutter; home course/mini direction filters in one horizontal row; mobile swipe rails clip at the viewport edges, retaining initial content gutters. Mobile menu omits preview labels/arrows and uses an existing-token card grouping. HOME-05 uses the public wipe language with rightward advance/leftward return. [Reference scope and QA](docs/qa/public-ui-fixes-2026-11-03.md). No new token, content approval or inter-section animation change.
+
+
+2026-11-03 second owner follow-up: compact catalog entry (H1 → existing type/filter controls → results), no catalog photo hero; a continuous plum dock backdrop behind the rounded header replaces the white bridge; desktop reviews reach the viewport edge beyond the container cap. Public mobile route/hash transitions move bottom-to-top, while desktop and internal step/offer directions retain their separate contracts. [Reference and QA](docs/qa/catalog-layout-followup-2026-11-03.md). No new product content or global token.
+
+
+## Preview and motion refinement · 2026-11-03
+
+Owner clarification removes homepage filters at every width. Course/mini discovery is capped at three with full-catalog links; cards have one full-card link. Catalog results own the actual H1 with no duplicate intro. Cut rests flat; depth appears only on hover/focus/press. The server-visible solid plum welcome clears diagonally downward, as does mobile page navigation; full-screen curtains cover the header. Header backing fades into and out of dock plum. Photo geometry follows existing cuts; detached photo seam ornaments are suppressed. Main/native menu scrollbars use existing plum/blush tokens, with forced-color and swipe-rail exceptions. [Scope, canonical owners and verification](docs/qa/preview-refinement-2026-11-03.md). These decisions supersede earlier affected notes; browser approval remains pending.

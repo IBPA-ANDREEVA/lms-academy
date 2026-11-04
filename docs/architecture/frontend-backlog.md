@@ -96,3 +96,23 @@ Still pending: human visual/motion approval; physical touch/Safari/low-end and l
 Implemented: explicit TEST_PREVIEW gating, centralized browser-local catalog/cart examples, labeled demo cards/detail, distinct loading/empty/no-match/unavailable UI, CatalogState reuse, production source boundary/contracts, no production fixture fallback, SEO allowlist/default-noindex/metadata/sitemap/robots/schema conventions, supplied-logo SVG/icon exports and permanent SEO checks. Historical NODE_ENV-only demo and unconditional-empty-array fallback descriptions are superseded.
 
 Still missing: real Catalog persistence and Admin readiness/publication/price/taxonomy flows; actual source error/timeout/request-time/cache invalidation; server Commerce cart/quote/checkout; approved public content/domain/legal/media permissions; live crawler/product-schema verification; human visual approval. No task completion, real database, payment, enrollment, publishing authority or Vault evidence is inferred. CatalogState extraction candidate is now implemented for demonstrated consumers, not generalized into a UI framework.
+
+
+## Public UI fixes · 2026-11-03
+
+Owner-requested non-home header opacity, larger/aligned mobile logo, compact home direction filters, edge-to-edge mobile card rails, simplified menu and directional HOME-05 wipe are implemented in existing owners. [Verification and reference scope](../qa/public-ui-fixes-2026-11-03.md). Pending: owner visual review, physical touch/Safari/low-end checks and existing content/service dependencies. No new shared primitive, backend capability, release promotion or task completion inferred.
+
+
+## Catalog and sticky-layout follow-up · 2026-11-03
+
+The owner’s sticky connection, desktop review clipping, compact course/mini catalog entry and upward mobile page-navigation corrections are implemented in the existing owners. These supersede the affected historical hero/bridge/horizontal-mobile notes. Human visual review and physical Safari/touch validation remain pending; backend/content/domain dependencies remain unchanged. [Paths, reference scope and verification](../qa/catalog-layout-followup-2026-11-03.md).
+
+
+## Learning wipe coverage correction · 2026-11-03
+
+Owner follow-up reverses HOME-05 step motion: advancing sweeps left, returning sweeps right. `home/sections/05-learning-preview/components/learning-preview-demo.tsx` (LearningPreviewDemo, no props; LearningPreviewSection consumer) places the existing plum curtain at the demo root so it covers the entire interactive surface, including its top step pickers/header. Pickers receive the same outgoing/incoming horizontal push, with the return beginning under the fully covered frame. The owning `.demo` clips the wipe; no page-navigation or inter-section motion changes. Existing form state, hidden/inert panels, keyboard focus and reduced-motion lifecycle remain. Numerical visual treatment awaits owner review. Regression checks now assert reversed direction and that the curtain spans the pickers.
+
+
+## Preview and motion refinement · 2026-11-03
+
+Implemented the owner's preview simplification, full-card navigation, catalog heading hierarchy, actual popup scrollbar hit-zone repair, flat-rest Cut, server-visible welcome splash, downward mobile wipe and bidirectional dock fade. Preserve missing real services/content/domain/legal approvals. Remaining: human appearance/motion review, physical touch/Safari/low-end QA, existing no-JS streamed detail limitation, generated-output lint hygiene, legacy test expectations for removed heading/home filters/upward wipe. No capability epic or Vault completion inferred. [Reference scope, contracts and evidence](../qa/preview-refinement-2026-11-03.md).

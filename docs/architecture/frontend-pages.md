@@ -166,3 +166,23 @@ This section supersedes earlier fixture-mode/metadata/branding descriptions for 
 | `/robots.txt`, `/sitemap.xml` | Next metadata routes, not UI pages; explicit static allowlist plus real publication filtering; no URLs without domain/in preview. | Live content invalidation when persistence arrives |
 
 Auth/legal/private routes remain absent. Root metadata is default-noindex; explicit approved static discovery pages opt in only with SITE_URL and preview off. English alternates remain absent.
+
+
+## Public UI fixes · 2026-11-03
+
+Current shell follow-up: existing root PublicHeader serves `/`, `/courses`, `/mini-courses`, both detail kinds, `/cart`, `/checkout`, `/preview/components`; only `/` uses the transparent overlay. Routes and composition ownership unchanged. ComponentPreviewPage reuses the header and updates its mobile-menu description. Verified viewport/route evidence and limits: [public UI fixes](../qa/public-ui-fixes-2026-11-03.md).
+
+
+## Catalog and sticky-layout follow-up · 2026-11-03
+
+`/courses` and `/mini-courses` retain persistent CatalogPage/CatalogExperience and existing route metadata; IntroductionSection is now a compact H1 followed by canonical type/filter controls and results. Root PublicMotion uses upward mobile navigation; desktop stays horizontal. No routes or service scope changed. [Paths, reference scope and verification](../qa/catalog-layout-followup-2026-11-03.md).
+
+
+## Learning wipe coverage correction · 2026-11-03
+
+Owner follow-up reverses HOME-05 step motion: advancing sweeps left, returning sweeps right. `home/sections/05-learning-preview/components/learning-preview-demo.tsx` (LearningPreviewDemo, no props; LearningPreviewSection consumer) places the existing plum curtain at the demo root so it covers the entire interactive surface, including its top step pickers/header. Pickers receive the same outgoing/incoming horizontal push, with the return beginning under the fully covered frame. The owning `.demo` clips the wipe; no page-navigation or inter-section motion changes. Existing form state, hidden/inert panels, keyboard focus and reduced-motion lifecycle remain. Numerical visual treatment awaits owner review. Regression checks now assert reversed direction and that the curtain spans the pickers.
+
+
+## Preview and motion refinement · 2026-11-03
+
+`/`: HOME-06/HOME-08 show at most three cards with full-catalog links; no home category/size filters at any width (explicit clarification). Package heading/description/custom-package callout, internal learning heading and FAQ contact prompt removed. `/courses` and `/mini-courses`: CatalogPage no longer mounts IntroductionSection; active result label is the single H1, with filters and complete results preserved. `/preview/components` uses the changed real card/Cut owners. Existing routing, TEST_PREVIEW and release boundaries preserved. [Reference scope, contracts and evidence](../qa/preview-refinement-2026-11-03.md).
