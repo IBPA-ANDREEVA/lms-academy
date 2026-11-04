@@ -1,5 +1,7 @@
 # Public frontend motion
 
+2026-11-04 homepage override (D-023): home-local HomeEntranceMotion owns fourteen authored scenes under `data-home-entrances`; shared SectionReveal defers there only. Hero/About/Founder typography/photos, learning intro/demo, four formats, reviews, FAQ and Contact use power4.out with shorter mobile treatment. Live reduced motion, focus/resize/route cleanup, visible SSR and static geometry are mandatory. The whole-offer scrub fade is replaced by article sequences after switching settles; no added scroll travel. [Timing, references and evidence](../qa/homepage-section-motion-2026-11-04.md).
+
 Current: **D-021 · 2026-11-03**. The owner's Animation Redesign brief supersedes the affected D-020 mechanics preserved below. Exact supplied image mapping and actual verification: [QA report](../qa/animation-redesign-2026-11-03.md). Implementation remains pending human visual review.
 
 ## Current owners and behavior
@@ -101,3 +103,26 @@ Owner follow-up reverses HOME-05 step motion: advancing sweeps left, returning s
 ## Downward wipe and first-frame splash · 2026-11-03
 
 The latest owner request supersedes bottom-to-top mobile navigation: PageWipeTransition covers from yPercent -100 to 0, reveals toward +100, with matching 12px content push. History shares this vertical direction; desktop horizontal/history direction stays unchanged. Fullscreen wipe/splash z-index 80 covers header 20. SplashLoader welcomes from server-visible solid plum and clears with an 800ms diagonal polygon from top to bottom; no lobe expansion after hydration. No-JS/reduced-motion skip, CSS pre-hydration failsafe, input/resize cleanup and genuine pending-loader ownership remain. PublicMotion renders its splash before route content. Desktop header backing transitions both ways in 320ms; Cut default depth is zero, existing hover/focus lift reveals depth. HOME-05 existing left-forward/right-back wipe is unchanged; only its internal heading was removed and step numbers stacked above labels. [Evidence and remaining review](../qa/preview-refinement-2026-11-03.md).
+
+
+## Landing fixes - 2026-11-04
+
+Cut motion is now CSS-only Double Cut + Panel (650ms cubic-bezier(.22,1,.36,1), arrow +4px, slash +5px), replacing historical Lift & Shift. Header native details uses repeatable opacity/transform + discrete visibility with reduced-motion/direct fallback. HOME-05 outgoing upload geometry no longer depends on newly active parent stage. Inter-section choreography is unchanged in this first changeset. [Reference/verification](../qa/landing-refinements-2026-11-04.md).
+
+## Entrance synchronization follow-up - 2026-11-04
+
+The owner-requested flicker repair supersedes earlier deferred-on-intersection initialization and wait-until-overlay-hidden/font-ready descriptions. Prepare target states in the scoped layout lifecycle, play existing timelines 120px before viewport entry, and coordinate with explicit shell/home readiness and curtain-reveal events. Exposed late-hydration content stays visible. Release all owned styles on teardown/media changes, including completed targets; suppress competing selection/route heading effects. Existing visual design and durations remain. [Root causes, implementation and tests](../qa/animation-synchronization-2026-11-04.md).
+
+## Visible entrance timing - 2026-11-04
+
+Owner follow-up supersedes the previous +120px pre-viewport start: HomeEntranceMotion now triggers at top 85% viewport height (desktop), 90% (mobile), with pre-paint starting states preserved. Home timelines run at 0.7x/0.6x speed; power2.out preserves more visible travel, with power2.inOut for the hero under the existing curtain. No layout, shared-control timing or ScrollTrigger/pinning addition. [Timing and verification](../qa/homepage-motion-visibility-2026-11-04.md).
+
+
+## Menu and catalog coordination · 2026-11-04
+
+Mobile menu navigation now has explicit start/completion events. The existing wipe becomes a manual popover above the modal; release the fixed-body lock immediately, suppress the menu's presentation at the fully covered handoff, and close the dialog only at completion. Interruption/watchdog paths release it too. Catalog kind changes use optimistic selection in the router transition, simultaneous outgoing/incoming motion (360ms total), captured interrupted poses and no end-of-tween scroll jump. Catalog panels own their motion, so descendant SectionReveal does not add a second entrance. Homepage entrance durations remain unchanged. [Verification](../qa/public-controls-followup-2026-11-04.md).
+
+
+## Catalog flash correction · 2026-11-04
+
+The catalog's partial-width alpha crossfade is superseded: two opaque panels now translate together across the full width, meeting at one edge throughout. One persistent progress tween (360ms, power2.inOut) owns positions and interpolated height; reversing redirects the current progress without resetting either panel. No blank or duplicate text layer, delayed trigger or extra loading cover. This narrowly changes catalog switch presentation to correct the owner-reported flash; settled layouts, homepage choreography and menu wipe remain unchanged. [Reproduction and evidence](../qa/catalog-switcher-flash-2026-11-04.md).

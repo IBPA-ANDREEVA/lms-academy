@@ -55,10 +55,12 @@ export function CartProvider({ children }: { children: ReactNode }) {
   function addMany(next: string[]) {
     if (!demoEnabled || catalog.status === "unavailable" || catalog.status === "loading") return;
     const valid = next.map(id => id === "demo-course" ? available.find(p => p.kind === "course")?.id : id === "demo-mini" ? available.find(p => p.kind === "mini-course")?.id : id)
-      .filter((id): id is string => Boolean(id && available.some(p => p.id === id)));
+      .filter((id): id is string => Boolean(id && (available.some(p => p.id === id) || catalog.packages.some(p => p.id === id))));
     save([...new Set([...idsRef.current, ...valid])]);
   }
-  const items: DemoItem[] = demoEnabled ? ids.flatMap(id => {
+  const items: DemoItem[] = demoEnabled ? ids.flatMap<DemoItem>(id => {
+    const pack = catalog.packages.find(p => p.id === id);
+    if (pack) return [{ id, title: pack.title, kind: "Пакет" as const, amount: pack.amountMinor, demonstration: true as const }];
     const product = available.find(p => p.id === id);
     return product ? [{ id, title: product.content.ru!.title, kind: product.kind === "course" ? "Курс" as const : "Мини-курс" as const, amount: product.price!.amountMinor, demonstration: true as const }] : [];
   }) : [];

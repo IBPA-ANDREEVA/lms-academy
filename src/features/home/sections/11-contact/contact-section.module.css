@@ -1,5 +1,7 @@
 .section { position: relative; isolation: isolate; overflow: hidden; padding: clamp(40px,4vw,64px) 0; background: var(--background); color: var(--text); }
-.layout { display: grid; grid-template-columns: minmax(0,1fr) minmax(0,1.05fr); gap: clamp(50px,8vw,140px); align-items: start; }
+.layout { display: grid; grid-template-columns: minmax(0,1.05fr) minmax(0,1fr); gap: clamp(50px,8vw,140px); align-items: start; }
+.intro { grid-column: 2; grid-row: 1; }
+.form { grid-column: 1; grid-row: 1; }
 .intro { padding-top: 40px; }
 .kicker { display: flex; align-items: center; gap: 20px; margin: 0 0 32px; color: var(--brand); font-size: 12px; font-weight: 800; letter-spacing: .1em; }
 .kicker::after { content: ""; width: 70px; border-top: 1px solid var(--plum-border); }

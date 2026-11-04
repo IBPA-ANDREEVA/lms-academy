@@ -3,11 +3,10 @@
 import { useEffect, useRef, useState, useSyncExternalStore, type KeyboardEvent, type ReactNode } from "react";
 import { gsap } from "gsap";
 import { useGSAP } from "@gsap/react";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { publicMotion as motion } from "@/features/public-shell/motion-tokens";
 import styles from "./learning-offers-showcase.module.css";
 
-gsap.registerPlugin(useGSAP, ScrollTrigger);
+gsap.registerPlugin(useGSAP);
 
 const subscribe = () => () => {};
 const sections = [
@@ -118,27 +117,6 @@ export function LearningOffersShowcase({ panels }: { panels: [ReactNode, ReactNo
       delete track.dataset.transitioning;
     };
   }, { scope: groupRef, dependencies: [activeIndex, enhanced], revertOnUpdate: true });
-
-  useGSAP(() => {
-    const group = groupRef.current;
-    const track = trackRef.current;
-    if (!group || !track || !enhanced) return;
-    const media = gsap.matchMedia();
-    media.add("(prefers-reduced-motion: no-preference)", () => {
-      // One measured entrance for the persistent group: no pin spacer, card
-      // height mutation or per-tab scroll owner to cancel panel switching.
-      const entrance = gsap.fromTo(track, { y: 32, opacity: .65 }, {
-        y: 0, opacity: 1, ease: "none",
-        scrollTrigger: { trigger: group, start: "top 92%", end: "top 55%", scrub: .25, once: true },
-      });
-      // Panel height does not change this top-to-top entrance geometry. Global
-      // refresh during hash navigation can restore a stale cached scroll value.
-      const refresh = () => entrance.scrollTrigger?.refresh();
-      window.addEventListener("public-layout", refresh);
-      return () => window.removeEventListener("public-layout", refresh);
-    });
-    return () => media.revert();
-  }, { scope: groupRef, dependencies: [enhanced], revertOnUpdate: true });
 
   useEffect(() => {
     const group = groupRef.current;

@@ -24,10 +24,10 @@ Status vocabulary:
 
 | ID | Status | Question |
 | --- | --- | --- |
-| OQ-011 | Clarify | Are `trainer` and `curator` always the same person, or may teaching, content ownership, and homework review be assigned separately? |
-| OQ-012 | Clarify | Can multiple curators be assigned to one course or cohort, and can one student be reassigned? What history remains visible after reassignment? |
+| OQ-011 | Clarify | With one current trainer/curator per course confirmed by PD-013, may content authorship and the current review assignment belong to different people? What staffing reference is required for mini-courses without curator support? |
+| OQ-012 | Clarify | When the single current trainer/curator changes, may an individual student be reassigned, how does the change propagate to existing enrollments/pending attempts, and what history remains visible? Original multiple-curator question is preserved in PD-013; concurrent multi-curator assignment is not assumed. |
 | OQ-013 | Clarify | What does role switching look like for a multi-role user, and which role is selected after login? |
-| OQ-014 | Clarify | PD-011 permits referral capability for trainer/curator/administrator or other authorized accounts. Which remaining role/capability combinations require separation-of-duties controls? |
+| OQ-014 | Clarify | With concurrent student/trainer/manager/administrator memberships under PD-013 and independent referral capabilities, which actions require separation-of-duties controls, including reviewing one's own homework or granting one's own access? |
 | OQ-015 | Clarify | What student fields may a curator see beyond display name and course activity? The source explicitly prohibits contact details outside the platform but does not define the allowed profile view. |
 | OQ-016 | Clarify | What actions may a blocked user take, and what happens to active enrollments, pending homework, messages, and financial records? |
 
@@ -64,7 +64,7 @@ Status vocabulary:
 | OQ-034 | Blocking feature | May promo codes stack? Are they single-use per customer? Can a fixed discount exceed the eligible subtotal? How do currency and tax interact with it? |
 | OQ-035 | Blocking feature | What happens to promo-code usage counts after cancellation or refund? |
 | OQ-036 | Blocking feature | Are partial refunds supported for an order, a package component, or a portion of a course? How are access and accrual reversals prorated? |
-| OQ-037 | Blocking MVP | What final refund eligibility, legal conditions, exception rules and reason/evidence fields govern automatic Stripe refunds and administrator escalation? PD-010 approves automation, but explicitly calls the seven-day window after confirmed payment, regardless of progress, proposed and subject to applicable law and final rules; do not encode it as final policy. |
+| OQ-037 | Blocking MVP | Beyond PD-013's confirmed within-24-hours AND unstarted-course eligibility and administration-handled execution, what legal conditions, reason/evidence requirements, administrator approval steps and failure/recovery handling apply? No package/partial-refund behavior or other financial exceptions are inferred. Original question is preserved in PD-013; the proposed seven-day rule and unattended execution requirement are superseded. |
 | OQ-038 | Blocking feature | What constitutes acceptable evidence for authorized-operator manual enrollment, and who may approve or reverse it? |
 | OQ-039 | Blocking feature | What order, receipt, tax, and accounting record should a manual enrollment create? |
 | OQ-040 | Blocking feature | What is the precedence when referral link, promo code, prior lead ownership, and manual enrollment point to different referral partners? |
@@ -81,7 +81,7 @@ Status vocabulary:
 | OQ-046 | Clarify | Are there assignment due dates distinct from the two-week support expiry, and who configures them? |
 | OQ-047 | Blocking feature | Does message history become read-only after support expires? PD-004 already establishes extension and administrator override permissions; remaining message-history visibility is unresolved. |
 | OQ-048 | Blocking MVP | Which detailed post-expiration transitions apply to in-review work, student revisions and certificate eligibility? PD-004 requires curators to review assignments submitted before the permitted deadline even if overdue; it does not settle the remaining transitions. Every submitted assignment needs a valid state and unambiguous next permitted action. |
-| OQ-049 | Blocking MVP | Which residual package/cohort and calendar/timezone/overlapping-extension rules apply beyond PD-004 independent deadlines per purchased course/enrollment? The MVP ownership and activation rule is approved; no alternative student-global clock is implied. |
+| OQ-049 | Blocking MVP | Which exact authorized course-opening action activates enrollment under PD-013, and how are accidental/prefetched openings excluded? Which timezone, year/month boundaries, pauses and overlapping-extension rules govern the confirmed one-year standard/three-month mini video access and 14-day supported-course clocks? Package/component and optional-module details remain unresolved; no student-global clock is implied. |
 
 ## Certificates
 
@@ -152,3 +152,6 @@ Status vocabulary:
 | OQ-089 | Clarify | The original specification includes the student dashboard's upcoming deadlines and curator responses, but the Vault defers messaging and support countdown. Which reduced MVP dashboard states are required? |
 | OQ-090 | Blocking MVP | PD-010 requires administrator course-conversation inspection while full student-curator messaging remains Full. What minimum conversation data and request types/statuses must MVP provide, and which underlying operations are authorized? No Full messaging scope is silently promoted or waived. |
 | OQ-091 | Blocking feature | What literal restricted operational-log URL and remaining protected account/admin route spellings are approved? PD-010 requires the viewer; UI planning can proceed without inventing routes. |
+| OQ-092 | Blocking feature | Which resource-scoped actions and release allocation apply to the manager membership restored by PD-013? How does it combine with separately authorized referral, lead/contact, financial-view and manual-sale capabilities? No dashboard, route or MVP commercial scope is inferred. |
+| OQ-093 | Blocking MVP | For PD-013 refunds, is exactly 24 hours included, which authoritative payment instant anchors it, when is unstarted status evaluated, and how are activation racing a request/admin execution and delayed provider confirmation handled? |
+| OQ-094 | Blocking MVP | How must preservation of all homework attempts, attachments, reviews and feedback under PD-013 qualify PD-007 access-expiry deletion, account deletion and legally required erasure? Which retention periods, exceptions and historical visibility rules apply without losing required review/certificate evidence? |

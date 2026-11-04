@@ -1,17 +1,20 @@
 "use client";
 
-import { useCallback, useRef, useState, type ReactNode } from "react";
+import { useCallback, useLayoutEffect, useRef, useState, type ReactNode } from "react";
 import { usePathname } from "next/navigation";
 import { PageWipeTransition } from "./page-wipe-transition";
 import { SplashLoader } from "./splash-loader";
 import { RouteLoadingContext } from "./route-loading";
 import styles from "./public-motion.module.css";
+import { motionReadyEvent } from "./motion-handoff";
 
 export function PublicMotion({ children }: { children: ReactNode }) {
   const content = useRef<HTMLDivElement>(null);
   const pathname = usePathname();
   const [loadingCount, setLoadingCount] = useState(0);
   const [wipeOwnsLoading, setWipeOwnsLoading] = useState(false);
+  // Parent layout effects run after descendants prepare their entrance states.
+  useLayoutEffect(() => { window.dispatchEvent(new Event(motionReadyEvent)); }, []);
   // Splash handles welcome/cold-entry loading. Once navigation uses Wipe,
   // a slow-response watchdog must never start a second fullscreen loader.
   const onWipeActive = useCallback((active: boolean) => { if (active) setWipeOwnsLoading(true); }, []);
@@ -21,7 +24,7 @@ export function PublicMotion({ children }: { children: ReactNode }) {
   }, []);
   return <RouteLoadingContext value={register}>
     <div className={styles.root}>
-      <SplashLoader active={loadingCount > 0} suppressed={wipeOwnsLoading} welcome={pathname === "/"} />
+      <SplashLoader active={loadingCount > 0} suppressed={wipeOwnsLoading} welcome={pathname === "/"} coordinated />
       <div ref={content} className={styles.content}>{children}</div>
       <PageWipeTransition content={content} pathname={pathname} loading={loadingCount > 0} onActive={onWipeActive} />
     </div>

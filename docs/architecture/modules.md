@@ -1,6 +1,9 @@
 # Module ownership and workflows
 
 ## Implemented presentation versus target domains · 2026-11-03
+> 2026-11-04 BASE02-A: the [entity map](entity-map.md) refines conceptual identities/state ownership within these seven domains. [PD-013](../product/decisions.md#pd-013--base02-a-domain-policy-overrides) supersedes older manager-role, introductory-acknowledgment activation, uniform three-month access, unattended-refund and refund-eligibility wording below. First authorized course opening starts the applicable independent clocks; administration handles within-24-hours/unstarted-course refunds. Learning owns course completion from published progress/assignment facts; Certificates owns eligibility and issuance. Catalog owns the single current course trainer/curator assignment; enrollment/attempt staffing records preserve applicable context. Conceptual events in BASE02-A do not define or implement the infrastructure described prospectively below.
+
+## Implemented presentation versus target domains · 2026-11-02
 
 [ADR-0003](../decisions/0003-python-backend-architecture.md) moves the planned backend to Python without changing the seven ownership boundaries below. `backend/app/modules` contains empty directories only. No authoritative authentication, database, payment, access, media, review or notification service exists.
 

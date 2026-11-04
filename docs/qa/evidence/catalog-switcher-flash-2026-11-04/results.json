@@ -1,0 +1,29 @@
+{
+  "results": [
+    {
+      "width": 1440,
+      "clicks": 24,
+      "frames": 1019,
+      "movingFrames": 852
+    },
+    {
+      "width": 390,
+      "clicks": 24,
+      "frames": 921,
+      "movingFrames": 662
+    },
+    {
+      "width": 360,
+      "clicks": 24,
+      "frames": 1028,
+      "movingFrames": 859
+    },
+    {
+      "width": 768,
+      "clicks": 24,
+      "frames": 1037,
+      "movingFrames": 861
+    }
+  ],
+  "errors": []
+}

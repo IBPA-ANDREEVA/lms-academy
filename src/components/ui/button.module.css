@@ -108,43 +108,44 @@
   box-shadow: 1px 1px 0 var(--text);
   transform: translate(2px, 2px);
 }
+/* Two owner-supplied treatments; legacy appearance="cut" defaults to line. */
 .button.cut {
-  --button-ink: var(--text);
-  isolation: isolate;
-  border: 0;
-  border-radius: 0;
-  background: transparent;
-  color: var(--button-ink);
-  padding-inline: 34px 40px;
+  --cut-accent: var(--brand);
+  --cut-edge: color-mix(in srgb, var(--brand) 45%, var(--border));
+  --cut-background: var(--surface);
+  --cut-hover: var(--soft);
+  --cut-pressed: var(--plum-border);
+  --cut-arrow-x: 0px;
+  --cut-line-scale: .72;
+  --cut-accent-scale: 0;
+  border: 1px solid var(--cut-edge);
+  background: var(--cut-background);
+  color: var(--cut-accent);
+  text-align: left;
+  box-shadow: none;
+  transition: background-color 300ms ease, border-color 300ms ease;
 }
-.button.cut:hover:not(:disabled),
-.button.cut:active:not(:disabled) { background: transparent; }
-.cut::before {
-  content: "";
-  position: absolute;
-  z-index: -1;
-  inset: 2px 20px 2px 10px;
-  border: 2px solid currentColor;
-  background: var(--surface);
-  transform: skewX(-16deg);
-  transition: background-color 150ms;
-  pointer-events: none;
+.cutLine { border-radius: 3px; }
+.button.cutSoft { --cut-hover: color-mix(in srgb, var(--brand) 12%, var(--surface)); --cut-background: var(--soft); --cut-edge: var(--border); border-radius: 14px; }
+.cut .label { display: flex; align-items: center; justify-content: space-between; gap: 24px; width: 100%; min-width: 0; }
+.cutText { position: relative; min-width: 0; }
+.cutLine .cutText::after { content: ""; position: absolute; height: 2px; inset: auto 0 -6px; background: currentColor; transform: scaleX(var(--cut-line-scale)); transform-origin: left; transition: transform 300ms cubic-bezier(.22,1,.36,1); }
+.cutSoft::before { content: ""; position: absolute; inset: 8px auto 8px 7px; width: 3px; border-radius: 2px; background: currentColor; transform: scaleY(var(--cut-accent-scale)); transition: transform 300ms cubic-bezier(.22,1,.36,1); }
+.cut .arrow { flex: none; display: inline-flex; align-items: center; justify-content: center; width: 20px; font-size: 22px; font-weight: 400; line-height: 1; transform: translateX(var(--cut-arrow-x)); transition: transform 300ms cubic-bezier(.22,1,.36,1); }
+.cut.inverse { --cut-accent: var(--on-brand); --cut-edge: rgb(255 255 255 / 65%); --cut-background: transparent; --cut-hover: rgb(255 255 255 / 12%); --cut-pressed: rgb(255 255 255 / 22%); }
+.cutSoft.inverse { --cut-background: rgb(255 255 255 / 10%); --cut-edge: rgb(255 255 255 / 35%); --cut-hover: rgb(255 255 255 / 20%); }
+.cut.destructive { --cut-accent: var(--error); --cut-edge: var(--error); }
+.cut.inverse.destructive { --cut-accent: var(--on-brand); }
+@media(hover:hover) and (pointer:fine) {
+  .button.cut:where(:hover,[data-cut-state="hover"]):not(:disabled):not([aria-disabled="true"]):not([aria-busy="true"]) {
+    background: var(--cut-hover); border-color: var(--cut-accent); --cut-line-scale: 1; --cut-accent-scale: 1; --cut-arrow-x: 3px;
+  }
 }
-.cut::after {
-  content: "";
-  position: absolute;
-  inset: 2px 9px 2px auto;
-  border-right: 1px solid currentColor;
-  transform: skewX(-16deg);
-  pointer-events: none;
+.button.cut:where(:focus-visible,:active,[data-cut-state="focus"],[data-cut-state="pressed"]):not(:disabled):not([aria-disabled="true"]):not([aria-busy="true"]) {
+  background: var(--cut-hover); border-color: var(--cut-accent); --cut-line-scale: 1; --cut-accent-scale: 1; --cut-arrow-x: 3px;
 }
-.cut:hover:not(:disabled)::before { background: var(--soft); }
-.cut:active:not(:disabled)::before { background: var(--plum-border); }
-.cut .label { display: flex; align-items: center; justify-content: space-between; gap: 28px; width: 100%; }
-.cut.inverse { --button-ink: var(--surface); }
-.cut.inverse::before { background: var(--text); }
-.cut.inverse:hover:not(:disabled)::before { background: rgb(255 255 255 / 12%); }
-.cut.destructive { --button-ink: var(--error); }
+.button.cut:active:not(:disabled) { background: var(--cut-pressed); }
+.cut.inverse:focus-visible { outline-color: var(--on-brand); }
 .button:disabled {
   cursor: not-allowed;
   background: var(--border);
@@ -153,106 +154,20 @@
   box-shadow: none;
   transform: none;
 }
-.button.cut:disabled { background: transparent; color: var(--muted); }
-.cut:disabled::before {
-  background: var(--border);
-}
-.pending {
-  position: absolute;
-  right: 8px;
-}
-@media (prefers-reduced-motion: reduce) {
-  .button,
-  .minimal::before,
-  .cut::before {
-    transition: none;
-  }
-  .neoBrutalist:hover:not(:disabled),
-  .neoBrutalist:active:not(:disabled) {
-    transform: none;
-  }
-}
-
-/* Lift & Shift: one foreground plane lifts from a solid offset shadow.
-   data-cut-state / data-cut-reduced-motion are review-only hooks used in /preview/components. */
-.button.cut {
-  --cut-body-x: 0px;
-  --cut-body-y: 0px;
-  --cut-slash-x: 0px;
-  --cut-label-x: 0px;
-  --cut-label-y: 0px;
-  --cut-slash-y: 0px;
-  --cut-depth-x: 0px;
-  --cut-arrow-x: 0px;
-  --cut-depth-y: 0px;
-  --cut-depth-opacity: 0;
-  --cut-duration: 240ms;
-  --cut-arrow-duration: 210ms;
-  overflow: visible;
-  transition: none;
-}
-.cut::before {
-  transform: translate(var(--cut-body-x),var(--cut-body-y)) skewX(-16deg);
-  transition: transform var(--cut-duration) cubic-bezier(.22,1,.36,1);
-}
-.cut::after {
-  display: none;
-  transform: translate(var(--cut-slash-x),var(--cut-slash-y)) skewX(-16deg);
-  transition: transform var(--cut-duration) cubic-bezier(.22,1,.36,1);
-}
-.cut .label {
-  transform: translate(var(--cut-label-x),var(--cut-label-y));
-  transition: transform var(--cut-duration) cubic-bezier(.22,1,.36,1);
-}
-.cut .label > span[aria-hidden="true"] {
-  display: inline-block;
-  flex: none;
-  transform: translateX(var(--cut-arrow-x));
-  transition: transform var(--cut-arrow-duration) cubic-bezier(.22,1,.36,1);
-}
-.cut .cutDepth {
-  position: absolute;
-  z-index: -2;
-  inset: 2px 20px 2px 10px;
-  border: 2px solid currentColor;
-  background: currentColor;
-  transform: translate(var(--cut-depth-x),var(--cut-depth-y)) skewX(-16deg);
-  opacity: var(--cut-depth-opacity);
-  pointer-events: none;
-  transition: transform var(--cut-duration) cubic-bezier(.22,1,.36,1), opacity var(--cut-duration) ease;
-}
-/* Preserve every variant's resting colors on hover/press. */
-.button.cut:is(:hover,:active):not(:disabled)::before { background: var(--surface); }
-.button.cut.inverse:is(:hover,:active):not(:disabled)::before { background: var(--text); }
-.button.cut:disabled .cutDepth { opacity:0; }
-@media(hover:hover) and (pointer:fine) {
-  .cut:where(:hover,[data-cut-state="hover"]):not(:disabled):not([aria-disabled="true"]):not([aria-busy="true"]) {
-    --cut-body-x: -3px; --cut-body-y: -3px; --cut-label-x: -3px; --cut-label-y: -3px; --cut-arrow-x: 2px; --cut-depth-x: 5px; --cut-depth-y: 5px; --cut-depth-opacity: 1;
-  }
-}
-.cut:where(:focus-visible,[data-cut-state="focus"]):not(:disabled):not([aria-disabled="true"]):not([aria-busy="true"]) {
-  --cut-body-x: -3px; --cut-body-y: -3px; --cut-label-x: -3px; --cut-label-y: -3px; --cut-arrow-x: 2px; --cut-depth-x: 5px; --cut-depth-y: 5px; --cut-depth-opacity: 1;
-  outline: 3px solid var(--focus); outline-offset: 4px;
-}
-.cut:where(:active,[data-cut-state="pressed"]):not(:disabled):not([aria-disabled="true"]):not([aria-busy="true"]) {
-  --cut-body-x: 2px; --cut-body-y: 3px; --cut-slash-x: 4px; --cut-slash-y: 2px; --cut-label-x: 2px; --cut-label-y: 3px; --cut-arrow-x: 2px; --cut-depth-x: 3px; --cut-depth-y: 4px; --cut-depth-opacity: 1;
-  --cut-duration: 120ms; --cut-arrow-duration: 120ms;
-}
+.button.cut:is(:disabled,[aria-disabled="true"]) { background: var(--border); border-color: var(--disabled); color: var(--muted); }
+.cut.inverse:is(:disabled,[aria-disabled="true"]) { background: rgb(255 255 255 / 12%); border-color: rgb(255 255 255 / 35%); color: rgb(255 255 255 / 65%); }
+.cut[aria-busy="true"] .arrow { visibility: hidden; }
+.pending { position: absolute; z-index: 3; right: 16px; }
 @media(prefers-reduced-motion:reduce) {
- .button.cut {
-  --cut-body-x: 0px !important; --cut-body-y: 0px !important; --cut-label-y: 0px !important; --cut-slash-y: 0px !important; --cut-depth-x: 0px !important; --cut-slash-x: 0px !important; --cut-label-x: 0px !important; --cut-arrow-x: 0px !important; --cut-depth-y: 0px !important; --cut-depth-opacity: 0 !important;
- }
- .cut::before, .cut::after, .cut .label, .cut .label > span[aria-hidden="true"], .cut .cutDepth { transition: none; }
+  .button, .minimal::before { transition: none; }
+  .neoBrutalist:is(:hover,:active):not(:disabled) { transform: none; }
+  .button.cut { --cut-arrow-x: 0px !important; transition: none; }
+  .cut .arrow, .cutText::after, .cutSoft::before { transition: none; }
 }
-[data-cut-reduced-motion] .button.cut {
- --cut-body-x: 0px !important; --cut-body-y: 0px !important; --cut-label-y: 0px !important; --cut-slash-y: 0px !important; --cut-depth-x: 0px !important; --cut-slash-x: 0px !important; --cut-label-x: 0px !important; --cut-arrow-x: 0px !important; --cut-depth-y: 0px !important; --cut-depth-opacity: 0 !important;
-}
-[data-cut-reduced-motion] .cut::before, [data-cut-reduced-motion] .cut::after, [data-cut-reduced-motion] .cut .label, [data-cut-reduced-motion] .cut .label > span[aria-hidden="true"], [data-cut-reduced-motion] .cut .cutDepth { transition: none; }
-
-@media (prefers-reduced-motion: reduce) {
-  .button.cut:is(:hover,:active):not(:disabled):not([aria-disabled="true"])::before { background: var(--soft); }
-  .button.cut.inverse:is(:hover,:active):not(:disabled):not([aria-disabled="true"])::before { background: rgb(255 255 255 / 12%); }
-}
-@media (hover: none) {
+[data-cut-reduced-motion] .button.cut { --cut-arrow-x: 0px !important; transition: none; }
+[data-cut-reduced-motion] .cut .arrow, [data-cut-reduced-motion] .cutText::after, [data-cut-reduced-motion] .cutSoft::before { transition: none; }
+@media(hover:none) {
   .neoBrutalist:hover:not(:active):not(:disabled) { transform: none; box-shadow: 4px 4px 0 var(--text); }
+  .button.cut:hover:not(:active):not(:disabled) { background: var(--cut-background); }
 }
+@media(forced-colors:active) { .button.cut { border-color: ButtonText; color: ButtonText; background: ButtonFace; } }

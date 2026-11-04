@@ -12,11 +12,12 @@ import { ContactSection } from "./sections/11-contact/contact-section";
 import { LearningOffersShowcase } from "./learning-offers/learning-offers-showcase";
 import { HomeSectionSeam } from "./composition/home-section-seam";
 import { AcademyStory } from "./composition/academy-story";
+import { HomeEntranceMotion } from "./composition/home-entrance-motion";
 import styles from "./home-page.module.css";
 
 export function HomePage() {
   return (
-    <main id="main-content" tabIndex={-1} className={styles.main}>
+    <HomeEntranceMotion className={styles.main}>
       <HeroSection />
       <HomeSectionSeam variant="hero" />
       <AcademyStory about={<AboutSection />} seam={<HomeSectionSeam variant="portraits" />} founder={<FounderSection />} />
@@ -32,6 +33,6 @@ export function HomePage() {
       <FaqSection />
       <HomeSectionSeam variant="contact" />
       <ContactSection />
-    </main>
+    </HomeEntranceMotion>
   );
 }

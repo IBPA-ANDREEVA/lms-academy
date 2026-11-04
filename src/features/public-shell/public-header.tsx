@@ -33,7 +33,7 @@ function NavigationLinks({ items, pathname, onNavigate }: {
   onNavigate: () => void;
 }) {
   return <ul>{items.map((item) => {
-    const children = item.children?.length ? <ul data-css-motion="surface" className={styles.dropdown}>
+    const children = item.children?.length ? <ul className={styles.dropdown}>
       {item.children.map((child) => <li key={child.label}><NavigationEntry entry={child} onNavigate={onNavigate} showPreviewLabel={false} /></li>)}
     </ul> : null;
     return <li key={item.label}>

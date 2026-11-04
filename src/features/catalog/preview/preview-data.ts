@@ -1,7 +1,20 @@
 import type { CatalogProduct, ProductKind } from "@/features/catalog/catalog-view-types";
 
 export const PREVIEW_KEY = "lms.catalog.preview.v1";
-export const initialPreviewIds = [0, 1, 2, 3].flatMap(index => [`demo-course-${index}`, `demo-mini-${index}`]);
+export const initialPreviewIds = [
+  ...[0, 1, 2, 3].flatMap(index => [`demo-course-${index}`, `demo-mini-${index}`]),
+  ...[0, 1, 2].map(index => `demo-package-${index}`),
+];
+
+/** Browser-only package fixtures. No production package contract or pricing policy. */
+export type PreviewPackage = { id: string; title: string; size: 2 | 3 | 6; amountMinor: number; demonstration: true };
+export function previewPackage(id: string): PreviewPackage | null {
+  const match = /^demo-package-(\d{1,4})$/.exec(id);
+  if (!match) return null;
+  const index = Number(match[1]);
+  const size = ([2, 3, 6] as const)[index % 3];
+  return { id, title: `Демо: пакет из ${size} направлений`, size, amountMinor: 18000 + size * 6000 + Math.floor(index / 3) * 500, demonstration: true };
+}
 const categories = [
   { id: "lash-extensions", title: "Наращивание ресниц" },
   { id: "nails", title: "Ногти" },
@@ -43,6 +56,6 @@ export function readPreviewIds(raw: string | null): string[] {
   if (raw === null) return [...initialPreviewIds];
   const ids: unknown = JSON.parse(raw);
   if (!Array.isArray(ids) || ids.length > 200 || new Set(ids).size !== ids.length ||
-    ids.some(id => typeof id !== "string" || !previewProduct(id))) throw new Error("Invalid preview identifiers");
+    ids.some(id => typeof id !== "string" || (!previewProduct(id) && !previewPackage(id)))) throw new Error("Invalid preview identifiers");
   return ids;
 }

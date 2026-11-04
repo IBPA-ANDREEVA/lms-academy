@@ -163,3 +163,6 @@
 .cutStates p { margin: 0 0 16px; color: var(--muted); font-size: 13px; }
 @media(max-width:900px) { .cutStates { grid-template-columns: repeat(2,minmax(0,1fr)); } }
 @media(max-width:600px) { .cutStates { grid-template-columns: 1fr; gap: 16px; } }
+.cutReview > .inverse { background: var(--brand); }
+.cutInverse { display: flex; flex-wrap: wrap; gap: 20px; padding: 24px; margin-block: 12px 32px; background: var(--brand); }
+@media(max-width:600px) { .cutInverse { padding: 20px; } }

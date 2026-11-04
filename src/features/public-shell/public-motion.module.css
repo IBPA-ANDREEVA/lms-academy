@@ -1,6 +1,6 @@
 .root, .content { min-width: 0; }
 /* Full-viewport curtains cover the sticky shell as well as route content. */
-.wipe { position: fixed; inset: 0; z-index: 80; pointer-events: none; background: var(--brand); }
+.wipe { margin: 0; padding: 0; border: 0; width: 100%; height: 100%; max-width: none; max-height: none; position: fixed; inset: 0; z-index: 80; pointer-events: none; background: var(--brand); }
 .wipe { display: grid; place-items: center; color: var(--on-brand); }
 .wipe[hidden] { display: none; }
 .wipe span { opacity: 0; font-size: 14px; }

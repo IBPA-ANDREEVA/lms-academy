@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict';
 import { test } from 'node:test';
-import { previewProduct, readPreviewIds, initialPreviewIds } from '../src/features/catalog/preview/preview-data.ts';
+import { previewProduct, previewPackage, readPreviewIds, initialPreviewIds } from '../src/features/catalog/preview/preview-data.ts';
+import { isPublicProduct, isPurchasable, selectPublished } from '../src/server/catalog/policy.ts';
 
 test('preview identifiers restore deterministic data and reject stored product/price objects', () => {
   assert.deepEqual(readPreviewIds(null), initialPreviewIds);

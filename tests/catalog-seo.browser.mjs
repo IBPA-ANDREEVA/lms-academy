@@ -74,7 +74,7 @@ try {
   await page.locator('main button[aria-label^="Удалить:"]').first().click();
   assert.equal(await page.locator('main [aria-label="Выбранные продукты"] li').count(),1);
   await action('Несколько товаров в корзину');await close();
-  assert.equal(await page.locator('main [aria-label="Выбранные продукты"] li').count(),8);
+  assert.equal(await page.locator('main [aria-label="Выбранные продукты"] li').count(),11); // Eight products + three package demos.
   await goto('/checkout');assert.ok(await page.getByRole('button',{name:'Оплата недоступна'}).isDisabled());
   await action('Очистить корзину / пустое состояние');await close();
   await goto('/cart');await page.getByRole('heading',{name:'Пока здесь пусто'}).waitFor();await capture('cart-empty');
