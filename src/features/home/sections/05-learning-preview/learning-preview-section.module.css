@@ -8,7 +8,7 @@
 .description { max-width: 410px; margin: 30px 0 36px; font-size: clamp(16px, 1.25vw, 20px); line-height: 1.55; }
 .note { display: flex; align-items: center; gap: 12px; margin: 0; color: var(--muted); font-size: 11px; font-weight: 700; letter-spacing: .08em; }
 .note::before { content: "↗"; display: grid; place-items: center; width: 26px; height: 26px; border: 1px solid var(--brand); border-radius: 50%; color: var(--brand); font-size: 16px; }
-.demo { position: relative; min-width: 0; border: 2px solid var(--text); background: var(--surface); box-shadow: 14px 14px 0 var(--text); }
+.demo { position: relative; overflow: clip; min-width: 0; border: 2px solid var(--text); background: var(--surface); box-shadow: 14px 14px 0 var(--text); }
 .demoHeader { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 18px 22px; border-bottom: 1px solid var(--border); font-size: 14px; }
 .demoHeader strong { white-space: nowrap; }
 .demoHeader strong span { color: var(--muted); font-weight: 500; }
@@ -65,7 +65,8 @@
 .lessonCard { margin-bottom: 28px; }
 .mediaPlaceholder { aspect-ratio: 16/9; min-height: 220px; }
 .lessonText { display: none; }
-.stageContent { max-width: 680px; margin-inline: auto; }
+.stageContent[aria-hidden="true"] { display: none; }
+.stageContent { width: 100%; max-width: 680px; margin-inline: auto; }
 .feedbackStatus { padding: 32px; margin-block: 32px; border-left: 3px solid var(--brand); }
 .demoBody[data-stage="feedback"] { display: flex; align-items: center; background: var(--soft); }
 .demoBody[data-stage="assignment"] .upload { min-height: 150px; }
@@ -112,3 +113,7 @@
  .stageContent textarea { font-size:16px; }
  .mediaPlaceholder { min-height:180px; }
 }
+
+/* Step selectors are the first row of the learning surface. */
+.tabs button { flex-direction:column; gap:4px; padding-block:14px; }
+.tabs small { display:block; font-size:14px; line-height:1.2; }
