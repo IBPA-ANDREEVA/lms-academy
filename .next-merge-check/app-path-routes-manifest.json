@@ -1,0 +1,17 @@
+{
+  "/(catalog)/courses/page": "/courses",
+  "/(catalog)/mini-courses/page": "/mini-courses",
+  "/(details)/courses/[slug]/page": "/courses/[slug]",
+  "/(details)/mini-courses/[slug]/page": "/mini-courses/[slug]",
+  "/_global-error/page": "/_global-error",
+  "/_not-found/page": "/_not-found",
+  "/apple-icon.png/route": "/apple-icon.png",
+  "/cart/page": "/cart",
+  "/checkout/page": "/checkout",
+  "/favicon.ico/route": "/favicon.ico",
+  "/icon.svg/route": "/icon.svg",
+  "/page": "/",
+  "/preview/components/page": "/preview/components",
+  "/robots.txt/route": "/robots.txt",
+  "/sitemap.xml/route": "/sitemap.xml"
+}

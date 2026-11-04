@@ -1,0 +1,10 @@
+:HL["/_next/static/chunks/3fzef2bdp118n.css","style"]
+:HL["/_next/static/chunks/30214-9taqar8.css","style"]
+:HL["/_next/static/chunks/10tg6yyfh2-o6.css","style"]
+:HL["/_next/static/media/Manrope-s.p.3rjk17h6oms_8.ttf","font",{"crossOrigin":"","type":"font/ttf"}]
+:HL["/_next/static/media/Unbounded-s.p.2o0w_6rj3qjvh.ttf","font",{"crossOrigin":"","type":"font/ttf"}]
+4:[["children",{"s":"__PAGE__","h":24738}]]
+3:[["children",{"s":{"n":"slug","t":"d","k":null,"s":[]},"h":24674,"c":"$Q4"}]]
+2:[["children",{"s":"mini-courses","h":24674,"c":"$Q3"}]]
+1:[["children",{"s":"(details)","h":24678,"c":"$Q2"}]]
+0:{"b":"E7N2zQhoR3o83-6094dax","t":{"t":{"s":"","h":24666,"c":"$Q1"}}}

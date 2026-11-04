@@ -1,0 +1,118 @@
+[
+  {
+    "mode": "real",
+    "route": "/",
+    "robots": "index, follow",
+    "canonical": [
+      "https://academy.example.test"
+    ],
+    "schema_count": 1,
+    "preview_control": false
+  },
+  {
+    "mode": "real",
+    "route": "/courses",
+    "robots": "index, follow",
+    "canonical": [
+      "https://academy.example.test/courses"
+    ],
+    "schema_count": 0,
+    "preview_control": false
+  },
+  {
+    "mode": "real",
+    "route": "/mini-courses",
+    "robots": "index, follow",
+    "canonical": [
+      "https://academy.example.test/mini-courses"
+    ],
+    "schema_count": 0,
+    "preview_control": false
+  },
+  {
+    "mode": "real",
+    "route": "/cart",
+    "robots": "noindex, nofollow",
+    "canonical": [],
+    "schema_count": 0,
+    "preview_control": false
+  },
+  {
+    "mode": "real",
+    "route": "/checkout",
+    "robots": "noindex, nofollow",
+    "canonical": [],
+    "schema_count": 0,
+    "preview_control": false
+  },
+  {
+    "mode": "real",
+    "route": "/preview/components",
+    "robots": "noindex, nofollow",
+    "canonical": [],
+    "schema_count": 0,
+    "preview_control": false
+  },
+  {
+    "mode": "real",
+    "sitemap": [
+      "https://academy.example.test/",
+      "https://academy.example.test/courses",
+      "https://academy.example.test/mini-courses"
+    ],
+    "robots": "User-Agent: *\nAllow: /\nDisallow: /api/\nDisallow: /admin/\nDisallow: /account/\nDisallow: /trainer/\n\nSitemap: https://academy.example.test/sitemap.xml\n"
+  },
+  {
+    "mode": "preview",
+    "route": "/",
+    "robots": "noindex, nofollow",
+    "canonical": [],
+    "schema_count": 0,
+    "preview_control": true
+  },
+  {
+    "mode": "preview",
+    "route": "/courses",
+    "robots": "noindex, nofollow",
+    "canonical": [],
+    "schema_count": 0,
+    "preview_control": true
+  },
+  {
+    "mode": "preview",
+    "route": "/mini-courses",
+    "robots": "noindex, nofollow",
+    "canonical": [],
+    "schema_count": 0,
+    "preview_control": true
+  },
+  {
+    "mode": "preview",
+    "route": "/cart",
+    "robots": "noindex, nofollow",
+    "canonical": [],
+    "schema_count": 0,
+    "preview_control": true
+  },
+  {
+    "mode": "preview",
+    "route": "/checkout",
+    "robots": "noindex, nofollow",
+    "canonical": [],
+    "schema_count": 0,
+    "preview_control": true
+  },
+  {
+    "mode": "preview",
+    "route": "/preview/components",
+    "robots": "noindex, nofollow",
+    "canonical": [],
+    "schema_count": 0,
+    "preview_control": true
+  },
+  {
+    "mode": "preview",
+    "sitemap": [],
+    "robots": "User-Agent: *\nDisallow: /\n\n"
+  }
+]

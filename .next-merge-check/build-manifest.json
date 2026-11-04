@@ -1,0 +1,124 @@
+{
+  "pages": {
+    "/_app": []
+  },
+  "devFiles": [],
+  "polyfillFiles": [
+    "static/chunks/0cz1d0mv5g_q7.js"
+  ],
+  "lowPriorityFiles": [
+    "static/E7N2zQhoR3o83-6094dax/_buildManifest.js",
+    "static/E7N2zQhoR3o83-6094dax/_ssgManifest.js",
+    "static/E7N2zQhoR3o83-6094dax/_clientMiddlewareManifest.js"
+  ],
+  "rootMainFiles": [
+    "static/chunks/2q9gyanh00h9b.js",
+    "static/chunks/05uu-qbxilrlo.js",
+    "static/chunks/268cgdygled7_.js",
+    "static/chunks/turbopack-3-ry682tkyiqk.js"
+  ],
+  "rootMainFilesTree": {},
+  "pagesChunkGroupBootstrapParams": {
+    "/page": {
+      "otherChunks": [
+        "static/chunks/2q9gyanh00h9b.js",
+        "static/chunks/05uu-qbxilrlo.js",
+        "static/chunks/268cgdygled7_.js"
+      ],
+      "runtimeModuleIds": [
+        66118
+      ]
+    },
+    "/_not-found/page": {
+      "otherChunks": [
+        "static/chunks/2q9gyanh00h9b.js",
+        "static/chunks/05uu-qbxilrlo.js",
+        "static/chunks/268cgdygled7_.js"
+      ],
+      "runtimeModuleIds": [
+        66118
+      ]
+    },
+    "/_global-error/page": {
+      "otherChunks": [
+        "static/chunks/2q9gyanh00h9b.js",
+        "static/chunks/05uu-qbxilrlo.js",
+        "static/chunks/268cgdygled7_.js"
+      ],
+      "runtimeModuleIds": [
+        66118
+      ]
+    },
+    "/(catalog)/courses/page": {
+      "otherChunks": [
+        "static/chunks/2q9gyanh00h9b.js",
+        "static/chunks/05uu-qbxilrlo.js",
+        "static/chunks/268cgdygled7_.js"
+      ],
+      "runtimeModuleIds": [
+        66118
+      ]
+    },
+    "/(catalog)/mini-courses/page": {
+      "otherChunks": [
+        "static/chunks/2q9gyanh00h9b.js",
+        "static/chunks/05uu-qbxilrlo.js",
+        "static/chunks/268cgdygled7_.js"
+      ],
+      "runtimeModuleIds": [
+        66118
+      ]
+    },
+    "/(details)/courses/[slug]/page": {
+      "otherChunks": [
+        "static/chunks/2q9gyanh00h9b.js",
+        "static/chunks/05uu-qbxilrlo.js",
+        "static/chunks/268cgdygled7_.js"
+      ],
+      "runtimeModuleIds": [
+        66118
+      ]
+    },
+    "/(details)/mini-courses/[slug]/page": {
+      "otherChunks": [
+        "static/chunks/2q9gyanh00h9b.js",
+        "static/chunks/05uu-qbxilrlo.js",
+        "static/chunks/268cgdygled7_.js"
+      ],
+      "runtimeModuleIds": [
+        66118
+      ]
+    },
+    "/cart/page": {
+      "otherChunks": [
+        "static/chunks/2q9gyanh00h9b.js",
+        "static/chunks/05uu-qbxilrlo.js",
+        "static/chunks/268cgdygled7_.js"
+      ],
+      "runtimeModuleIds": [
+        66118
+      ]
+    },
+    "/checkout/page": {
+      "otherChunks": [
+        "static/chunks/2q9gyanh00h9b.js",
+        "static/chunks/05uu-qbxilrlo.js",
+        "static/chunks/268cgdygled7_.js"
+      ],
+      "runtimeModuleIds": [
+        66118
+      ]
+    },
+    "/preview/components/page": {
+      "otherChunks": [
+        "static/chunks/2q9gyanh00h9b.js",
+        "static/chunks/05uu-qbxilrlo.js",
+        "static/chunks/268cgdygled7_.js"
+      ],
+      "runtimeModuleIds": [
+        66118
+      ]
+    }
+  },
+  "chunkLoadingGlobal": "TURBOPACK"
+}

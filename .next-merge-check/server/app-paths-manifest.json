@@ -1,0 +1,17 @@
+{
+  "/(catalog)/courses/page": "app/(catalog)/courses/page.js",
+  "/(catalog)/mini-courses/page": "app/(catalog)/mini-courses/page.js",
+  "/(details)/courses/[slug]/page": "app/(details)/courses/[slug]/page.js",
+  "/(details)/mini-courses/[slug]/page": "app/(details)/mini-courses/[slug]/page.js",
+  "/_global-error/page": "app/_global-error/page.js",
+  "/_not-found/page": "app/_not-found/page.js",
+  "/apple-icon.png/route": "app/apple-icon.png/route.js",
+  "/cart/page": "app/cart/page.js",
+  "/checkout/page": "app/checkout/page.js",
+  "/favicon.ico/route": "app/favicon.ico/route.js",
+  "/icon.svg/route": "app/icon.svg/route.js",
+  "/page": "app/page.js",
+  "/preview/components/page": "app/preview/components/page.js",
+  "/robots.txt/route": "app/robots.txt/route.js",
+  "/sitemap.xml/route": "app/sitemap.xml/route.js"
+}

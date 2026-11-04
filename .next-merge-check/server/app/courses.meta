@@ -1,0 +1,42 @@
+{
+  "status": 200,
+  "headers": {
+    "link": "</_next/static/media/Manrope-s.p.3rjk17h6oms_8.ttf>; rel=preload; as=\"font\"; crossorigin=\"\"; type=\"font/ttf\", </_next/static/media/Unbounded-s.p.2o0w_6rj3qjvh.ttf>; rel=preload; as=\"font\"; crossorigin=\"\"; type=\"font/ttf\"",
+    "x-nextjs-stale-time": "300",
+    "x-nextjs-prerender": "1",
+    "x-next-cache-tags": "_N_T_/layout,_N_T_/(catalog)/layout,_N_T_/(catalog)/courses/layout,_N_T_/(catalog)/courses/page,_N_T_/courses"
+  },
+  "segmentPaths": [
+    "/_tree",
+    "/_full",
+    "/!KGNhdGFsb2cp",
+    "/!KGNhdGFsb2cp/courses/__PAGE__"
+  ],
+  "prefetchHints": {
+    "hints": 49216,
+    "slots": {
+      "children": {
+        "hints": 49184,
+        "slots": {
+          "children": {
+            "hints": 49216,
+            "slots": {
+              "children": {
+                "hints": 49312,
+                "slots": null
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "routeCache": {
+    "key": "/route-cache/APP_PAGE/8a3d534101bc57e327f061798a2b953057e6add73955630c0e780f417dfe7053/$/courses",
+    "owner": {
+      "kind": "APP_PAGE",
+      "sourceRoute": "/(catalog)/courses/page"
+    },
+    "isFallback": false
+  }
+}
