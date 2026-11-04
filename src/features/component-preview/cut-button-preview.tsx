@@ -10,7 +10,7 @@ export function CutButtonPreview() {
     <h3>Lift &amp; Shift</h3>
     <p className={styles.note}>Демонстрация состояний общей кнопки. На интерактивных примерах проверьте наведение, нажатие и Tab.</p>
     <div className={styles.cutStates}>
-      <div><p>Обычное</p><Button onClick={recordPress} appearance="cut">Подробнее →</Button></div>
+      <div><p>Обычное · без тени</p><Button onClick={recordPress} appearance="cut">Подробнее →</Button></div>
       <div><p>Подъём и смещение · плотная тень</p><Button onClick={recordPress} appearance="cut" data-cut-state="hover">Подробнее →</Button></div>
       <div><p>Нажатие · 120 ms</p><Button onClick={recordPress} appearance="cut" data-cut-state="pressed">Подробнее →</Button></div>
       <div><p>Фокус клавиатуры</p><Button onClick={recordPress} appearance="cut" data-cut-state="focus">Подробнее →</Button></div>
