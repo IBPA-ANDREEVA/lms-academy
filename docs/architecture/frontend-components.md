@@ -64,7 +64,7 @@ PublicHeader overlays home hero and catalogs; after 48px scroll its surface cont
 
 The component preview intentionally showcases nine families in rendered order recorded in [sections](frontend-sections.md). It is not exhaustive coverage of all product components: PurchasePanel, PreviewPlayer, detail anatomy and AuthModal are not separate preview sections. Auth is reachable from root header; real media/offer-state variants remain unverified. Keep the preview synchronized when a shared API changes.
 
-Authoritative prices/auth/access/refunds/completion stay with future `src/server` contracts (ADR-0002). Source business domains, persistence and service integrations are absent today. Public Site owns presentation, Catalog owns approved published content/offers, Commerce owns cart/checkout calculations and payment, Identity owns sessions, Administration owns approval/publication workflows; policy-publication domain ownership remains a SALE002 preparation decision. Existing frontend files are not migrated to those server folders.
+Authoritative prices/auth/access/refunds/completion stay with future Python `backend/app/modules` contracts over HTTP (ADR-0003). Source business domains, persistence and service integrations are absent today. Public Site owns presentation, Catalog owns approved published content/offers, Commerce owns cart/checkout calculations and payment, Identity owns sessions, Administration owns approval/publication workflows; policy-publication domain ownership remains a SALE002 preparation decision. Existing frontend files are not migrated to those server folders.
 
 ## Historical change notes
 
@@ -97,7 +97,7 @@ LA09 refinement (2026-10-29): CartPreview now keeps its panel mounted for a reve
 
 ## Backend boundary · 2026-10-30
 
-ADR-0002 leaves all component paths, props and consumers unchanged. Frontend feature public exports remain presentation APIs. Authoritative price, access, authentication and other business operations move into future `src/server` domain interfaces; do not re-export those runtime functions through client-facing UI barrels. No new shared component or preview change is made by this planning task.
+ADR-0002 leaves all component paths, props and consumers unchanged. Frontend feature public exports remain presentation APIs. Authoritative price, access, authentication and other business operations move into future `backend/app/modules` domain interfaces; do not re-export those runtime functions through client-facing UI barrels. No new shared component or preview change is made by this planning task.
 
 ## Shared refinement · 2026-11-02
 
@@ -226,6 +226,19 @@ Owner follow-up reverses HOME-05 step motion: advancing sweeps left, returning s
 CourseCard (`@/features/catalog`, `features/catalog/course-card.tsx`): remove action prop/internal buttons; retain course,headingLevel,status,variant,demonstration; full card has one native detail link. Consumers verified: home course/mini explorers, catalog course/mini sections, component preview, frontend fixture. Canonical Button/ButtonLink Cut rests without depth and lifts/shadows on hover/focus; all identity/commerce/detail/home/preview consumers preserved. FilterDropdown keeps label/value/options/onChange and fixes null-blur scrollbar dismissal. PublicHeader, PageWipeTransition, SplashLoader and PublicMotion APIs unchanged; overlay now covers header, welcome SSR-visible, mobile wipe downward, header backing animated both ways. No new shared primitive. See report for source paths, props, consumer list and verification. [Reference scope, contracts and evidence](../qa/preview-refinement-2026-11-03.md).
 
 
+## Python backend migration · 2026-11-03
+
+[ADR-0003](../decisions/0003-python-backend-architecture.md) supersedes TypeScript backend placement. Existing frontend owners/props/JSX remain unchanged. Future authoritative operations live in `backend/app/modules` and are consumed over HTTP using generated OpenAPI contracts. Current backend directories are empty, not delivered services. Catalog preview remains gated solely by `TEST_PREVIEW=true`, regardless of NODE_ENV. See [integration](frontend-backend-integration.md) and [migration evidence](../qa/python-backend-migration-2026-11-03.md) for the retained frontend-only Catalog view types, disconnected source, SEO consumer paths and missing real integration.
+
+### Retained Catalog presentation contracts (ADR-0003)
+
+| Owner / import path | API / consumers | Status and missing work |
+| --- | --- | --- |
+| `features/catalog/catalog-view-types.ts` | Type-only CatalogProduct, ProductKind, Locale, CatalogQuery, CatalogResult, ProductResult; provider, preview-data, presentation mapping, CatalogState, course/mini sections, preview-detail, product-route, SEO helpers, catalog-source | Temporary frontend/preview data shapes; not generated or authoritative. Replace transport assumptions with generated FastAPI contracts at integration. |
+| `features/catalog/catalog-source.ts` | Server-only `fetchPublishedCatalog(query?)`, `fetchPublishedProduct(kind, slug)`; root layout, sitemap, course-detail ProductRoute/metadata | Existing disconnected handling relocated; unavailable diagnostic, reserved demo/invalid slug rejection. No I/O/service. Real HTTP integration missing. |
+| `lib/seo/product-indexability.ts` | `isIndexableProduct(product)`; metadata, structured-data, sitemap | Existing defensive exclusion behavior retained for SEO only. No publication/purchase authority; Python owns those rules. |
+
+No shared visual component API/style or `/preview/components` implementation changes. CatalogState and course/mini sections change only type import paths; provider/fixtures/presentation behavior remains the same.
 ## Landing refinements - 2026-11-04
 
 | Owner / import | Props / actual consumers / state |

@@ -1,5 +1,7 @@
 # ADR-0001: Feature-based modular monolith
 
+> 2026-11-03 status update: [ADR-0003](0003-python-backend-architecture.md) supersedes the Next.js/TypeScript backend runtime, backend code placement and direct frontend/domain calls below. Seven-domain ownership, security, consistency and frontend separation remain. The original decision body is retained as history; use ADR-0003 for current implementation.
+
 - Status: Accepted; code placement and UI ownership superseded by [ADR-0002](0002-frontend-server-separation.md)
 - Date: 2026-10-26
 - Owners: Product engineering

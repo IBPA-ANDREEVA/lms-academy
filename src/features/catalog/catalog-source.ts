@@ -1,8 +1,11 @@
 import "server-only";
 import { cache } from "react";
-import type { CatalogQuery, CatalogResult, ProductKind, ProductResult } from "./contracts";
+import type { CatalogQuery, CatalogResult, ProductKind, ProductResult } from "./catalog-view-types";
 
-/** Backend integration seam. Never replace an outage with fixtures or an empty success. */
+/** Existing disconnected frontend read boundary retained during ADR-0003 migration.
+ * No HTTP client, database, publication authority or backend implementation exists here.
+ * Replace with generated FastAPI integration in a separate task; never use fixtures as fallback.
+ */
 export const fetchPublishedCatalog = cache(async (_query: CatalogQuery = {}): Promise<CatalogResult> => {
   // Stable readiness diagnostic: no request/DB exists yet. Future I/O failures use request correlation.
   const diagnosticId = "catalog-adapter-not-connected";

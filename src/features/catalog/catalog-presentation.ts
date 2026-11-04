@@ -1,4 +1,4 @@
-import type { CatalogProduct } from "@/server/catalog/contracts";
+import type { CatalogProduct } from "@/features/catalog/catalog-view-types";
 import type { CatalogItem } from "./catalog-data";
 import type { DetailProduct } from "@/features/course-detail/detail-data";
 

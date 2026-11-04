@@ -9,7 +9,7 @@ import {
 import "./globals.css";
 import { CatalogProvider } from "@/features/catalog/catalog-provider";
 import { PreviewControl } from "@/features/catalog/preview/preview-control";
-import { fetchPublishedCatalog } from "@/server/catalog";
+import { fetchPublishedCatalog } from "@/features/catalog/catalog-source";
 import { pageMetadata, siteName } from "@/lib/seo/metadata";
 import { testPreview, siteOrigin } from "@/lib/site-environment";
 import { CartProvider } from "@/features/commerce";

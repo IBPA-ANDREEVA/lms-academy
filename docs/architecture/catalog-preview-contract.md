@@ -1,6 +1,6 @@
 # Catalog read contract and TEST_PREVIEW
 
-Implemented for LAND03-A, 2026-11-03. This is a presentation/read boundary, **not a database, Admin publication service, authoritative cart or purchase implementation**. Authority: PD-001, PD-002, PD-009, ADR-0002. Existing feature and section owners remain in place.
+Implemented for LAND03-A, 2026-11-03; frontend boundary ownership updated by ADR-0003 on the same date. This is a presentation/read boundary, **not a database, Admin publication service, authoritative cart or purchase implementation**. Authority: PD-001, PD-002, PD-009, ADR-0003. Existing feature and section owners remain in place.
 
 ## Configuration and isolation
 
@@ -8,7 +8,7 @@ Implemented for LAND03-A, 2026-11-03. This is a presentation/read boundary, **no
 
 Environment values affect prerendered HTML and metadata: restart development after changes and **rebuild for each deployment mode/domain**. Do not change only the `next start` environment and expect a previously built artifact to change. `LMS_BUILD_DIR` optionally isolates verification output from the owner's active `.next`; the framework indicator is bottom-right to avoid the preview button.
 
-With preview disabled, root reads `src/server/catalog/index.ts`. Its source is deliberately unconnected and returns `{status:'unavailable', products:[], diagnosticId:'catalog-adapter-not-connected'}` with a structured server diagnostic. No fake production store or fallback inventory exists. Client catalog/cart never query or write a database. All preview mode pages are noindex; see [SEO guide](../seo/README.md).
+With preview disabled, root reads `src/features/catalog/catalog-source.ts`. Its source is deliberately unconnected and returns `{status:'unavailable', products:[], diagnosticId:'catalog-adapter-not-connected'}` with a structured server diagnostic. No fake production store or fallback inventory exists. Client catalog/cart never query or write a database. All preview mode pages are noindex; see [SEO guide](../seo/README.md).
 
 ## Preview store and controls
 
@@ -30,7 +30,7 @@ Cart stores only selected IDs and derives current preview amounts from catalog r
 
 ## Read model
 
-Canonical safe types: `src/server/catalog/contracts.ts`. Frontend mapping: `src/features/catalog/catalog-presentation.ts` adapts this DTO to **existing** CatalogItem/CourseCard and DetailProduct presentation contracts, rather than replacing them or moving UI into server domains.
+Temporary frontend/preview view types: `src/features/catalog/catalog-view-types.ts`. These preserve current consumers, not an authoritative backend API schema; generate transport contracts from FastAPI OpenAPI during integration. Frontend mapping: `src/features/catalog/catalog-presentation.ts` adapts this DTO to **existing** CatalogItem/CourseCard and DetailProduct presentation contracts, rather than replacing them or moving UI into server domains.
 
 | Field | Meaning / integration rule |
 | --- | --- |
@@ -50,13 +50,13 @@ Canonical safe types: `src/server/catalog/contracts.ts`. Frontend mapping: `src/
 | createdAt, updatedAt, publishedAt | ISO timestamps from source; actual content update time, never sitemap generation time. |
 | demonstration | Mandatory false for a real public record; true records are always rejected at production boundary. |
 
-## Backend integration seam
+## Disconnected frontend boundary and future integration
 
 `fetchPublishedCatalog(query?: {kind, category, language})` returns success with products, empty with an empty collection, or unavailable with a safe diagnostic reference. `fetchPublishedProduct(kind, slug)` returns success, missing, or unavailable. Loading belongs to the asynchronous UI/Suspense state; it is not a stored publication status. Query methods cover main and mini lists through kind, keeping a single contract.
 
-When Base/Catalog persistence is ready, replace only the unconnected source in the Catalog server owner. Query the approved public read projection, validate source shape/readiness, apply `selectPublished` in `policy.ts` at the boundary, and return `empty` only after a successful read with zero matches. Handle bounded timeout/retry/connection failure as `unavailable`; catch and log safe structured request-correlated diagnostics, not SQL, credentials or personal data. A backend outage is never a 404/missing result. Do not create speculative endpoints/migrations for this seam.
+The retained source is frontend compatibility only: no HTTP client, mock API or persistence is implemented. Python Catalog will own publication/readiness and public queries under `backend/app/modules/catalog`. When a real FastAPI contract exists, replace disconnected frontend reads with generated HTTP integration and map safe responses to existing presentation. Return `empty` only after a successful read with zero matches; no TypeScript publication or purchase policy is restored. Handle bounded timeout/retry/connection failure as `unavailable`; catch and log safe structured request-correlated diagnostics, not SQL, credentials or personal data. A backend outage is never a 404/missing result. Do not create speculative endpoints/migrations for this seam.
 
-Admin alone approves content/prices and independently publishes, pauses sales, hides or archives. Upstream publication must validate required lessons/videos/materials/homework and assigned curator (supported courses), correct locale/media availability and version-matched readiness per PD-009. `isPublicProduct` is a read-projection visibility gate, not the full Admin readiness workflow. `isPurchasable` additionally requires open sales and an approved positive USD price; Commerce must re-authorize price, eligibility and availability server-side at quote/purchase time. Real purchase controls stay disabled until that integration exists, even for a visible record.
+Admin alone approves content/prices and independently publishes, pauses sales, hides or archives. Upstream publication must validate required lessons/videos/materials/homework and assigned curator (supported courses), correct locale/media availability and version-matched readiness per PD-009. The retired TypeScript `isPublicProduct`, `isPurchasable` and `selectPublished` backend policy is removed. `src/lib/seo/product-indexability.ts` now retains only a defensive SEO exclusion check; it grants no publication or purchase authority. Python Catalog must supply approved public projections; Python Commerce must authorize price, eligibility and availability at quote/purchase time. Real purchase controls stay disabled until that integration exists, even for a visible record.
 
 Wire actual request-time reads under appropriate Suspense boundaries or use Next cache tags with explicit publication/price invalidation. Current disconnected results can be prerendered because no source can change; **do not retain static outage snapshots when connecting a live backend**. React `cache` only deduplicates a render; it is not a persistence cache. Publication invalidates listing, detail metadata, sitemap and related home projections together. Preserve enrollment entitlements when sales pause/archive. No access/refund/retention policy is added here.
 
@@ -74,6 +74,9 @@ Wire actual request-time reads under appropriate Suspense boundaries or use Next
 
 Preview status and draft/sale distinctions are test data, not production publication evidence. HOME-07/09 experimental package/module content is also gated from production; no Phase 2 feature is promoted. Remaining backend dependencies: actual persistence/readiness/publication/category/price workflows, Commerce cart/quote and eligibility, approved media/content and legal policies, request-time error/invalidation behavior.
 
+## Migration ownership and missing work
+
+See [integration conventions](frontend-backend-integration.md) and [migration evidence](../qa/python-backend-migration-2026-11-03.md). The Python runtime is not initialized. Existing `fetchPublishedCatalog(query?)` and `fetchPublishedProduct(kind, slug)` signatures are retained solely so the current frontend compiles and keeps honest unavailable/missing states; they are not promised API endpoint signatures. Preview fixtures and UI storage behavior are unchanged. Future API integration must define authentication, generated schemas, request-time cache invalidation, real publication/readiness and Commerce authorization before enabling purchases.
 
 ## Package preview extension - 2026-11-04
 

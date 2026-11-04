@@ -15,6 +15,8 @@
 
 # next.js
 /.next/
+# Isolated verification builds are generated, like the default .next output.
+/.next-*/
 /.next-la06-check/
 /.next-auth-check/
 /out/

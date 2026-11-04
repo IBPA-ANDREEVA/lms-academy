@@ -159,4 +159,9 @@ Guest identity, cart reconciliation, payment authorization, legal/pricing rules,
 
 ## Current placement overlay · 2026-10-30
 
-The original draft inspection baseline above is historical. Current public UI/fixtures are listed in the frontend registry; no protected server domains are implemented. ADR-0002 preserves frontend features and puts authoritative operations in seven `src/server` domains. PD-011 removes the dedicated manager role and manager-only workspace; referral capabilities use existing authorized account experiences. OQ-091 retains unknown protected-route spellings. No URL is approved by this overlay.
+The original draft inspection baseline above is historical. Current public UI/fixtures are listed in the frontend registry; no protected server domains are implemented. ADR-0003 preserves frontend features and puts authoritative Python operations in seven `backend/app/modules` domains. PD-011 removes the dedicated manager role and manager-only workspace; referral capabilities use existing authorized account experiences. OQ-091 retains unknown protected-route spellings. No URL is approved by this overlay.
+
+
+## Python backend migration · 2026-11-03
+
+[ADR-0003](../decisions/0003-python-backend-architecture.md) supersedes TypeScript backend placement. Existing frontend owners/props/JSX remain unchanged. Future authoritative operations live in `backend/app/modules` and are consumed over HTTP using generated OpenAPI contracts. Current backend directories are empty, not delivered services. Catalog preview remains gated solely by `TEST_PREVIEW=true`, regardless of NODE_ENV. See [integration](frontend-backend-integration.md) and [migration evidence](../qa/python-backend-migration-2026-11-03.md) for the retained frontend-only Catalog view types, disconnected source, SEO consumer paths and missing real integration.

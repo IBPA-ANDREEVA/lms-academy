@@ -1,8 +1,8 @@
 import "server-only";
 import { siteOrigin, testPreview } from "../site-environment";
 import { siteName } from "./metadata";
-import type { CatalogProduct } from "@/server/catalog/contracts";
-import { isPublicProduct } from "@/server/catalog/policy";
+import type { CatalogProduct } from "@/features/catalog/catalog-view-types";
+import { isIndexableProduct } from "@/lib/seo/product-indexability";
 
 export function websiteSchema() {
   const origin = siteOrigin();
@@ -14,7 +14,7 @@ export function websiteSchema() {
 }
 export function productSchema(product: CatalogProduct) {
   const origin = siteOrigin();
-  if (!origin || testPreview || !isPublicProduct(product)) return null;
+  if (!origin || testPreview || !isIndexableProduct(product)) return null;
   const listing = product.kind === "course" ? "/courses" : "/mini-courses";
   const url = `${origin}${listing}/${product.slug}`;
   return { "@context": "https://schema.org", "@graph": [

@@ -1,4 +1,7 @@
-/** Safe serializable Catalog read model. No persistence, React or secret imports. */
+/** Temporary frontend/preview view types, not an authoritative API contract.
+ * Replace transport types with generated FastAPI OpenAPI contracts during integration.
+ * No persistence, React or secret imports.
+ */
 export type ProductKind = "course" | "mini-course";
 export type Locale = "ru" | "en";
 export type CatalogProduct = {

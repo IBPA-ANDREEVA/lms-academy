@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
-import type { ProductKind } from "@/server/catalog/contracts";
-import { fetchPublishedProduct } from "@/server/catalog";
+import type { ProductKind } from "@/features/catalog/catalog-view-types";
+import { fetchPublishedProduct } from "@/features/catalog/catalog-source";
 import { testPreview } from "@/lib/site-environment";
 import { pageMetadata, productMetadata } from "@/lib/seo/metadata";
 import { productSchema } from "@/lib/seo/structured-data";

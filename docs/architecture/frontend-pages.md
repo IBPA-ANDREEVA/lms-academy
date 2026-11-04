@@ -104,7 +104,7 @@ The planned entries in the table above remain scope/backlog records, not additio
 ## Planning ownership update · 2026-10-30
 
 ADR-0002 preserves every existing frontend implementation and section order.
-`src/features` owns UI; seven `src/server` domains own authoritative business
+`src/features` owns UI; under the subsequent ADR-0003 runtime update, seven Python `backend/app/modules` domains own authoritative business
 operations. No frontend files or routes changed in this restructuring. PD-011
 replaces unimplemented manager-only surfaces with existing-account/admin sections;
 these are capability/page identifiers, not approved URL spellings or visual references.
@@ -188,6 +188,9 @@ Owner follow-up reverses HOME-05 step motion: advancing sweeps left, returning s
 `/`: HOME-06/HOME-08 show at most three cards with full-catalog links; no home category/size filters at any width (explicit clarification). Package heading/description/custom-package callout, internal learning heading and FAQ contact prompt removed. `/courses` and `/mini-courses`: CatalogPage no longer mounts IntroductionSection; active result label is the single H1, with filters and complete results preserved. `/preview/components` uses the changed real card/Cut owners. Existing routing, TEST_PREVIEW and release boundaries preserved. [Reference scope, contracts and evidence](../qa/preview-refinement-2026-11-03.md).
 
 
+## Python backend migration · 2026-11-03
+
+[ADR-0003](../decisions/0003-python-backend-architecture.md) supersedes TypeScript backend placement. Existing frontend owners/props/JSX remain unchanged. Future authoritative operations live in `backend/app/modules` and are consumed over HTTP using generated OpenAPI contracts. Current backend directories are empty, not delivered services. Catalog preview remains gated solely by `TEST_PREVIEW=true`, regardless of NODE_ENV. See [integration](frontend-backend-integration.md) and [migration evidence](../qa/python-backend-migration-2026-11-03.md) for the retained frontend-only Catalog view types, disconnected source, SEO consumer paths and missing real integration.
 ## Landing refinements - 2026-11-04
 
 Route ownership unchanged: `/` -> HomePage and numbered sections; `/preview/components` -> ComponentPreviewPage. Package discovery is now browser-local ID-based preview data with empty/loading/error states and cart persistence; no package URL or production release. Contact is form-left/title-right on desktop, catalog links top-right, reviews use drag hint. All Cut consumers inherit Double Cut + Panel. Real-mode empty packages link to `/courses`. [Contracts and verification](../qa/landing-refinements-2026-11-04.md).

@@ -4,7 +4,7 @@ import { useCart } from "@/features/commerce/cart-provider";
 import { useCatalog } from "@/features/catalog/catalog-provider";
 import { CatalogState } from "@/features/catalog/components/catalog-state";
 import { toDetailProduct } from "@/features/catalog/catalog-presentation";
-import type { ProductKind } from "@/server/catalog/contracts";
+import type { ProductKind } from "@/features/catalog/catalog-view-types";
 import { DetailPage } from "./detail-page";
 import { DetailNotFound } from "./components/detail-not-found";
 
