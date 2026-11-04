@@ -108,101 +108,44 @@
   box-shadow: 1px 1px 0 var(--text);
   transform: translate(2px, 2px);
 }
-/* Double Cut + Panel. The root hit area never moves. */
+/* Two owner-supplied treatments; legacy appearance="cut" defaults to line. */
 .button.cut {
-  --cut-size: 48px;
-  --cut-padding: 10px 26px 10px 32px;
-  --cut-duration: 650ms;
-  --cut-ease: cubic-bezier(.22,1,.36,1);
-  --cut-panel-start: calc(100% - 66px);
-  --cut-panel-end: calc(100% - 84px);
-  --cut-fill: var(--text);
-  --cut-outline: var(--text);
+  --cut-accent: var(--brand);
+  --cut-edge: color-mix(in srgb, var(--brand) 45%, var(--border));
+  --cut-background: var(--surface);
+  --cut-hover: var(--soft);
+  --cut-pressed: var(--plum-border);
   --cut-arrow-x: 0px;
-  --cut-slash-x: 0px;
-  --cut-shape: polygon(18px 0,calc(100% - 14px) 0,100% 50%,calc(100% - 14px) 100%,18px 100%,0 50%);
-  isolation: isolate;
-  padding: 0 22px 0 0;
-  border: 0;
-  border-radius: 0;
-  background: transparent;
-  color: var(--text);
-  overflow: visible;
+  --cut-line-scale: .72;
+  --cut-accent-scale: 0;
+  border: 1px solid var(--cut-edge);
+  background: var(--cut-background);
+  color: var(--cut-accent);
   text-align: left;
-  transition: none;
+  box-shadow: none;
+  transition: background-color 300ms ease, border-color 300ms ease;
 }
-.button.cut.sm { --cut-size: 44px; --cut-padding: 8px 24px 8px 28px; }
-.button.cut.lg { --cut-size: 56px; --cut-padding: 14px 28px 14px 36px; }
-.button.cut:is(:hover,:active):not(:disabled) { background: transparent; }
-.cut::before {
-  content: "";
-  position: absolute;
-  inset: 0 22px 0 0;
-  background: var(--cut-outline);
-  clip-path: var(--cut-shape);
-  pointer-events: none;
-}
-.cut::after {
-  content: "";
-  position: absolute;
-  inset: 7px 0 7px auto;
-  width: 12px;
-  background: var(--cut-outline);
-  clip-path: polygon(0 0,2px 0,100% 50%,2px 100%,0 100%,calc(100% - 2px) 50%);
-  transform: translateX(var(--cut-slash-x));
-  transition: transform var(--cut-duration) var(--cut-ease);
-  pointer-events: none;
-}
-.cutSurface {
-  position: relative;
-  display: flex;
-  align-items: center;
-  width: 100%;
-  min-height: calc(var(--cut-size) - 4px);
-  margin: 2px;
-  padding: var(--cut-padding);
-  background: var(--surface);
-  clip-path: var(--cut-shape);
-}
-.cut .label {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 42px;
-  width: 100%;
-}
-.cutPanel {
-  position: absolute;
-  z-index: 2;
-  inset: 0;
-  display: flex;
-  align-items: center;
-  padding: inherit;
-  background: var(--cut-fill);
-  color: var(--on-brand);
-  clip-path: polygon(var(--cut-panel-start) 0,100% 0,100% 100%,var(--cut-panel-end) 100%);
-  transition: clip-path var(--cut-duration) var(--cut-ease), background-color var(--cut-duration) var(--cut-ease);
-  pointer-events: none;
-}
-.cut .label > span[aria-hidden="true"] {
-  display: inline-block;
-  flex: none;
-  width: 18px;
-  text-align: center;
-  transform: translateX(var(--cut-arrow-x));
-  transition: transform var(--cut-duration) var(--cut-ease);
-}
-.cut.inverse { --cut-outline: var(--surface); }
-.cut.destructive { --cut-fill: var(--error); --cut-outline: var(--error); }
+.cutLine { border-radius: 3px; }
+.button.cutSoft { --cut-hover: color-mix(in srgb, var(--brand) 12%, var(--surface)); --cut-background: var(--soft); --cut-edge: var(--border); border-radius: 14px; }
+.cut .label { display: flex; align-items: center; justify-content: space-between; gap: 24px; width: 100%; min-width: 0; }
+.cutText { position: relative; min-width: 0; }
+.cutLine .cutText::after { content: ""; position: absolute; height: 2px; inset: auto 0 -6px; background: currentColor; transform: scaleX(var(--cut-line-scale)); transform-origin: left; transition: transform 300ms cubic-bezier(.22,1,.36,1); }
+.cutSoft::before { content: ""; position: absolute; inset: 8px auto 8px 7px; width: 3px; border-radius: 2px; background: currentColor; transform: scaleY(var(--cut-accent-scale)); transition: transform 300ms cubic-bezier(.22,1,.36,1); }
+.cut .arrow { flex: none; display: inline-flex; align-items: center; justify-content: center; width: 20px; font-size: 22px; font-weight: 400; line-height: 1; transform: translateX(var(--cut-arrow-x)); transition: transform 300ms cubic-bezier(.22,1,.36,1); }
+.cut.inverse { --cut-accent: var(--on-brand); --cut-edge: rgb(255 255 255 / 65%); --cut-background: transparent; --cut-hover: rgb(255 255 255 / 12%); --cut-pressed: rgb(255 255 255 / 22%); }
+.cutSoft.inverse { --cut-background: rgb(255 255 255 / 10%); --cut-edge: rgb(255 255 255 / 35%); --cut-hover: rgb(255 255 255 / 20%); }
+.cut.destructive { --cut-accent: var(--error); --cut-edge: var(--error); }
+.cut.inverse.destructive { --cut-accent: var(--on-brand); }
 @media(hover:hover) and (pointer:fine) {
-  .cut:where(:hover,[data-cut-state="hover"]):not(:disabled):not([aria-disabled="true"]):not([aria-busy="true"]) {
-    --cut-panel-start: 0%; --cut-panel-end: 0%; --cut-fill: var(--brand); --cut-arrow-x: 4px; --cut-slash-x: 5px;
+  .button.cut:where(:hover,[data-cut-state="hover"]):not(:disabled):not([aria-disabled="true"]):not([aria-busy="true"]) {
+    background: var(--cut-hover); border-color: var(--cut-accent); --cut-line-scale: 1; --cut-accent-scale: 1; --cut-arrow-x: 3px;
   }
 }
-.cut:where(:focus-visible,:active,[data-cut-state="focus"],[data-cut-state="pressed"]):not(:disabled):not([aria-disabled="true"]):not([aria-busy="true"]) {
-  --cut-panel-start: 0%; --cut-panel-end: 0%; --cut-fill: var(--brand); --cut-arrow-x: 4px; --cut-slash-x: 5px;
+.button.cut:where(:focus-visible,:active,[data-cut-state="focus"],[data-cut-state="pressed"]):not(:disabled):not([aria-disabled="true"]):not([aria-busy="true"]) {
+  background: var(--cut-hover); border-color: var(--cut-accent); --cut-line-scale: 1; --cut-accent-scale: 1; --cut-arrow-x: 3px;
 }
-.cut.destructive:is(:hover,:focus-visible,:active) { --cut-fill: var(--error); }
+.button.cut:active:not(:disabled) { background: var(--cut-pressed); }
+.cut.inverse:focus-visible { outline-color: var(--on-brand); }
 .button:disabled {
   cursor: not-allowed;
   background: var(--border);
@@ -211,26 +154,20 @@
   box-shadow: none;
   transform: none;
 }
-.button.cut:is(:disabled,[aria-disabled="true"]) {
-  --cut-fill: var(--disabled);
-  --cut-outline: var(--disabled);
-  background: transparent;
-  color: var(--muted);
-}
-.cut:is(:disabled,[aria-disabled="true"]) .cutSurface { background: var(--border); }
-.pending { position: absolute; z-index: 3; right: 7px; }
+.button.cut:is(:disabled,[aria-disabled="true"]) { background: var(--border); border-color: var(--disabled); color: var(--muted); }
+.cut.inverse:is(:disabled,[aria-disabled="true"]) { background: rgb(255 255 255 / 12%); border-color: rgb(255 255 255 / 35%); color: rgb(255 255 255 / 65%); }
+.cut[aria-busy="true"] .arrow { visibility: hidden; }
+.pending { position: absolute; z-index: 3; right: 16px; }
 @media(prefers-reduced-motion:reduce) {
   .button, .minimal::before { transition: none; }
   .neoBrutalist:is(:hover,:active):not(:disabled) { transform: none; }
-  .button.cut { --cut-arrow-x: 0px !important; --cut-slash-x: 0px !important; }
-  .cut::after, .cutPanel, .cut .label > span[aria-hidden="true"] { transition: none; }
+  .button.cut { --cut-arrow-x: 0px !important; transition: none; }
+  .cut .arrow, .cutText::after, .cutSoft::before { transition: none; }
 }
-[data-cut-reduced-motion] .button.cut { --cut-arrow-x: 0px !important; --cut-slash-x: 0px !important; }
-[data-cut-reduced-motion] .cut::after, [data-cut-reduced-motion] .cutPanel, [data-cut-reduced-motion] .cut .label > span[aria-hidden="true"] { transition: none; }
+[data-cut-reduced-motion] .button.cut { --cut-arrow-x: 0px !important; transition: none; }
+[data-cut-reduced-motion] .cut .arrow, [data-cut-reduced-motion] .cutText::after, [data-cut-reduced-motion] .cutSoft::before { transition: none; }
 @media(hover:none) {
   .neoBrutalist:hover:not(:active):not(:disabled) { transform: none; box-shadow: 4px 4px 0 var(--text); }
+  .button.cut:hover:not(:active):not(:disabled) { background: var(--cut-background); }
 }
-@media(forced-colors:active) {
-  .cut::before, .cut::after { background: ButtonText; }
-  .cutPanel { forced-color-adjust: none; background: ButtonText; color: ButtonFace; }
-}
+@media(forced-colors:active) { .button.cut { border-color: ButtonText; color: ButtonText; background: ButtonFace; } }
