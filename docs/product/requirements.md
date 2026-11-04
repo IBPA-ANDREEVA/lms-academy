@@ -1,5 +1,7 @@
 # LMS product requirements
 
+> 2026-11-04 precedence update: [PD-013](decisions.md#pd-013--base02-a-domain-policy-overrides) supersedes older wording below on manager membership, first-course-opening activation, one-year standard/three-month mini video access, one trainer/curator per course, and within-24-hours/unstarted-course refunds handled by administration. Homework history preservation/deletion reconciliation remains open. Other requirements remain in force. See the [BASE02-A entity map](../architecture/entity-map.md) for owners, relationships and residual dependencies; legacy passages below are not alternative approved policies.
+
 ## Purpose and source authority
 
 This document defines the intended behavior of the online academy for future product and engineering work. It consolidates the original Russian technical specification, the five-page wireframe PDF, and the LMS planning notes. It describes required behavior, including the owner-approved selections in [decisions.md](./decisions.md), without resolving questions that remain open.

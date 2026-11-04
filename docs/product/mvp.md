@@ -1,5 +1,7 @@
 # LMS delivery scope
 
+> 2026-11-04 precedence update: apply [PD-013](decisions.md#pd-013--base02-a-domain-policy-overrides) to older activation/access/refund/role wording below. Refunds remain MVP with administration-handled execution, within 24 hours of payment and course unstarted; unattended processing is no longer required. Manager membership does not promote commercial workflows or a dashboard into MVP; packages/finance remain later. Use the [entity map](../architecture/entity-map.md) for the distinction between MVP admin access grants and later evidenced offline sales. Homework deletion remains blocked pending preservation/legal reconciliation.
+
 ## Purpose
 
 This document divides the product into MVP, Phase 2, and Phase 3 while preserving the priority order in the original technical specification. It also records the dated delivery overlay from the Vault plans.
