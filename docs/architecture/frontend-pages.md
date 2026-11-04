@@ -186,3 +186,8 @@ Owner follow-up reverses HOME-05 step motion: advancing sweeps left, returning s
 ## Preview and motion refinement · 2026-11-03
 
 `/`: HOME-06/HOME-08 show at most three cards with full-catalog links; no home category/size filters at any width (explicit clarification). Package heading/description/custom-package callout, internal learning heading and FAQ contact prompt removed. `/courses` and `/mini-courses`: CatalogPage no longer mounts IntroductionSection; active result label is the single H1, with filters and complete results preserved. `/preview/components` uses the changed real card/Cut owners. Existing routing, TEST_PREVIEW and release boundaries preserved. [Reference scope, contracts and evidence](../qa/preview-refinement-2026-11-03.md).
+
+
+## Landing refinements - 2026-11-04
+
+Route ownership unchanged: `/` -> HomePage and numbered sections; `/preview/components` -> ComponentPreviewPage. Package discovery is now browser-local ID-based preview data with empty/loading/error states and cart persistence; no package URL or production release. Contact is form-left/title-right on desktop, catalog links top-right, reviews use drag hint. All Cut consumers inherit Double Cut + Panel. Real-mode empty packages link to `/courses`. [Contracts and verification](../qa/landing-refinements-2026-11-04.md).

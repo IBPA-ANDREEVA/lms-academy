@@ -101,3 +101,8 @@ Owner follow-up reverses HOME-05 step motion: advancing sweeps left, returning s
 ## Downward wipe and first-frame splash · 2026-11-03
 
 The latest owner request supersedes bottom-to-top mobile navigation: PageWipeTransition covers from yPercent -100 to 0, reveals toward +100, with matching 12px content push. History shares this vertical direction; desktop horizontal/history direction stays unchanged. Fullscreen wipe/splash z-index 80 covers header 20. SplashLoader welcomes from server-visible solid plum and clears with an 800ms diagonal polygon from top to bottom; no lobe expansion after hydration. No-JS/reduced-motion skip, CSS pre-hydration failsafe, input/resize cleanup and genuine pending-loader ownership remain. PublicMotion renders its splash before route content. Desktop header backing transitions both ways in 320ms; Cut default depth is zero, existing hover/focus lift reveals depth. HOME-05 existing left-forward/right-back wipe is unchanged; only its internal heading was removed and step numbers stacked above labels. [Evidence and remaining review](../qa/preview-refinement-2026-11-03.md).
+
+
+## Landing fixes - 2026-11-04
+
+Cut motion is now CSS-only Double Cut + Panel (650ms cubic-bezier(.22,1,.36,1), arrow +4px, slash +5px), replacing historical Lift & Shift. Header native details uses repeatable opacity/transform + discrete visibility with reduced-motion/direct fallback. HOME-05 outgoing upload geometry no longer depends on newly active parent stage. Inter-section choreography is unchanged in this first changeset. [Reference/verification](../qa/landing-refinements-2026-11-04.md).

@@ -2,14 +2,15 @@
 
 import { createContext, useContext, useEffect, useRef, useState, type ReactNode } from "react";
 import type { CatalogProduct, CatalogResult, ProductKind } from "@/server/catalog/contracts";
-import { initialPreviewIds, PREVIEW_KEY, previewProduct, readPreviewIds } from "./preview/preview-data";
+import { initialPreviewIds, PREVIEW_KEY, previewProduct, previewPackage, readPreviewIds, type PreviewPackage } from "./preview/preview-data";
 
 type CatalogContextValue = {
   enabled: boolean;
   products: CatalogProduct[];
+  packages: PreviewPackage[];
   status: CatalogResult["status"] | "loading";
   warning: boolean;
-  add: (kind: ProductKind, count?: number) => string[];
+  add: (kind: ProductKind | "package", count?: number) => string[];
   clear: () => void;
   reset: () => void;
   simulate: (status: "success" | "unavailable" | "loading") => void;
@@ -47,11 +48,12 @@ export function CatalogProvider({ enabled, initial, children }: { enabled: boole
     catch { setWarning(true); console.error({ event: "preview.catalog.save.failed", reference: "preview-catalog-storage", outcome: "memory_only" }); }
   }
   const products = enabled ? ids.map(id => previewProduct(id)!).filter(Boolean) : initial.products;
-  const status = !enabled ? initial.status : !ready ? "loading" : scenario !== "success" ? scenario : products.length ? "success" : "empty";
-  return <CatalogContext.Provider value={{ enabled, products, status, warning,
+  const packages = enabled ? ids.map(id => previewPackage(id)!).filter(Boolean) : [];
+  const status = !enabled ? initial.status : !ready ? "loading" : scenario !== "success" ? scenario : products.length || packages.length ? "success" : "empty";
+  return <CatalogContext.Provider value={{ enabled, products, packages, status, warning,
     add: (kind, count = 1) => {
       if (!enabled) return [];
-      const prefix = kind === "course" ? "demo-course-" : "demo-mini-";
+      const prefix = kind === "course" ? "demo-course-" : kind === "package" ? "demo-package-" : "demo-mini-";
       const nextIndex = Math.max(-1, ...idsRef.current.filter(id => id.startsWith(prefix)).map(id => Number(id.slice(prefix.length)))) + 1;
       const added = Array.from({ length: Math.min(count, 200 - idsRef.current.length, 10000 - nextIndex) }, (_, i) => `${prefix}${nextIndex + i}`);
       save([...idsRef.current, ...added]); return added;

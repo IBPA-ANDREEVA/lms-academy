@@ -31,7 +31,7 @@ export function ContactForm() {
 
   return (
     <form data-motion-item className={styles.form} onSubmit={preventSubmission} noValidate aria-labelledby="contact-form-title">
-      <div className={styles.formHeader}><h3 id="contact-form-title">ВАШЕ СООБЩЕНИЕ</h3><span>Поля с * обязательны</span></div>
+      <div className={styles.formHeader}><h3 id="contact-form-title">ВАШЕ СООБЩЕНИЕ</h3></div>
       <div className={styles.formGrid}>
         <TextField label="Ваше имя *" name="name" autoComplete="name" placeholder="Как к вам обращаться" value={values.name} onChange={change("name")} onBlur={blur("name")} error={error("name")} maxLength={100} />
         <TextField label="Электронная почта *" name="email" type="email" autoComplete="email" inputMode="email" placeholder="name@example.com" value={values.email} onChange={change("email")} onBlur={blur("email")} error={error("email")} maxLength={254} />

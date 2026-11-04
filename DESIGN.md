@@ -1,5 +1,7 @@
 # LMS frontend design context
 
+Latest owner refinement, 2026-11-04: canonical Cut now uses **Double Cut + Panel**, superseding historical lift/shadow descriptions below. White hexagonal face + charcoal arrow panel + detached slash; hover expands plum with spatially following white ink, 650ms cubic-bezier(.22,1,.36,1), arrow +4px/slash +5px. Inverse keeps a white outline on plum. Contact is form-left/title-right on desktop. Package cards have one full-card demo-cart action with explicit fictional data. [Reference/verification](docs/qa/landing-refinements-2026-11-04.md); human browser review remains pending.
+
 Latest selected scope: **D-021, 2026-11-03**, recorded at the end of this file. Earlier dated motion/mobile descriptions are historical where D-021 supersedes them.
 
 Russian-first beauty education. Public discovery uses restrained editorial composition; forms and protected workspaces use quiet functional layouts. Product facts and release scope override decorative references. Read [design guidance](docs/design/README.md), [decisions](docs/design/DECISIONS.md), and the [frontend registry](docs/architecture/frontend-components.md).

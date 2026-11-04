@@ -18,10 +18,10 @@ export function MiniCourseExplorer() {
   const root = useRef<HTMLDivElement>(null);
   useOfferSelectionMotion(root, `${catalog.status}:${visible.map(item => item.id).join(",")}`, true);
   return <div ref={root} className={styles.explorer}>
+    <div className={styles.seeAll}><ButtonLink href="/mini-courses" appearance="cut">Все мини-курсы →</ButtonLink></div>
     {catalog.status === "unavailable" || catalog.status === "loading" || !visible.length ? <CatalogState status={catalog.status} mini /> : <OfferCarousel mobileGrid label="Мини-курсы" items={visible.map((item) => {
       const course = item.course;
       return { id: item.id, content: <div className={styles.card}><CourseCard course={course} variant="compact" demonstration={catalog.enabled} /></div> };
     })} />}
-    <div className={styles.seeAll}><ButtonLink href="/mini-courses" appearance="cut">Все мини-курсы →</ButtonLink></div>
   </div>;
 }

@@ -14,7 +14,6 @@ export function LearningPreviewSection() {
           <p className={styles.description}>
             Посмотрите пример урока, добавьте фото работы и узнайте, как выглядит обратная связь куратора.
           </p>
-          <p className={styles.note}>ИНТЕРАКТИВНЫЙ ПРИМЕР ОБУЧЕНИЯ</p>
         </div>
         <LearningPreviewDemo />
       </PageContainer>

@@ -1,7 +1,6 @@
 "use client";
 
 import { useId, useRef } from "react";
-import { Button } from "@/components/ui/button";
 import { useSnapCarousel } from "@/features/home/learning-offers/use-snap-carousel";
 import styles from "../reviews-section.module.css";
 
@@ -16,12 +15,9 @@ export function ReviewsCarousel() {
     <div className={styles.carousel} role="region" aria-roledescription="карусель" aria-label="Макеты будущих отзывов учеников">
       <div className={styles.carouselHeader}>
         <p>ОТЗЫВЫ И РЕКОМЕНДАЦИИ</p>
-        <div className={styles.arrows}>
-          <Button size="sm" intent="secondary" aria-label="Предыдущий макет отзыва" aria-controls={trackId} disabled={activeIndex === 0} onClick={() => goTo(activeIndex - 1)}>←</Button>
-          <Button size="sm" aria-label="Следующий макет отзыва" aria-controls={trackId} disabled={activeIndex === placeholders.length - 1} onClick={() => goTo(activeIndex + 1)}>→</Button>
-        </div>
+        <span id={`${trackId}-hint`} className={styles.dragHint}><span aria-hidden="true">↔</span> Потяните, чтобы листать</span>
       </div>
-      <div id={trackId} ref={trackRef} className={styles.track} onScroll={syncIndex} tabIndex={0} aria-label="Отзывы и рекомендации: прокрутка по горизонтали"
+      <div id={trackId} ref={trackRef} className={styles.track} onScroll={syncIndex} tabIndex={0} aria-describedby={`${trackId}-hint`} aria-label="Отзывы и рекомендации: прокрутка по горизонтали"
         onPointerDown={event => {
           if (event.pointerType !== "mouse" || event.button !== 0) return;
           drag.current = { x: event.clientX, left: event.currentTarget.scrollLeft };

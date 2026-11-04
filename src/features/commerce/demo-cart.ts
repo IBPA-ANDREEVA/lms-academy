@@ -2,7 +2,7 @@
 export type DemoItem = {
   id: string;
   title: string;
-  kind: "Курс" | "Мини-курс";
+  kind: "Курс" | "Мини-курс" | "Пакет";
   /** Integer USD cents, read from the centralized preview catalog. */
   amount: number;
   demonstration: true;
@@ -14,7 +14,7 @@ export function readDemoSelection(raw: string | null): string[] {
   if (raw === null) return [];
   const ids: unknown = JSON.parse(raw);
   if (!Array.isArray(ids) || ids.length > 200 || new Set(ids).size !== ids.length ||
-    ids.some(id => typeof id !== "string" || !/^demo-(course|mini)-\d{1,4}$/.test(id))) throw new Error("Invalid preview cart identifiers");
+    ids.some(id => typeof id !== "string" || !/^demo-(course|mini|package)-\d{1,4}$/.test(id))) throw new Error("Invalid preview cart identifiers");
   // Caller resolves records/prices from the preview catalog; storage never supplies objects.
   return ids;
 }

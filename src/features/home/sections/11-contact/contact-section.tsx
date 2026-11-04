@@ -10,7 +10,6 @@ export function ContactSection() {
           <p className={styles.kicker}>НАПИШИТЕ НАМ</p>
           <h2 data-motion-item id="contact-title" className={styles.heading}><span>ОСТАЛИСЬ</span><span>ВОПРОСЫ?</span></h2>
           <p data-motion-item className={styles.description}>Расскажите, что хотите узнать о курсах и формате обучения.</p>
-          <div className={styles.notice}><span aria-hidden="true">✉</span><div><strong>СВЯЗЬ С АКАДЕМИЕЙ</strong><p>Форма готовится к подключению. Данные сейчас не отправляются.</p></div></div>
         </div>
         <ContactForm />
       </PageContainer>

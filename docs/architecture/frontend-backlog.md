@@ -116,3 +116,8 @@ Owner follow-up reverses HOME-05 step motion: advancing sweeps left, returning s
 ## Preview and motion refinement · 2026-11-03
 
 Implemented the owner's preview simplification, full-card navigation, catalog heading hierarchy, actual popup scrollbar hit-zone repair, flat-rest Cut, server-visible welcome splash, downward mobile wipe and bidirectional dock fade. Preserve missing real services/content/domain/legal approvals. Remaining: human appearance/motion review, physical touch/Safari/low-end QA, existing no-JS streamed detail limitation, generated-output lint hygiene, legacy test expectations for removed heading/home filters/upward wipe. No capability epic or Vault completion inferred. [Reference scope, contracts and evidence](../qa/preview-refinement-2026-11-03.md).
+
+
+## Landing refinements - 2026-11-04
+
+Completed in owner-requested preview scope: stable outgoing upload height, repeated dropdown animation, Contact inversion/removals, top-right catalog links, review drag affordance and canonical Double Cut + Panel. Package preview now shares catalog/cart IDs and state controls; PackageBuilder is unconsumed historical source, not production integration. Production package contracts/pricing/overlap policy, Commerce, contact delivery, real reviews and human visual review remain pending at their existing phase/owners. No missing backend capability is counted as delivered. [Verification](../qa/landing-refinements-2026-11-04.md).

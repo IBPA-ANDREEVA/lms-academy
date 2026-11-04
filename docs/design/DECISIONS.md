@@ -1,5 +1,7 @@
 # Visual decision register — owner decisions made 2026-10-27
 
+D-022 `selected-direction` — 2026-11-04 owner landing brief/six PNGs select Double Cut + Panel for the shared Cut family, stable learning-upload geometry, repeatable dropdown motion, form-left Contact, upper-right catalog links, brutalist whole-card package demo-cart actions and drag-hinted reviews without arrows. Supersedes affected D-021 refinements only. Packages remain TEST_PREVIEW-only; no release, real content, new route or human browser approval implied. [Reference contract/verification](../qa/landing-refinements-2026-11-04.md).
+
 Vocabulary:
 - `selected`: owner explicitly chose this direction; a specific implementation is not yet approved.
 - `preferred-reference`: owner liked the image; only the documented relationships are selected.

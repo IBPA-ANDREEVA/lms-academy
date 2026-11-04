@@ -73,3 +73,8 @@ Wire actual request-time reads under appropriate Suspense boundaries or use Next
 | Empty cart | «Пока здесь пусто» + catalog/mini navigation | Existing CartSection/CartPreview |
 
 Preview status and draft/sale distinctions are test data, not production publication evidence. HOME-07/09 experimental package/module content is also gated from production; no Phase 2 feature is promoted. Remaining backend dependencies: actual persistence/readiness/publication/category/price workflows, Commerce cart/quote and eligibility, approved media/content and legal policies, request-time error/invalidation behavior.
+
+
+## Package preview extension - 2026-11-04
+
+CatalogProvider additionally reconstructs browser-only PreviewPackage records from `demo-package-N` IDs. New/reset stores have eight course/mini records plus three package records (2/3/6); old valid stores are preserved. Same ID-only storage key, 200-record cap and corruption recovery. Packages have explicit fictional USD cents and no production CatalogProduct/ProductKind change, detail URL, server mutation, payment or entitlement. PreviewControl creates packages and adds them to cart; bulk add includes them. Clear/reset/loading/unavailable apply to all preview records. PackageExplorer reuses CatalogState and OfferCarousel; one full-card action adds a unique package ID, announces in-cart state and preserves restoration/removal in existing Commerce views. TEST_PREVIEW false/missing always has no package fixtures and the calm unpublished state. [Reference and verification](../qa/landing-refinements-2026-11-04.md).

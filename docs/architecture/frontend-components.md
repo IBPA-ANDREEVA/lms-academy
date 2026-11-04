@@ -224,3 +224,17 @@ Owner follow-up reverses HOME-05 step motion: advancing sweeps left, returning s
 ## Preview and motion refinement · 2026-11-03
 
 CourseCard (`@/features/catalog`, `features/catalog/course-card.tsx`): remove action prop/internal buttons; retain course,headingLevel,status,variant,demonstration; full card has one native detail link. Consumers verified: home course/mini explorers, catalog course/mini sections, component preview, frontend fixture. Canonical Button/ButtonLink Cut rests without depth and lifts/shadows on hover/focus; all identity/commerce/detail/home/preview consumers preserved. FilterDropdown keeps label/value/options/onChange and fixes null-blur scrollbar dismissal. PublicHeader, PageWipeTransition, SplashLoader and PublicMotion APIs unchanged; overlay now covers header, welcome SSR-visible, mobile wipe downward, header backing animated both ways. No new shared primitive. See report for source paths, props, consumer list and verification. [Reference scope, contracts and evidence](../qa/preview-refinement-2026-11-03.md).
+
+
+## Landing refinements - 2026-11-04
+
+| Owner / import | Props / actual consumers / state |
+| --- | --- |
+| Button/ButtonLink, `@/components/ui/button` | All public/identity/commerce/detail/preview consumers listed in the QA report retain existing props. Private CutSurface implements Double Cut + Panel, inverse, focus/press/disabled/loading/reduced motion. No duplicate shared button. ComponentPreview uses the real implementation on light/plum. |
+| CatalogProvider / useCatalog, `features/catalog/catalog-provider.tsx` | Existing provider props; context adds `packages:PreviewPackage[]`, add accepts package. RootLayout provider; PackageExplorer and PreviewControl newly read packages. ID-only fixtures; real CatalogProduct unchanged. |
+| CatalogState, `features/catalog/components/catalog-state.tsx` | Existing status/mini/filtered/onReset plus optional `productType:package`. Existing catalog/home/detail/preview consumers; PackageExplorer adds package empty/loading/error state. |
+| CartProvider, `features/commerce/cart-provider.tsx` | API unchanged. Existing cart/checkout/preview consumers plus PackageExplorer. Adds validated preview package IDs and DemoItem kind Package, never authoritative checkout. |
+| PublicHeader, `@/features/public-shell` | Props and RootLayout/ComponentPreview consumers unchanged. Native repeatable/reversible CSS dropdown, no mount-animation conflict. |
+| OfferCarousel, home-local existing owner | API unchanged, PackageExplorer and MiniCourseExplorer reuse; no new shared extraction. |
+
+Working/demo/missing boundaries and exact Cut consumers: [reference and verification](../qa/landing-refinements-2026-11-04.md).

@@ -1,0 +1,625 @@
+{
+  "results": [
+    {
+      "variant": "primary",
+      "rest": {
+        "panel": {
+          "x": 0,
+          "y": 0,
+          "color": "rgb(255, 255, 255)",
+          "background": "rgb(29, 27, 31)",
+          "clip": "polygon(calc(100% - 66px) 0px, 100% 0px, 100% 100%, calc(100% - 84px) 100%)",
+          "duration": "0.65s, 0.65s",
+          "outline": "none"
+        },
+        "slash": {
+          "x": 0,
+          "y": 0,
+          "color": "rgb(29, 27, 31)",
+          "background": "rgb(29, 27, 31)",
+          "clip": "polygon(0px 0px, 2px 0px, 100% 50%, 2px 100%, 0px 100%, calc(100% - 2px) 50%)",
+          "duration": "0.65s",
+          "outline": "none"
+        },
+        "arrow": {
+          "x": 0,
+          "y": 0,
+          "color": "rgb(255, 255, 255)",
+          "background": "rgba(0, 0, 0, 0)",
+          "clip": "none",
+          "duration": "0.65s",
+          "outline": "none"
+        },
+        "root": {
+          "x": 0,
+          "y": 0,
+          "color": "rgb(29, 27, 31)",
+          "background": "rgba(0, 0, 0, 0)",
+          "clip": "none",
+          "duration": "0s",
+          "outline": "none"
+        }
+      },
+      "during": {
+        "panel": {
+          "x": 0,
+          "y": 0,
+          "color": "rgb(255, 255, 255)",
+          "background": "rgb(96, 37, 73)",
+          "clip": "polygon(calc(25.9151% - 17.1039px) 0px, 100% 0px, 100% 100%, calc(25.9151% - 21.7687px) 100%)",
+          "duration": "0.65s, 0.65s",
+          "outline": "none"
+        },
+        "slash": {
+          "x": 3.70425,
+          "y": 0,
+          "color": "rgb(29, 27, 31)",
+          "background": "rgb(29, 27, 31)",
+          "clip": "polygon(0px 0px, 2px 0px, 100% 50%, 2px 100%, 0px 100%, calc(100% - 2px) 50%)",
+          "duration": "0.65s",
+          "outline": "none"
+        },
+        "arrow": {
+          "x": 2.9634,
+          "y": 0,
+          "color": "rgb(255, 255, 255)",
+          "background": "rgba(0, 0, 0, 0)",
+          "clip": "none",
+          "duration": "0.65s",
+          "outline": "none"
+        },
+        "root": {
+          "x": 0,
+          "y": 0,
+          "color": "rgb(29, 27, 31)",
+          "background": "rgba(0, 0, 0, 0)",
+          "clip": "none",
+          "duration": "0.3s",
+          "outline": "none"
+        }
+      },
+      "hover": {
+        "panel": {
+          "x": 0,
+          "y": 0,
+          "color": "rgb(255, 255, 255)",
+          "background": "rgb(120, 40, 88)",
+          "clip": "polygon(0% 0px, 100% 0px, 100% 100%, 0% 100%)",
+          "duration": "0.65s, 0.65s",
+          "outline": "none"
+        },
+        "slash": {
+          "x": 5,
+          "y": 0,
+          "color": "rgb(29, 27, 31)",
+          "background": "rgb(29, 27, 31)",
+          "clip": "polygon(0px 0px, 2px 0px, 100% 50%, 2px 100%, 0px 100%, calc(100% - 2px) 50%)",
+          "duration": "0.65s",
+          "outline": "none"
+        },
+        "arrow": {
+          "x": 4,
+          "y": 0,
+          "color": "rgb(255, 255, 255)",
+          "background": "rgba(0, 0, 0, 0)",
+          "clip": "none",
+          "duration": "0.65s",
+          "outline": "none"
+        },
+        "root": {
+          "x": 0,
+          "y": 0,
+          "color": "rgb(29, 27, 31)",
+          "background": "rgba(0, 0, 0, 0)",
+          "clip": "none",
+          "duration": "0.3s",
+          "outline": "none"
+        }
+      },
+      "reversing": {
+        "panel": {
+          "x": 0,
+          "y": 0,
+          "color": "rgb(255, 255, 255)",
+          "background": "rgb(57, 31, 49)",
+          "clip": "polygon(calc(69.0567% - 45.5774px) 0px, 100% 0px, 100% 100%, calc(69.0567% - 58.0076px) 100%)",
+          "duration": "0.65s, 0.65s",
+          "outline": "none"
+        },
+        "slash": {
+          "x": 1.54716,
+          "y": 0,
+          "color": "rgb(29, 27, 31)",
+          "background": "rgb(29, 27, 31)",
+          "clip": "polygon(0px 0px, 2px 0px, 100% 50%, 2px 100%, 0px 100%, calc(100% - 2px) 50%)",
+          "duration": "0.65s",
+          "outline": "none"
+        },
+        "arrow": {
+          "x": 1.23773,
+          "y": 0,
+          "color": "rgb(255, 255, 255)",
+          "background": "rgba(0, 0, 0, 0)",
+          "clip": "none",
+          "duration": "0.65s",
+          "outline": "none"
+        },
+        "root": {
+          "x": 0,
+          "y": 0,
+          "color": "rgb(29, 27, 31)",
+          "background": "rgba(0, 0, 0, 0)",
+          "clip": "none",
+          "duration": "0s",
+          "outline": "none"
+        }
+      }
+    },
+    {
+      "variant": "secondary",
+      "rest": {
+        "panel": {
+          "x": 0,
+          "y": 0,
+          "color": "rgb(255, 255, 255)",
+          "background": "rgb(29, 27, 31)",
+          "clip": "polygon(calc(100% - 66px) 0px, 100% 0px, 100% 100%, calc(100% - 84px) 100%)",
+          "duration": "0.65s, 0.65s",
+          "outline": "none"
+        },
+        "slash": {
+          "x": 0,
+          "y": 0,
+          "color": "rgb(29, 27, 31)",
+          "background": "rgb(29, 27, 31)",
+          "clip": "polygon(0px 0px, 2px 0px, 100% 50%, 2px 100%, 0px 100%, calc(100% - 2px) 50%)",
+          "duration": "0.65s",
+          "outline": "none"
+        },
+        "arrow": {
+          "x": 0,
+          "y": 0,
+          "color": "rgb(255, 255, 255)",
+          "background": "rgba(0, 0, 0, 0)",
+          "clip": "none",
+          "duration": "0.65s",
+          "outline": "none"
+        },
+        "root": {
+          "x": 0,
+          "y": 0,
+          "color": "rgb(29, 27, 31)",
+          "background": "rgba(0, 0, 0, 0)",
+          "clip": "none",
+          "duration": "0s",
+          "outline": "none"
+        }
+      },
+      "during": {
+        "panel": {
+          "x": 0,
+          "y": 0,
+          "color": "rgb(255, 255, 255)",
+          "background": "rgb(96, 37, 73)",
+          "clip": "polygon(calc(25.9064% - 17.0982px) 0px, 100% 0px, 100% 100%, calc(25.9064% - 21.7614px) 100%)",
+          "duration": "0.65s, 0.65s",
+          "outline": "none"
+        },
+        "slash": {
+          "x": 3.70468,
+          "y": 0,
+          "color": "rgb(29, 27, 31)",
+          "background": "rgb(29, 27, 31)",
+          "clip": "polygon(0px 0px, 2px 0px, 100% 50%, 2px 100%, 0px 100%, calc(100% - 2px) 50%)",
+          "duration": "0.65s",
+          "outline": "none"
+        },
+        "arrow": {
+          "x": 2.96374,
+          "y": 0,
+          "color": "rgb(255, 255, 255)",
+          "background": "rgba(0, 0, 0, 0)",
+          "clip": "none",
+          "duration": "0.65s",
+          "outline": "none"
+        },
+        "root": {
+          "x": 0,
+          "y": 0,
+          "color": "rgb(29, 27, 31)",
+          "background": "rgba(0, 0, 0, 0)",
+          "clip": "none",
+          "duration": "0.3s",
+          "outline": "none"
+        }
+      },
+      "hover": {
+        "panel": {
+          "x": 0,
+          "y": 0,
+          "color": "rgb(255, 255, 255)",
+          "background": "rgb(120, 40, 88)",
+          "clip": "polygon(0% 0px, 100% 0px, 100% 100%, 0% 100%)",
+          "duration": "0.65s, 0.65s",
+          "outline": "none"
+        },
+        "slash": {
+          "x": 5,
+          "y": 0,
+          "color": "rgb(29, 27, 31)",
+          "background": "rgb(29, 27, 31)",
+          "clip": "polygon(0px 0px, 2px 0px, 100% 50%, 2px 100%, 0px 100%, calc(100% - 2px) 50%)",
+          "duration": "0.65s",
+          "outline": "none"
+        },
+        "arrow": {
+          "x": 4,
+          "y": 0,
+          "color": "rgb(255, 255, 255)",
+          "background": "rgba(0, 0, 0, 0)",
+          "clip": "none",
+          "duration": "0.65s",
+          "outline": "none"
+        },
+        "root": {
+          "x": 0,
+          "y": 0,
+          "color": "rgb(29, 27, 31)",
+          "background": "rgba(0, 0, 0, 0)",
+          "clip": "none",
+          "duration": "0.3s",
+          "outline": "none"
+        }
+      },
+      "reversing": {
+        "panel": {
+          "x": 0,
+          "y": 0,
+          "color": "rgb(255, 255, 255)",
+          "background": "rgb(57, 31, 49)",
+          "clip": "polygon(calc(69.0893% - 45.5989px) 0px, 100% 0px, 100% 100%, calc(69.0893% - 58.035px) 100%)",
+          "duration": "0.65s, 0.65s",
+          "outline": "none"
+        },
+        "slash": {
+          "x": 1.54554,
+          "y": 0,
+          "color": "rgb(29, 27, 31)",
+          "background": "rgb(29, 27, 31)",
+          "clip": "polygon(0px 0px, 2px 0px, 100% 50%, 2px 100%, 0px 100%, calc(100% - 2px) 50%)",
+          "duration": "0.65s",
+          "outline": "none"
+        },
+        "arrow": {
+          "x": 1.23643,
+          "y": 0,
+          "color": "rgb(255, 255, 255)",
+          "background": "rgba(0, 0, 0, 0)",
+          "clip": "none",
+          "duration": "0.65s",
+          "outline": "none"
+        },
+        "root": {
+          "x": 0,
+          "y": 0,
+          "color": "rgb(29, 27, 31)",
+          "background": "rgba(0, 0, 0, 0)",
+          "clip": "none",
+          "duration": "0s",
+          "outline": "none"
+        }
+      }
+    },
+    {
+      "variant": "inverse",
+      "rest": {
+        "panel": {
+          "x": 0,
+          "y": 0,
+          "color": "rgb(255, 255, 255)",
+          "background": "rgb(29, 27, 31)",
+          "clip": "polygon(calc(100% - 66px) 0px, 100% 0px, 100% 100%, calc(100% - 84px) 100%)",
+          "duration": "0.65s, 0.65s",
+          "outline": "none"
+        },
+        "slash": {
+          "x": 0,
+          "y": 0,
+          "color": "rgb(29, 27, 31)",
+          "background": "rgb(255, 255, 255)",
+          "clip": "polygon(0px 0px, 2px 0px, 100% 50%, 2px 100%, 0px 100%, calc(100% - 2px) 50%)",
+          "duration": "0.65s",
+          "outline": "none"
+        },
+        "arrow": {
+          "x": 0,
+          "y": 0,
+          "color": "rgb(255, 255, 255)",
+          "background": "rgba(0, 0, 0, 0)",
+          "clip": "none",
+          "duration": "0.65s",
+          "outline": "none"
+        },
+        "root": {
+          "x": 0,
+          "y": 0,
+          "color": "rgb(29, 27, 31)",
+          "background": "rgba(0, 0, 0, 0)",
+          "clip": "none",
+          "duration": "0s",
+          "outline": "none"
+        }
+      },
+      "during": {
+        "panel": {
+          "x": 0,
+          "y": 0,
+          "color": "rgb(255, 255, 255)",
+          "background": "rgb(98, 37, 74)",
+          "clip": "polygon(calc(24.403% - 16.106px) 0px, 100% 0px, 100% 100%, calc(24.403% - 20.4985px) 100%)",
+          "duration": "0.65s, 0.65s",
+          "outline": "none"
+        },
+        "slash": {
+          "x": 3.77985,
+          "y": 0,
+          "color": "rgb(29, 27, 31)",
+          "background": "rgb(255, 255, 255)",
+          "clip": "polygon(0px 0px, 2px 0px, 100% 50%, 2px 100%, 0px 100%, calc(100% - 2px) 50%)",
+          "duration": "0.65s",
+          "outline": "none"
+        },
+        "arrow": {
+          "x": 3.02388,
+          "y": 0,
+          "color": "rgb(255, 255, 255)",
+          "background": "rgba(0, 0, 0, 0)",
+          "clip": "none",
+          "duration": "0.65s",
+          "outline": "none"
+        },
+        "root": {
+          "x": 0,
+          "y": 0,
+          "color": "rgb(29, 27, 31)",
+          "background": "rgba(0, 0, 0, 0)",
+          "clip": "none",
+          "duration": "0.3s",
+          "outline": "none"
+        }
+      },
+      "hover": {
+        "panel": {
+          "x": 0,
+          "y": 0,
+          "color": "rgb(255, 255, 255)",
+          "background": "rgb(120, 40, 88)",
+          "clip": "polygon(0% 0px, 100% 0px, 100% 100%, 0% 100%)",
+          "duration": "0.65s, 0.65s",
+          "outline": "none"
+        },
+        "slash": {
+          "x": 5,
+          "y": 0,
+          "color": "rgb(29, 27, 31)",
+          "background": "rgb(255, 255, 255)",
+          "clip": "polygon(0px 0px, 2px 0px, 100% 50%, 2px 100%, 0px 100%, calc(100% - 2px) 50%)",
+          "duration": "0.65s",
+          "outline": "none"
+        },
+        "arrow": {
+          "x": 4,
+          "y": 0,
+          "color": "rgb(255, 255, 255)",
+          "background": "rgba(0, 0, 0, 0)",
+          "clip": "none",
+          "duration": "0.65s",
+          "outline": "none"
+        },
+        "root": {
+          "x": 0,
+          "y": 0,
+          "color": "rgb(29, 27, 31)",
+          "background": "rgba(0, 0, 0, 0)",
+          "clip": "none",
+          "duration": "0.3s",
+          "outline": "none"
+        }
+      },
+      "reversing": {
+        "panel": {
+          "x": 0,
+          "y": 0,
+          "color": "rgb(255, 255, 255)",
+          "background": "rgb(57, 31, 49)",
+          "clip": "polygon(calc(69.0687% - 45.5853px) 0px, 100% 0px, 100% 100%, calc(69.0687% - 58.0177px) 100%)",
+          "duration": "0.65s, 0.65s",
+          "outline": "none"
+        },
+        "slash": {
+          "x": 1.54657,
+          "y": 0,
+          "color": "rgb(29, 27, 31)",
+          "background": "rgb(255, 255, 255)",
+          "clip": "polygon(0px 0px, 2px 0px, 100% 50%, 2px 100%, 0px 100%, calc(100% - 2px) 50%)",
+          "duration": "0.65s",
+          "outline": "none"
+        },
+        "arrow": {
+          "x": 1.23725,
+          "y": 0,
+          "color": "rgb(255, 255, 255)",
+          "background": "rgba(0, 0, 0, 0)",
+          "clip": "none",
+          "duration": "0.65s",
+          "outline": "none"
+        },
+        "root": {
+          "x": 0,
+          "y": 0,
+          "color": "rgb(29, 27, 31)",
+          "background": "rgba(0, 0, 0, 0)",
+          "clip": "none",
+          "duration": "0s",
+          "outline": "none"
+        }
+      }
+    },
+    {
+      "variant": "link",
+      "rest": {
+        "panel": {
+          "x": 0,
+          "y": 0,
+          "color": "rgb(255, 255, 255)",
+          "background": "rgb(29, 27, 31)",
+          "clip": "polygon(calc(100% - 66px) 0px, 100% 0px, 100% 100%, calc(100% - 84px) 100%)",
+          "duration": "0.65s, 0.65s",
+          "outline": "none"
+        },
+        "slash": {
+          "x": 0,
+          "y": 0,
+          "color": "rgb(29, 27, 31)",
+          "background": "rgb(29, 27, 31)",
+          "clip": "polygon(0px 0px, 2px 0px, 100% 50%, 2px 100%, 0px 100%, calc(100% - 2px) 50%)",
+          "duration": "0.65s",
+          "outline": "none"
+        },
+        "arrow": {
+          "x": 0,
+          "y": 0,
+          "color": "rgb(255, 255, 255)",
+          "background": "rgba(0, 0, 0, 0)",
+          "clip": "none",
+          "duration": "0.65s",
+          "outline": "none"
+        },
+        "root": {
+          "x": 0,
+          "y": 0,
+          "color": "rgb(29, 27, 31)",
+          "background": "rgba(0, 0, 0, 0)",
+          "clip": "none",
+          "duration": "0s",
+          "outline": "none"
+        }
+      },
+      "during": {
+        "panel": {
+          "x": 0,
+          "y": 0,
+          "color": "rgb(255, 255, 255)",
+          "background": "rgb(99, 37, 75)",
+          "clip": "polygon(calc(22.9701% - 15.1603px) 0px, 100% 0px, 100% 100%, calc(22.9701% - 19.2949px) 100%)",
+          "duration": "0.65s, 0.65s",
+          "outline": "none"
+        },
+        "slash": {
+          "x": 3.8515,
+          "y": 0,
+          "color": "rgb(29, 27, 31)",
+          "background": "rgb(29, 27, 31)",
+          "clip": "polygon(0px 0px, 2px 0px, 100% 50%, 2px 100%, 0px 100%, calc(100% - 2px) 50%)",
+          "duration": "0.65s",
+          "outline": "none"
+        },
+        "arrow": {
+          "x": 3.0812,
+          "y": 0,
+          "color": "rgb(255, 255, 255)",
+          "background": "rgba(0, 0, 0, 0)",
+          "clip": "none",
+          "duration": "0.65s",
+          "outline": "none"
+        },
+        "root": {
+          "x": 0,
+          "y": 0,
+          "color": "rgb(29, 27, 31)",
+          "background": "rgba(0, 0, 0, 0)",
+          "clip": "none",
+          "duration": "0s",
+          "outline": "none"
+        }
+      },
+      "hover": {
+        "panel": {
+          "x": 0,
+          "y": 0,
+          "color": "rgb(255, 255, 255)",
+          "background": "rgb(120, 40, 88)",
+          "clip": "polygon(0% 0px, 100% 0px, 100% 100%, 0% 100%)",
+          "duration": "0.65s, 0.65s",
+          "outline": "none"
+        },
+        "slash": {
+          "x": 5,
+          "y": 0,
+          "color": "rgb(29, 27, 31)",
+          "background": "rgb(29, 27, 31)",
+          "clip": "polygon(0px 0px, 2px 0px, 100% 50%, 2px 100%, 0px 100%, calc(100% - 2px) 50%)",
+          "duration": "0.65s",
+          "outline": "none"
+        },
+        "arrow": {
+          "x": 4,
+          "y": 0,
+          "color": "rgb(255, 255, 255)",
+          "background": "rgba(0, 0, 0, 0)",
+          "clip": "none",
+          "duration": "0.65s",
+          "outline": "none"
+        },
+        "root": {
+          "x": 0,
+          "y": 0,
+          "color": "rgb(29, 27, 31)",
+          "background": "rgba(0, 0, 0, 0)",
+          "clip": "none",
+          "duration": "0s",
+          "outline": "none"
+        }
+      },
+      "reversing": {
+        "panel": {
+          "x": 0,
+          "y": 0,
+          "color": "rgb(255, 255, 255)",
+          "background": "rgb(61, 32, 51)",
+          "clip": "polygon(calc(65.2707% - 43.0786px) 0px, 100% 0px, 100% 100%, calc(65.2707% - 54.8274px) 100%)",
+          "duration": "0.65s, 0.65s",
+          "outline": "none"
+        },
+        "slash": {
+          "x": 1.73647,
+          "y": 0,
+          "color": "rgb(29, 27, 31)",
+          "background": "rgb(29, 27, 31)",
+          "clip": "polygon(0px 0px, 2px 0px, 100% 50%, 2px 100%, 0px 100%, calc(100% - 2px) 50%)",
+          "duration": "0.65s",
+          "outline": "none"
+        },
+        "arrow": {
+          "x": 1.38917,
+          "y": 0,
+          "color": "rgb(255, 255, 255)",
+          "background": "rgba(0, 0, 0, 0)",
+          "clip": "none",
+          "duration": "0.65s",
+          "outline": "none"
+        },
+        "root": {
+          "x": 0,
+          "y": 0,
+          "color": "rgb(29, 27, 31)",
+          "background": "rgba(0, 0, 0, 0)",
+          "clip": "none",
+          "duration": "0s",
+          "outline": "none"
+        }
+      }
+    }
+  ],
+  "errors": []
+}
