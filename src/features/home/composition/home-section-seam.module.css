@@ -17,3 +17,6 @@
   .learning > div { top: -24px; height: 64px; opacity: 1; clip-path: polygon(88% 0,100% 24px,84% 100%); }
   .contact > div { top: -36px; height: 76px; clip-path: polygon(90% 0,100% 0,100% 100%,78% 50%); }
 }
+
+/* Photo geometry belongs to each image edge, not a floating overlay across text. */
+.hero, .portraits, .learning { display:none; }
