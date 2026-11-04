@@ -1,5 +1,8 @@
 # Design system — tokens and constraints
 
+Latest 2026-11-04 Cut override (D-023): `cutVariant="line"` (default) uses 3px corners, fine plum outline, growing underline; `cutVariant="soft"` uses 14px corners, blush fill and inset vertical accent. Both use existing brand/surface/soft tokens, 300ms CSS feedback and +3px arrow travel; inverse uses white ink/edges and translucent white fills over plum. Reduced motion suppresses transitions/travel. Replaces the following historical Double Cut specification only. [Verification](../qa/public-controls-followup-2026-11-04.md).
+
+
 2026-11-04 Cut override: Double Cut + Panel replaces Lift & Shift for `appearance="cut"`. Existing surface/text/brand/on-brand tokens provide white/charcoal/plum/white. CSS transition 650ms cubic-bezier(.22,1,.36,1), arrow +4px, slash +5px, full reversal. Spatial ink clipping; fixed hit area; inverse white edge for plum; reduced motion gives immediate state feedback without displacement. Other families/tokens unchanged. [Evidence](../qa/landing-refinements-2026-11-04.md).
 
 STATUS: Color HEX values and semantic narrative selected. Type-family roles selected. Numeric sizes and geometric ratios below are candidate implementation values until verified with real Unbounded glyphs and browser screenshots. Never call them owner-approved pixel-perfect specs.

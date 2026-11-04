@@ -1,5 +1,7 @@
 # LMS frontend design context
 
+Homepage motion branch, 2026-11-04: owner-authorized Awwwards-inspired entrances belong to home-local HomeEntranceMotion. Typography/photo/content sequences preserve layout and stationary cut geometry, with shorter mobile motion and direct reduced/no-JS states. Generic SectionReveal defers only inside this composition. Format cards enter after panel switching settles; the former whole-track scrub fade is superseded. [Research, timing, ownership and verification](docs/qa/homepage-section-motion-2026-11-04.md). No new brand/content approval.
+
 Latest owner refinement, 2026-11-04: canonical Cut now uses **Double Cut + Panel**, superseding historical lift/shadow descriptions below. White hexagonal face + charcoal arrow panel + detached slash; hover expands plum with spatially following white ink, 650ms cubic-bezier(.22,1,.36,1), arrow +4px/slash +5px. Inverse keeps a white outline on plum. Contact is form-left/title-right on desktop. Package cards have one full-card demo-cart action with explicit fictional data. [Reference/verification](docs/qa/landing-refinements-2026-11-04.md); human browser review remains pending.
 
 Latest selected scope: **D-021, 2026-11-03**, recorded at the end of this file. Earlier dated motion/mobile descriptions are historical where D-021 supersedes them.
@@ -42,3 +44,9 @@ The tokens remain `docs/design/SYSTEM.md` -> `src/app/globals.css` -> existing C
 ## Preview and motion refinement · 2026-11-03
 
 Owner clarification removes homepage filters at every width. Course/mini discovery is capped at three with full-catalog links; cards have one full-card link. Catalog results own the actual H1 with no duplicate intro. Cut rests flat; depth appears only on hover/focus/press. The server-visible solid plum welcome clears diagonally downward, as does mobile page navigation; full-screen curtains cover the header. Header backing fades into and out of dock plum. Photo geometry follows existing cuts; detached photo seam ornaments are suppressed. Main/native menu scrollbars use existing plum/blush tokens, with forced-color and swipe-rail exceptions. [Scope, canonical owners and verification](docs/qa/preview-refinement-2026-11-03.md). These decisions supersede earlier affected notes; browser approval remains pending.
+
+2026-11-04 synchronization correction: homepage entrance starting states are prepared before exposure, with an explicit ready/reveal handoff to the existing splash/wipe. Scroll only plays prepared timelines, and late-hydrated exposed content stays visible. Visual treatments/durations remain; duplicate heading/selection motion and stale cleanup states are removed. [Audit and evidence](docs/qa/animation-synchronization-2026-11-04.md).
+
+2026-11-04 owner visibility follow-up: homepage reveals start inside the viewport (85% desktop / 90% mobile), with longer, less front-loaded motion. Starting-state preparation and explicit loader handoff remain. Existing layouts and shared controls are unchanged. [Timing and verification](docs/qa/homepage-motion-visibility-2026-11-04.md).
+
+2026-11-04 latest controls follow-up: the two supplied line/soft Cut references supersede Double Cut + Panel. Existing tokens, inverse plum variants and shared API are retained. Menu closes on navigation completion; catalog switches immediately; HOME-08 uses one responsive toolbar without the certificate label. [Scope and evidence](docs/qa/public-controls-followup-2026-11-04.md).

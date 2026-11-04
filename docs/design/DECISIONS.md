@@ -1,5 +1,10 @@
 # Visual decision register — owner decisions made 2026-10-27
 
+D-023 `selected-direction` — 2026-11-04 latest owner references select Linear Minimalism and Quiet Accent for the shared Cut family, with inverse plum variants. This supersedes D-022's Double Cut + Panel only. Mobile menus persist through route wipes; catalog kind selection responds immediately; remove HOME-08 certificate label and align its toolbar. No new product facts, publication approval or human screenshot approval. [Reference scope and QA](../qa/public-controls-followup-2026-11-04.md).
+
+
+D-023 `selected-motion` — 2026-11-04 owner requests Awwwards-style homepage entrances on a new branch after landing commit/push, allowing motion choices while preserving layout. Home-local authored heading/photo/card sequences replace earlier generic homepage entrances/whole-track scrub only. Existing switching, route/loading and stationary seams retain ownership; reduced motion/no-JS/focus remain direct. [Research/verification](../qa/homepage-section-motion-2026-11-04.md). No new identity, route, product fact or human implementation approval.
+
 D-022 `selected-direction` — 2026-11-04 owner landing brief/six PNGs select Double Cut + Panel for the shared Cut family, stable learning-upload geometry, repeatable dropdown motion, form-left Contact, upper-right catalog links, brutalist whole-card package demo-cart actions and drag-hinted reviews without arrows. Supersedes affected D-021 refinements only. Packages remain TEST_PREVIEW-only; no release, real content, new route or human browser approval implied. [Reference contract/verification](../qa/landing-refinements-2026-11-04.md).
 
 Vocabulary:

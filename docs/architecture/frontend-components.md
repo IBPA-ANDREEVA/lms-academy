@@ -238,3 +238,30 @@ CourseCard (`@/features/catalog`, `features/catalog/course-card.tsx`): remove ac
 | OfferCarousel, home-local existing owner | API unchanged, PackageExplorer and MiniCourseExplorer reuse; no new shared extraction. |
 
 Working/demo/missing boundaries and exact Cut consumers: [reference and verification](../qa/landing-refinements-2026-11-04.md).
+
+
+## Homepage appearance motion - 2026-11-04
+
+HomeEntranceMotion is local to `features/home/composition` and consumed only by HomePage; props `children:ReactNode,className?`. Its scene module owns authored DOM targets, GSAP timelines and no business behavior. Scoped contextSafe lifecycle, observer cleanup, once-only playback, focus/pointer/resize/live-preference cancellation. Generic SectionReveal (`public-shell`, API unchanged) defers only under data-home-entrances; detail/preview consumers keep their existing animation. LearningOffersShowcase API/sole HomePage consumer unchanged; removes old whole-track scrub, retains stateful panel/height/seam ownership. No shared primitive extracted. [Reference contract and tests](../qa/homepage-section-motion-2026-11-04.md).
+
+## Entrance lifecycle correction - 2026-11-04
+
+HomeEntranceMotion and home-entrance-scenes retain HomePage-only ownership and existing props. Shared `features/public-shell/motion-handoff.ts` supplies ready/reveal events and covering-phase detection to PublicMotion, SplashLoader, PageWipeTransition, HomeEntranceMotion and SectionReveal; actual reuse justifies this narrow presentation protocol. SplashLoader adds `coordinated?:boolean=false`, true only in PublicMotion; MotionPreview remains standalone. Other shared APIs and consumers are unchanged. SectionReveal still defers under home; elsewhere it now prepares before exposure. Wipe excludes headings owned by either entrance controller. `home/learning-offers/use-offer-selection-motion.ts` keeps `(root,selection,compact?)` and CourseShowcase/PackageExplorer/MiniCourseExplorer consumers; suppresses duplicate hydration and stale preference-triggered replays. [Detailed paths, lifecycle and checks](../qa/animation-synchronization-2026-11-04.md).
+
+## Homepage entrance visibility - 2026-11-04
+
+Existing `/` -> HomePage -> home/composition/HomeEntranceMotion (`children,className?`) and home-entrance-scenes retain all fourteen home section owners/consumers. The owner-requested visibility adjustment changes only the viewport entry line (85% desktop / 90% mobile) and local timeline pacing/easing; prepared states, loader handoff, interaction/cancellation, data and natural geometry remain. Shared SectionReveal/control timings are unchanged. Status: implemented; human appearance review and existing content/service dependencies remain. [Paths, timing and verification](../qa/homepage-motion-visibility-2026-11-04.md).
+
+## Public controls follow-up · 2026-11-04
+
+Owner references replace Double Cut + Panel with `Button`/`ButtonLink` (`@/components/ui/button`) `appearance="cut", cutVariant?: "line" | "soft"` (default line), preserving existing intent/size/inverse/fullWidth/loading/native props. Line uses an extending underline; soft uses an inset accent. Both have white-ink inverse styles for plum and reduced-motion feedback. HOME-05 uses soft; home catalog links, identity, commerce, detail and `/preview/components` reuse the canonical family. The preview shows both versions and inverse/interaction states.
+
+`public-shell/mobile-navigation.tsx` and `page-wipe-transition.tsx` keep the native menu open through navigation, release its scroll lock at start, cover it with the existing curtain in the top layer, and close at the completion event. During reveal the still-open menu is visually suppressed under the curtain; destination focus is restored at completion. No additional loading surface or delay.
+
+`catalog/components/catalog-experience.tsx` remains the persistent `/courses` and `/mini-courses` owner (no props). Optimistic kind selection immediately starts one simultaneous 360ms panel/height transition; Next still owns URL, metadata and history. Generic SectionReveal defers to this owner. Interrupted poses, reduced motion and resize settle cleanly. HOME-08 `MiniCourseExplorer` keeps the existing CourseCard/OfferCarousel, removes the requested certificate label and aligns the remaining format note with the catalog link in a wrapping toolbar. No service, route or product policy changes.
+
+Status: implemented and browser-verified; human visual approval, physical Safari testing and existing real-catalog/service readiness remain. [Reference scope, root causes and verification](../qa/public-controls-followup-2026-11-04.md).
+
+## Catalog switcher flash correction · 2026-11-04
+
+`CatalogExperience` (`src/features/catalog/components/catalog-experience.tsx`, no props; persistent CatalogPage consumer on `/courses` and `/mini-courses`) replaces the overlapping transparent panel transition with two opaque adjacent surfaces driven by one progress tween. The scoped GSAP controller persists across kind updates; a plain layout effect redirects it, preserving current position on rapid reversal instead of reverting/rebuilding DOM tweens. Duration remains 360ms, with coordinated power2.inOut translation/height. CSS ownership remains `catalog-experience.module.css`; no new shared component or route. Optimistic selection, URL/filter/history ownership, inert panels and natural settled height remain. Resize/live reduced motion settle; observers/listeners/tween/styles clean up on unmount. Status: verified in optimized browser builds; human visual review and physical Safari remain unverified. [Cause and frame regression evidence](../qa/catalog-switcher-flash-2026-11-04.md).
