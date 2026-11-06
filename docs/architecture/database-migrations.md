@@ -1,0 +1,247 @@
+# Database migration and recovery foundation · BASE02-B
+
+Scope: database infrastructure only. [ADR-0003](../decisions/0003-python-backend-architecture.md)
+and the [entity map](entity-map.md) retain domain ownership. No LMS tables, API,
+authentication, runtime session factory or production seed records are implemented.
+Verification evidence is recorded in [BASE02-B QA](../qa/BASE02-B-database-foundation-2026-11-04.md).
+
+## Environment and credentials
+
+From `backend/`, use Python 3.12 selected by `.python-version` and `uv sync --locked`.
+`uv.lock` pins the resolved dependencies. Synchronous SQLAlchemy 2 / Psycopg 3 is
+selected for these operator commands. This does not select the future FastAPI
+request strategy: synchronous calls must not block an async event loop. Ruff,
+strict mypy and pytest are configured in `pyproject.toml`.
+
+No command automatically loads `.env`. Inject credentials into the current process
+from a private secret store/session; do not paste them into terminal history, Git,
+chat, CLI arguments or reports. `.env*`, `.venv/`, Python caches and dump files are
+ignored. The checked-in `.env.example` exception contains placeholders only.
+
+| Variable | Purpose |
+| --- | --- |
+| `LMS_ENV` | Required for Alembic online/offline and recovery: `development`, `migration-test`, `restore-test`, `production`, or `test` |
+| `MIGRATION_DATABASE_URL` | Direct endpoint, schema-owner/migration credentials for the explicitly selected environment |
+| `DATABASE_URL` | Reserved for future least-privilege runtime credentials; never an Alembic fallback |
+| `TEST_POSTGRES_ADMIN_URL` | Explicitly authorized **test server** control database, with CREATEDB; tests only create new UUID databases |
+| `TEST_POSTGRES_ALLOW_CREATE_DATABASE` | Must equal `create-new-databases-only`; a name containing “test” is insufficient authorization |
+| `POSTGRES_BIN` | Directory containing PostgreSQL **18** client tools; local test harness also requires complete server support files |
+| `BACKUP_SOURCE_DATABASE_URL` | Read-capable credentials for one explicitly selected backup source |
+| `RESTORE_TARGET_DATABASE_URL` | Separate migration/restore credentials for an empty, isolated destination |
+
+URLs accept `postgresql://` or `postgresql+psycopg://`, normalize to Psycopg 3,
+and require host, database and user. Percent-encode reserved characters in passwords.
+Only `sslmode`, `sslrootcert`, `channel_binding` and `connect_timeout` query options
+are supported; routing overrides are rejected. Use a direct Neon endpoint, with
+the TLS/channel-binding settings issued by Neon. Pooled endpoints are rejected.
+Do not put URLs into `alembic.ini`; `%` escaping through config interpolation is avoided.
+
+The owner reports Neon project `LMS-Academy`, database `neondb`, and separate branches
+`production`, `development`, `migration-test`, `restore-test`. Keep a separate secret
+entry for each branch and credential purpose; select a matching `LMS_ENV`/secret pair
+in the same session. The environment label **does not authenticate the branch**.
+Verify the direct endpoint in Neon before applying changes. No branch is disposable
+merely because of its name. Never reset these shared branches from tests. This task
+does not create/promote branches or provision/restrict their roles.
+
+The future runtime role must not own schema objects or have migration/CREATEDB
+privileges. Migration/restore credentials must not reach Next.js, browsers, API
+replicas or workers. Real role grants and production secrets remain an operational
+provisioning step, not something established by this foundation's local tests.
+
+## Migration commands and transaction behavior
+
+Run from `backend/` after injecting the selected migration credentials:
+
+```powershell
+uv sync --locked
+$env:LMS_ENV = 'development'
+uv run alembic history
+uv run alembic heads
+uv run alembic current --check-heads
+# Only after the selected endpoint and reviewed revision are authorized:
+uv run alembic upgrade head
+uv run alembic current --check-heads
+uv run alembic check
+```
+
+`history` and `heads` do not require a database. `current` is read-only and an
+unmigrated database is expected to fail `--check-heads`. The only revision directory
+is `backend/alembic/versions/`. The existing applied revision `5c9789a48cba` remains
+byte-identical: no application DDL/DML in either direction, no parent, one head.
+Upgrading an empty database creates only Alembic's revision bookkeeping table.
+Do not edit the applied baseline to add future features.
+
+Alembic owns one transaction for an online upgrade invocation, including revision
+bookkeeping. A PostgreSQL transactional DDL/DML failure rolls back that transaction;
+the command exits nonzero and always disposes its engine. `NullPool` avoids a
+long-lived migration connection pool. Diagnostics expose an error class and SQLSTATE,
+not driver messages, SQL parameters or credentials. Record the command, environment,
+release/revision and safe diagnostic in the release evidence. One operator/release
+runner must serialize migrations; no distributed migration lock or deployment
+orchestrator is implemented. Never run migrations on API/worker startup.
+
+Autocommit blocks, concurrent indexes, external effects and operations PostgreSQL
+cannot roll back need revision-specific planning and tests. The default transaction
+does not make them recoverable. On failure, stop rollout, inspect `current`/history
+and the reviewed revision, verify data and resolve the cause. Retest on a new
+disposable database before retrying. Never blindly stamp a revision or downgrade
+to conceal a failed operation. Prefer a reviewed forward repair for applied changes.
+
+## Adding the first domain table
+
+1. Resolve the concrete domain contract and its blocking product questions. Name the
+   sole owner using [modules](modules.md); conceptual entities are not permission
+   to invent fields, cascades or retention policies.
+2. Put mappings in `app/modules/<owner>/models.py` (or a justified owner-local
+   package), subclassing `app.db.base.Base`. Keep business rules/writes with the
+   owner. Use explicit constraint names for checks; the shared naming convention
+   supplies PK/FK/unique/index names. Do not place domain models in `app/db`.
+3. Add an **explicit import** to `app/db/metadata.py:migration_metadata`. Import all
+   implemented mappings before comparison, without connecting or creating tables.
+   Do not catch import failures or use filesystem autodiscovery. Never use
+   `Base.metadata.create_all()` as the release schema mechanism.
+4. Bring an authorized development database to the current head and generate:
+
+   ```powershell
+   uv run alembic revision --autogenerate -m 'owner: describe concrete change'
+   ```
+
+5. Review the actual script: owner, dependencies, all drops, renames versus
+   drop/create, nullable/backfill transitions, defaults, foreign keys, retained
+   evidence, indexes/locking, large-table behavior and data conversions. An empty
+   metadata registry against populated tables can propose destructive drops.
+   Autogeneration is a draft, never automatic approval. Avoid live model imports
+   inside historical revisions; freeze the needed migration structure.
+6. Keep one coordinated head. Rebase an unapplied revision onto the latest head or
+   create a reviewed merge where appropriate; never rewrite applied history.
+   Update the foundation's explicit expected-head/no-domain-table assertions as
+   real approved schema arrives, while retaining single-head and baseline ancestry
+   coverage. Add fresh and supported-prior-revision PostgreSQL tests using realistic
+   synthetic records, constraints, concurrent/conflicting operations and rollback.
+7. Run the checks below. Verify `alembic check` against the migrated schema with all
+   mappings loaded. Review old/new API and worker compatibility: expand schema,
+   deploy compatible code, backfill in bounded resumable steps, then separately
+   contract only after old consumers are gone. State whether downgrade loses data.
+8. Apply once through an authorized release operation; preserve logs, backup/recovery
+   evidence and revision status. Frontend OpenAPI generation/checks are required
+   when the domain slice introduces or changes HTTP contracts.
+
+## Initial/reference data
+
+```powershell
+uv run python -m app.db.seed --environment development
+```
+
+This is a deliberate **no-op**: it validates the explicit environment, connects to
+no database, writes zero records and reports `no_op_no_approved_reference_data`.
+Calling it twice makes no schema/data changes. There are no default administrators,
+passwords, fake users/courses, or invented reference values. Schema changes belong
+to Alembic, not seed scripts. Account provisioning is a separate Identity workflow.
+
+When approved reference data exists, the owning epic adds an owner-local seed
+operation and explicitly registers it in this composition command. Before enabling
+writes, add separate environment-scoped credentials/target validation, an explicit
+transaction owner, stable natural keys with uniqueness, deterministic conflict
+handling, and twice-run/concurrent tests that compare records. Do not overwrite
+operator-managed data, delete unknown rows or silently convert demo fixtures into
+production defaults. No general seed plugin framework or seed-tracking table is
+needed before an actual consumer exists.
+
+## Reproducible PostgreSQL verification
+
+```powershell
+uv run ruff check .
+uv run ruff format --check .
+uv run mypy
+uv run pytest -q
+# Full server distribution, not a client-only installation:
+$env:POSTGRES_BIN = 'C:\path\to\postgresql18\bin'
+uv run python scripts/verify_postgres.py
+```
+
+The local harness creates a new temp cluster outside Git, binds only to loopback
+on a free port, generates a temporary SCRAM password, runs all tests, stops its own
+server and removes its own cluster. It never starts a Windows service or accesses
+existing cluster data. On Windows, PostgreSQL's official downloads link to an
+[EDB binary archive](https://www.enterprisedb.com/download-postgresql-binaries);
+a complete distribution includes `share/postgres.bki`. Point `POSTGRES_BIN` at an
+extracted distribution if only client tools were installed. Run as a normal user.
+
+Alternatively inject an approved test-server `TEST_POSTGRES_ADMIN_URL` and the
+explicit creation opt-in above. Tests create UUID databases from `template0`; a
+successful CREATE must precede cleanup of that exact database. The supplied control
+database is never reset or dropped. Do not point this at a shared Neon branch.
+Missing credentials produce explicit skips; present but invalid/unauthorized
+credentials fail. Set `POSTGRES_BIN` for the recovery test or it explicitly skips.
+
+Tests exercise the real Alembic environment via subprocesses. The rollback test
+adds a failing migration only to a temporary copy; synthetic preservation/recovery
+tables exist only in disposable test databases. There are no fake shipped revisions.
+The current no-op seed cannot demonstrate a future domain upsert or business-data
+migration; those require owner-specific tests when tables exist.
+
+## Backup and recovery
+
+Freeze schema changes for the dump; normal application writes may continue under
+PostgreSQL's consistent dump snapshot. Use a private, access-restricted directory
+outside the repository. Archives can contain personal data: production backups
+must use encrypted storage, restricted access and PD-007 retention/recovery controls.
+This utility does not implement encryption, scheduled backups, PITR, role/global
+backups or a production RPO/RTO. Do not serve a restored database before applying
+deletion restrictions and reconciling external payment/job effects.
+
+Inject `BACKUP_SOURCE_DATABASE_URL`, then:
+
+```powershell
+$env:LMS_ENV = 'development'
+$env:POSTGRES_BIN = 'C:\Program Files\PostgreSQL\18\bin'
+uv run python -m app.db.recovery backup --file 'C:\private-backups\lms-before-change.dump'
+```
+
+The wrapper runs PostgreSQL 18 `pg_dump --format=custom --no-owner --no-acl
+--no-password --file <archive>`. Credentials are child-process environment values,
+never command-line strings or logs. It rejects files inside this Git repository or
+existing paths. A `.dump.json` sidecar records SHA-256, source endpoint fingerprint
+(no credentials) and revision. A failed dump has no verified manifest; retain it
+for private inspection or explicitly discard it, and use a new name for retry.
+
+Provision/select a **separate empty isolated destination** through the authorized
+operational workflow. Inject its `RESTORE_TARGET_DATABASE_URL`; do not reuse the
+source credentials by changing only `LMS_ENV`. Keep other writers disconnected
+throughout preflight and restore, then:
+
+```powershell
+$env:LMS_ENV = 'restore-test'
+uv run python -m app.db.recovery restore --file 'C:\private-backups\lms-before-change.dump' --confirm-target neondb
+# Inject this same destination's migration secret before the read-only check:
+uv run alembic current
+```
+
+The exact database name must match `--confirm-target`; this is an operator guard,
+not proof of branch identity. Endpoint equality, checksum mismatch, any user
+objects/extra schemas/extensions/large objects or revision mismatch fail. The
+wrapper never invokes `--clean`/`--create`, and has no force-overwrite option.
+It runs `pg_restore --single-transaction --exit-on-error --no-owner --no-acl
+--no-password --dbname <destination database> <archive>` and verifies the restored
+Alembic revision against the manifest, not necessarily today's code head.
+If any restore SQL fails, PostgreSQL rolls back that restore transaction.
+
+Use only a trusted archive/manifest: a checksum is not a signature, and restores
+execute SQL. Different host aliases can refer to one database, so independently
+verify endpoints and keep the destination exclusive; the empty-target guard is an
+additional check. Owner/ACL restoration is intentionally omitted for portability;
+review and reapply approved destination runtime grants separately. Compare expected
+record counts/representative stable values using domain-approved verification
+queries before release. The automated test currently compares one synthetic record
+and the revision; there are no LMS records to verify yet.
+
+A downgrade executes a migration author's reverse schema operations; it is **not
+database recovery** and cannot generally recover deleted data. Recovery restores a
+known snapshot into a separate database, verifies it, reconciles later effects and
+only then permits an explicitly authorized cutover. Never restore over populated
+production/development databases as a migration-error shortcut.
+
+Reference semantics: [Alembic transactions](https://alembic.sqlalchemy.org/en/latest/api/runtime.html),
+[PostgreSQL 18 pg_dump](https://www.postgresql.org/docs/18/app-pgdump.html),
+[PostgreSQL 18 pg_restore](https://www.postgresql.org/docs/18/app-pgrestore.html).

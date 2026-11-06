@@ -1,6 +1,6 @@
 # LMS Python backend
 
-**Status: structural preparation only. The Python runtime has not yet been implemented.** This directory contains instructions and intentionally empty directories. There is no application entry point, dependency manifest/lockfile, router, model, database connection, migration, authentication, job or API client. Do not run an assumed startup command or treat `.gitkeep` as delivered functionality.
+**Status: BASE02-B database migration foundation implemented.** Python/uv dependencies, Alembic's empty baseline, shared metadata, an explicit no-op seed, PostgreSQL integration tests and guarded backup/recovery commands exist. There is no FastAPI application, domain table/model, authentication, job or HTTP client. Empty domain directories remain preparation, not delivered features. See the [database runbook](../docs/architecture/database-migrations.md) and [verification evidence](../docs/qa/BASE02-B-database-foundation-2026-11-04.md).
 
 Read the root [AGENTS.md](../AGENTS.md), local [AGENTS.md](AGENTS.md), [ADR-0003](../docs/decisions/0003-python-backend-architecture.md), [module contracts](../docs/architecture/modules.md) and [integration contract](../docs/architecture/frontend-backend-integration.md) before implementation.
 
@@ -8,7 +8,7 @@ Read the root [AGENTS.md](../AGENTS.md), local [AGENTS.md](AGENTS.md), [ADR-0003
 
 One Python FastAPI modular monolith owns authoritative operations. The existing Next.js 16 / React / TypeScript / Tailwind frontend remains in this repository and deploys independently. They communicate through versioned HTTP/JSON REST APIs and OpenAPI contracts. Python modules communicate through narrow local interfaces, not seven network services.
 
-The selected stack is FastAPI, Pydantic v2, SQLAlchemy 2, Alembic and PostgreSQL; Neon is the intended database host, not a provisioned service. Tooling is uv, pytest and Ruff; mypy is the proposed static checker, to confirm and configure at initialization. Python version, exact dependency pins, database driver/sync strategy, hosting, authentication library and durable-job executor remain technical selections. No dependencies are installed by this change.
+The target stack remains FastAPI, Pydantic v2, SQLAlchemy 2, Alembic and PostgreSQL. The foundation uses Python 3.12, synchronous SQLAlchemy/Psycopg 3 for operator commands, uv/uv.lock, pytest, Ruff and strict mypy. FastAPI/Pydantic and application request/session/pooling strategy are not initialized. The owner reports a provisioned Neon project with four branches; this task's independent verification uses isolated local PostgreSQL. Hosting, authentication and durable-job selections remain separate work.
 
 ## Directory conventions
 
@@ -30,14 +30,16 @@ backend/
       notifications/
     jobs/                    # durable execution wiring; domain handlers keep owners
   alembic/
-    versions/                # future reviewed schema revisions
+    versions/                # immutable applied empty baseline; future reviewed revisions
+  scripts/
+    verify_postgres.py        # creates/stops its own disposable local cluster
   tests/
     unit/
     integration/
     api/
 ```
 
-Each leaf currently contains only `.gitkeep`. API, core, db and jobs are technical boundaries, never additional business domains.
+Domain, API, core and jobs leaves still contain only `.gitkeep`. `app/db` now contains configuration, metadata/base, no-op seed and recovery utilities. API, core, db and jobs remain technical boundaries, never additional business domains.
 
 | Domain | Responsibility |
 | --- | --- |
@@ -49,7 +51,7 @@ Each leaf currently contains only `.gitkeep`. API, core, db and jobs are technic
 | Certificates | Eligibility evaluation and issuance records; admin review/manual issuance |
 | Notifications | Delivery of committed notification intents and delivery outcomes |
 
-The complete ownership and dependency matrix in `docs/architecture/modules.md` takes precedence over this short map. PD-011 adds referral capabilities, never a manager role. Homework-definition ownership and policy-publication ownership remain their existing preparation decisions.
+The complete ownership and dependency matrix in `docs/architecture/modules.md` takes precedence over this short map. PD-013 restores concurrent manager membership; referral capability remains independent. Homework-definition ownership and policy-publication ownership remain their existing preparation decisions.
 
 ## Future internal module organization
 
@@ -69,9 +71,27 @@ Split growing files by use case; do not mandate base services, repository-per-ta
 
 ## Future development and verification
 
-Prepare a bounded feature contract, record blocking product questions, then initialize the runtime in a separate implementation task. That task selects supported Python/pinned packages, creates `pyproject.toml` and `uv.lock`, configures checks and documents real commands. No initialization is implied here.
+Prepare a bounded feature contract and record blocking product questions before adding domain models or APIs. Follow the [exact new-table process](../docs/architecture/database-migrations.md#adding-the-first-domain-table). Do not rewrite baseline `5c9789a48cba` or put domain mappings in `app/db`.
 
-Thereafter use uv for reproducible environments, Ruff for formatting/lint, a configured static checker and pytest. Expected future checks are `uv run ruff check .`, `uv run ruff format --check .`, `uv run mypy app`, and `uv run pytest` from this directory; they are **not available yet**. Unit tests isolate rules, PostgreSQL integration tests cover migrations/constraints/transactions/concurrency, and API tests cover schemas, authentication, authorization and error/privacy contracts. Do not substitute SQLite for PostgreSQL acceptance.
+Run from this directory:
+
+```powershell
+uv sync --locked
+uv run ruff check .
+uv run ruff format --check .
+uv run mypy
+uv run pytest -q
+uv run alembic history
+uv run alembic heads
+uv run python -m app.db.seed --environment development
+# Requires a complete PostgreSQL 18 distribution:
+$env:POSTGRES_BIN = 'C:\path\to\postgresql18\bin'
+uv run python scripts/verify_postgres.py
+```
+
+Without explicit test credentials, pytest reports database skips. The isolated harness provides its own temporary credentials and runs live migration/rollback/recovery checks. The applied baseline is excluded from Ruff to preserve its exact bytes. `uv run mypy` checks app, Alembic environment, tests and the harness. Domain/API tests remain future work; SQLite cannot substitute for PostgreSQL acceptance.
+
+Alembic online commands require `LMS_ENV` and `MIGRATION_DATABASE_URL`; there is no fallback to the future runtime `DATABASE_URL`, and `.env` is never auto-loaded. Select the authorized direct endpoint before any upgrade. Backup/restore credentials are separate. Commands, environment guards and their limits are documented in the [runbook](../docs/architecture/database-migrations.md).
 
 Alembic revisions are reviewed, tested from an empty and supported prior database, and applied once by a controlled release step. Never migrate automatically from every API/worker process. Use additive expand/contract changes across independently deployed frontend/API versions. Test recovery and data preservation before destructive changes.
 

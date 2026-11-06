@@ -59,3 +59,15 @@ next-env.d.ts
 !.env.example
 
 /.next-land03-*/
+
+# Python environments, caches and private database artifacts
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.coverage
+htmlcov/
+*.dump
+*.backup

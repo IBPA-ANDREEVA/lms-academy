@@ -1,18 +1,26 @@
 # LMS architecture overview
 
-## Current implementation snapshot · 2026-11-03
+## Current implementation snapshot · 2026-11-04
 
-The frontend is implemented; the Python backend is **empty structural preparation**, not a running service. Eight App Router page templates cover `/`, two catalogs, two dynamic detail families, `/cart`, `/checkout` and `/preview/components`. Root layout composes CatalogProvider, CartProvider, PublicHeader, PublicMotion and PublicSiteFooter. Catalog leaves return null under their persistent group layout; both detail kinds share ProductRoute/DetailPage. Existing frontend owners and UI remain in place.
+The frontend is implemented; Python has a [database migration foundation](database-migrations.md), not a running application service. Eight App Router page templates cover `/`, two catalogs, two dynamic detail families, `/cart`, `/checkout` and `/preview/components`. Root layout composes CatalogProvider, CartProvider, PublicHeader, PublicMotion and PublicSiteFooter. Catalog leaves return null under their persistent group layout; both detail kinds share ProductRoute/DetailPage. Existing frontend owners and UI remain in place.
 
 Presentation owners are `home`, `catalog`, `course-detail`, `public-shell`, `identity`, `commerce`, `component-preview`. Generic UI remains Button/Link, form controls and SectionHeading; PageContainer belongs to public-shell. Styles/fonts and numbered sections are unchanged. `TEST_PREVIEW=true` alone enables browser-local fixtures. False/missing returns unavailable, not invented inventory; auth and purchases remain unavailable.
 
 The former `src/server/catalog/{index,contracts,policy}.ts` contained a disconnected read adapter, DTO types and pure read/purchase checks, with no database. They are retired. Existing disconnected UI handling and temporary view types remain in `src/features/catalog/catalog-source.ts` and `catalog-view-types.ts`; defensive SEO exclusion is in `src/lib/seo/product-indexability.ts`. These are not an authoritative backend or new mock API. See [migration evidence](../qa/python-backend-migration-2026-11-03.md).
 
-`backend/` has instructions and `.gitkeep` directories only. There are no Python entry points, dependencies, schemas, models, migrations, services, endpoints, auth or workers. Existing empty `src/db` is a retired placeholder; it must not gain authoritative database access. Empty `src/app/api` is retained only for a future justified thin transport boundary. Empty legacy frontend feature folders are not implemented domains. `src/lib` now contains actual frontend environment/SEO utilities, not just placeholders.
+`backend/` has Python 3.12/uv, SQLAlchemy/Psycopg, Alembic's empty baseline, shared metadata, no-op seed, recovery utilities and configured checks. Domain models/tables, services, endpoints, auth and workers remain absent. Existing empty `src/db` is a retired placeholder; it must not gain authoritative database access. Empty `src/app/api` is retained only for a future justified thin transport boundary. Empty legacy frontend feature folders are not implemented domains. `src/lib` contains actual frontend environment/SEO utilities.
 
 [Frontend registries](frontend-pages.md) locate real owners/consumers. The dated [LAND01 audit](../qa/LAND01-public-site-audit-2026-11-02.md) and LAND03/04 evidence remain historical, not current backend implementation or visual approval.
 
 ## Purpose and decision status
+
+For authentication, sessions, manual administrator management, claiming and
+enrollment lifecycle, read [PD-014's identity/access policy](identity-access-policy.md)
+and the [permission matrix](../product/permission-matrix.md). PD-013 supersedes older
+activation/duration/refund/manager/retention wording; PD-014 fixes product lifetimes
+without selecting an authentication provider. Older admin review/inspection
+descriptions are qualified by the selected Deny cells and unresolved OQ-096.
+Resource Ownership & Security Validation remains the next task, not completed here.
 
 This document defines the implementation boundaries for the LMS described in
 [product requirements](../product/requirements.md), [delivery scope](../product/mvp.md),
@@ -136,7 +144,7 @@ Next.js SSR / browser -> versioned FastAPI HTTP API
 
 Workers and provider callbacks invoke the same domain operations through their respective validated entry points. Pydantic v2 validates untrusted inputs; syntactic validation is separate from current-state/business validation. Response schemas expose only approved fields, not ORM models or secrets. Pure policies should remain independent of FastAPI and SQLAlchemy where practical.
 
-Use `router.py` for HTTP mapping, `schemas.py` for Pydantic transport models, `models.py` for owned SQLAlchemy mappings, `service.py` for use cases/transaction coordination and `policies.py` for rules. Optional focused persistence adapters separate nontrivial queries when useful. These are future conventions, not mandatory files/layers; all current backend directories are empty. See [backend README](../../backend/README.md) and mandatory [backend instructions](../../backend/AGENTS.md).
+Use `router.py` for HTTP mapping, `schemas.py` for Pydantic transport models, `models.py` for owned SQLAlchemy mappings, `service.py` for use cases/transaction coordination and `policies.py` for rules. Optional focused persistence adapters separate nontrivial queries when useful. These are future domain conventions, not mandatory files/layers; domain directories remain empty alongside the implemented database plumbing. See [backend README](../../backend/README.md) and mandatory [backend instructions](../../backend/AGENTS.md).
 
 Application services name the workflow/transaction owner; participating domain commands must not independently commit. Use narrow typed inputs/results instead of ORM objects or query builders across domains. Public Python contracts may accept an explicit transaction context for atomic operations such as enrollment grant/revocation; that context does not permit cross-domain table writes. The exact concrete API follows the selected driver/session design at initialization.
 
@@ -326,16 +334,18 @@ PD-008 requires server-calculated 48 counted weekday-hour review deadlines using
 the assigned curator timezone captured per submission/resubmission, including
 public holidays and excluding weekends. Viewers see local deadlines. Durable,
 retry-safe notifications occur immediately, at 24/12/6/1 remaining hours and overdue;
-admin overdue notifications persist and are auditable. Keep overdue work queued,
-allow authorized admin review without reassignment, and protect concurrent actions.
+admin overdue notifications persist and are auditable. Keep overdue work queued
+and protect concurrent actions. The older admin-review grant conflicts with
+PD-014 matrix Deny; OQ-096 must reconcile the workflow without bypassing selections.
 
 PD-009 makes complete category/course authoring and content/price approval plus
 independent visibility/sale/archive controls MVP. Validate readiness before
 publication and preserve existing entitlements through sales pauses/archiving.
 PD-010 requires essential admin-dashboard operations without routine developer
-intervention, automatic eligible Stripe refunds, and manual administrator review
-and issuance of every certificate after automatic eligibility calculation. The
-seven-day refund window is proposed, not final eligibility; OQ-037 still blocks it.
+intervention and manual administrator evidence review/issuance of every certificate
+after automatic eligibility calculation. PD-013 supersedes its refund rule:
+administration handles execution for requests within 24 hours of payment AND an
+unstarted course; residual legal/execution/boundary details remain OQ-037/OQ-093.
 Infrastructure recovery/server management stays outside the admin dashboard.
 
 Admin monitoring includes courses, progress, submissions, review history/deadlines,
@@ -343,7 +353,7 @@ course conversations and student-request statuses. Provide persistent admin
 notifications and a separate admin-restricted log-viewer route with date/severity/
 operation/resource/reference-ID filtering and readable, privacy-safe diagnostics;
 no literal route is chosen here. Sensitive admin actions require an explanatory
-confirmation popup, explicit confirmation, server authorization and audit of actor,
+confirmation popup, explicit confirmation, recent password reauthentication (PD-014), server authorization and audit of actor,
 action, resource, timestamp and outcome. Account/role workflows remain separately
 authorized; no permission is inferred. Module ownership remains in [modules.md](./modules.md).
 
@@ -426,7 +436,7 @@ must be resolved before their dependent implementation slice. This is not a glob
 
 | Decision | Why architecture needs it | Product dependencies |
 | --- | --- | --- |
-| PostgreSQL/SQLAlchemy/Alembic initialization and Neon deployment details | Stack selected in ADR-0003; driver, pool limits, topology and migration operation remain to be configured | OQ-078, OQ-081 |
+| PostgreSQL/SQLAlchemy/Alembic foundation and Neon deployment details | BASE02-B implements migration/recovery commands with sync Psycopg 3; application pools, deployment topology and live Neon operational readiness remain separate | OQ-078, OQ-081 |
 | Authentication library/provider and session model | Defines account/session storage, verification, blocking, and multi-role actor context | OQ-013, OQ-016, OQ-032 |
 | Stripe entity/settlement/method eligibility verification and authoritative event states | PD-002 selects provider/account/currency; verify launch configuration and resolve payment/refund state rules | OQ-029, OQ-031, OQ-032, OQ-036, OQ-037 |
 | Remaining calendar/overlap and post-expiration rules | PD-004 fixes per-enrollment activation, durations, extensions and pauses; unresolved transitions must not be invented | OQ-048–OQ-049; PD-008 SLA is approved |
@@ -437,7 +447,7 @@ must be resolved before their dependent implementation slice. This is not a glob
 | Email provider and delivery policy | Defines sender authentication, callback mapping, retry, localization, and operational support | OQ-006, OQ-069, OQ-080 |
 | Audit scope, retention, privacy, and recovery objectives | Defines immutable evidence, deletion exceptions, storage lifecycle, and backup design | OQ-008, OQ-079, OQ-081–OQ-083 |
 | Certificate identity/template/reissue rules | Defines eligibility snapshot and immutable issuance model | OQ-051–OQ-057 |
-| Essential admin implementation and remaining policies | PD-009/PD-010 require dashboard authoring/operations, automatic refunds, manual certificates, monitoring and log viewing; specify implementation ownership and routes without inventing policy | OQ-031, OQ-032, OQ-036, OQ-037, OQ-051–OQ-052, OQ-079–OQ-080 |
+| Essential admin implementation and remaining policies | PD-009/PD-010 require dashboard operations/manual certificates/log viewing; PD-013 makes refunds administration-handled; PD-014 matrix Deny qualifies older inspection/review grants. No new ownership or routes inferred | OQ-031, OQ-032, OQ-036, OQ-037, OQ-051–OQ-052, OQ-079–OQ-080, OQ-093, OQ-095–097 |
 | Detailed refund, expiry and launch operational policies | PD-004 approves server enforcement/revocation; dependent acceptance still needs residual answers | OQ-037, OQ-048, OQ-049; PD-010 admin scope is approved |
 
 Provider selections and technical tools should be recorded in focused ADRs.

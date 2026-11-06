@@ -63,10 +63,11 @@ These remain real implementation or release prerequisites, **not additional LA02
 
 ### PA-05 — Guest account matching, verification and activation
 
-- **Evidence:** S1 section 3 creates an account after successful payment if absent; requirements allow checkout account creation. OQ-032 explicitly blocks existing-email matching. Email/password, verification and reset are MVP, but activation/verification timing is unspecified.
+- **Approved BASE03-A update:** [PD-014 / identity policy](identity-access-policy.md) fixes email/password MVP, 48-hour activation links/secure resend, verified email before purchased-course access, single-use 30-minute reset links and 30-day absolute/7-day inactivity sessions. Guest purchases may create accounts through email activation; existing-account linking requires ownership verification. Paid purchases remain claimable after link expiry. These product rules are no longer unspecified; the older options below do not override them.
+- **Evidence:** S1 section 3 creates an account after successful payment if absent; OQ-032 now retains exact proof/matching/recovery mechanics, not whether ownership verification is required.
 - **Options:** (A) collect guest buyer details, create/resolve after payment, then secure email activation; (B) verify email ownership before payment while keeping guest checkout and post-payment account creation; (C) mandatory full registration before payment, which changes the documented guest flow and requires explicit approval.
 - **Recommendation:** preserve A's documented guest purchase path, with verified ownership before account/learning disclosure; evaluate B for collision prevention. Never automatically sign into an existing account based on typed email. Use secure, purpose-bound links and existing auth surfaces where practical; approve password setup, existing-account collision, typo correction and expired-link recovery together.
-- **Owner / timing:** Product + identity/security engineering; blocking checkout/auth integration. OQ-032, OQ-016 and OQ-051 affect related fields/actions. This draft selects neither a provider nor a final token/session lifecycle.
+- **Owner / timing:** Product + identity/security engineering; blocking checkout/auth integration. OQ-032/OQ-016/OQ-051/OQ-095–097 retain related unresolved details. PD-014 selects product lifecycles; provider, token/session mechanisms and exact URLs remain unselected.
 
 ### PA-06 — Cart persistence and account reconciliation
 
@@ -148,7 +149,7 @@ These remain real implementation or release prerequisites, **not additional LA02
 
 ### PA-17 — Remaining launch scope and acceptance
 
-- **Unresolved:** final refund eligibility and post-expiration transitions under OQ-037/OQ-048/OQ-049, plus implementation/acceptance evidence. Countdown remains later scope; PD-010 requires automatic Stripe refunds and full essential administration in MVP. The seven-day window is proposed, not final policy.
+- **Unresolved:** residual refund legal/execution/boundary details and post-expiration transitions under OQ-037/OQ-048/OQ-049/OQ-093, plus implementation/acceptance evidence. Countdown remains later scope. PD-013 confirms within-24-hours AND unstarted-course refunds handled by administration; the seven-day/unattended rules are superseded. PD-014 matrix/workflow conflicts remain OQ-096.
 - **Approved boundary:** PD-004 establishes server-enforced deadlines, extension/pause permissions, review obligations for timely submissions, and revocation on refunds/closure. Public pages may disclose only the approved behavior; no unlimited access, partial-refund policy or automatic certificate cancellation is implied.
 - **Owner / timing:** Product + operations + relevant engineering owners; before MVP learning/commerce acceptance. Resolve remaining questions and the scope/calendar mismatch in the Vault review.
 

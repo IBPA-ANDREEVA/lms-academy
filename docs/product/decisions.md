@@ -88,6 +88,10 @@ When an OQ is answered:
 
 ## PD-004 · Course Access & Curator Support
 
+**Precedence:** The original approval below is historical. PD-013 supersedes its
+activation trigger and standard-course duration; PD-014 consolidates the current
+identity/enrollment lifecycle. Preserve the remaining extension/pause/review rules.
+
 - **Status:** APPROVED
 - **Date:** 2026-10-30
 - **Original question:** OQ-003 · When do the curator-support clock and recorded-content access clock start, pause, expire, or extend? Is recorded access actually three months?
@@ -118,6 +122,10 @@ When an OQ is answered:
 **Documentation/planning traceability:** See [requirements](./requirements.md), [scope](./mvp.md), [architecture](../architecture/overview.md), and the 2026-10-30 decision synchronization review in the Vault `Full Project Plan.md`. No implementation, schema, or migration is delivered by this record.
 
 ## PD-005 · Homework Media Uploads
+
+**Precedence:** The original approval remains historical. PD-014's matrix selects
+Admin Deny for submission viewing/download; OQ-096 retains reconciliation with
+the older administrator-access wording below. Do not change matrix selections.
 
 - **Status:** APPROVED
 - **Date:** 2026-10-30
@@ -172,6 +180,11 @@ When an OQ is answered:
 
 ## PD-007 · Data Retention & Deletion
 
+**Precedence:** Preserve the original approval below as history. PD-013 prevents
+access expiry alone from destroying homework history; OQ-008/OQ-094 still govern
+preservation versus eventual lawful deletion. The historical three-month default
+is not the standard-course duration.
+
 - **Status:** APPROVED
 - **Date:** 2026-10-30
 - **Original question:** OQ-008 · What record-retention period and deletion exceptions apply to users, payments, consents, homework, messages, audit events, and certificates?
@@ -198,6 +211,10 @@ When an OQ is answered:
 **Documentation/planning traceability:** See [requirements](./requirements.md), [scope](./mvp.md), [architecture](../architecture/overview.md), and the 2026-10-30 decision synchronization review in the Vault `Full Project Plan.md`. No implementation, schema, or migration is delivered by this record.
 
 ## PD-008 · Curator Response SLA
+
+**Precedence:** The original approval remains historical. PD-014's matrix selects
+Admin Deny for homework review/accept/revision; OQ-096 retains the resulting workflow
+conflict. The SLA, curator review duty and administrator alerts remain unchanged.
 
 - **Status:** APPROVED
 - **Date:** 2026-10-30
@@ -246,6 +263,11 @@ Implementation: Category management, trainer course editor, administrator review
 **Documentation/planning traceability:** See [requirements](./requirements.md), [scope](./mvp.md), [architecture](../architecture/overview.md), and the follow-up decision review in the Vault `Full Project Plan.md`. This update implements no feature or database change.
 
 ## PD-010 · MVP Administration & Operations
+
+**Precedence:** PD-013 supersedes the proposed refund window and unattended refund
+execution requirement below. PD-014's exact approved permission selections govern
+role grants; conflicts with older admin review/inspection scope are explicitly
+tracked in OQ-096, not permission to override matrix Deny cells.
 
 - **Status:** APPROVED
 - **Date:** 2026-10-30
@@ -315,6 +337,10 @@ Implementation: Admin dashboard, restricted user management, course-access contr
 
 ## PD-011 · Referral capabilities replace the dedicated manager role
 
+**Precedence:** PD-013 restores manager membership; PD-014 references the approved
+matrix selections. The original body below remains historical. Independent
+attribution and the absence of an approved manager dashboard remain unchanged.
+
 - **Status:** Approved
 - **Date:** 2026-10-30
 - **Evidence:** Direct owner request, “LMS Academy: Architecture & Development Plan Restructuring”, section 9. No shareable approval URL supplied.
@@ -368,6 +394,23 @@ The following questions change terminology, not their unresolved financial/legal
 - **Supersedes:** PD-004 activation trigger and standard-course duration; PD-010 refund eligibility proposal and unattended processing requirement; PD-011 manager-role exclusion; conflicting derived statements in requirements, scope, module workflows and agent instructions. PD-007 expiry-driven homework deletion is subject to the preservation/deletion clarification above. Prior decision bodies remain historical approval evidence.
 - **Unchanged:** Seven domains and ADR-0003 runtime boundaries; PD-002 payment provider/currency/no subscriptions; PD-003 media security; PD-005 upload constraints; PD-006 legal approval/acceptance; PD-008 review SLA; PD-009 publishing; PD-010 manual certificate issuance/admin safety; PD-012 deadlines. No package refund behavior, financial exception, production content or scope promotion is inferred.
 - **Consequences:** [Entity map](../architecture/entity-map.md) documents conceptual identities, owners, state transitions, scenarios and events. OQ-011–014, OQ-036–039, OQ-048–049, OQ-092–094 and existing completion/certificate/legal dependencies must shape later feature contracts and tests. This documentation task creates no schema, fields, migrations, APIs, UI or business logic and does not reforecast or modify completed Vault history.
+
+## PD-014 · BASE03-A authentication, authorization and account lifecycle
+
+- **Status:** Approved product policies and permission selections; documentation only
+- **Date:** Recorded 2026-11-04; earlier discussion date not supplied
+- **Evidence:** Direct owner request, “Task: BASE03-A — Finalize Authentication & Authorization Documentation”, supplied as an attachment in this repository chat. The [authoritative permission matrix](https://docs.google.com/spreadsheets/d/1acwbupYPY0GFTYapcER3Qwr6056dj6EUbgBWqX4Kajw/edit#gid=0) was read through the Google Drive connector on 2026-11-04: `Permission Matrix`, sheet ID 0, `A1:L100`, 90 action rows, all marked Approved. The [exact dated snapshot](permission-matrix.md) preserves all selections, conditions, blanks and stage labels. No external approval URL was supplied for the prose decisions.
+- **Decision:**
+  - Preserve every role permission exactly as selected: Allow = permitted; Deny = forbidden; Conditional = additional authorization checks required; NAN = action does not exist for that account type. Users may hold multiple roles. Administrative account management is manual. No new ownership condition or multi-role combination algorithm is approved.
+  - MVP uses email/password authentication. Email verification is required before purchased-course access. Account activation links expire after 48 hours and can be securely resent. Email changes require reauthentication and verification. Guest purchases may create accounts through email activation; linking to an existing account requires ownership verification, never matching checkout email alone.
+  - Password-reset email links are single-use and expire after 30 minutes. Successful recovery revokes all previous sessions.
+  - Administrator accounts are created/managed manually with no public admin registration. Password setup/recovery and email changes are manual, using secure one-time credential setup. `.env` may contain bootstrap/application secrets, never permanent user passwords; the authentication system stores password hashes.
+  - Sessions have an absolute maximum of 30 days after login and expire after 7 days of inactivity. Only genuine authenticated user interactions refresh inactivity; background polling does not. Multiple simultaneous sessions/devices are allowed. The same policy applies to every role. MFA is not required for MVP. Sensitive administrator actions require recent password reauthentication. Blocking and role revocation take effect immediately. Expiration requires login again without deleting learning progress.
+  - Payment and enrollment remain separate. Unclaimed paid purchases remain claimable after activation-link expiry. First authorized opening of an enrolled course activates its independent deadlines: 1 year of access for standard courses, 3 calendar months for mini-courses, and 14 consecutive calendar days of support where included. Payment alone never starts either timer.
+  - Retain PD-004's non-superseded curator support-extension permissions, administrator deadline adjustment/pause permissions and timely-homework review obligations. Confirmed refunds/revocations immediately remove affected access while preserving historical learning/financial records under PD-013. No new deletion policy is approved.
+- **Precedence and constraints:** PD-013 continues to override older activation/access/refund/role/retention wording; its refund policy is unchanged. The matrix is authoritative for selected role permissions, including selections differing from older PD-005/008/010 role-grant prose. Preserve historical decision bodies. Do not infer a bypass, new ownership rule, release promotion or certificate/retention policy from a selection or stage label. Resulting workflow/scope discrepancies remain OQ-096. Resource Ownership & Security Validation is explicitly the next task, not delivered here.
+- **Original question traceability:** OQ-032 originally asked “What account-matching policy applies when a guest checkout email already belongs to an account?” Ownership proof before linking is now approved; exact proof/matching/recovery mechanics remain open. OQ-016 originally asked “What actions may a blocked user take, and what happens to active enrollments, pending homework, messages, and financial records?” Immediate blocking is confirmed; residual permitted actions and lifecycle effects remain open. OQ-092 originally asked “Which resource-scoped actions and release allocation apply to the manager membership restored by PD-013? How does it combine with separately authorized referral, lead/contact, financial-view and manual-sale capabilities? No dashboard, route or MVP commercial scope is inferred.” Matrix selections now supply the permission baseline; conditional/resource/capability and release reconciliation remain open.
+- **Consequences:** [Identity/access policy and next-task handoff](../architecture/identity-access-policy.md), requirements, release scope, entity map and integration references distinguish approved policy, existing technical requirements, recommendations and unanswered questions. OQ-095–097 capture remaining authorization/source-conflict/reauthentication questions. No provider, schema, migration, API, UI, dependency, configuration or runtime is changed. See [documentation verification](../qa/BASE03-A-documentation-2026-11-04.md).
 
 ## Decision entry template
 
