@@ -1,0 +1,40 @@
+PASS navigation 1440
+PASS auth views/focus/state 1440
+PASS auth background scroll 1440
+PASS founder disclosure 1440
+PASS learning demo 1440
+PASS offer panels/geometry 1440
+PASS package builder 1440
+PASS mini filters/start USA 1440
+PASS reviews scroll 1440
+PASS contact validation 1440
+FAIL catalog filters/history 1440 TimeoutError: page.waitForURL: Timeout 8000ms exceeded.
+=========================== logs ===========================
+waiting for navigation to "**/courses?direction=brows&language=en" until "load"
+  navigated to "http://localhost:3000/courses?direction=brows"
+============================================================
+PASS reduced motion rapid tabs 1440
+PASS commerce seed/cart/checkout 1440
+PASS commerce scenarios 1440
+PASS commerce corrupt restoration 1440
+PASS navigation 390
+PASS auth views/focus/state 390
+PASS auth background scroll 390
+PASS founder disclosure 390
+PASS learning demo 390
+PASS offer panels/geometry 390
+PASS package builder 390
+PASS mini filters/start USA 390
+PASS reviews scroll 390
+PASS contact validation 390
+FAIL catalog filters/history 390 TimeoutError: page.waitForURL: Timeout 8000ms exceeded.
+=========================== logs ===========================
+waiting for navigation to "**/courses?direction=brows&language=en" until "load"
+============================================================
+FAIL reduced motion rapid tabs 390 TimeoutError: page.goto: Timeout 8000ms exceeded.
+Call log:
+[2m  - navigating to "http://localhost:3000/#learning-offers", waiting until "load"[22m
+
+PASS commerce seed/cart/checkout 390
+PASS commerce scenarios 390
+PASS commerce corrupt restoration 390
