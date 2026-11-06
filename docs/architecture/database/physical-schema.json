@@ -1,0 +1,3788 @@
+{
+  "enums": [
+    {
+      "labels": [
+        "active",
+        "blocked"
+      ],
+      "name": "account_status",
+      "schema": "public",
+      "visible": true
+    },
+    {
+      "labels": [
+        "course",
+        "miniCourse"
+      ],
+      "name": "course_type",
+      "schema": "public",
+      "visible": true
+    },
+    {
+      "labels": [
+        "image",
+        "pdf",
+        "document",
+        "archive"
+      ],
+      "name": "lesson_doc",
+      "schema": "public",
+      "visible": true
+    },
+    {
+      "labels": [
+        "ru",
+        "en"
+      ],
+      "name": "locale",
+      "schema": "public",
+      "visible": true
+    },
+    {
+      "labels": [
+        "web",
+        "email"
+      ],
+      "name": "notification_channel",
+      "schema": "public",
+      "visible": true
+    },
+    {
+      "labels": [
+        "2",
+        "3",
+        "6"
+      ],
+      "name": "package_type",
+      "schema": "public",
+      "visible": true
+    },
+    {
+      "labels": [
+        "student",
+        "trainer",
+        "manager",
+        "admin"
+      ],
+      "name": "user_role",
+      "schema": "public",
+      "visible": true
+    }
+  ],
+  "head": "20261106_02",
+  "reviewed_model_checks_sha256": "3cca98480a466c61a316efac105856349c3f0e6060b6f3398027c134f90e8338",
+  "tables": {
+    "assignments": {
+      "checks": [],
+      "columns": [
+        {
+          "default": null,
+          "name": "id",
+          "nullable": false,
+          "type": "UUID"
+        },
+        {
+          "default": null,
+          "name": "lesson_id",
+          "nullable": false,
+          "type": "UUID"
+        },
+        {
+          "default": null,
+          "name": "title",
+          "nullable": false,
+          "type": "TEXT"
+        },
+        {
+          "default": null,
+          "name": "description",
+          "nullable": true,
+          "type": "TEXT"
+        },
+        {
+          "default": null,
+          "name": "attachments",
+          "nullable": true,
+          "type": "JSONB"
+        },
+        {
+          "default": "true",
+          "name": "is_required",
+          "nullable": false,
+          "type": "BOOLEAN"
+        },
+        {
+          "default": null,
+          "name": "course_id",
+          "nullable": false,
+          "type": "UUID"
+        }
+      ],
+      "foreign_keys": [
+        {
+          "comment": null,
+          "constrained_columns": [
+            "lesson_id",
+            "course_id"
+          ],
+          "name": "fk_assignments_lesson_course",
+          "options": {
+            "ondelete": "RESTRICT"
+          },
+          "referred_columns": [
+            "id",
+            "course_id"
+          ],
+          "referred_schema": "public",
+          "referred_table": "lessons"
+        }
+      ],
+      "indexes": [
+        {
+          "column_names": [
+            "id",
+            "course_id"
+          ],
+          "dialect_options": {
+            "postgresql_include": []
+          },
+          "duplicates_constraint": "uq_assignments_id_course",
+          "name": "uq_assignments_id_course",
+          "unique": true
+        }
+      ],
+      "primary_key": {
+        "comment": null,
+        "constrained_columns": [
+          "id"
+        ],
+        "dialect_options": {
+          "postgresql_include": []
+        },
+        "name": "pk_assignments"
+      },
+      "unique_constraints": [
+        {
+          "column_names": [
+            "id",
+            "course_id"
+          ],
+          "comment": null,
+          "dialect_options": {
+            "postgresql_include": [],
+            "postgresql_nulls_not_distinct": false
+          },
+          "name": "uq_assignments_id_course"
+        }
+      ]
+    },
+    "categories": {
+      "checks": [],
+      "columns": [
+        {
+          "default": null,
+          "name": "id",
+          "nullable": false,
+          "type": "UUID"
+        },
+        {
+          "default": null,
+          "name": "title",
+          "nullable": false,
+          "type": "TEXT"
+        },
+        {
+          "default": null,
+          "name": "archived_at",
+          "nullable": true,
+          "type": "TIMESTAMP"
+        }
+      ],
+      "foreign_keys": [],
+      "indexes": [],
+      "primary_key": {
+        "comment": null,
+        "constrained_columns": [
+          "id"
+        ],
+        "dialect_options": {
+          "postgresql_include": []
+        },
+        "name": "pk_categories"
+      },
+      "unique_constraints": []
+    },
+    "certificate_requests": {
+      "checks": [
+        {
+          "comment": null,
+          "name": "ck_certificate_requests_status_nonblank",
+          "sqltext": "length(btrim(status)) > 0"
+        }
+      ],
+      "columns": [
+        {
+          "default": null,
+          "name": "id",
+          "nullable": false,
+          "type": "UUID"
+        },
+        {
+          "default": null,
+          "name": "requested_by",
+          "nullable": true,
+          "type": "UUID"
+        },
+        {
+          "default": null,
+          "name": "reviewed_by",
+          "nullable": true,
+          "type": "UUID"
+        },
+        {
+          "default": null,
+          "name": "enrollment_id",
+          "nullable": false,
+          "type": "UUID"
+        },
+        {
+          "default": null,
+          "name": "status",
+          "nullable": false,
+          "type": "TEXT"
+        },
+        {
+          "default": null,
+          "name": "review_comment",
+          "nullable": true,
+          "type": "TEXT"
+        },
+        {
+          "default": "now()",
+          "name": "created_at",
+          "nullable": false,
+          "type": "TIMESTAMP"
+        },
+        {
+          "default": null,
+          "name": "reviewed_at",
+          "nullable": true,
+          "type": "TIMESTAMP"
+        }
+      ],
+      "foreign_keys": [
+        {
+          "comment": null,
+          "constrained_columns": [
+            "enrollment_id"
+          ],
+          "name": "fk_certificate_requests_enrollment_id_enrollments",
+          "options": {
+            "ondelete": "RESTRICT"
+          },
+          "referred_columns": [
+            "id"
+          ],
+          "referred_schema": "public",
+          "referred_table": "enrollments"
+        },
+        {
+          "comment": null,
+          "constrained_columns": [
+            "requested_by"
+          ],
+          "name": "fk_certificate_requests_requested_by_users",
+          "options": {
+            "ondelete": "RESTRICT"
+          },
+          "referred_columns": [
+            "id"
+          ],
+          "referred_schema": "public",
+          "referred_table": "users"
+        },
+        {
+          "comment": null,
+          "constrained_columns": [
+            "reviewed_by"
+          ],
+          "name": "fk_certificate_requests_reviewed_by_users",
+          "options": {
+            "ondelete": "RESTRICT"
+          },
+          "referred_columns": [
+            "id"
+          ],
+          "referred_schema": "public",
+          "referred_table": "users"
+        }
+      ],
+      "indexes": [
+        {
+          "column_names": [
+            "id",
+            "enrollment_id"
+          ],
+          "dialect_options": {
+            "postgresql_include": []
+          },
+          "duplicates_constraint": "uq_certificate_requests_id_enrollment",
+          "name": "uq_certificate_requests_id_enrollment",
+          "unique": true
+        }
+      ],
+      "primary_key": {
+        "comment": null,
+        "constrained_columns": [
+          "id"
+        ],
+        "dialect_options": {
+          "postgresql_include": []
+        },
+        "name": "pk_certificate_requests"
+      },
+      "unique_constraints": [
+        {
+          "column_names": [
+            "id",
+            "enrollment_id"
+          ],
+          "comment": null,
+          "dialect_options": {
+            "postgresql_include": [],
+            "postgresql_nulls_not_distinct": false
+          },
+          "name": "uq_certificate_requests_id_enrollment"
+        }
+      ]
+    },
+    "certificate_templates": {
+      "checks": [
+        {
+          "comment": null,
+          "name": "ck_certificate_templates_approval_evidence",
+          "sqltext": "approved_at IS NULL AND approved_by IS NULL AND issuer_identity IS NULL OR approved_at IS NOT NULL AND approved_by IS NOT NULL AND issuer_identity IS NOT NULL AND length(btrim(issuer_identity)) > 0"
+        },
+        {
+          "comment": null,
+          "name": "ck_certificate_templates_version_positive",
+          "sqltext": "version > 0"
+        }
+      ],
+      "columns": [
+        {
+          "default": null,
+          "name": "id",
+          "nullable": false,
+          "type": "UUID"
+        },
+        {
+          "default": null,
+          "name": "name",
+          "nullable": false,
+          "type": "TEXT"
+        },
+        {
+          "default": null,
+          "name": "locale",
+          "nullable": false,
+          "type": "VARCHAR(2)"
+        },
+        {
+          "default": null,
+          "name": "version",
+          "nullable": false,
+          "type": "INTEGER"
+        },
+        {
+          "default": null,
+          "name": "template_key",
+          "nullable": false,
+          "type": "TEXT"
+        },
+        {
+          "default": null,
+          "name": "approved_at",
+          "nullable": true,
+          "type": "TIMESTAMP"
+        },
+        {
+          "default": null,
+          "name": "approved_by",
+          "nullable": true,
+          "type": "UUID"
+        },
+        {
+          "default": null,
+          "name": "issuer_identity",
+          "nullable": true,
+          "type": "TEXT"
+        }
+      ],
+      "foreign_keys": [
+        {
+          "comment": null,
+          "constrained_columns": [
+            "approved_by"
+          ],
+          "name": "fk_certificate_templates_approved_by_users",
+          "options": {
+            "ondelete": "RESTRICT"
+          },
+          "referred_columns": [
+            "id"
+          ],
+          "referred_schema": "public",
+          "referred_table": "users"
+        }
+      ],
+      "indexes": [
+        {
+          "column_names": [
+            "id",
+            "locale"
+          ],
+          "dialect_options": {
+            "postgresql_include": []
+          },
+          "duplicates_constraint": "uq_certificate_templates_id_locale",
+          "name": "uq_certificate_templates_id_locale",
+          "unique": true
+        },
+        {
+          "column_names": [
+            "name",
+            "locale",
+            "version"
+          ],
+          "dialect_options": {
+            "postgresql_include": []
+          },
+          "duplicates_constraint": "uq_certificate_templates_name",
+          "name": "uq_certificate_templates_name",
+          "unique": true
+        }
+      ],
+      "primary_key": {
+        "comment": null,
+        "constrained_columns": [
+          "id"
+        ],
+        "dialect_options": {
+          "postgresql_include": []
+        },
+        "name": "pk_certificate_templates"
+      },
+      "unique_constraints": [
+        {
+          "column_names": [
+            "id",
+            "locale"
+          ],
+          "comment": null,
+          "dialect_options": {
+            "postgresql_include": [],
+            "postgresql_nulls_not_distinct": false
+          },
+          "name": "uq_certificate_templates_id_locale"
+        },
+        {
+          "column_names": [
+            "name",
+            "locale",
+            "version"
+          ],
+          "comment": null,
+          "dialect_options": {
+            "postgresql_include": [],
+            "postgresql_nulls_not_distinct": false
+          },
+          "name": "uq_certificate_templates_name"
+        }
+      ]
+    },
+    "certificates": {
+      "checks": [],
+      "columns": [
+        {
+          "default": null,
+          "name": "id",
+          "nullable": false,
+          "type": "UUID"
+        },
+        {
+          "default": null,
+          "name": "certificate_number",
+          "nullable": false,
+          "type": "TEXT"
+        },
+        {
+          "default": null,
+          "name": "request_id",
+          "nullable": false,
+          "type": "UUID"
+        },
+        {
+          "default": null,
+          "name": "enrollment_id",
+          "nullable": false,
+          "type": "UUID"
+        },
+        {
+          "default": null,
+          "name": "template_id",
+          "nullable": false,
+          "type": "UUID"
+        },
+        {
+          "default": null,
+          "name": "issued_to",
+          "nullable": false,
+          "type": "UUID"
+        },
+        {
+          "default": null,
+          "name": "issued_by",
+          "nullable": false,
+          "type": "UUID"
+        },
+        {
+          "default": null,
+          "name": "student_name",
+          "nullable": false,
+          "type": "TEXT"
+        },
+        {
+          "default": null,
+          "name": "course_title",
+          "nullable": false,
+          "type": "TEXT"
+        },
+        {
+          "default": null,
+          "name": "trainer_name",
+          "nullable": true,
+          "type": "TEXT"
+        },
+        {
+          "default": null,
+          "name": "locale",
+          "nullable": false,
+          "type": "VARCHAR(2)"
+        },
+        {
+          "default": null,
+          "name": "pdf_key",
+          "nullable": false,
+          "type": "TEXT"
+        },
+        {
+          "default": null,
+          "name": "issued_at",
+          "nullable": false,
+          "type": "TIMESTAMP"
+        },
+        {
+          "default": null,
+          "name": "issuer_identity",
+          "nullable": false,
+          "type": "TEXT"
+        }
+      ],
+      "foreign_keys": [
+        {
+          "comment": null,
+          "constrained_columns": [
+            "enrollment_id",
+            "issued_to"
+          ],
+          "name": "fk_certificates_enrollment_user",
+          "options": {
+            "ondelete": "RESTRICT"
+          },
+          "referred_columns": [
+            "id",
+            "user_id"
+          ],
+          "referred_schema": "public",
+          "referred_table": "enrollments"
+        },
+        {
+          "comment": null,
+          "constrained_columns": [
+            "issued_by"
+          ],
+          "name": "fk_certificates_issued_by_users",
+          "options": {
+            "ondelete": "RESTRICT"
+          },
+          "referred_columns": [
+            "id"
+          ],
+          "referred_schema": "public",
+          "referred_table": "users"
+        },
+        {
+          "comment": null,
+          "constrained_columns": [
+            "request_id",
+            "enrollment_id"
+          ],
+          "name": "fk_certificates_request_enrollment",
+          "options": {
+            "ondelete": "RESTRICT"
+          },
+          "referred_columns": [
+            "id",
+            "enrollment_id"
+          ],
+          "referred_schema": "public",
+          "referred_table": "certificate_requests"
+        },
+        {
+          "comment": null,
+          "constrained_columns": [
+            "template_id",
+            "locale"
+          ],
+          "name": "fk_certificates_template_locale",
+          "options": {
+            "ondelete": "RESTRICT"
+          },
+          "referred_columns": [
+            "id",
+            "locale"
+          ],
+          "referred_schema": "public",
+          "referred_table": "certificate_templates"
+        }
+      ],
+      "indexes": [
+        {
+          "column_names": [
+            "certificate_number"
+          ],
+          "dialect_options": {
+            "postgresql_include": []
+          },
+          "duplicates_constraint": "uq_certificates_certificate_number",
+          "name": "uq_certificates_certificate_number",
+          "unique": true
+        }
+      ],
+      "primary_key": {
+        "comment": null,
+        "constrained_columns": [
+          "id"
+        ],
+        "dialect_options": {
+          "postgresql_include": []
+        },
+        "name": "pk_certificates"
+      },
+      "unique_constraints": [
+        {
+          "column_names": [
+            "certificate_number"
+          ],
+          "comment": null,
+          "dialect_options": {
+            "postgresql_include": [],
+            "postgresql_nulls_not_distinct": false
+          },
+          "name": "uq_certificates_certificate_number"
+        }
+      ]
+    },
+    "course_localizations": {
+      "checks": [],
+      "columns": [
+        {
+          "default": null,
+          "name": "course_id",
+          "nullable": false,
+          "type": "UUID"
+        },
+        {
+          "default": null,
+          "name": "locale",
+          "nullable": false,
+          "type": "VARCHAR(2)"
+        },
+        {
+          "default": null,
+          "name": "title",
+          "nullable": false,
+          "type": "TEXT"
+        },
+        {
+          "default": null,
+          "name": "description",
+          "nullable": true,
+          "type": "TEXT"
+        }
+      ],
+      "foreign_keys": [
+        {
+          "comment": null,
+          "constrained_columns": [
+            "course_id"
+          ],
+          "name": "fk_course_localizations_course_id_courses",
+          "options": {
+            "ondelete": "RESTRICT"
+          },
+          "referred_columns": [
+            "id"
+          ],
+          "referred_schema": "public",
+          "referred_table": "courses"
+        }
+      ],
+      "indexes": [],
+      "primary_key": {
+        "comment": null,
+        "constrained_columns": [
+          "course_id",
+          "locale"
+        ],
+        "dialect_options": {
+          "postgresql_include": []
+        },
+        "name": "pk_course_localizations"
+      },
+      "unique_constraints": []
+    },
+    "course_messages": {
+      "checks": [
+        {
+          "comment": null,
+          "name": "ck_course_messages_delivery_status",
+          "sqltext": "status = ANY (ARRAY['draft'::text, 'sent'::text, 'failed'::text])"
+        },
+        {
+          "comment": null,
+          "name": "ck_course_messages_status_nonblank",
+          "sqltext": "length(btrim(status)) > 0"
+        }
+      ],
+      "columns": [
+        {
+          "default": null,
+          "name": "id",
+          "nullable": false,
+          "type": "UUID"
+        },
+        {
+          "default": null,
+          "name": "enrollment_id",
+          "nullable": false,
+          "type": "UUID"
+        },
+        {
+          "default": null,
+          "name": "sent_by",
+          "nullable": false,
+          "type": "UUID"
+        },
+        {
+          "default": null,
+          "name": "content",
+          "nullable": true,
+          "type": "TEXT"
+        },
+        {
+          "default": null,
+          "name": "attachment_key",
+          "nullable": true,
+          "type": "TEXT"
+        },
+        {
+          "default": null,
+          "name": "status",
+          "nullable": false,
+          "type": "TEXT"
+        },
+        {
+          "default": "now()",
+          "name": "created_at",
+          "nullable": false,
+          "type": "TIMESTAMP"
+        },
+        {
+          "default": null,
+          "name": "delivered_at",
+          "nullable": true,
+          "type": "TIMESTAMP"
+        },
+        {
+          "default": null,
+          "name": "read_at",
+          "nullable": true,
+          "type": "TIMESTAMP"
+        },
+        {
+          "default": null,
+          "name": "edited_at",
+          "nullable": true,
+          "type": "TIMESTAMP"
+        },
+        {
+          "default": null,
+          "name": "deleted_at",
+          "nullable": true,
+          "type": "TIMESTAMP"
+        }
+      ],
+      "foreign_keys": [
+        {
+          "comment": null,
+          "constrained_columns": [
+            "enrollment_id"
+          ],
+          "name": "fk_course_messages_enrollment_id_enrollments",
+          "options": {
+            "ondelete": "RESTRICT"
+          },
+          "referred_columns": [
+            "id"
+          ],
+          "referred_schema": "public",
+          "referred_table": "enrollments"
+        },
+        {
+          "comment": null,
+          "constrained_columns": [
+            "sent_by"
+          ],
+          "name": "fk_course_messages_sent_by_users",
+          "options": {
+            "ondelete": "RESTRICT"
+          },
+          "referred_columns": [
+            "id"
+          ],
+          "referred_schema": "public",
+          "referred_table": "users"
+        }
+      ],
+      "indexes": [],
+      "primary_key": {
+        "comment": null,
+        "constrained_columns": [
+          "id"
+        ],
+        "dialect_options": {
+          "postgresql_include": []
+        },
+        "name": "pk_course_messages"
+      },
+      "unique_constraints": []
+    },
+    "courses": {
+      "checks": [
+        {
+          "comment": null,
+          "name": "ck_courses_currency_usd",
+          "sqltext": "currency::text = 'USD'::text"
+        },
+        {
+          "comment": null,
+          "name": "ck_courses_price_nonnegative",
+          "sqltext": "price_cents IS NULL OR price_cents >= 0"
+        }
+      ],
+      "columns": [
+        {
+          "default": null,
+          "name": "id",
+          "nullable": false,
+          "type": "UUID"
+        },
+        {
+          "default": null,
+          "name": "category_id",
+          "nullable": true,
+          "type": "UUID"
+        },
+        {
+          "default": null,
+          "name": "trainer_id",
+          "nullable": true,
+          "type": "UUID"
+        },
+        {
+          "default": null,
+          "name": "title",
+          "nullable": false,
+          "type": "TEXT"
+        },
+        {
+          "default": null,
+          "name": "author",
+          "nullable": true,
+          "type": "TEXT"
+        },
+        {
+          "default": null,
+          "name": "locales",
+          "nullable": true,
+          "type": "ARRAY"
+        },
+        {
+          "default": null,
+          "name": "price_cents",
+          "nullable": true,
+          "type": "BIGINT"
+        },
+        {
+          "default": null,
+          "name": "type",
+          "nullable": false,
+          "type": "VARCHAR(10)"
+        },
+        {
+          "default": "now()",
+          "name": "created_at",
+          "nullable": false,
+          "type": "TIMESTAMP"
+        },
+        {
+          "default": "now()",
+          "name": "updated_at",
+          "nullable": false,
+          "type": "TIMESTAMP"
+        },
+        {
+          "default": "'USD'::character varying",
+          "name": "currency",
+          "nullable": false,
+          "type": "VARCHAR(3)"
+        },
+        {
+          "default": "false",
+          "name": "is_visible",
+          "nullable": false,
+          "type": "BOOLEAN"
+        },
+        {
+          "default": "false",
+          "name": "is_for_sale",
+          "nullable": false,
+          "type": "BOOLEAN"
+        },
+        {
+          "default": null,
+          "name": "archived_at",
+          "nullable": true,
+          "type": "TIMESTAMP"
+        },
+        {
+          "default": null,
+          "name": "content_approved_at",
+          "nullable": true,
+          "type": "TIMESTAMP"
+        },
+        {
+          "default": null,
+          "name": "price_approved_at",
+          "nullable": true,
+          "type": "TIMESTAMP"
+        }
+      ],
+      "foreign_keys": [
+        {
+          "comment": null,
+          "constrained_columns": [
+            "category_id"
+          ],
+          "name": "fk_courses_category_id_categories",
+          "options": {
+            "ondelete": "RESTRICT"
+          },
+          "referred_columns": [
+            "id"
+          ],
+          "referred_schema": "public",
+          "referred_table": "categories"
+        },
+        {
+          "comment": null,
+          "constrained_columns": [
+            "trainer_id"
+          ],
+          "name": "fk_courses_trainer_id_users",
+          "options": {
+            "ondelete": "RESTRICT"
+          },
+          "referred_columns": [
+            "id"
+          ],
+          "referred_schema": "public",
+          "referred_table": "users"
+        }
+      ],
+      "indexes": [],
+      "primary_key": {
+        "comment": null,
+        "constrained_columns": [
+          "id"
+        ],
+        "dialect_options": {
+          "postgresql_include": []
+        },
+        "name": "pk_courses"
+      },
+      "unique_constraints": []
+    },
+    "enrollments": {
+      "checks": [
+        {
+          "comment": null,
+          "name": "ck_enrollments_activation_before_deadlines",
+          "sqltext": "activated_at IS NOT NULL OR access_expires_at IS NULL AND support_expires_at IS NULL"
+        },
+        {
+          "comment": null,
+          "name": "ck_enrollments_source_provenance",
+          "sqltext": "order_item_id IS NULL AND granted_by IS NOT NULL AND grant_reason IS NOT NULL AND length(btrim(grant_reason)) > 0 AND granted_at IS NOT NULL OR order_item_id IS NOT NULL AND granted_by IS NULL AND grant_reason IS NULL AND granted_at IS NULL"
+        },
+        {
+          "comment": null,
+          "name": "ck_enrollments_status_nonblank",
+          "sqltext": "length(btrim(status)) > 0"
+        }
+      ],
+      "columns": [
+        {
+          "default": null,
+          "name": "id",
+          "nullable": false,
+          "type": "UUID"
+        },
+        {
+          "default": null,
+          "name": "course_id",
+          "nullable": false,
+          "type": "UUID"
+        },
+        {
+          "default": null,
+          "name": "order_item_id",
+          "nullable": true,
+          "type": "UUID"
+        },
+        {
+          "default": null,
+          "name": "user_id",
+          "nullable": false,
+          "type": "UUID"
+        },
+        {
+          "default": null,
+          "name": "granted_by",
+          "nullable": true,
+          "type": "UUID"
+        },
+        {
+          "default": null,
+          "name": "status",
+          "nullable": false,
+          "type": "TEXT"
+        },
+        {
+          "default": null,
+          "name": "activated_at",
+          "nullable": true,
+          "type": "TIMESTAMP"
+        },
+        {
+          "default": null,
+          "name": "access_expires_at",
+          "nullable": true,
+          "type": "TIMESTAMP"
+        },
+        {
+          "default": null,
+          "name": "support_expires_at",
+          "nullable": true,
+          "type": "TIMESTAMP"
+        },
+        {
+          "default": null,
+          "name": "completed_at",
+          "nullable": true,
+          "type": "TIMESTAMP"
+        },
+        {
+          "default": "now()",
+          "name": "created_at",
+          "nullable": false,
+          "type": "TIMESTAMP"
+        },
+        {
+          "default": null,
+          "name": "grant_reason",
+          "nullable": true,
+          "type": "TEXT"
+        },
+        {
+          "default": null,
+          "name": "granted_at",
+          "nullable": true,
+          "type": "TIMESTAMP"
+        }
+      ],
+      "foreign_keys": [
+        {
+          "comment": null,
+          "constrained_columns": [
+            "course_id"
+          ],
+          "name": "fk_enrollments_course_id_courses",
+          "options": {
+            "ondelete": "RESTRICT"
+          },
+          "referred_columns": [
+            "id"
+          ],
+          "referred_schema": "public",
+          "referred_table": "courses"
+        },
+        {
+          "comment": null,
+          "constrained_columns": [
+            "granted_by"
+          ],
+          "name": "fk_enrollments_granted_by_users",
+          "options": {
+            "ondelete": "RESTRICT"
+          },
+          "referred_columns": [
+            "id"
+          ],
+          "referred_schema": "public",
+          "referred_table": "users"
+        },
+        {
+          "comment": null,
+          "constrained_columns": [
+            "order_item_id"
+          ],
+          "name": "fk_enrollments_order_item_id_order_items",
+          "options": {
+            "ondelete": "RESTRICT"
+          },
+          "referred_columns": [
+            "id"
+          ],
+          "referred_schema": "public",
+          "referred_table": "order_items"
+        },
+        {
+          "comment": null,
+          "constrained_columns": [
+            "user_id"
+          ],
+          "name": "fk_enrollments_user_id_users",
+          "options": {
+            "ondelete": "RESTRICT"
+          },
+          "referred_columns": [
+            "id"
+          ],
+          "referred_schema": "public",
+          "referred_table": "users"
+        }
+      ],
+      "indexes": [
+        {
+          "column_names": [
+            "id",
+            "course_id"
+          ],
+          "dialect_options": {
+            "postgresql_include": []
+          },
+          "duplicates_constraint": "uq_enrollments_id_course",
+          "name": "uq_enrollments_id_course",
+          "unique": true
+        },
+        {
+          "column_names": [
+            "id",
+            "user_id"
+          ],
+          "dialect_options": {
+            "postgresql_include": []
+          },
+          "duplicates_constraint": "uq_enrollments_id_user",
+          "name": "uq_enrollments_id_user",
+          "unique": true
+        },
+        {
+          "column_names": [
+            "order_item_id",
+            "course_id"
+          ],
+          "dialect_options": {
+            "postgresql_include": []
+          },
+          "duplicates_constraint": "uq_enrollments_order_item_id",
+          "name": "uq_enrollments_order_item_id",
+          "unique": true
+        }
+      ],
+      "primary_key": {
+        "comment": null,
+        "constrained_columns": [
+          "id"
+        ],
+        "dialect_options": {
+          "postgresql_include": []
+        },
+        "name": "pk_enrollments"
+      },
+      "unique_constraints": [
+        {
+          "column_names": [
+            "id",
+            "course_id"
+          ],
+          "comment": null,
+          "dialect_options": {
+            "postgresql_include": [],
+            "postgresql_nulls_not_distinct": false
+          },
+          "name": "uq_enrollments_id_course"
+        },
+        {
+          "column_names": [
+            "id",
+            "user_id"
+          ],
+          "comment": null,
+          "dialect_options": {
+            "postgresql_include": [],
+            "postgresql_nulls_not_distinct": false
+          },
+          "name": "uq_enrollments_id_user"
+        },
+        {
+          "column_names": [
+            "order_item_id",
+            "course_id"
+          ],
+          "comment": null,
+          "dialect_options": {
+            "postgresql_include": [],
+            "postgresql_nulls_not_distinct": false
+          },
+          "name": "uq_enrollments_order_item_id"
+        }
+      ]
+    },
+    "lesson_docs": {
+      "checks": [
+        {
+          "comment": null,
+          "name": "ck_lesson_docs_version_positive",
+          "sqltext": "version > 0"
+        }
+      ],
+      "columns": [
+        {
+          "default": null,
+          "name": "id",
+          "nullable": false,
+          "type": "UUID"
+        },
+        {
+          "default": null,
+          "name": "lesson_id",
+          "nullable": false,
+          "type": "UUID"
+        },
+        {
+          "default": null,
+          "name": "title",
+          "nullable": true,
+          "type": "TEXT"
+        },
+        {
+          "default": null,
+          "name": "storage_key",
+          "nullable": false,
+          "type": "TEXT"
+        },
+        {
+          "default": null,
+          "name": "type",
+          "nullable": false,
+          "type": "VARCHAR(8)"
+        },
+        {
+          "default": null,
+          "name": "locale",
+          "nullable": false,
+          "type": "VARCHAR(2)"
+        },
+        {
+          "default": null,
+          "name": "version",
+          "nullable": false,
+          "type": "INTEGER"
+        },
+        {
+          "default": "now()",
+          "name": "created_at",
+          "nullable": false,
+          "type": "TIMESTAMP"
+        }
+      ],
+      "foreign_keys": [
+        {
+          "comment": null,
+          "constrained_columns": [
+            "lesson_id"
+          ],
+          "name": "fk_lesson_docs_lesson_id_lessons",
+          "options": {
+            "ondelete": "RESTRICT"
+          },
+          "referred_columns": [
+            "id"
+          ],
+          "referred_schema": "public",
+          "referred_table": "lessons"
+        }
+      ],
+      "indexes": [],
+      "primary_key": {
+        "comment": null,
+        "constrained_columns": [
+          "id"
+        ],
+        "dialect_options": {
+          "postgresql_include": []
+        },
+        "name": "pk_lesson_docs"
+      },
+      "unique_constraints": []
+    },
+    "lesson_media": {
+      "checks": [
+        {
+          "comment": null,
+          "name": "ck_lesson_media_processing_status_nonblank",
+          "sqltext": "length(btrim(processing_status)) > 0"
+        },
+        {
+          "comment": null,
+          "name": "ck_lesson_media_publication_evidence",
+          "sqltext": "(published_at IS NULL) = (published_by IS NULL)"
+        },
+        {
+          "comment": null,
+          "name": "ck_lesson_media_version_positive",
+          "sqltext": "version > 0"
+        }
+      ],
+      "columns": [
+        {
+          "default": null,
+          "name": "id",
+          "nullable": false,
+          "type": "UUID"
+        },
+        {
+          "default": null,
+          "name": "lesson_id",
+          "nullable": false,
+          "type": "UUID"
+        },
+        {
+          "default": null,
+          "name": "title",
+          "nullable": true,
+          "type": "TEXT"
+        },
+        {
+          "default": null,
+          "name": "description",
+          "nullable": true,
+          "type": "TEXT"
+        },
+        {
+          "default": null,
+          "name": "storage_key",
+          "nullable": false,
+          "type": "TEXT"
+        },
+        {
+          "default": null,
+          "name": "locale",
+          "nullable": false,
+          "type": "VARCHAR(2)"
+        },
+        {
+          "default": null,
+          "name": "version",
+          "nullable": false,
+          "type": "INTEGER"
+        },
+        {
+          "default": "now()",
+          "name": "created_at",
+          "nullable": false,
+          "type": "TIMESTAMP"
+        },
+        {
+          "default": "'pending'::text",
+          "name": "processing_status",
+          "nullable": false,
+          "type": "TEXT"
+        },
+        {
+          "default": null,
+          "name": "processed_key",
+          "nullable": true,
+          "type": "TEXT"
+        },
+        {
+          "default": null,
+          "name": "published_at",
+          "nullable": true,
+          "type": "TIMESTAMP"
+        },
+        {
+          "default": null,
+          "name": "published_by",
+          "nullable": true,
+          "type": "UUID"
+        }
+      ],
+      "foreign_keys": [
+        {
+          "comment": null,
+          "constrained_columns": [
+            "lesson_id"
+          ],
+          "name": "fk_lesson_media_lesson_id_lessons",
+          "options": {
+            "ondelete": "RESTRICT"
+          },
+          "referred_columns": [
+            "id"
+          ],
+          "referred_schema": "public",
+          "referred_table": "lessons"
+        },
+        {
+          "comment": null,
+          "constrained_columns": [
+            "published_by"
+          ],
+          "name": "fk_lesson_media_published_by_users",
+          "options": {
+            "ondelete": "RESTRICT"
+          },
+          "referred_columns": [
+            "id"
+          ],
+          "referred_schema": "public",
+          "referred_table": "users"
+        }
+      ],
+      "indexes": [
+        {
+          "column_names": [
+            "lesson_id",
+            "locale",
+            "version"
+          ],
+          "dialect_options": {
+            "postgresql_include": []
+          },
+          "duplicates_constraint": "uq_lesson_media_lesson_id",
+          "name": "uq_lesson_media_lesson_id",
+          "unique": true
+        }
+      ],
+      "primary_key": {
+        "comment": null,
+        "constrained_columns": [
+          "id"
+        ],
+        "dialect_options": {
+          "postgresql_include": []
+        },
+        "name": "pk_lesson_media"
+      },
+      "unique_constraints": [
+        {
+          "column_names": [
+            "lesson_id",
+            "locale",
+            "version"
+          ],
+          "comment": null,
+          "dialect_options": {
+            "postgresql_include": [],
+            "postgresql_nulls_not_distinct": false
+          },
+          "name": "uq_lesson_media_lesson_id"
+        }
+      ]
+    },
+    "lesson_progress": {
+      "checks": [
+        {
+          "comment": null,
+          "name": "ck_lesson_progress_position_nonnegative",
+          "sqltext": "video_position_seconds >= 0"
+        }
+      ],
+      "columns": [
+        {
+          "default": null,
+          "name": "id",
+          "nullable": false,
+          "type": "UUID"
+        },
+        {
+          "default": null,
+          "name": "enrollment_id",
+          "nullable": false,
+          "type": "UUID"
+        },
+        {
+          "default": null,
+          "name": "lesson_id",
+          "nullable": false,
+          "type": "UUID"
+        },
+        {
+          "default": "0",
+          "name": "video_position_seconds",
+          "nullable": false,
+          "type": "INTEGER"
+        },
+        {
+          "default": "false",
+          "name": "is_completed",
+          "nullable": false,
+          "type": "BOOLEAN"
+        },
+        {
+          "default": null,
+          "name": "completed_at",
+          "nullable": true,
+          "type": "TIMESTAMP"
+        },
+        {
+          "default": null,
+          "name": "course_id",
+          "nullable": false,
+          "type": "UUID"
+        }
+      ],
+      "foreign_keys": [
+        {
+          "comment": null,
+          "constrained_columns": [
+            "enrollment_id",
+            "course_id"
+          ],
+          "name": "fk_progress_enrollments_course",
+          "options": {
+            "ondelete": "RESTRICT"
+          },
+          "referred_columns": [
+            "id",
+            "course_id"
+          ],
+          "referred_schema": "public",
+          "referred_table": "enrollments"
+        },
+        {
+          "comment": null,
+          "constrained_columns": [
+            "lesson_id",
+            "course_id"
+          ],
+          "name": "fk_progress_lessons_course",
+          "options": {
+            "ondelete": "RESTRICT"
+          },
+          "referred_columns": [
+            "id",
+            "course_id"
+          ],
+          "referred_schema": "public",
+          "referred_table": "lessons"
+        }
+      ],
+      "indexes": [
+        {
+          "column_names": [
+            "enrollment_id",
+            "lesson_id"
+          ],
+          "dialect_options": {
+            "postgresql_include": []
+          },
+          "duplicates_constraint": "uq_lesson_progress_enrollment_id",
+          "name": "uq_lesson_progress_enrollment_id",
+          "unique": true
+        }
+      ],
+      "primary_key": {
+        "comment": null,
+        "constrained_columns": [
+          "id"
+        ],
+        "dialect_options": {
+          "postgresql_include": []
+        },
+        "name": "pk_lesson_progress"
+      },
+      "unique_constraints": [
+        {
+          "column_names": [
+            "enrollment_id",
+            "lesson_id"
+          ],
+          "comment": null,
+          "dialect_options": {
+            "postgresql_include": [],
+            "postgresql_nulls_not_distinct": false
+          },
+          "name": "uq_lesson_progress_enrollment_id"
+        }
+      ]
+    },
+    "lessons": {
+      "checks": [
+        {
+          "comment": null,
+          "name": "ck_lessons_position_nonnegative",
+          "sqltext": "\"position\" >= 0"
+        }
+      ],
+      "columns": [
+        {
+          "default": null,
+          "name": "id",
+          "nullable": false,
+          "type": "UUID"
+        },
+        {
+          "default": null,
+          "name": "module_id",
+          "nullable": false,
+          "type": "UUID"
+        },
+        {
+          "default": null,
+          "name": "title",
+          "nullable": false,
+          "type": "TEXT"
+        },
+        {
+          "default": null,
+          "name": "description",
+          "nullable": true,
+          "type": "TEXT"
+        },
+        {
+          "default": null,
+          "name": "position",
+          "nullable": false,
+          "type": "INTEGER"
+        },
+        {
+          "default": null,
+          "name": "course_id",
+          "nullable": false,
+          "type": "UUID"
+        }
+      ],
+      "foreign_keys": [
+        {
+          "comment": null,
+          "constrained_columns": [
+            "module_id",
+            "course_id"
+          ],
+          "name": "fk_lessons_module_course",
+          "options": {
+            "ondelete": "RESTRICT"
+          },
+          "referred_columns": [
+            "id",
+            "course_id"
+          ],
+          "referred_schema": "public",
+          "referred_table": "modules"
+        }
+      ],
+      "indexes": [
+        {
+          "column_names": [
+            "id",
+            "course_id"
+          ],
+          "dialect_options": {
+            "postgresql_include": []
+          },
+          "duplicates_constraint": "uq_lessons_id_course",
+          "name": "uq_lessons_id_course",
+          "unique": true
+        },
+        {
+          "column_names": [
+            "module_id",
+            "position"
+          ],
+          "dialect_options": {
+            "postgresql_include": []
+          },
+          "duplicates_constraint": "uq_lessons_module_id",
+          "name": "uq_lessons_module_id",
+          "unique": true
+        }
+      ],
+      "primary_key": {
+        "comment": null,
+        "constrained_columns": [
+          "id"
+        ],
+        "dialect_options": {
+          "postgresql_include": []
+        },
+        "name": "pk_lessons"
+      },
+      "unique_constraints": [
+        {
+          "column_names": [
+            "id",
+            "course_id"
+          ],
+          "comment": null,
+          "dialect_options": {
+            "postgresql_include": [],
+            "postgresql_nulls_not_distinct": false
+          },
+          "name": "uq_lessons_id_course"
+        },
+        {
+          "column_names": [
+            "module_id",
+            "position"
+          ],
+          "comment": null,
+          "dialect_options": {
+            "postgresql_include": [],
+            "postgresql_nulls_not_distinct": false
+          },
+          "name": "uq_lessons_module_id"
+        }
+      ]
+    },
+    "modules": {
+      "checks": [
+        {
+          "comment": null,
+          "name": "ck_modules_position_nonnegative",
+          "sqltext": "\"position\" >= 0"
+        }
+      ],
+      "columns": [
+        {
+          "default": null,
+          "name": "id",
+          "nullable": false,
+          "type": "UUID"
+        },
+        {
+          "default": null,
+          "name": "course_id",
+          "nullable": false,
+          "type": "UUID"
+        },
+        {
+          "default": null,
+          "name": "title",
+          "nullable": false,
+          "type": "TEXT"
+        },
+        {
+          "default": null,
+          "name": "position",
+          "nullable": false,
+          "type": "INTEGER"
+        }
+      ],
+      "foreign_keys": [
+        {
+          "comment": null,
+          "constrained_columns": [
+            "course_id"
+          ],
+          "name": "fk_modules_course_id_courses",
+          "options": {
+            "ondelete": "RESTRICT"
+          },
+          "referred_columns": [
+            "id"
+          ],
+          "referred_schema": "public",
+          "referred_table": "courses"
+        }
+      ],
+      "indexes": [
+        {
+          "column_names": [
+            "course_id",
+            "position"
+          ],
+          "dialect_options": {
+            "postgresql_include": []
+          },
+          "duplicates_constraint": "uq_modules_course_id",
+          "name": "uq_modules_course_id",
+          "unique": true
+        },
+        {
+          "column_names": [
+            "id",
+            "course_id"
+          ],
+          "dialect_options": {
+            "postgresql_include": []
+          },
+          "duplicates_constraint": "uq_modules_id_course",
+          "name": "uq_modules_id_course",
+          "unique": true
+        }
+      ],
+      "primary_key": {
+        "comment": null,
+        "constrained_columns": [
+          "id"
+        ],
+        "dialect_options": {
+          "postgresql_include": []
+        },
+        "name": "pk_modules"
+      },
+      "unique_constraints": [
+        {
+          "column_names": [
+            "course_id",
+            "position"
+          ],
+          "comment": null,
+          "dialect_options": {
+            "postgresql_include": [],
+            "postgresql_nulls_not_distinct": false
+          },
+          "name": "uq_modules_course_id"
+        },
+        {
+          "column_names": [
+            "id",
+            "course_id"
+          ],
+          "comment": null,
+          "dialect_options": {
+            "postgresql_include": [],
+            "postgresql_nulls_not_distinct": false
+          },
+          "name": "uq_modules_id_course"
+        }
+      ]
+    },
+    "notifications": {
+      "checks": [
+        {
+          "comment": null,
+          "name": "ck_notifications_attempts_nonnegative",
+          "sqltext": "attempt_count >= 0"
+        },
+        {
+          "comment": null,
+          "name": "ck_notifications_dedup_nonblank",
+          "sqltext": "length(btrim(deduplication_key)) > 0 AND length(btrim(event_key)) > 0"
+        },
+        {
+          "comment": null,
+          "name": "ck_notifications_status_nonblank",
+          "sqltext": "length(btrim(status)) > 0"
+        },
+        {
+          "comment": null,
+          "name": "ck_notifications_type_nonblank",
+          "sqltext": "length(btrim(type)) > 0"
+        }
+      ],
+      "columns": [
+        {
+          "default": null,
+          "name": "id",
+          "nullable": false,
+          "type": "UUID"
+        },
+        {
+          "default": null,
+          "name": "user_id",
+          "nullable": false,
+          "type": "UUID"
+        },
+        {
+          "default": null,
+          "name": "type",
+          "nullable": false,
+          "type": "TEXT"
+        },
+        {
+          "default": null,
+          "name": "channel",
+          "nullable": false,
+          "type": "VARCHAR(5)"
+        },
+        {
+          "default": "'pending'::text",
+          "name": "status",
+          "nullable": false,
+          "type": "TEXT"
+        },
+        {
+          "default": null,
+          "name": "title",
+          "nullable": false,
+          "type": "TEXT"
+        },
+        {
+          "default": null,
+          "name": "content",
+          "nullable": false,
+          "type": "TEXT"
+        },
+        {
+          "default": null,
+          "name": "action_url",
+          "nullable": true,
+          "type": "TEXT"
+        },
+        {
+          "default": null,
+          "name": "attachments",
+          "nullable": true,
+          "type": "JSONB"
+        },
+        {
+          "default": "0",
+          "name": "attempt_count",
+          "nullable": false,
+          "type": "INTEGER"
+        },
+        {
+          "default": null,
+          "name": "deduplication_key",
+          "nullable": false,
+          "type": "TEXT"
+        },
+        {
+          "default": null,
+          "name": "next_retry_at",
+          "nullable": true,
+          "type": "TIMESTAMP"
+        },
+        {
+          "default": null,
+          "name": "last_error_code",
+          "nullable": true,
+          "type": "TEXT"
+        },
+        {
+          "default": null,
+          "name": "provider_message_id",
+          "nullable": true,
+          "type": "TEXT"
+        },
+        {
+          "default": "now()",
+          "name": "created_at",
+          "nullable": false,
+          "type": "TIMESTAMP"
+        },
+        {
+          "default": null,
+          "name": "sent_at",
+          "nullable": true,
+          "type": "TIMESTAMP"
+        },
+        {
+          "default": null,
+          "name": "read_at",
+          "nullable": true,
+          "type": "TIMESTAMP"
+        },
+        {
+          "default": null,
+          "name": "event_key",
+          "nullable": false,
+          "type": "TEXT"
+        }
+      ],
+      "foreign_keys": [
+        {
+          "comment": null,
+          "constrained_columns": [
+            "user_id"
+          ],
+          "name": "fk_notifications_user_id_users",
+          "options": {
+            "ondelete": "RESTRICT"
+          },
+          "referred_columns": [
+            "id"
+          ],
+          "referred_schema": "public",
+          "referred_table": "users"
+        }
+      ],
+      "indexes": [
+        {
+          "column_names": [
+            "deduplication_key"
+          ],
+          "dialect_options": {
+            "postgresql_include": []
+          },
+          "duplicates_constraint": "uq_notifications_deduplication_key",
+          "name": "uq_notifications_deduplication_key",
+          "unique": true
+        },
+        {
+          "column_names": [
+            "event_key",
+            "user_id",
+            "channel"
+          ],
+          "dialect_options": {
+            "postgresql_include": []
+          },
+          "duplicates_constraint": "uq_notifications_event_key",
+          "name": "uq_notifications_event_key",
+          "unique": true
+        }
+      ],
+      "primary_key": {
+        "comment": null,
+        "constrained_columns": [
+          "id"
+        ],
+        "dialect_options": {
+          "postgresql_include": []
+        },
+        "name": "pk_notifications"
+      },
+      "unique_constraints": [
+        {
+          "column_names": [
+            "deduplication_key"
+          ],
+          "comment": null,
+          "dialect_options": {
+            "postgresql_include": [],
+            "postgresql_nulls_not_distinct": false
+          },
+          "name": "uq_notifications_deduplication_key"
+        },
+        {
+          "column_names": [
+            "event_key",
+            "user_id",
+            "channel"
+          ],
+          "comment": null,
+          "dialect_options": {
+            "postgresql_include": [],
+            "postgresql_nulls_not_distinct": false
+          },
+          "name": "uq_notifications_event_key"
+        }
+      ]
+    },
+    "order_items": {
+      "checks": [
+        {
+          "comment": null,
+          "name": "ck_order_items_currency_usd",
+          "sqltext": "currency::text = 'USD'::text"
+        },
+        {
+          "comment": null,
+          "name": "ck_order_items_money_nonnegative",
+          "sqltext": "price_cents >= 0 AND discount_cents >= 0 AND total_cents >= 0"
+        },
+        {
+          "comment": null,
+          "name": "ck_order_items_one_product",
+          "sqltext": "course_id IS NOT NULL AND package_id IS NULL OR course_id IS NULL AND package_id IS NOT NULL"
+        }
+      ],
+      "columns": [
+        {
+          "default": null,
+          "name": "id",
+          "nullable": false,
+          "type": "UUID"
+        },
+        {
+          "default": null,
+          "name": "order_id",
+          "nullable": false,
+          "type": "UUID"
+        },
+        {
+          "default": null,
+          "name": "package_id",
+          "nullable": true,
+          "type": "UUID"
+        },
+        {
+          "default": null,
+          "name": "course_id",
+          "nullable": true,
+          "type": "UUID"
+        },
+        {
+          "default": null,
+          "name": "title_snapshot",
+          "nullable": false,
+          "type": "TEXT"
+        },
+        {
+          "default": null,
+          "name": "price_cents",
+          "nullable": false,
+          "type": "BIGINT"
+        },
+        {
+          "default": "0",
+          "name": "discount_cents",
+          "nullable": false,
+          "type": "BIGINT"
+        },
+        {
+          "default": null,
+          "name": "total_cents",
+          "nullable": false,
+          "type": "BIGINT"
+        },
+        {
+          "default": "'USD'::character varying",
+          "name": "currency",
+          "nullable": false,
+          "type": "VARCHAR(3)"
+        }
+      ],
+      "foreign_keys": [
+        {
+          "comment": null,
+          "constrained_columns": [
+            "course_id"
+          ],
+          "name": "fk_order_items_course_id_courses",
+          "options": {
+            "ondelete": "RESTRICT"
+          },
+          "referred_columns": [
+            "id"
+          ],
+          "referred_schema": "public",
+          "referred_table": "courses"
+        },
+        {
+          "comment": null,
+          "constrained_columns": [
+            "order_id"
+          ],
+          "name": "fk_order_items_order_id_orders",
+          "options": {
+            "ondelete": "RESTRICT"
+          },
+          "referred_columns": [
+            "id"
+          ],
+          "referred_schema": "public",
+          "referred_table": "orders"
+        },
+        {
+          "comment": null,
+          "constrained_columns": [
+            "package_id"
+          ],
+          "name": "fk_order_items_package_id_packages",
+          "options": {
+            "ondelete": "RESTRICT"
+          },
+          "referred_columns": [
+            "id"
+          ],
+          "referred_schema": "public",
+          "referred_table": "packages"
+        }
+      ],
+      "indexes": [
+        {
+          "column_names": [
+            "id",
+            "order_id"
+          ],
+          "dialect_options": {
+            "postgresql_include": []
+          },
+          "duplicates_constraint": "uq_order_items_id_order",
+          "name": "uq_order_items_id_order",
+          "unique": true
+        }
+      ],
+      "primary_key": {
+        "comment": null,
+        "constrained_columns": [
+          "id"
+        ],
+        "dialect_options": {
+          "postgresql_include": []
+        },
+        "name": "pk_order_items"
+      },
+      "unique_constraints": [
+        {
+          "column_names": [
+            "id",
+            "order_id"
+          ],
+          "comment": null,
+          "dialect_options": {
+            "postgresql_include": [],
+            "postgresql_nulls_not_distinct": false
+          },
+          "name": "uq_order_items_id_order"
+        }
+      ]
+    },
+    "orders": {
+      "checks": [
+        {
+          "comment": null,
+          "name": "ck_orders_currency_usd",
+          "sqltext": "currency::text = 'USD'::text"
+        },
+        {
+          "comment": null,
+          "name": "ck_orders_money_nonnegative",
+          "sqltext": "subtotal_cents >= 0 AND discount_cents >= 0 AND total_cents >= 0"
+        },
+        {
+          "comment": null,
+          "name": "ck_orders_status_nonblank",
+          "sqltext": "length(btrim(status)) > 0"
+        }
+      ],
+      "columns": [
+        {
+          "default": null,
+          "name": "id",
+          "nullable": false,
+          "type": "UUID"
+        },
+        {
+          "default": null,
+          "name": "user_id",
+          "nullable": true,
+          "type": "UUID"
+        },
+        {
+          "default": null,
+          "name": "subtotal_cents",
+          "nullable": false,
+          "type": "BIGINT"
+        },
+        {
+          "default": "0",
+          "name": "discount_cents",
+          "nullable": false,
+          "type": "BIGINT"
+        },
+        {
+          "default": null,
+          "name": "total_cents",
+          "nullable": false,
+          "type": "BIGINT"
+        },
+        {
+          "default": "'USD'::character varying",
+          "name": "currency",
+          "nullable": false,
+          "type": "VARCHAR(3)"
+        },
+        {
+          "default": null,
+          "name": "status",
+          "nullable": false,
+          "type": "TEXT"
+        },
+        {
+          "default": null,
+          "name": "policy",
+          "nullable": true,
+          "type": "JSONB"
+        },
+        {
+          "default": "now()",
+          "name": "created_at",
+          "nullable": false,
+          "type": "TIMESTAMP"
+        },
+        {
+          "default": "now()",
+          "name": "updated_at",
+          "nullable": false,
+          "type": "TIMESTAMP"
+        }
+      ],
+      "foreign_keys": [
+        {
+          "comment": null,
+          "constrained_columns": [
+            "user_id"
+          ],
+          "name": "fk_orders_user_id_users",
+          "options": {
+            "ondelete": "RESTRICT"
+          },
+          "referred_columns": [
+            "id"
+          ],
+          "referred_schema": "public",
+          "referred_table": "users"
+        }
+      ],
+      "indexes": [],
+      "primary_key": {
+        "comment": null,
+        "constrained_columns": [
+          "id"
+        ],
+        "dialect_options": {
+          "postgresql_include": []
+        },
+        "name": "pk_orders"
+      },
+      "unique_constraints": []
+    },
+    "package_courses": {
+      "checks": [],
+      "columns": [
+        {
+          "default": null,
+          "name": "id",
+          "nullable": false,
+          "type": "UUID"
+        },
+        {
+          "default": null,
+          "name": "course_id",
+          "nullable": false,
+          "type": "UUID"
+        },
+        {
+          "default": null,
+          "name": "package_id",
+          "nullable": false,
+          "type": "UUID"
+        }
+      ],
+      "foreign_keys": [
+        {
+          "comment": null,
+          "constrained_columns": [
+            "course_id"
+          ],
+          "name": "fk_package_courses_course_id_courses",
+          "options": {
+            "ondelete": "RESTRICT"
+          },
+          "referred_columns": [
+            "id"
+          ],
+          "referred_schema": "public",
+          "referred_table": "courses"
+        },
+        {
+          "comment": null,
+          "constrained_columns": [
+            "package_id"
+          ],
+          "name": "fk_package_courses_package_id_packages",
+          "options": {
+            "ondelete": "RESTRICT"
+          },
+          "referred_columns": [
+            "id"
+          ],
+          "referred_schema": "public",
+          "referred_table": "packages"
+        }
+      ],
+      "indexes": [
+        {
+          "column_names": [
+            "package_id",
+            "course_id"
+          ],
+          "dialect_options": {
+            "postgresql_include": []
+          },
+          "duplicates_constraint": "uq_package_courses_package_id",
+          "name": "uq_package_courses_package_id",
+          "unique": true
+        }
+      ],
+      "primary_key": {
+        "comment": null,
+        "constrained_columns": [
+          "id"
+        ],
+        "dialect_options": {
+          "postgresql_include": []
+        },
+        "name": "pk_package_courses"
+      },
+      "unique_constraints": [
+        {
+          "column_names": [
+            "package_id",
+            "course_id"
+          ],
+          "comment": null,
+          "dialect_options": {
+            "postgresql_include": [],
+            "postgresql_nulls_not_distinct": false
+          },
+          "name": "uq_package_courses_package_id"
+        }
+      ]
+    },
+    "packages": {
+      "checks": [
+        {
+          "comment": null,
+          "name": "ck_packages_currency_usd",
+          "sqltext": "currency::text = 'USD'::text"
+        },
+        {
+          "comment": null,
+          "name": "ck_packages_price_nonnegative",
+          "sqltext": "price_cents >= 0"
+        }
+      ],
+      "columns": [
+        {
+          "default": null,
+          "name": "id",
+          "nullable": false,
+          "type": "UUID"
+        },
+        {
+          "default": null,
+          "name": "title",
+          "nullable": false,
+          "type": "TEXT"
+        },
+        {
+          "default": null,
+          "name": "description",
+          "nullable": true,
+          "type": "TEXT"
+        },
+        {
+          "default": null,
+          "name": "price_cents",
+          "nullable": false,
+          "type": "BIGINT"
+        },
+        {
+          "default": null,
+          "name": "type",
+          "nullable": true,
+          "type": "VARCHAR(1)"
+        },
+        {
+          "default": "'USD'::character varying",
+          "name": "currency",
+          "nullable": false,
+          "type": "VARCHAR(3)"
+        }
+      ],
+      "foreign_keys": [],
+      "indexes": [],
+      "primary_key": {
+        "comment": null,
+        "constrained_columns": [
+          "id"
+        ],
+        "dialect_options": {
+          "postgresql_include": []
+        },
+        "name": "pk_packages"
+      },
+      "unique_constraints": []
+    },
+    "payment_events": {
+      "checks": [
+        {
+          "comment": null,
+          "name": "ck_payment_events_status_nonblank",
+          "sqltext": "length(btrim(status)) > 0"
+        }
+      ],
+      "columns": [
+        {
+          "default": null,
+          "name": "provider_event_id",
+          "nullable": false,
+          "type": "TEXT"
+        },
+        {
+          "default": null,
+          "name": "payment_id",
+          "nullable": true,
+          "type": "UUID"
+        },
+        {
+          "default": null,
+          "name": "event_type",
+          "nullable": false,
+          "type": "TEXT"
+        },
+        {
+          "default": null,
+          "name": "status",
+          "nullable": false,
+          "type": "TEXT"
+        },
+        {
+          "default": "now()",
+          "name": "received_at",
+          "nullable": false,
+          "type": "TIMESTAMP"
+        },
+        {
+          "default": null,
+          "name": "processed_at",
+          "nullable": true,
+          "type": "TIMESTAMP"
+        }
+      ],
+      "foreign_keys": [
+        {
+          "comment": null,
+          "constrained_columns": [
+            "payment_id"
+          ],
+          "name": "fk_payment_events_payment_id_payments",
+          "options": {
+            "ondelete": "RESTRICT"
+          },
+          "referred_columns": [
+            "id"
+          ],
+          "referred_schema": "public",
+          "referred_table": "payments"
+        }
+      ],
+      "indexes": [],
+      "primary_key": {
+        "comment": null,
+        "constrained_columns": [
+          "provider_event_id"
+        ],
+        "dialect_options": {
+          "postgresql_include": []
+        },
+        "name": "pk_payment_events"
+      },
+      "unique_constraints": []
+    },
+    "payments": {
+      "checks": [
+        {
+          "comment": null,
+          "name": "ck_payments_amount_nonnegative",
+          "sqltext": "amount_cents >= 0"
+        },
+        {
+          "comment": null,
+          "name": "ck_payments_currency_usd",
+          "sqltext": "currency::text = 'USD'::text"
+        },
+        {
+          "comment": null,
+          "name": "ck_payments_status_nonblank",
+          "sqltext": "length(btrim(status)) > 0"
+        }
+      ],
+      "columns": [
+        {
+          "default": null,
+          "name": "id",
+          "nullable": false,
+          "type": "UUID"
+        },
+        {
+          "default": null,
+          "name": "order_id",
+          "nullable": false,
+          "type": "UUID"
+        },
+        {
+          "default": "'stripe'::text",
+          "name": "provider",
+          "nullable": false,
+          "type": "TEXT"
+        },
+        {
+          "default": null,
+          "name": "provider_payment_id",
+          "nullable": true,
+          "type": "TEXT"
+        },
+        {
+          "default": null,
+          "name": "status",
+          "nullable": false,
+          "type": "TEXT"
+        },
+        {
+          "default": null,
+          "name": "amount_cents",
+          "nullable": false,
+          "type": "BIGINT"
+        },
+        {
+          "default": "'USD'::character varying",
+          "name": "currency",
+          "nullable": false,
+          "type": "VARCHAR(3)"
+        },
+        {
+          "default": "now()",
+          "name": "created_at",
+          "nullable": false,
+          "type": "TIMESTAMP"
+        },
+        {
+          "default": null,
+          "name": "confirmed_at",
+          "nullable": true,
+          "type": "TIMESTAMP"
+        }
+      ],
+      "foreign_keys": [
+        {
+          "comment": null,
+          "constrained_columns": [
+            "order_id"
+          ],
+          "name": "fk_payments_order_id_orders",
+          "options": {
+            "ondelete": "RESTRICT"
+          },
+          "referred_columns": [
+            "id"
+          ],
+          "referred_schema": "public",
+          "referred_table": "orders"
+        }
+      ],
+      "indexes": [
+        {
+          "column_names": [
+            "id",
+            "order_id"
+          ],
+          "dialect_options": {
+            "postgresql_include": []
+          },
+          "duplicates_constraint": "uq_payments_id_order",
+          "name": "uq_payments_id_order",
+          "unique": true
+        },
+        {
+          "column_names": [
+            "provider",
+            "provider_payment_id"
+          ],
+          "dialect_options": {
+            "postgresql_include": []
+          },
+          "duplicates_constraint": "uq_payments_provider",
+          "name": "uq_payments_provider",
+          "unique": true
+        }
+      ],
+      "primary_key": {
+        "comment": null,
+        "constrained_columns": [
+          "id"
+        ],
+        "dialect_options": {
+          "postgresql_include": []
+        },
+        "name": "pk_payments"
+      },
+      "unique_constraints": [
+        {
+          "column_names": [
+            "id",
+            "order_id"
+          ],
+          "comment": null,
+          "dialect_options": {
+            "postgresql_include": [],
+            "postgresql_nulls_not_distinct": false
+          },
+          "name": "uq_payments_id_order"
+        },
+        {
+          "column_names": [
+            "provider",
+            "provider_payment_id"
+          ],
+          "comment": null,
+          "dialect_options": {
+            "postgresql_include": [],
+            "postgresql_nulls_not_distinct": false
+          },
+          "name": "uq_payments_provider"
+        }
+      ]
+    },
+    "profiles": {
+      "checks": [],
+      "columns": [
+        {
+          "default": null,
+          "name": "user_id",
+          "nullable": false,
+          "type": "UUID"
+        },
+        {
+          "default": null,
+          "name": "first_name",
+          "nullable": true,
+          "type": "VARCHAR(100)"
+        },
+        {
+          "default": null,
+          "name": "last_name",
+          "nullable": true,
+          "type": "VARCHAR(100)"
+        },
+        {
+          "default": null,
+          "name": "phone",
+          "nullable": true,
+          "type": "VARCHAR(30)"
+        },
+        {
+          "default": "'ru'::locale",
+          "name": "preferred_locale",
+          "nullable": false,
+          "type": "VARCHAR(2)"
+        },
+        {
+          "default": null,
+          "name": "avatar_key",
+          "nullable": true,
+          "type": "TEXT"
+        },
+        {
+          "default": "now()",
+          "name": "created_at",
+          "nullable": false,
+          "type": "TIMESTAMP"
+        },
+        {
+          "default": "now()",
+          "name": "updated_at",
+          "nullable": false,
+          "type": "TIMESTAMP"
+        }
+      ],
+      "foreign_keys": [
+        {
+          "comment": null,
+          "constrained_columns": [
+            "user_id"
+          ],
+          "name": "fk_profiles_user_id_users",
+          "options": {
+            "ondelete": "RESTRICT"
+          },
+          "referred_columns": [
+            "id"
+          ],
+          "referred_schema": "public",
+          "referred_table": "users"
+        }
+      ],
+      "indexes": [],
+      "primary_key": {
+        "comment": null,
+        "constrained_columns": [
+          "user_id"
+        ],
+        "dialect_options": {
+          "postgresql_include": []
+        },
+        "name": "pk_profiles"
+      },
+      "unique_constraints": []
+    },
+    "refunds": {
+      "checks": [
+        {
+          "comment": null,
+          "name": "ck_refunds_amount_positive",
+          "sqltext": "amount_cents > 0"
+        },
+        {
+          "comment": null,
+          "name": "ck_refunds_currency_usd",
+          "sqltext": "currency::text = 'USD'::text"
+        },
+        {
+          "comment": null,
+          "name": "ck_refunds_status_nonblank",
+          "sqltext": "length(btrim(status)) > 0"
+        }
+      ],
+      "columns": [
+        {
+          "default": null,
+          "name": "id",
+          "nullable": false,
+          "type": "UUID"
+        },
+        {
+          "default": null,
+          "name": "order_id",
+          "nullable": false,
+          "type": "UUID"
+        },
+        {
+          "default": null,
+          "name": "payment_id",
+          "nullable": false,
+          "type": "UUID"
+        },
+        {
+          "default": null,
+          "name": "order_item_id",
+          "nullable": true,
+          "type": "UUID"
+        },
+        {
+          "default": null,
+          "name": "amount_cents",
+          "nullable": false,
+          "type": "BIGINT"
+        },
+        {
+          "default": "'USD'::character varying",
+          "name": "currency",
+          "nullable": false,
+          "type": "VARCHAR(3)"
+        },
+        {
+          "default": null,
+          "name": "status",
+          "nullable": false,
+          "type": "TEXT"
+        },
+        {
+          "default": null,
+          "name": "reason",
+          "nullable": true,
+          "type": "TEXT"
+        },
+        {
+          "default": null,
+          "name": "provider_refund_id",
+          "nullable": true,
+          "type": "TEXT"
+        },
+        {
+          "default": "now()",
+          "name": "requested_at",
+          "nullable": false,
+          "type": "TIMESTAMP"
+        },
+        {
+          "default": null,
+          "name": "processed_at",
+          "nullable": true,
+          "type": "TIMESTAMP"
+        },
+        {
+          "default": null,
+          "name": "request_key",
+          "nullable": false,
+          "type": "TEXT"
+        }
+      ],
+      "foreign_keys": [
+        {
+          "comment": null,
+          "constrained_columns": [
+            "order_item_id",
+            "order_id"
+          ],
+          "name": "fk_refunds_item_order",
+          "options": {
+            "ondelete": "RESTRICT"
+          },
+          "referred_columns": [
+            "id",
+            "order_id"
+          ],
+          "referred_schema": "public",
+          "referred_table": "order_items"
+        },
+        {
+          "comment": null,
+          "constrained_columns": [
+            "order_id"
+          ],
+          "name": "fk_refunds_order_id_orders",
+          "options": {
+            "ondelete": "RESTRICT"
+          },
+          "referred_columns": [
+            "id"
+          ],
+          "referred_schema": "public",
+          "referred_table": "orders"
+        },
+        {
+          "comment": null,
+          "constrained_columns": [
+            "payment_id",
+            "order_id"
+          ],
+          "name": "fk_refunds_payment_order",
+          "options": {
+            "ondelete": "RESTRICT"
+          },
+          "referred_columns": [
+            "id",
+            "order_id"
+          ],
+          "referred_schema": "public",
+          "referred_table": "payments"
+        }
+      ],
+      "indexes": [
+        {
+          "column_names": [
+            "provider_refund_id"
+          ],
+          "dialect_options": {
+            "postgresql_include": []
+          },
+          "duplicates_constraint": "uq_refunds_provider_refund_id",
+          "name": "uq_refunds_provider_refund_id",
+          "unique": true
+        },
+        {
+          "column_names": [
+            "request_key"
+          ],
+          "dialect_options": {
+            "postgresql_include": []
+          },
+          "duplicates_constraint": "uq_refunds_request_key",
+          "name": "uq_refunds_request_key",
+          "unique": true
+        }
+      ],
+      "primary_key": {
+        "comment": null,
+        "constrained_columns": [
+          "id"
+        ],
+        "dialect_options": {
+          "postgresql_include": []
+        },
+        "name": "pk_refunds"
+      },
+      "unique_constraints": [
+        {
+          "column_names": [
+            "provider_refund_id"
+          ],
+          "comment": null,
+          "dialect_options": {
+            "postgresql_include": [],
+            "postgresql_nulls_not_distinct": false
+          },
+          "name": "uq_refunds_provider_refund_id"
+        },
+        {
+          "column_names": [
+            "request_key"
+          ],
+          "comment": null,
+          "dialect_options": {
+            "postgresql_include": [],
+            "postgresql_nulls_not_distinct": false
+          },
+          "name": "uq_refunds_request_key"
+        }
+      ]
+    },
+    "student_requests": {
+      "checks": [
+        {
+          "comment": null,
+          "name": "ck_student_requests_no_money_refund",
+          "sqltext": "type <> 'externalRefund'::text"
+        },
+        {
+          "comment": null,
+          "name": "ck_student_requests_status_nonblank",
+          "sqltext": "length(btrim(status)) > 0"
+        },
+        {
+          "comment": null,
+          "name": "ck_student_requests_type_nonblank",
+          "sqltext": "length(btrim(type)) > 0"
+        }
+      ],
+      "columns": [
+        {
+          "default": null,
+          "name": "id",
+          "nullable": false,
+          "type": "UUID"
+        },
+        {
+          "default": null,
+          "name": "enrollment_id",
+          "nullable": false,
+          "type": "UUID"
+        },
+        {
+          "default": null,
+          "name": "requested_by",
+          "nullable": false,
+          "type": "UUID"
+        },
+        {
+          "default": null,
+          "name": "reviewed_by",
+          "nullable": true,
+          "type": "UUID"
+        },
+        {
+          "default": null,
+          "name": "type",
+          "nullable": false,
+          "type": "TEXT"
+        },
+        {
+          "default": null,
+          "name": "status",
+          "nullable": false,
+          "type": "TEXT"
+        },
+        {
+          "default": null,
+          "name": "description",
+          "nullable": true,
+          "type": "TEXT"
+        },
+        {
+          "default": null,
+          "name": "attachment_key",
+          "nullable": true,
+          "type": "TEXT"
+        },
+        {
+          "default": null,
+          "name": "deadline_extension",
+          "nullable": true,
+          "type": "TIMESTAMP"
+        },
+        {
+          "default": "now()",
+          "name": "created_at",
+          "nullable": false,
+          "type": "TIMESTAMP"
+        },
+        {
+          "default": null,
+          "name": "resolved_at",
+          "nullable": true,
+          "type": "TIMESTAMP"
+        }
+      ],
+      "foreign_keys": [
+        {
+          "comment": null,
+          "constrained_columns": [
+            "enrollment_id"
+          ],
+          "name": "fk_student_requests_enrollment_id_enrollments",
+          "options": {
+            "ondelete": "RESTRICT"
+          },
+          "referred_columns": [
+            "id"
+          ],
+          "referred_schema": "public",
+          "referred_table": "enrollments"
+        },
+        {
+          "comment": null,
+          "constrained_columns": [
+            "requested_by"
+          ],
+          "name": "fk_student_requests_requested_by_users",
+          "options": {
+            "ondelete": "RESTRICT"
+          },
+          "referred_columns": [
+            "id"
+          ],
+          "referred_schema": "public",
+          "referred_table": "users"
+        },
+        {
+          "comment": null,
+          "constrained_columns": [
+            "reviewed_by"
+          ],
+          "name": "fk_student_requests_reviewed_by_users",
+          "options": {
+            "ondelete": "RESTRICT"
+          },
+          "referred_columns": [
+            "id"
+          ],
+          "referred_schema": "public",
+          "referred_table": "users"
+        }
+      ],
+      "indexes": [],
+      "primary_key": {
+        "comment": null,
+        "constrained_columns": [
+          "id"
+        ],
+        "dialect_options": {
+          "postgresql_include": []
+        },
+        "name": "pk_student_requests"
+      },
+      "unique_constraints": []
+    },
+    "submission_attachments": {
+      "checks": [
+        {
+          "comment": null,
+          "name": "ck_submission_attachments_processing_status_nonblank",
+          "sqltext": "length(btrim(processing_status)) > 0"
+        },
+        {
+          "comment": null,
+          "name": "ck_submission_attachments_size_bounds",
+          "sqltext": "file_size_bytes IS NULL OR file_size_bytes >= 0 AND file_size_bytes <= 1000000000"
+        },
+        {
+          "comment": null,
+          "name": "ck_submission_attachments_upload_status_nonblank",
+          "sqltext": "length(btrim(upload_status)) > 0"
+        },
+        {
+          "comment": null,
+          "name": "ck_submission_attachments_version_positive",
+          "sqltext": "version > 0"
+        }
+      ],
+      "columns": [
+        {
+          "default": null,
+          "name": "id",
+          "nullable": false,
+          "type": "UUID"
+        },
+        {
+          "default": null,
+          "name": "submission_id",
+          "nullable": false,
+          "type": "UUID"
+        },
+        {
+          "default": null,
+          "name": "storage_key",
+          "nullable": false,
+          "type": "TEXT"
+        },
+        {
+          "default": null,
+          "name": "preview_key",
+          "nullable": true,
+          "type": "TEXT"
+        },
+        {
+          "default": null,
+          "name": "file_type",
+          "nullable": true,
+          "type": "TEXT"
+        },
+        {
+          "default": null,
+          "name": "file_size_bytes",
+          "nullable": true,
+          "type": "BIGINT"
+        },
+        {
+          "default": null,
+          "name": "processing_status",
+          "nullable": false,
+          "type": "TEXT"
+        },
+        {
+          "default": "now()",
+          "name": "created_at",
+          "nullable": false,
+          "type": "TIMESTAMP"
+        },
+        {
+          "default": "'pending'::text",
+          "name": "upload_status",
+          "nullable": false,
+          "type": "TEXT"
+        },
+        {
+          "default": null,
+          "name": "upload_id",
+          "nullable": true,
+          "type": "TEXT"
+        },
+        {
+          "default": null,
+          "name": "object_version",
+          "nullable": true,
+          "type": "TEXT"
+        },
+        {
+          "default": null,
+          "name": "derived_key",
+          "nullable": true,
+          "type": "TEXT"
+        },
+        {
+          "default": "1",
+          "name": "version",
+          "nullable": false,
+          "type": "INTEGER"
+        }
+      ],
+      "foreign_keys": [
+        {
+          "comment": null,
+          "constrained_columns": [
+            "submission_id"
+          ],
+          "name": "fk_submission_attachments_submission_id_submissions",
+          "options": {
+            "ondelete": "RESTRICT"
+          },
+          "referred_columns": [
+            "id"
+          ],
+          "referred_schema": "public",
+          "referred_table": "submissions"
+        }
+      ],
+      "indexes": [],
+      "primary_key": {
+        "comment": null,
+        "constrained_columns": [
+          "id"
+        ],
+        "dialect_options": {
+          "postgresql_include": []
+        },
+        "name": "pk_submission_attachments"
+      },
+      "unique_constraints": []
+    },
+    "submission_reviews": {
+      "checks": [
+        {
+          "comment": null,
+          "name": "ck_submission_reviews_decision_nonblank",
+          "sqltext": "length(btrim(decision)) > 0"
+        }
+      ],
+      "columns": [
+        {
+          "default": null,
+          "name": "id",
+          "nullable": false,
+          "type": "UUID"
+        },
+        {
+          "default": null,
+          "name": "submission_id",
+          "nullable": false,
+          "type": "UUID"
+        },
+        {
+          "default": null,
+          "name": "reviewer_id",
+          "nullable": false,
+          "type": "UUID"
+        },
+        {
+          "default": null,
+          "name": "content",
+          "nullable": true,
+          "type": "TEXT"
+        },
+        {
+          "default": null,
+          "name": "attachments",
+          "nullable": true,
+          "type": "JSONB"
+        },
+        {
+          "default": null,
+          "name": "decision",
+          "nullable": false,
+          "type": "TEXT"
+        },
+        {
+          "default": "now()",
+          "name": "created_at",
+          "nullable": false,
+          "type": "TIMESTAMP"
+        }
+      ],
+      "foreign_keys": [
+        {
+          "comment": null,
+          "constrained_columns": [
+            "reviewer_id"
+          ],
+          "name": "fk_submission_reviews_reviewer_id_users",
+          "options": {
+            "ondelete": "RESTRICT"
+          },
+          "referred_columns": [
+            "id"
+          ],
+          "referred_schema": "public",
+          "referred_table": "users"
+        },
+        {
+          "comment": null,
+          "constrained_columns": [
+            "submission_id"
+          ],
+          "name": "fk_submission_reviews_submission_id_submissions",
+          "options": {
+            "ondelete": "RESTRICT"
+          },
+          "referred_columns": [
+            "id"
+          ],
+          "referred_schema": "public",
+          "referred_table": "submissions"
+        }
+      ],
+      "indexes": [],
+      "primary_key": {
+        "comment": null,
+        "constrained_columns": [
+          "id"
+        ],
+        "dialect_options": {
+          "postgresql_include": []
+        },
+        "name": "pk_submission_reviews"
+      },
+      "unique_constraints": []
+    },
+    "submissions": {
+      "checks": [
+        {
+          "comment": null,
+          "name": "ck_submissions_attempt_order",
+          "sqltext": "attempt = 1 AND previous_submission_id IS NULL AND previous_attempt IS NULL OR attempt > 1 AND previous_submission_id IS NOT NULL AND previous_attempt IS NOT NULL AND previous_attempt > 0 AND previous_attempt < attempt"
+        },
+        {
+          "comment": null,
+          "name": "ck_submissions_sla_snapshot",
+          "sqltext": "submitted_at IS NULL OR review_due_at IS NOT NULL AND curator_timezone IS NOT NULL AND length(btrim(curator_timezone)) > 0 AND assigned_curator_id IS NOT NULL"
+        },
+        {
+          "comment": null,
+          "name": "ck_submissions_status_nonblank",
+          "sqltext": "length(btrim(status)) > 0"
+        }
+      ],
+      "columns": [
+        {
+          "default": null,
+          "name": "id",
+          "nullable": false,
+          "type": "UUID"
+        },
+        {
+          "default": null,
+          "name": "assignment_id",
+          "nullable": false,
+          "type": "UUID"
+        },
+        {
+          "default": null,
+          "name": "enrollment_id",
+          "nullable": false,
+          "type": "UUID"
+        },
+        {
+          "default": null,
+          "name": "previous_submission_id",
+          "nullable": true,
+          "type": "UUID"
+        },
+        {
+          "default": null,
+          "name": "message",
+          "nullable": true,
+          "type": "TEXT"
+        },
+        {
+          "default": null,
+          "name": "attempt",
+          "nullable": false,
+          "type": "INTEGER"
+        },
+        {
+          "default": null,
+          "name": "status",
+          "nullable": false,
+          "type": "TEXT"
+        },
+        {
+          "default": null,
+          "name": "submitted_at",
+          "nullable": true,
+          "type": "TIMESTAMP"
+        },
+        {
+          "default": null,
+          "name": "review_due_at",
+          "nullable": true,
+          "type": "TIMESTAMP"
+        },
+        {
+          "default": null,
+          "name": "curator_timezone",
+          "nullable": true,
+          "type": "TEXT"
+        },
+        {
+          "default": null,
+          "name": "course_id",
+          "nullable": false,
+          "type": "UUID"
+        },
+        {
+          "default": null,
+          "name": "previous_attempt",
+          "nullable": true,
+          "type": "INTEGER"
+        },
+        {
+          "default": null,
+          "name": "assigned_curator_id",
+          "nullable": true,
+          "type": "UUID"
+        },
+        {
+          "default": "now()",
+          "name": "created_at",
+          "nullable": false,
+          "type": "TIMESTAMP"
+        }
+      ],
+      "foreign_keys": [
+        {
+          "comment": null,
+          "constrained_columns": [
+            "assigned_curator_id"
+          ],
+          "name": "fk_submissions_assigned_curator_id_users",
+          "options": {
+            "ondelete": "RESTRICT"
+          },
+          "referred_columns": [
+            "id"
+          ],
+          "referred_schema": "public",
+          "referred_table": "users"
+        },
+        {
+          "comment": null,
+          "constrained_columns": [
+            "assignment_id",
+            "course_id"
+          ],
+          "name": "fk_submissions_assignments_course",
+          "options": {
+            "ondelete": "RESTRICT"
+          },
+          "referred_columns": [
+            "id",
+            "course_id"
+          ],
+          "referred_schema": "public",
+          "referred_table": "assignments"
+        },
+        {
+          "comment": null,
+          "constrained_columns": [
+            "enrollment_id",
+            "course_id"
+          ],
+          "name": "fk_submissions_enrollments_course",
+          "options": {
+            "ondelete": "RESTRICT"
+          },
+          "referred_columns": [
+            "id",
+            "course_id"
+          ],
+          "referred_schema": "public",
+          "referred_table": "enrollments"
+        },
+        {
+          "comment": null,
+          "constrained_columns": [
+            "previous_submission_id",
+            "assignment_id",
+            "enrollment_id",
+            "previous_attempt"
+          ],
+          "name": "fk_submissions_previous_attempt",
+          "options": {
+            "ondelete": "RESTRICT"
+          },
+          "referred_columns": [
+            "id",
+            "assignment_id",
+            "enrollment_id",
+            "attempt"
+          ],
+          "referred_schema": "public",
+          "referred_table": "submissions"
+        }
+      ],
+      "indexes": [
+        {
+          "column_names": [
+            "assignment_id",
+            "enrollment_id",
+            "attempt"
+          ],
+          "dialect_options": {
+            "postgresql_include": []
+          },
+          "duplicates_constraint": "uq_submissions_assignment_id",
+          "name": "uq_submissions_assignment_id",
+          "unique": true
+        },
+        {
+          "column_names": [
+            "id",
+            "assignment_id",
+            "enrollment_id",
+            "attempt"
+          ],
+          "dialect_options": {
+            "postgresql_include": []
+          },
+          "duplicates_constraint": "uq_submissions_predecessor_target",
+          "name": "uq_submissions_predecessor_target",
+          "unique": true
+        }
+      ],
+      "primary_key": {
+        "comment": null,
+        "constrained_columns": [
+          "id"
+        ],
+        "dialect_options": {
+          "postgresql_include": []
+        },
+        "name": "pk_submissions"
+      },
+      "unique_constraints": [
+        {
+          "column_names": [
+            "assignment_id",
+            "enrollment_id",
+            "attempt"
+          ],
+          "comment": null,
+          "dialect_options": {
+            "postgresql_include": [],
+            "postgresql_nulls_not_distinct": false
+          },
+          "name": "uq_submissions_assignment_id"
+        },
+        {
+          "column_names": [
+            "id",
+            "assignment_id",
+            "enrollment_id",
+            "attempt"
+          ],
+          "comment": null,
+          "dialect_options": {
+            "postgresql_include": [],
+            "postgresql_nulls_not_distinct": false
+          },
+          "name": "uq_submissions_predecessor_target"
+        }
+      ]
+    },
+    "users": {
+      "checks": [
+        {
+          "comment": null,
+          "name": "ck_users_email_nonblank",
+          "sqltext": "length(btrim(email::text)) > 0"
+        },
+        {
+          "comment": null,
+          "name": "ck_users_roles_set",
+          "sqltext": "COALESCE(array_ndims(roles), 1) = 1 AND array_position(roles, NULL::user_role) IS NULL AND cardinality(roles) = ((roles @> ARRAY['student'::user_role])::integer + (roles @> ARRAY['trainer'::user_role])::integer + (roles @> ARRAY['manager'::user_role])::integer + (roles @> ARRAY['admin'::user_role])::integer)"
+        }
+      ],
+      "columns": [
+        {
+          "default": null,
+          "name": "id",
+          "nullable": false,
+          "type": "UUID"
+        },
+        {
+          "default": null,
+          "name": "email",
+          "nullable": false,
+          "type": "VARCHAR(255)"
+        },
+        {
+          "default": "ARRAY['student'::user_role]",
+          "name": "roles",
+          "nullable": false,
+          "type": "ARRAY"
+        },
+        {
+          "default": null,
+          "name": "email_verified_at",
+          "nullable": true,
+          "type": "TIMESTAMP"
+        },
+        {
+          "default": null,
+          "name": "referral_code",
+          "nullable": true,
+          "type": "VARCHAR(50)"
+        },
+        {
+          "default": "'active'::account_status",
+          "name": "status",
+          "nullable": false,
+          "type": "VARCHAR(7)"
+        },
+        {
+          "default": "now()",
+          "name": "created_at",
+          "nullable": false,
+          "type": "TIMESTAMP"
+        },
+        {
+          "default": "now()",
+          "name": "updated_at",
+          "nullable": false,
+          "type": "TIMESTAMP"
+        }
+      ],
+      "foreign_keys": [],
+      "indexes": [
+        {
+          "column_names": [
+            null
+          ],
+          "dialect_options": {
+            "postgresql_include": []
+          },
+          "expressions": [
+            "lower(email::text)"
+          ],
+          "name": "uq_users_email_ci",
+          "unique": true
+        },
+        {
+          "column_names": [
+            null
+          ],
+          "dialect_options": {
+            "postgresql_include": []
+          },
+          "expressions": [
+            "lower(referral_code::text)"
+          ],
+          "name": "uq_users_referral_code_ci",
+          "unique": true
+        }
+      ],
+      "primary_key": {
+        "comment": null,
+        "constrained_columns": [
+          "id"
+        ],
+        "dialect_options": {
+          "postgresql_include": []
+        },
+        "name": "pk_users"
+      },
+      "unique_constraints": []
+    }
+  }
+}
