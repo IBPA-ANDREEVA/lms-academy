@@ -1,0 +1,31 @@
+[project]
+name = "lms-academy-backend"
+version = "0.1.0"
+requires-python = ">=3.12"
+dependencies = [
+    "alembic>=1,<2",
+    "psycopg[binary]>=3,<4",
+    "sqlalchemy>=2,<3",
+]
+
+[dependency-groups]
+dev = ["pytest>=8,<10", "ruff>=0.14,<1", "mypy>=1.18,<2"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]
+addopts = "-ra --tb=short"
+markers = ["integration: requires explicitly authorized PostgreSQL database creation"]
+
+[tool.ruff]
+target-version = "py312"
+# Applied baseline remains byte-identical, including generated unused imports.
+extend-exclude = ["alembic/versions/5c9789a48cba_initial_baseline.py"]
+
+[tool.ruff.lint]
+select = ["E4", "E7", "E9", "F", "I", "UP"]
+
+[tool.mypy]
+python_version = "3.12"
+strict = true
+files = ["app", "alembic/env.py", "tests", "scripts"]

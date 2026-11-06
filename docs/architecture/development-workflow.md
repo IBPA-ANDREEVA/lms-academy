@@ -26,11 +26,11 @@ Integration uses generated TypeScript contracts from FastAPI OpenAPI and replace
 
 ## Cross-runtime implementation and verification
 
-Root AGENTS applies throughout; backend/AGENTS additionally governs Python. The current backend is empty structure only. A separate initialization task selects/pins Python, dependencies, static checker (mypy recommended), database driver, auth/session transport and contract-generation tools, and creates runnable commands. Implement neither fake endpoints nor speculative layers to satisfy a plan.
+Root AGENTS applies throughout; backend/AGENTS additionally governs Python. BASE02-B implements the [database foundation](database-migrations.md): Python/uv, SQLAlchemy/Psycopg, Alembic, strict mypy/Ruff/pytest, no-op seed and recovery commands. Domain/API/auth/worker implementation, application pooling/session strategy and contract generation remain future work. Implement neither fake endpoints nor speculative layers to satisfy a plan.
 
 Feature contracts name both frontend consumers and Python owners, allowed version overlap, transaction boundaries, privacy-safe errors/correlation, and required worker behavior. Export OpenAPI and review generated types/client changes; never hand-copy Python schemas into TypeScript. Keep fixtures explicitly preview-only until real integration passes. Next.js never accesses authoritative tables.
 
-Run frontend lint/type/build and affected browser/SEO checks; once configured, run uv/Ruff/static-checker/pytest checks, PostgreSQL migration/transaction/concurrency tests, API authorization/contract checks and actual integration checks. No backend tests are runnable from empty directories. Deployments are independent: migrations must support the API/worker compatibility window, and HTTP contracts must support overlapping frontend/backend versions. Record missing implementation separately from failed checks.
+Run frontend lint/type/build and affected browser/SEO checks; run configured uv/Ruff/mypy/pytest checks and isolated PostgreSQL migration/recovery tests. Add domain transaction/concurrency, API authorization/contract and actual integration checks with those implementations. Deployments are independent: migrations must support the API/worker compatibility window, and HTTP contracts must support overlapping frontend/backend versions. Record missing implementation separately from failed checks.
 
 ## Finish a capability
 

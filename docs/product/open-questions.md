@@ -29,7 +29,7 @@ Status vocabulary:
 | OQ-013 | Clarify | What does role switching look like for a multi-role user, and which role is selected after login? |
 | OQ-014 | Clarify | With concurrent student/trainer/manager/administrator memberships under PD-013 and independent referral capabilities, which actions require separation-of-duties controls, including reviewing one's own homework or granting one's own access? |
 | OQ-015 | Clarify | What student fields may a curator see beyond display name and course activity? The source explicitly prohibits contact details outside the platform but does not define the allowed profile view. |
-| OQ-016 | Clarify | What actions may a blocked user take, and what happens to active enrollments, pending homework, messages, and financial records? |
+| OQ-016 | Clarify | Beyond PD-014's immediate blocking/role-revocation effect, what residual actions may a blocked user take, and what non-destructive lifecycle effects apply to active enrollments, pending homework, messages and financial records? Original wording is preserved in PD-014. |
 
 ## Catalog, content, and eligibility
 
@@ -59,7 +59,7 @@ Status vocabulary:
 | ID | Status | Question |
 | --- | --- | --- |
 | OQ-031 | Blocking MVP | Which payment state is authoritative for fulfillment, and how are asynchronous, disputed, charged-back, or reversed payments handled? |
-| OQ-032 | Blocking MVP | What account-matching policy applies when a guest checkout email already belongs to an account? |
+| OQ-032 | Blocking MVP | Which exact ownership-proof, matching and recovery mechanics link a guest purchase to an existing account, including changed/unreachable email and repeated claims? PD-014 requires ownership verification before linking, never matching email alone, and preserves claimability of paid purchases after activation-link expiry. Original wording is preserved in PD-014. |
 | OQ-033 | Clarify | How long does a cart persist, and is it shared across anonymous and authenticated sessions or devices? |
 | OQ-034 | Blocking feature | May promo codes stack? Are they single-use per customer? Can a fixed discount exceed the eligible subtotal? How do currency and tax interact with it? |
 | OQ-035 | Blocking feature | What happens to promo-code usage counts after cancellation or refund? |
@@ -152,6 +152,9 @@ Status vocabulary:
 | OQ-089 | Clarify | The original specification includes the student dashboard's upcoming deadlines and curator responses, but the Vault defers messaging and support countdown. Which reduced MVP dashboard states are required? |
 | OQ-090 | Blocking MVP | PD-010 requires administrator course-conversation inspection while full student-curator messaging remains Full. What minimum conversation data and request types/statuses must MVP provide, and which underlying operations are authorized? No Full messaging scope is silently promoted or waived. |
 | OQ-091 | Blocking feature | What literal restricted operational-log URL and remaining protected account/admin route spellings are approved? PD-010 requires the viewer; UI planning can proceed without inventing routes. |
-| OQ-092 | Blocking feature | Which resource-scoped actions and release allocation apply to the manager membership restored by PD-013? How does it combine with separately authorized referral, lead/contact, financial-view and manual-sale capabilities? No dashboard, route or MVP commercial scope is inferred. |
+| OQ-092 | Blocking feature | Given PD-014's approved matrix selections for manager membership, which final resource conditions and capability combinations apply, and how are release discrepancies reconciled with separately authorized referral, lead/contact, financial-view and manual-sale scope? No dashboard or route is inferred. Original wording is preserved in PD-014; OQ-095/OQ-096 cover cross-role and source conflicts. |
 | OQ-093 | Blocking MVP | For PD-013 refunds, is exactly 24 hours included, which authoritative payment instant anchors it, when is unstarted status evaluated, and how are activation racing a request/admin execution and delayed provider confirmation handled? |
 | OQ-094 | Blocking MVP | How must preservation of all homework attempts, attachments, reviews and feedback under PD-013 qualify PD-007 access-expiry deletion, account deletion and legally required erasure? Which retention periods, exceptions and historical visibility rules apply without losing required review/certificate evidence? |
+| OQ-095 | Blocking MVP | What final resource ownership/authorization conditions govern the matrix's Conditional permissions and blank/ambiguous resource context, including Guest-to-authenticated transitions, trainer deadline/access edits, multi-role Allow/Deny/NAN combinations and separation of duties? BASE03-A approves selections, not these interpretations. |
+| OQ-096 | Blocking MVP | How should workflows and release allocations be reconciled with the approved matrix: Admin Deny for task/submission/review/file/conversation actions versus older PD-005/008/010 inspection/review requirements; Guest Allow alongside authenticated-owner conditions; MVP stage labels for messaging/certificate revocation versus later or unresolved scope? Selected values remain unchanged; no bypass, scope promotion or completed ownership validation is implied. |
+| OQ-097 | Blocking MVP | What numeric window qualifies password reauthentication as recent for sensitive administrator actions, which actions require it, and which genuine authenticated interactions qualify for inactivity refresh? PD-014 excludes background polling and fixes the 30-day absolute/7-day inactivity limits; those limits are not open. |

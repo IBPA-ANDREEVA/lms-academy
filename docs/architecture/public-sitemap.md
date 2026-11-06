@@ -159,7 +159,7 @@ Guest identity, cart reconciliation, payment authorization, legal/pricing rules,
 
 ## Current placement overlay · 2026-10-30
 
-The original draft inspection baseline above is historical. Current public UI/fixtures are listed in the frontend registry; no protected server domains are implemented. ADR-0003 preserves frontend features and puts authoritative Python operations in seven `backend/app/modules` domains. PD-011 removes the dedicated manager role and manager-only workspace; referral capabilities use existing authorized account experiences. OQ-091 retains unknown protected-route spellings. No URL is approved by this overlay.
+The original draft inspection baseline above is historical. Current public UI/fixtures are listed in the frontend registry; no protected server domains are implemented. ADR-0003 preserves frontend features and puts authoritative Python operations in seven `backend/app/modules` domains. PD-013 restores manager membership and PD-014 supplies [matrix selections](../product/permission-matrix.md), without approving a manager-only workspace or route; referral capabilities use existing authorized account experiences. See the [identity policy](identity-access-policy.md) for lifecycle and residual conditions. OQ-091 retains unknown protected-route spellings. No URL is approved or changed by this overlay.
 
 
 ## Python backend migration · 2026-11-03

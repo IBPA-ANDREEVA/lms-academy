@@ -5,7 +5,7 @@
 
 ## Implemented presentation versus target domains · 2026-11-02
 
-[ADR-0003](../decisions/0003-python-backend-architecture.md) moves the planned backend to Python without changing the seven ownership boundaries below. `backend/app/modules` contains empty directories only. No authoritative authentication, database, payment, access, media, review or notification service exists.
+[ADR-0003](../decisions/0003-python-backend-architecture.md) moves the planned backend to Python without changing the seven ownership boundaries below. `backend/app/modules` contains empty directories only. BASE02-B adds the [database foundation](database-migrations.md); no authoritative authentication, payment, access, media, review or notification service exists.
 
 Existing presentation owners remain `home`, `catalog`, `course-detail`, `public-shell`, `identity`, `commerce`, `component-preview`. PublicHeader consumes AuthModal/CartPreview; home consumes CourseCard/CategoryNavigation and shared CatalogProvider state; details map preview records into existing DetailProduct presentation. These are frontend dependencies, not domain APIs. Demo data/control requires `TEST_PREVIEW=true`; false/missing stays unavailable. The retired TypeScript Catalog contained only types, checks and an unconnected source. Temporary view types/disconnected handling now live in the Catalog feature; defensive indexability lives under SEO. See [migration evidence](../qa/python-backend-migration-2026-11-03.md).
 
@@ -90,6 +90,11 @@ permission to update or reinterpret the referenced record.
 
 ## Module responsibilities
 
+BASE03-A's [identity policy](identity-access-policy.md) and [permission matrix](../product/permission-matrix.md)
+govern authentication and selected permissions. Older admin review/inspection
+descriptions below are qualified by the matrix's Deny cells and OQ-096; they are
+not permission to bypass the matrix. Resource-specific conditions remain deferred.
+
 ### Identity
 
 Identity authenticates users and produces the actor context used by other modules.
@@ -105,6 +110,14 @@ client-provided role set.
 Open policies include role switching and prohibited role combinations (OQ-013 and
 OQ-014), blocked-user residual behavior (OQ-016), guest-checkout matching (OQ-032),
 and later social account linking.
+
+PD-014 approves email/password MVP, verified email before purchased-course access,
+48-hour activation links/secure resend, single-use 30-minute reset links and
+revocation of all previous sessions after recovery. Every role has a 30-day absolute
+login lifetime and 7-day genuine-interaction inactivity limit; polling does not
+refresh it. Blocking/role revocation is immediate; expiration preserves progress.
+Manual admin provisioning/recovery/email changes and recent password reauthentication
+for sensitive admin actions are required. See the policy for exact scope and remaining choices.
 
 ### Catalog
 
@@ -150,10 +163,10 @@ USD and eligible cards/wallets/Klarna one-time purchases; no subscriptions in an
 planned phase. State transitions and other commercial policies remain blocked by
 OQ-029 through OQ-041. Commerce retains immutable legal-version acceptance evidence
 and verifies all four PD-006 acknowledgments before payment. Commerce owns checkout acceptance evidence. The owner of policy documents, approval/publication and immutable source versions remains a SALE002 preparation decision within the seven domains. Frontend policy management stays in its own feature; this refactor does not approve the previously proposed ownership choice.
-PD-010 requires automatic Stripe approval/processing of eligible refund requests
-without administrator approval; exceptions/failures escalate to administrators.
-Final eligibility is blocked by OQ-037: the seven-day window remains proposed.
-Do not infer a manual-only MVP substitute or a final refund rule.
+PD-013 supersedes unattended refund processing and the seven-day proposal:
+requests must be within 24 hours of payment AND the course unstarted; administration
+handles execution through Commerce. OQ-037/OQ-093 retain legal, approval, boundary,
+race and recovery details; no package/partial-refund policy is inferred.
 
 ### Learning
 
@@ -167,9 +180,10 @@ Learning consumes Catalog definitions but does not copy current Catalog state in
 authority at request time when a historical enrollment snapshot should govern.
 Exactly which version governs is blocked by OQ-022 and OQ-023.
 
-PD-004 requires independent support/access deadlines per purchased course/enrollment.
-Both activate when the student explicitly marks the introductory rules page viewed:
-14 consecutive calendar days of support and 3 calendar months of course access.
+PD-013/PD-014 require independent deadlines per enrollment, activated by the student's
+first authorized course opening: 1 year of standard-course access, 3 calendar months
+of mini-course access and 14 consecutive calendar days of support where included.
+Mini-courses have no support. Payment, email verification and claiming never start timers.
 Assigned curators can extend support up to 14 calendar days per request, including
 requests after support expiry, but cannot extend course access. Administrators may
 change both deadlines, approve longer exceptions and pause access. Freeze applicable
@@ -205,8 +219,9 @@ timezone per submission/resubmission; each starts its own deadline and retains
 review history. Display in viewer-local time. Assignments calculates deadlines
 server-side and emits durable notification facts immediately, at 24/12/6/1 hours
 remaining and overdue, with replay/concurrency protection. Overdue work remains
-queued; Notifications delivers persistent auditable admin alerts. Administrators
-can comment/accept/request revisions without changing the assigned curator.
+queued; Notifications delivers persistent auditable admin alerts. The older PD-008
+admin comment/accept/revision grant conflicts with matrix Deny; OQ-096 must reconcile
+the workflow without overriding selected permissions.
 PD-001 and OQ-048/OQ-079/OQ-080 remain applicable. No implementation may collapse
 in-review work into an undefined state or erase required history at expiry.
 
@@ -411,8 +426,8 @@ Support expiration is evaluated on request. A delayed scheduled job must not all
 an expired action. Jobs are useful for warnings, read models, and operational
 visibility only.
 
-PD-004 settles activation, durations, extension permissions, pauses, materials
-expiry and the obligation to review timely submissions. Detailed post-expiry
+PD-013/PD-014 settle activation and durations; PD-004 retains extension permissions,
+pauses, materials expiry and timely-review obligations. Detailed post-expiry
 transitions, revisions, message-history visibility and reassignment remain under
 OQ-047 through OQ-049. Preserve required history and outstanding reviews under
 PD-007 while those questions and legal retention checks remain pending.
@@ -434,9 +449,10 @@ sequenceDiagram
     participant O as Outbox
 
     Requester->>C: Submit refund request
-    C->>C: Evaluate final approved eligibility rules
-    alt Eligible under final rules
-      C->>P: Automatically process refund once
+    C->>C: Check within 24 hours AND course unstarted
+    alt Eligible under approved rules and resolved dependencies
+      Admin->>C: Handle execution under final approved procedure
+      C->>P: Process refund once
     else Exception or failed processing
       C-->>Admin: Escalate exception/failure for inspection
     end
@@ -451,8 +467,8 @@ sequenceDiagram
 
 Required invariants:
 
-- authorize the request and evaluate final eligibility server-side; eligible refunds
-  require no administrator approval, while exceptions/failures escalate (PD-010);
+- authorize the request and evaluate PD-013 eligibility server-side; administration
+  handles execution, with approval/recovery details still OQ-037/OQ-093;
 - monetary confirmation, not intent alone, triggers the required revocation;
 - repeated confirmation is a no-op with the original result;
 - revocation blocks lessons, materials, playback grants, and protected learning
@@ -490,7 +506,7 @@ details, not newly approved routes or a new domain module.
 
 ## Practical folder organization
 
-Follow [ADR-0003](../decisions/0003-python-backend-architecture.md). The [backend tree](../../backend/README.md#directory-conventions) is currently empty. Future placement examples, not files to scaffold:
+Follow [ADR-0003](../decisions/0003-python-backend-architecture.md). The [backend tree](../../backend/README.md#directory-conventions) has database plumbing only; domain/API/job directories remain empty. Future placement examples, not files to scaffold:
 
 ```text
 src/features/learning/
@@ -522,7 +538,7 @@ Next.js Server Components/actions call FastAPI HTTP operations using future gene
 
 ## Data and schema rules
 
-Domain `models.py` owns SQLAlchemy mappings; `backend/app/db` assembles shared metadata and session infrastructure without moving record ownership. Alembic revisions under `backend/alembic/versions` name affected owners and preserve a coordinated schema history. Do not use `src/db` for authoritative persistence. PostgreSQL is selected; Neon is intended hosting, with driver/pooling configuration still pending.
+Domain `models.py` owns SQLAlchemy mappings; `backend/app/db` assembles shared metadata without moving record ownership. Explicit model registration and the migration/recovery workflow are in the [database runbook](database-migrations.md). Alembic revisions under `backend/alembic/versions` name affected owners and preserve a coordinated schema history. Do not use `src/db` for authoritative persistence. Operator commands use synchronous Psycopg 3; application session/pooling configuration remains pending.
 
 Only the owning domain writes its records. Foreign keys may cross ownership boundaries, but cascades must not erase retained commercial, educational, audit or certificate evidence. Cross-domain transactions pass an explicit context to public commands, not raw tables/query builders; participating operations do not independently commit. Keep external effects outside long transactions and commit durable facts atomically with state. Use database constraints and concurrency checks for duplicate/conflicting operations.
 
@@ -555,7 +571,8 @@ Before merging a feature change, verify:
 
 ## Referral capability and cross-domain preparation
 
-PD-011 removes a dedicated manager role/dashboard. Commerce owns stable partner
+PD-013 restores manager membership; PD-014 supplies exact matrix selections, not
+a new dashboard or final resource conditions. Commerce owns stable partner
 identity/link records, attribution snapshots and commissions. Identity supplies
 explicit authorization capabilities; current role changes never rewrite financial
 history. Trainer/curator/administrator or another explicitly authorized account may

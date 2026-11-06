@@ -2,6 +2,8 @@
 
 > 2026-11-04 precedence update: [PD-013](decisions.md#pd-013--base02-a-domain-policy-overrides) supersedes older wording below on manager membership, first-course-opening activation, one-year standard/three-month mini video access, one trainer/curator per course, and within-24-hours/unstarted-course refunds handled by administration. Homework history preservation/deletion reconciliation remains open. Other requirements remain in force. See the [BASE02-A entity map](../architecture/entity-map.md) for owners, relationships and residual dependencies; legacy passages below are not alternative approved policies.
 
+> BASE03-A: [PD-014](decisions.md#pd-014--base03-a-authentication-authorization-and-account-lifecycle) and the [permission matrix](permission-matrix.md) govern authentication and exact role selections. Older administrator review/inspection descriptions conflict with selected Deny cells; they are historical scope requiring OQ-096 reconciliation, not effective grants. See the [identity policy](../architecture/identity-access-policy.md) for approved lifecycles and the deferred ownership/security handoff.
+
 ## Purpose and source authority
 
 This document defines the intended behavior of the online academy for future product and engineering work. It consolidates the original Russian technical specification, the five-page wireframe PDF, and the LMS planning notes. It describes required behavior, including the owner-approved selections in [decisions.md](./decisions.md), without resolving questions that remain open.
@@ -53,13 +55,13 @@ The operating model distinguishes instructor-created content from curator-suppor
 
 ### Shared rules
 
-- Supported roles are guest, student, trainer-curator, and administrator.
+- Authenticated memberships are student, trainer, manager and administrator (PD-013); trainer/curator separation remains unresolved. Guest means unauthenticated, not a membership.
 - One account may hold multiple roles at the same time.
 - An administrator assigns and removes roles.
 - A user must be able to operate in the appropriate role context without creating duplicate accounts. The exact role-switching experience is not specified.
 - Protected course content, homework, messages, financial information, and administrative actions must only be available to authorized users.
 
-**Engineering recommendation:** enforce the source's role-access requirement on the server and at resource level, not only through hidden navigation.
+Server enforcement is required. The [90-row matrix](permission-matrix.md) supplies exact permissions; the role summaries below are not a substitute for its Allow/Deny/Conditional/NAN selections. Final resource conditions and multi-role combination rules remain deferred.
 
 ### Guest
 
@@ -194,12 +196,15 @@ The public product experience must distinguish full courses, packages, mini-cour
 
 ## Identity and account lifecycle
 
-- The platform must support email-and-password registration, sign-in, session handling, email verification, password reset, and password change.
-- Checkout may create an account when the buyer does not already have one.
-- After successful payment, the buyer must receive a receipt and an access or sign-in link.
-- Google and Apple sign-in are desired later features.
-- Administrators may create and block accounts.
-- Blocking an account must prevent protected access without deleting legally or operationally required records.
+- MVP uses email/password registration and login. Purchased-course access requires verified email; account activation links expire after 48 hours and can be securely resent.
+- Guest purchases may create accounts through email activation. Verify ownership before linking purchases to existing accounts; typed checkout email alone is insufficient. Paid unclaimed purchases remain claimable after link expiration.
+- After confirmed payment, send the receipt and secure access/account instructions. Payment and enrollment are separate; payment, email verification and purchase claiming never activate course timers.
+- Password-reset email links are single-use with a 30-minute lifetime; successful recovery revokes every previous session.
+- Email changes require reauthentication and verification. Administrator creation/management, password setup/recovery and email changes are manual; no public admin registration. Use secure one-time credential setup and authentication-system password hashes. `.env` may hold bootstrap/application secrets, never permanent user passwords.
+- Every role has the same 30-day absolute session limit after login and 7-day inactivity limit. Only genuine authenticated user interactions refresh inactivity; background polling does not. Multiple simultaneous sessions/devices are allowed; MFA is not required for MVP.
+- Sensitive administrator actions require recent password reauthentication as well as existing confirmation/consent/audit safeguards. The exact recency window remains OQ-097.
+- Blocking and role revocation take effect immediately. Expired sessions require login again without deleting learning progress or legally/operationally required records.
+- Google and Apple sign-in remain later features. Provider and implementation details are unselected; see [identity policy](../architecture/identity-access-policy.md).
 
 **Planning refinement (P2):** social sign-in should link safely to existing accounts rather than create unintended duplicates; the matching policy remains open.
 
@@ -259,9 +264,9 @@ Before payment, the buyer must explicitly accept:
 
 After confirmed payment, the system must:
 
-- create or resolve the buyer account;
+- create or resolve the buyer account through verified ownership under PD-014;
 - create the order and order lines;
-- grant the corresponding enrollments and access;
+- grant the corresponding enrollments once identity is resolved; require verified email and authorization for purchased-course access, with timers still unactivated;
 - record applicable referral-partner attribution;
 - send payment confirmation, receipt, and access instructions.
 
@@ -281,15 +286,15 @@ Stacking, per-customer limits, minimum spend, currency behavior, and treatment o
 
 ### Refunds and access reversal
 
-- **Approved — PD-010 / OQ-010:** eligible refund requests are automatically approved and processed through Stripe without administrator approval; exceptional cases and failures escalate to administrators. Administrators inspect orders, refunds, statuses and exceptions.
-- The supplied seven-day window after confirmed payment, regardless of course progress, is explicitly **proposed**, subject to applicable law and final refund rules. OQ-037 remains blocking; do not treat that window as final eligibility policy.
+- **Approved — PD-013:** a refund request must be within 24 hours of payment AND the purchased course must be unstarted (not activated). Administration handles execution through Commerce/Stripe. Approval mechanics, legal/exception handling and boundary/race details remain OQ-037/OQ-093.
+- PD-013 supersedes the old seven-day proposal and unattended processing requirement; no package/partial-refund behavior is inferred.
 
 **Approved access revocation — PD-004 / OQ-003; unresolved refund details remain under OQ-036/OQ-037:**
 
 - Once a monetary refund is confirmed, the affected course access must be revoked immediately, including in MVP.
 - The revocation must be server-enforced and recorded with the order, refund confirmation, actor, timestamp, affected enrollment, and resulting access state so it is auditable.
 - Trainer and referral-partner accruals must be reversed for the refunded sale when those financial modules exist.
-- Automatic Stripe refunds and confirmed-refund access revocation are MVP (PD-010). Trainer/partner financial reversals remain with their later financial modules. A manual-provider workflow is not a substitute for the approved automatic refund path.
+- Administration-handled Stripe refunds and immediate confirmed-refund access revocation are MVP (PD-013). Trainer/partner financial reversals remain with their later financial modules.
 - Refund handling must be idempotent so repeated confirmation cannot create inconsistent access or financial effects.
 - Partial-refund and multi-product order behavior is unresolved.
 
@@ -338,7 +343,7 @@ The precise threshold for considering a video or lesson viewed is unresolved.
 - **Approved — PD-005 / OQ-004:** all supported photo/video formats, including JPEG, PNG, HEIC, WebP, MP4, MOV and WebM, with automatic normalization.
 - Maximum 1 GB per file and 1 GB combined original files per submission; no fixed file-count limit.
 - Images: auto-orientation, high-quality compression, maximum 2560px processed copies. Videos: H.264/AAC MP4, maximum 1080p. Generate thumbnails and playable previews.
-- Submission files must be stored privately and made available only to authorized student, assigned curator, and authorized administrators.
+- Submission files must be private. Use the selected matrix permissions; the older PD-005 administrator viewing grant conflicts with Admin Deny in the matrix and requires OQ-096 workflow reconciliation, not a bypass.
 
 **Approved — PD-005:** resumable uploads with progress and interruption recovery; students can preview, remove and replace files. Use short-lived signed delivery, preserve originals until processing succeeds, and never corrupt submission history. Safe retries, understandable errors and structured logs follow PD-001. Retention follows course access and PD-007, including outstanding review obligations. OQ-043/OQ-044 remain dependencies; OQ-045 still governs changes to an already-submitted assignment.
 
@@ -357,8 +362,8 @@ The system must preserve submission and review history across revisions. A curat
 - Student-curator messages are scoped to a course.
 - A student may ask questions and receive curator responses while support is active.
 - The student must see the remaining curator-support time.
-- **Approved — PD-004 / OQ-003:** both timers start when the student explicitly marks the introductory course page as viewed; that page explains all important course rules.
-- Support lasts 14 consecutive calendar days; course access lasts 3 calendar months including support. Track separate deadlines per purchased course/enrollment.
+- **Approved — PD-013/PD-014:** the student's first authorized opening of the enrolled course activates it; payment alone never starts timers. Introductory-page acknowledgment is no longer the activation trigger.
+- Supported courses have 14 consecutive calendar days of support. Standard courses have 1 year of access; mini-courses have 3 calendar months and no curator support. Track independent deadlines per enrollment.
 - Students can submit a Request Extension form even after support expires. Assigned curators may extend support by up to 14 calendar days per request, never course access. Administrators may modify both deadlines, approve longer exceptions, and temporarily pause access.
 - Pauses freeze applicable timers and preserve the exact remaining duration until restoration. Support extensions never automatically extend course access.
 - Support closes at its deadline; lessons and materials close at the course-access deadline unless extended. Refunds/closure revoke access while preserving historical learning records, subject to PD-007 retention safeguards.
@@ -390,12 +395,12 @@ The wireframe shows an in-lesson curator hint, text comment area, upload surface
 - **Approved — PD-008 / OQ-005:** 48 counted hours from submission, counting Monday–Friday continuously, excluding weekends; public holidays count.
 - Snapshot the assigned curator's timezone at submission; display deadlines in each viewer's local timezone. Each new submission or corrected resubmission has an independent 48-hour deadline, with all history preserved.
 - Notify the curator immediately on submission, at 24, 12, 6 and 1 remaining hours, and when overdue. Overdue work remains in the queue; persistent, auditable administrator notifications are required. Contacting the curator is optional.
-- Students see the expected review deadline and current status. Administrators can comment, accept or request revisions without changing the assigned curator; audit every action.
+- Students see the expected review deadline and current status. The historical PD-008 administrator comment/accept/revision grant conflicts with matrix Admin Deny; preserve those selections and reconcile the escalation workflow under OQ-096. Audit authorized actions.
 - Timely submissions must still be reviewed after support expiration. OQ-048 still controls student revisions after expiry. Calculate deadlines server-side with durable reminders, retry safety, concurrency protection and PD-001 errors. OQ-079/OQ-080 remain dependencies.
 
 ### Review detail
 
-The curator, and an administrator acting under PD-008 without changing the assigned curator, must be able to:
+The authorized curator must be able to perform the following review workflow. PD-008's older administrator review grant is not effective against matrix Deny; its workflow reconciliation remains OQ-096:
 
 - inspect submitted photos and video;
 - read the student's comment and relevant submission history;
@@ -471,7 +476,7 @@ Administrators must be able to:
 Administrators must be able to:
 
 - view all orders and details;
-- inspect automatic Stripe refund outcomes, exceptions and failures under PD-010; final refund eligibility remains under OQ-037;
+- handle Stripe refund execution under PD-013 and inspect outcomes, exceptions and failures; residual eligibility/execution details remain OQ-037/OQ-093;
 - manage promo codes;
 - inspect manual enrollments and payment evidence;
 - inspect current access state;
@@ -483,8 +488,8 @@ Administrators must be able to:
 
 - monitor review deadlines and overdue homework by trainer or curator;
 - receive persistent, auditable overdue notifications;
-- inspect all courses, student progress, submissions, review history, deadlines and course-scoped conversations; view student requests and their processing statuses (PD-010);
-- comment, accept or request homework revisions under PD-008 without automatically changing the assigned curator;
+- inspect permitted course/progress/deadline/request information under the matrix; PD-010's broader submission/conversation inspection requirement remains a workflow conflict under OQ-096;
+- preserve the matrix's Admin Deny for homework review/accept/revision actions; reconcile the older PD-008 admin-review requirement under OQ-096 without inventing a bypass;
 - inspect assignment and reassignment of curators;
 - moderate student reviews when reviews are enabled.
 
@@ -607,7 +612,7 @@ Public pages must exist for:
 **Approved — PD-007 / OQ-008:**
 
 - Accounts remain until manual deletion or a verified deletion request. Financial records remain until eligible for deletion subject to legal obligations; consent records follow account retention unless legally required longer.
-- Homework and messages are deleted when associated course access ends, normally after 3 months, accounting for pauses, extensions, outstanding reviews and legal exceptions.
+- PD-013 qualifies the historical PD-007 deletion rule: preserve homework attempts, attachments, reviews and feedback through revisions, closure and refunds. Access expiry alone does not authorize destruction; preservation versus eventual lawful deletion, including message-history handling, remains OQ-008/OQ-094.
 - Certificate records and necessary verification evidence are retained permanently.
 - Technical-error logs and routine administrator activity have 30-day retention; critical audit records follow legally required periods.
 - Account deletion notifies administrators. Automatically delete eligible data only when no active courses remain and identity/retention checks pass; otherwise an administrator contacts the student.
@@ -658,11 +663,11 @@ The platform must minimize role access to personal data and keep protected stude
 3. The buyer authenticates or supplies account details and accepts required legal documents.
 4. The payment provider processes payment.
 5. Only confirmed payment creates or fulfills the order.
-6. The LMS grants access, records attribution, and sends receipt and entry instructions.
+6. The LMS resolves verified account ownership, grants enrollment once, records applicable attribution, and sends receipt/entry instructions. Purchased-course access requires verified email; payment does not activate its clocks.
 
 ### Supported-course completion
 
-1. The student explicitly marks the introductory course page, containing all important course rules, as viewed to activate the independent support/access deadlines; then opens authorized lessons in the configured order.
+1. The student's first authorized opening of the enrolled standard course starts 1 year of access and 14 consecutive calendar days of support; authorized lessons follow the configured order (PD-013/PD-014).
 2. The student watches content and uses lesson materials.
 3. The student submits required homework during active support.
 4. The curator reviews it within the configured SLA and accepts it or requests revision.
@@ -671,14 +676,14 @@ The platform must minimize role access to personal data and keep protected stude
 
 ### Mini-course completion
 
-1. The student purchases or receives the mini-course.
+1. The student purchases or receives the mini-course; first authorized opening activates 3 calendar months of access, with no curator support.
 2. The student views every required lesson.
 3. The LMS calculates eligibility without curator homework review, then queues administrator evidence review and manual issuance (PD-010).
 
 ### Refund
 
-1. The server evaluates a refund request using the final approved eligibility rules; the proposed seven-day window remains under OQ-037.
-2. Eligible requests are approved and processed through Stripe automatically; exceptions and failures escalate to administrators.
+1. Commerce checks PD-013's within-24-hours AND unstarted-course eligibility; OQ-037/OQ-093 still block legal/execution/boundary details.
+2. Administration handles execution through Commerce/Stripe; approval mechanics and exception handling remain unresolved.
 3. Authoritative confirmed refunds revoke affected access automatically and immediately, with audit evidence and no duplicate refunds (PD-010).
 4. Related trainer and referral-partner accruals are reversed when those modules exist.
 5. The event and actor remain auditable and reports reflect the correction.

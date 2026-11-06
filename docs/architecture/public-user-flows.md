@@ -119,6 +119,13 @@ Legal pages never require login. Reading a policy is not consent; the buyer must
 
 ## 6. Guest purchase → Account creation and access
 
+PD-014's [identity policy](identity-access-policy.md) now fixes the lifecycle:
+48-hour account activation links with secure resend, verified email before
+purchased-course access, and ownership verification before linking an existing
+account. Paid unclaimed purchases remain claimable after link expiry. First
+authorized opening activates the enrollment under PD-013; payment/claiming does not.
+No route or UI change is approved by this documentation update.
+
 The required order of authority is payment confirmation → create/resolve account and fulfill once → authenticated access. A provider payment attempt or provisional internal checkout record can exist earlier without being presented as a successful order.
 
 ```mermaid
@@ -153,8 +160,8 @@ The receipt/access email is an asynchronous effect; its failure does not undo co
 
 | Guest case | Required boundary | Recommended experience, subject to approval |
 | --- | --- | --- |
-| Email not linked to account | Create account after confirmed payment; establish credentials securely | One-time activation entry using verification/password setup components, then `/account`; exact URL/token/session behavior remains PA-05 |
-| Email linked to existing account | OQ-032 must define matching; typed email is not ownership proof | Offer sign-in/secure email proof and preserve cart; associate safely without silently exposing or signing into that account |
+| Email not linked to account | Guest purchase may create an account through email activation; establish credentials securely | Activation links expire after 48 hours with secure resend; purchased-course access requires verified email. Exact route/token mechanics remain PA-05; session policy is fixed by PD-014 |
+| Email linked to existing account | Verify ownership before linking; typed email alone is not proof (PD-014) | Preserve cart and avoid disclosure/automatic sign-in; exact proof/matching/recovery mechanism remains OQ-032 |
 | User voluntarily registers before paying | Registration alone grants no learning entitlement | Retain cart; verification/login returns to `/checkout`; confirmed payment uses same account |
 | Guest returns on same device | Browser return is not payment or account proof | Show only checkout-context-authorized status; learning CTA still requires authenticated owner |
 | Guest returns on another device | A guessed order ID must not reveal the order | Secure email entry or login reestablishes access; expired links offer a safe replacement path |
@@ -207,7 +214,7 @@ Resolve these before the corresponding feature or launch acceptance, as grouped 
 | Verification course has been archived | Retain issuance snapshot/title; omit broken product link | OQ-055/OQ-056 |
 | Account blocked | Clear permitted recovery path without granting protected access | OQ-016 |
 
-PD-004 approves server-enforced access/support clocks and revocation. PD-010 requires automatic eligible Stripe refunds and confirmed-refund access revocation in MVP; exceptions/failures escalate to administrators. The seven-day window remains proposed under OQ-037, not final public policy. PD-010 also requires manual administrator issuance after eligibility review for every certificate. Do not infer certificate correction/revocation/reissuance rules.
+PD-013/PD-014 require first-authorized-opening activation: 1 year standard access, 3 calendar months mini access and 14 consecutive calendar days of support where included. PD-004 retains extension/pause/review rules. PD-013 refunds require a request within 24 hours AND an unstarted course, with administration-handled execution and immediate confirmed-refund revocation; OQ-037/OQ-093 retain residual details. PD-010 manual certificate issuance remains; matrix permissions do not settle correction/revocation/reissuance policy or OQ-096 conflicts.
 
 ## Acceptance scenarios for future implementation
 
