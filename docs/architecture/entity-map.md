@@ -1,12 +1,12 @@
 # LMS domain entity map · BASE02-A
 
-Status: architectural documentation, 2026-11-04. This map defines conceptual identities, relationships and state owners; it specifies no storage types, tables, fields, ORM mappings, APIs or event infrastructure. BASE02-B subsequently implements a [database foundation](database-migrations.md) with an empty baseline, not these domain entities. The BASE02-A evidence below remains historical.
+Status: architectural documentation, 2026-11-04. This map defines conceptual identities, relationships and state owners; it specifies no storage types, tables, fields, ORM mappings, APIs or event infrastructure. BASE02-B supplied an empty baseline; the 2026-11-06 [physical schema contract](database/schema-contract.md) now maps 28 tables to these seven owners, with explicit deferrals and no feature services. The conceptual map and BASE02-A evidence below remain historical; physical fields and migrations are authoritative only in the new contract/models/revisions.
 
 ## Authority and scope
 
 The direct BASE02-A instructions are recorded in [PD-013](../product/decisions.md#pd-013--base02-a-domain-policy-overrides). They supersede conflicting older policies only within the scope listed there. Other requirements and release allocations remain authoritative: [requirements](../product/requirements.md), [MVP/phases](../product/mvp.md), [open questions](../product/open-questions.md), [module boundaries](modules.md), and [ADR-0003](../decisions/0003-python-backend-architecture.md).
 
-One modular monolith has seven authoritative domains and one future database. Existing runtime choices in ADR-0003 are neither reselected nor implemented here. Authentication provider and account-linking solution remain unselected. Frontend previews and empty backend directories are not domain implementations. Administration is an actor/workflow spanning owners, not an eighth domain.
+One modular monolith has seven authoritative domains and one future database. Existing runtime choices in ADR-0003 are neither reselected nor implemented here. Authentication provider and account-linking solution remain unselected. Frontend previews and physical database mappings alone are not domain feature implementations. Administration is an actor/workflow spanning owners, not an eighth domain.
 
 BASE03-A follow-up: [PD-014](../product/decisions.md#pd-014--base03-a-authentication-authorization-and-account-lifecycle)
 and the [identity policy](identity-access-policy.md) now define approved authentication,
