@@ -222,12 +222,12 @@ def test_postgres_utilities_receive_only_explicit_settings(
     assert os.environ["PGOPTIONS"] == "ambient-secret"
 
 
-def test_one_reviewed_baseline_and_no_domain_tables() -> None:
+def test_one_head_preserves_baseline_and_registers_domains() -> None:
     script = ScriptDirectory.from_config(Config(str(BACKEND / "alembic.ini")))
-    assert script.get_heads() == [BASELINE]
+    assert script.get_heads() == ["20261106_02"]
     assert script.get_bases() == [BASELINE]
-    assert len(list(script.walk_revisions())) == 1
-    assert not migration_metadata().tables
+    assert len(list(script.walk_revisions())) == 3
+    assert len(migration_metadata().tables) == 28
 
 
 @pytest.mark.parametrize(

@@ -12,6 +12,7 @@ from sqlalchemy import inspect, text
 from sqlalchemy.engine import URL
 
 from app.db.config import DatabaseConfigurationError, database_engine
+from app.db.metadata import migration_metadata
 from app.db.recovery import (
     RecoveryError,
     backup,
@@ -65,7 +66,8 @@ def test_fresh_upgrade_repeatability_revision_and_seed(
             Config(str(BACKEND / "alembic.ini"))
         ).get_current_head()
         assert revision(disposable_database) == expected
-        assert inspect(engine).get_table_names() == ["alembic_version"]
+        expected_tables = sorted(["alembic_version", *migration_metadata().tables])
+        assert sorted(inspect(engine).get_table_names()) == expected_tables
         alembic(disposable_database, "check")
         # Synthetic test data, never a shipped domain table or production revision.
         with engine.begin() as connection:
@@ -94,10 +96,9 @@ def test_fresh_upgrade_repeatability_revision_and_seed(
                 text("SELECT * FROM preservation_probe")
             ).all() == [(1, "synthetic record")]
             assert connection.scalar(text("SELECT count(*) FROM alembic_version")) == 1
-        assert inspect(engine).get_table_names() == [
-            "alembic_version",
-            "preservation_probe",
-        ]
+        assert sorted(inspect(engine).get_table_names()) == sorted(
+            [*expected_tables, "preservation_probe"]
+        )
     finally:
         engine.dispose()
 

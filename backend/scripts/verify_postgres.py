@@ -25,7 +25,7 @@ def main() -> int:
         raise RuntimeError(
             "Complete PostgreSQL server distribution required; share/postgres.bki is missing"
         )
-    flags = subprocess.CREATE_NO_WINDOW if os.name == "nt" else 0
+    flags = getattr(subprocess, "CREATE_NO_WINDOW", 0) if os.name == "nt" else 0
 
     def pg(tool: str, *args: str) -> None:
         result = subprocess.run(
@@ -112,6 +112,8 @@ def main() -> int:
                     "LMS_ENV": "test",
                     "TEST_POSTGRES_ADMIN_URL": f"postgresql+psycopg://base02_test:{password}@127.0.0.1:{port}/postgres",
                     "TEST_POSTGRES_ALLOW_CREATE_DATABASE": "create-new-databases-only",
+                    # Tests verify the live pid/data path/port of this minted cluster.
+                    "TEST_POSTGRES_CLUSTER_DIRECTORY": str(root),
                 }
             )
             print(
