@@ -8,11 +8,15 @@ import subprocess
 from pathlib import Path
 
 from psycopg.conninfo import make_conninfo
-from sqlalchemy import create_engine, text
+from sqlalchemy import text
 from sqlalchemy.engine import URL
-from sqlalchemy.pool import NullPool
 
-from app.db.config import database_url, require_environment
+from app.db.config import (
+    clean_pg_environment,
+    database_engine,
+    database_url,
+    require_environment,
+)
 
 REPOSITORY = Path(__file__).resolve().parents[3]
 
@@ -34,12 +38,7 @@ def endpoint_id(url: URL) -> str:
 
 
 def pg_environment(url: URL) -> dict[str, str]:
-    # Eliminate inherited PGDATABASE/PGSERVICE/PGOPTIONS destination overrides.
-    env = {
-        key: value
-        for key, value in os.environ.items()
-        if not key.upper().startswith("PG")
-    }
+    env = clean_pg_environment()
     env.update(
         {
             "PGHOST": str(url.host),
@@ -48,6 +47,7 @@ def pg_environment(url: URL) -> dict[str, str]:
             "PGUSER": str(url.username),
             "PGCONNECT_TIMEOUT": "10",
             "PGAPPNAME": "lms-recovery",
+            "PGPASSFILE": os.devnull,
         }
     )
     if url.password is not None:
@@ -65,7 +65,11 @@ def pg_environment(url: URL) -> dict[str, str]:
 def run_pg(tool: str, arguments: list[str], url: URL) -> None:
     binary = Path(os.environ["POSTGRES_BIN"]) / tool
     version = subprocess.run(
-        [str(binary), "--version"], capture_output=True, text=True, check=True
+        [str(binary), "--version"],
+        env=clean_pg_environment(),
+        capture_output=True,
+        text=True,
+        check=True,
     )
     if "(PostgreSQL) 18." not in version.stdout:
         raise RecoveryError("PostgreSQL 18 client tools are required.")
@@ -87,12 +91,7 @@ def run_pg(tool: str, arguments: list[str], url: URL) -> None:
 
 
 def revision(url: URL) -> str:
-    engine = create_engine(
-        url,
-        poolclass=NullPool,
-        hide_parameters=True,
-        connect_args={"connect_timeout": 10},
-    )
+    engine = database_engine(url)
     try:
         with engine.connect() as connection:
             revisions = list(
@@ -112,12 +111,7 @@ def require_empty_target(url: URL, confirmation: str) -> None:
         raise RecoveryError(
             "--confirm-target must match the destination database name."
         )
-    engine = create_engine(
-        url,
-        poolclass=NullPool,
-        hide_parameters=True,
-        connect_args={"connect_timeout": 10},
-    )
+    engine = database_engine(url)
     try:
         with engine.connect() as connection:
             # Reject tables, views, sequences, types, functions, extensions, extra

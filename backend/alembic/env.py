@@ -5,11 +5,15 @@ import os
 from logging.config import fileConfig
 
 from alembic.util import CommandError
-from sqlalchemy import create_engine, pool
 from sqlalchemy.exc import DBAPIError
 
 from alembic import context
-from app.db.config import DatabaseConfigurationError, database_url, require_environment
+from app.db.config import (
+    DatabaseConfigurationError,
+    database_engine,
+    database_url,
+    require_environment,
+)
 from app.db.metadata import migration_metadata
 
 config = context.config
@@ -34,12 +38,7 @@ def run_migrations() -> None:
             context.run_migrations()
         return
 
-    engine = create_engine(
-        url,
-        poolclass=pool.NullPool,
-        hide_parameters=True,
-        connect_args={"connect_timeout": 10},
-    )
+    engine = database_engine(url)
     try:
         with engine.connect() as connection:
             context.configure(

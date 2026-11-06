@@ -12,6 +12,10 @@ BACKEND = Path(__file__).resolve().parents[1]
 
 
 def main() -> int:
+    # Direct script invocation puts scripts/, not backend/, on Python's path.
+    sys.path.insert(0, str(BACKEND))
+    from app.db.config import clean_pg_environment
+
     binary_dir = os.environ.get("POSTGRES_BIN")
     if not binary_dir:
         print("Set POSTGRES_BIN to the PostgreSQL 18 bin directory.", file=sys.stderr)
@@ -32,6 +36,7 @@ def main() -> int:
             check=False,
             creationflags=flags,
             timeout=60,
+            env=clean_pg_environment(),
         )
         if result.returncode:
             raise RuntimeError(
@@ -43,6 +48,7 @@ def main() -> int:
         capture_output=True,
         text=True,
         check=True,
+        env=clean_pg_environment(),
     )
     if "(PostgreSQL) 18." not in version.stdout:
         raise RuntimeError("PostgreSQL 18 server required")
@@ -91,11 +97,7 @@ def main() -> int:
                 "30",
                 "start",
             )
-            env = {
-                key: value
-                for key, value in os.environ.items()
-                if not key.upper().startswith("PG")
-            }
+            env = clean_pg_environment()
             # Shared/Neon credentials are neither loaded nor passed to tests.
             for key in (
                 "DATABASE_URL",

@@ -36,6 +36,45 @@ are supported; routing overrides are rejected. Use a direct Neon endpoint, with
 the TLS/channel-binding settings issued by Neon. Pooled endpoints are rejected.
 Do not put URLs into `alembic.ini`; `%` escaping through config interpolation is avoided.
 
+All SQLAlchemy connections (Alembic, recovery preflight/revision checks and test
+database creation/inspection/cleanup) use `app.db.config.database_engine`.
+Immediately before **every** Psycopg connection, including reconnects, it rejects
+inherited PostgreSQL 18 libpq connection/session environment variables. This
+includes `PGHOSTADDR`, `PGOPTIONS`, service/password-file selectors, TLS/GSS/auth
+options, encoding, timezone and date-style defaults. `PGHOST`, `PGDATABASE` and
+`PGUSER` would normally be overridden by the required URL fields; they are still
+rejected, even when empty, to keep one explicit configuration contract. Port and
+password variables can otherwise supply missing URL fields; `PGHOSTADDR` can
+redirect even an explicit host, and `PGOPTIONS` can add session settings. Errors
+never print inherited values or connection strings. Unset these variables in the
+operator process; supply credentials and the four supported options only through
+the purpose-specific URL above. Port defaults explicitly to 5432; timeout defaults
+to 10 seconds, with an explicit URL timeout taking precedence.
+
+PostgreSQL subprocesses use a copied environment stripped of the **same named
+inputs**, then recovery adds only the selected URL fields/options. The disposable
+verification harness uses that sanitized environment for server lifecycle tools
+and pytest too. Unrelated `PG*` variables (for example `PGLOCALEDIR`) are preserved;
+the parent environment is never temporarily cleared or rewritten. Backup/restore
+still fail at Python preflight if ambient overrides are present. Default password
+file lookup is disabled with the platform null device for both drivers and tools:
+password authentication requires a URL password, never an inherited `.pgpass` or
+Windows `pgpass.conf`. Service-based configuration is unsupported.
+
+TLS policy is not upgraded implicitly: supply approved `sslmode`, `sslrootcert`
+and `channel_binding` in the URL; omitted options retain libpq defaults (including
+`sslmode=prefer`, which does not require TLS). `SSL_CERT_FILE`/`SSL_CERT_DIR` are
+also rejected/stripped because they can alter `sslrootcert=system` trust. Standard
+libpq certificate/CRL files, system trust, DNS, server/role defaults and the host's
+OpenSSL/Kerberos configuration remain trusted operator-managed infrastructure;
+this boundary is not a filesystem or process sandbox. It does not authorize
+custom client-certificate/session configuration through environment variables.
+Do not mutate the process environment concurrently with connection establishment.
+The named-variable policy targets PostgreSQL 18 tools; a test checks coverage of
+the installed Psycopg libpq option metadata. Review both when upgrading clients.
+See [libpq environment inputs](https://www.postgresql.org/docs/18/libpq-envars.html)
+and [connection defaults](https://www.postgresql.org/docs/18/libpq-connect.html).
+
 The owner reports Neon project `LMS-Academy`, database `neondb`, and separate branches
 `production`, `development`, `migration-test`, `restore-test`. Keep a separate secret
 entry for each branch and credential purpose; select a matching `LMS_ENV`/secret pair

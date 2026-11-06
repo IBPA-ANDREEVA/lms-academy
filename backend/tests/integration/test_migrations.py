@@ -8,10 +8,10 @@ import pytest
 from alembic.config import Config
 from alembic.script import ScriptDirectory
 from conftest import new_database
-from sqlalchemy import create_engine, inspect, text
+from sqlalchemy import inspect, text
 from sqlalchemy.engine import URL
-from sqlalchemy.pool import NullPool
 
+from app.db.config import DatabaseConfigurationError, database_engine
 from app.db.recovery import (
     RecoveryError,
     backup,
@@ -57,9 +57,7 @@ def alembic(
 def test_fresh_upgrade_repeatability_revision_and_seed(
     disposable_database: URL,
 ) -> None:
-    engine = create_engine(
-        disposable_database, poolclass=NullPool, hide_parameters=True
-    )
+    engine = database_engine(disposable_database)
     try:
         assert inspect(engine).get_table_names() == []
         alembic(disposable_database, "upgrade", "head")
@@ -104,14 +102,41 @@ def test_fresh_upgrade_repeatability_revision_and_seed(
         engine.dispose()
 
 
+def test_live_connection_rechecks_environment_and_preserves_explicit_options(
+    disposable_database: URL, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    url = disposable_database.update_query_dict(
+        {"sslmode": "disable", "connect_timeout": "7", "channel_binding": "disable"}
+    )
+    engine = database_engine(url)
+    try:
+        with engine.connect() as connection:
+            original_search_path = connection.scalar(text("SHOW search_path"))
+            assert connection.scalar(text("SELECT current_database()")) == url.database
+        with monkeypatch.context() as ambient:
+            ambient.setenv("PGHOSTADDR", "192.0.2.1")
+            ambient.setenv("PGOPTIONS", "-c search_path=unintended_schema")
+            with pytest.raises(DatabaseConfigurationError, match="Inherited"):
+                engine.connect()
+            rejected = alembic(url, "current", success=False)
+            assert rejected.returncode != 0
+            assert "Inherited PostgreSQL" in rejected.stdout + rejected.stderr
+            assert "192.0.2.1" not in rejected.stdout + rejected.stderr
+            assert "unintended_schema" not in rejected.stdout + rejected.stderr
+        # NullPool creates a fresh physical connection after each close.
+        with engine.connect() as connection:
+            assert connection.scalar(text("SHOW search_path")) == original_search_path
+            assert connection.scalar(text("SELECT current_database()")) == url.database
+    finally:
+        engine.dispose()
+
+
 def test_failed_migration_rolls_back_ddl_data_and_revision(
     disposable_database: URL, tmp_path: Path
 ) -> None:
     alembic(disposable_database, "upgrade", "head")
     before = revision(disposable_database)
-    engine = create_engine(
-        disposable_database, poolclass=NullPool, hide_parameters=True
-    )
+    engine = database_engine(disposable_database)
     try:
         with engine.begin() as connection:
             connection.execute(
@@ -176,9 +201,7 @@ def test_backup_restore_and_destination_guards(
     if not os.environ.get("POSTGRES_BIN"):
         pytest.skip("POSTGRES_BIN absent; PostgreSQL 18 recovery tools required")
     alembic(disposable_database, "upgrade", "head")
-    engine = create_engine(
-        disposable_database, poolclass=NullPool, hide_parameters=True
-    )
+    engine = database_engine(disposable_database)
     try:
         with engine.begin() as connection:
             connection.execute(
@@ -205,7 +228,7 @@ def test_backup_restore_and_destination_guards(
             restore(archive, target, "wrong")
         restore(archive, target, str(target.database))
         assert revision(target) == revision(disposable_database)
-        restored = create_engine(target, poolclass=NullPool, hide_parameters=True)
+        restored = database_engine(target)
         try:
             with restored.connect() as connection:
                 assert connection.execute(
@@ -220,7 +243,7 @@ def test_backup_restore_and_destination_guards(
         finally:
             restored.dispose()
     with new_database(postgres_admin_url) as target:
-        occupied = create_engine(target, poolclass=NullPool, hide_parameters=True)
+        occupied = database_engine(target)
         try:
             with occupied.begin() as connection:
                 connection.execute(text("CREATE SCHEMA unrelated"))

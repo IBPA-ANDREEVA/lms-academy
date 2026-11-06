@@ -6,12 +6,11 @@ from contextlib import contextmanager
 from uuid import uuid4
 
 import pytest
-from sqlalchemy import create_engine, text
+from sqlalchemy import text
 from sqlalchemy.engine import URL
 from sqlalchemy.exc import SQLAlchemyError
-from sqlalchemy.pool import NullPool
 
-from app.db.config import DatabaseConfigurationError, database_url
+from app.db.config import DatabaseConfigurationError, database_engine, database_url
 
 
 @pytest.fixture(scope="session")
@@ -36,13 +35,7 @@ def postgres_admin_url() -> URL:
 @contextmanager
 def new_database(admin_url: URL) -> Iterator[URL]:
     name = "base02_" + uuid4().hex
-    engine = create_engine(
-        admin_url,
-        isolation_level="AUTOCOMMIT",
-        poolclass=NullPool,
-        hide_parameters=True,
-        connect_args={"connect_timeout": 10},
-    )
+    engine = database_engine(admin_url, autocommit=True)
     created = False
     try:
         try:
