@@ -214,7 +214,10 @@ on a free port, generates a temporary SCRAM password, runs all tests, stops its 
 server and removes its own cluster. It never starts a Windows service or accesses
 existing cluster data. On Windows, PostgreSQL's official downloads link to an
 [EDB binary archive](https://www.enterprisedb.com/download-postgresql-binaries);
-a complete distribution includes `share/postgres.bki`. Point `POSTGRES_BIN` at an
+a complete distribution includes `postgres.bki` in the directory reported by
+its own `pg_config --sharedir`. Layouts such as `share`, `share/postgresql` and
+versioned distribution directories are supported; the harness passes that directory
+explicitly to `initdb -L`. Point `POSTGRES_BIN` at an
 extracted distribution if only client tools were installed. Run as a normal user.
 
 Do not manually supply a shared test-server URL. The harness provides loopback

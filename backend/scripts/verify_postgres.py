@@ -11,6 +11,27 @@ from pathlib import Path
 BACKEND = Path(__file__).resolve().parents[1]
 
 
+def postgres_share_directory(binaries: Path) -> Path:
+    """Resolve installation data without assuming a platform/prefix layout."""
+    from app.db.config import clean_pg_environment
+
+    result = subprocess.run(
+        [str(binaries / "pg_config"), "--sharedir"],
+        capture_output=True,
+        text=True,
+        check=True,
+        timeout=10,
+        env=clean_pg_environment(),
+    )
+    directory = Path(result.stdout.strip())
+    if not directory.is_absolute() or not (directory / "postgres.bki").is_file():
+        raise RuntimeError(
+            "Complete PostgreSQL server distribution required; "
+            "pg_config --sharedir must identify a directory containing postgres.bki"
+        )
+    return directory
+
+
 def main() -> int:
     # Direct script invocation puts scripts/, not backend/, on Python's path.
     sys.path.insert(0, str(BACKEND))
@@ -21,10 +42,7 @@ def main() -> int:
         print("Set POSTGRES_BIN to the PostgreSQL 18 bin directory.", file=sys.stderr)
         return 1
     binaries = Path(binary_dir)
-    if not (binaries.parent / "share/postgres.bki").exists():
-        raise RuntimeError(
-            "Complete PostgreSQL server distribution required; share/postgres.bki is missing"
-        )
+    sharedir = postgres_share_directory(binaries)
     flags = getattr(subprocess, "CREATE_NO_WINDOW", 0) if os.name == "nt" else 0
 
     def pg(tool: str, *args: str) -> None:
@@ -65,6 +83,8 @@ def main() -> int:
         try:
             pg(
                 "initdb",
+                "-L",
+                str(sharedir),
                 "-D",
                 str(data),
                 "-U",
