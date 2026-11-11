@@ -10,11 +10,6 @@ const eslintConfig = defineConfig([
     // Default ignores of eslint-config-next:
     ".next/**",
     ".next-*/**", // Isolated Next verification outputs are generated code.
-    ".next-land03-*/**",
-    ".next-components/**",
-    ".next-components-production/**",
-    ".next-la06-check/**",
-    ".next-auth-check/**",
     "out/**",
     "build/**",
     "next-env.d.ts",
