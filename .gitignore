@@ -17,8 +17,6 @@
 /.next/
 # Isolated verification builds are generated, like the default .next output.
 /.next-*/
-/.next-la06-check/
-/.next-auth-check/
 /out/
 
 # production
@@ -45,8 +43,6 @@ yarn-error.log*
 next-env.d.ts
 
 # local browser verification and temporary build outputs
-/.next-components/
-/.next-components-production/
 /.auth-evidence/
 /.catalog-evidence/
 /.commerce-evidence/
@@ -57,8 +53,6 @@ next-env.d.ts
 /.landing-evidence/
 
 !.env.example
-
-/.next-land03-*/
 
 # Python environments, caches and private database artifacts
 .venv/
@@ -71,3 +65,6 @@ __pycache__/
 htmlcov/
 *.dump
 *.backup
+
+# DBML CLI error output
+/dbml-error.log

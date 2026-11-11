@@ -1,5 +1,0 @@
-.preview { display: grid; gap: 24px; }
-.preview p { margin: 0; }
-.controls { display: flex; flex-wrap: wrap; gap: 12px; }
-.sample { position: relative; overflow: clip; min-height: 200px; padding: 32px; border: 1px solid var(--border); background: var(--surface); }
-.sample h3 { margin: 0 0 16px; }
