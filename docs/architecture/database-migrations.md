@@ -20,6 +20,8 @@ is in [schema QA](../qa/DB-schema-foundation-2026-11-06.md);
 
 ## Environment and credentials
 
+Security follow-up (2026-11-10): the macOS/Linux isolated verifier passes its generated bootstrap password to PostgreSQL 18 `initdb --pwfile=/dev/stdin` through a private subprocess input pipe. No plaintext `init-password` file is created and no password is put in command arguments or logs. SCRAM authentication, fresh-cluster proof, clean environment, migration/recovery coverage and teardown are unchanged. This harness requires `/dev/stdin`; it does not fall back to storing credentials on disk. See [verification and CodeQL triage](../qa/ci-security-followup-2026-11-10.md).
+
 From `backend/`, use Python 3.12 selected by `.python-version` and `uv sync --locked`.
 `uv.lock` pins the resolved dependencies. Synchronous SQLAlchemy 2 / Psycopg 3 is
 selected for operator commands and application units of work. Future synchronous

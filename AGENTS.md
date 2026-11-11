@@ -13,6 +13,7 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 This is a Russian-first beauty education LMS. It is not a generic SaaS dashboard or a cosmetics store. Work in English in repository documentation and engineering communication unless asked otherwise; design real UI copy in Russian first. English product localization follows `docs/product/mvp.md`.
 
 AUTHORITATIVE SOURCES. Read only the ones relevant to the task:
+- [SECURITY.md](SECURITY.md): read before security-sensitive work; concise trust boundaries and links to existing policy, with recommendations and unresolved decisions kept separate.
 - `docs/product/requirements.md`: business behavior and roles.
 - `docs/product/mvp.md`: release inclusion and exclusions.
 - `docs/product/open-questions.md`: only unresolved product questions. Never resolve these by guessing.

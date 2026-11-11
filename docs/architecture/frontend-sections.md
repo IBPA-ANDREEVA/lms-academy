@@ -1,5 +1,7 @@
 # Frontend sections and reuse audit
 
+CI follow-up, 2026-11-10: the unreferenced D-020 copies `home/composition/academy-story 2.tsx` and `home/sections/06-courses/components/use-featured-course-scroll 2.ts` are preserved byte-for-byte with `.archive` suffixes. HOME-03/04 continues to use `home/composition/academy-story.tsx` (`about,founder,seam`; HomePage); HOME-06 continues without a course-only scroll hook, per D-021 below. No section behavior, active source path or props changed. [Verification](../qa/ci-security-followup-2026-11-10.md).
+
 ## Source-verified section registry · 2026-11-02
 
 Current owners below supersede historical implementation notes. Paths are repository-relative; `home/`, `catalog/`, `course-detail/`, `commerce/` and `component-preview/` prefixes in this table mean `src/features/<prefix>`. Every section has colocated module CSS unless explicitly noted. Runtime/visual evidence and remaining approval are in the [LAND01 audit](../qa/LAND01-public-site-audit-2026-11-02.md). No implementation was changed by this documentation synchronization.

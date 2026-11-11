@@ -45,10 +45,11 @@ def main() -> int:
     sharedir = postgres_share_directory(binaries)
     flags = getattr(subprocess, "CREATE_NO_WINDOW", 0) if os.name == "nt" else 0
 
-    def pg(tool: str, *args: str) -> None:
+    def pg(tool: str, *args: str, input_data: bytes | None = None) -> None:
         result = subprocess.run(
             [str(binaries / tool), *args],
-            stdin=subprocess.DEVNULL,
+            stdin=subprocess.DEVNULL if input_data is None else None,
+            input=input_data,
             stdout=subprocess.DEVNULL,
             stderr=subprocess.DEVNULL,
             check=False,
@@ -78,25 +79,22 @@ def main() -> int:
             raise RuntimeError("Temporary cluster must be outside the repository")
         data = root / "data"
         password = secrets.token_hex(24)
-        password_file = root / "init-password"
-        password_file.write_text(password, encoding="utf-8")
-        try:
-            pg(
-                "initdb",
-                "-L",
-                str(sharedir),
-                "-D",
-                str(data),
-                "-U",
-                "base02_test",
-                "--auth=scram-sha-256",
-                "--pwfile",
-                str(password_file),
-                "--encoding=UTF8",
-                "--locale=C",
-            )
-        finally:
-            password_file.unlink(missing_ok=True)
+        # macOS/Linux: initdb reads its password from a private stdin pipe.
+        # No plaintext credential file, command-line secret or logging fallback.
+        pg(
+            "initdb",
+            "-L",
+            str(sharedir),
+            "-D",
+            str(data),
+            "-U",
+            "base02_test",
+            "--auth=scram-sha-256",
+            "--pwfile=/dev/stdin",
+            "--encoding=UTF8",
+            "--locale=C",
+            input_data=(password + "\n").encode("utf-8"),
+        )
         with socket.socket() as listener:
             listener.bind(("127.0.0.1", 0))
             port = listener.getsockname()[1]
