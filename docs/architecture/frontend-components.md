@@ -1,5 +1,7 @@
 # Shared frontend components
 
+Repository cleanup, 2026-11-10: removed unreferenced numbered source copies; canonical implementation paths, props, consumers, route composition and product backlog are unchanged. Historical `.archive` sources remain preserved. See the [cleanup verification](../qa/repository-cleanup-2026-11-10.md).
+
 ## CI source archival · 2026-11-10
 
 Four unreferenced ` 2.ts/tsx` copies of D-020 motion implementations now retain their exact bytes with an `.archive` suffix: `features/component-preview/motion-preview 2.tsx.archive`, `features/public-shell/circle-loader 2.tsx.archive`, `features/home/composition/academy-story 2.tsx.archive` and `features/home/sections/06-courses/components/use-featured-course-scroll 2.ts.archive` (all under `src/`). They have no runtime consumers and are historical source, not additional components. Their removed imports/tokens contradicted the approved D-021 replacement recorded below. No TypeScript exclusions, replacement token values or runtime component edits were introduced. Current owners remain `MotionPreview` (`component-preview/motion-preview.tsx`, no props; ComponentPreviewPage), `SplashLoader` (PublicMotion/MotionPreview) and the home-owned document-flow `AcademyStory`. The course-only scroll hook remains retired. See [CI/security follow-up](../qa/ci-security-followup-2026-11-10.md).

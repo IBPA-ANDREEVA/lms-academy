@@ -54,7 +54,6 @@ next-env.d.ts
 
 !.env.example
 
-
 # Python environments, caches and private database artifacts
 .venv/
 __pycache__/
