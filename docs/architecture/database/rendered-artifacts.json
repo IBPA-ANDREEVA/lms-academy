@@ -1,0 +1,14 @@
+{
+  "lms-overview.png": {
+    "artifact_sha256": "2b05be7cfeb7143c4c8f7efebb23e241717e642d26a36ec9e3ca35fa10f6f929",
+    "source_sha256": "3abf7a760d3a75a4f2ab34747c56e52679a991961155d237c71f3c03986f4424"
+  },
+  "lms-overview.svg": {
+    "artifact_sha256": "9d22253437ab7bad5a11859471a3ccc68a13b6dc087135a8d47bd0fa68b22475",
+    "source_sha256": "3abf7a760d3a75a4f2ab34747c56e52679a991961155d237c71f3c03986f4424"
+  },
+  "lms-schema.svg": {
+    "artifact_sha256": "b87e5f402f8196e28f11110017ef0971a4bb12877c9ee4c3adaa9fc4504c68e7",
+    "source_sha256": "878148bacad720e8e1de95093effdfb521db5277486589edfd6473a3345b7e71"
+  }
+}
