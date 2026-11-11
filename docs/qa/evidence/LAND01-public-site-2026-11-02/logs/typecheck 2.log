@@ -1,6 +1,0 @@
-error TS6053: File '/Users/ivanmakovetskyi/Desktop/Work/lms-academy/.next/types/cache-life.d.ts' not found.
-  The file is in the program because:
-    Matched by include pattern '.next/types/**/*.ts' in '/Users/ivanmakovetskyi/Desktop/Work/lms-academy/tsconfig.json'
-error TS6053: File '/Users/ivanmakovetskyi/Desktop/Work/lms-academy/.next/types/validator.ts' not found.
-  The file is in the program because:
-    Matched by include pattern '.next/types/**/*.ts' in '/Users/ivanmakovetskyi/Desktop/Work/lms-academy/tsconfig.json'
