@@ -1,5 +1,15 @@
 # Database development, migrations and recovery
 
+> Merge update (2026-11-10): the current head is `20261110_01`, with 31 domain
+> tables. `20261109_01` adds Identity storage; `20261110_01` adds the incoming
+> pending account status/default without changing applied revisions. Existing
+> users retain their statuses; downgrade refuses pending accounts. This revision
+> replaces the enum under a users-table lock; plan a controlled migration window.
+> Incoming Identity API/service work is partial and is not release-verified.
+> Earlier foundation-only status statements below describe the November 6 baseline.
+> See `docs/architecture/database/schema-contract.md` for the reconciled contract.
+
+
 Scope: database infrastructure only. [ADR-0003](../decisions/0003-python-backend-architecture.md)
 and the [entity map](entity-map.md) retain domain ownership. The 2026-11-06
 [schema contract](database/schema-contract.md) maps 28 owner-local tables, bounded

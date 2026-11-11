@@ -3,7 +3,8 @@
     {
       "labels": [
         "active",
-        "blocked"
+        "blocked",
+        "pending"
       ],
       "name": "account_status",
       "schema": "public",
@@ -69,8 +70,8 @@
       "visible": true
     }
   ],
-  "head": "20261106_02",
-  "reviewed_model_checks_sha256": "3cca98480a466c61a316efac105856349c3f0e6060b6f3398027c134f90e8338",
+  "head": "20261110_01",
+  "reviewed_model_checks_sha256": "ae21f1d2311b572ec1d66ca44073f2bf14bd36f2f433ab9cf0f8698b25efc7a2",
   "tables": {
     "assignments": {
       "checks": [],
@@ -1279,6 +1280,341 @@
             "postgresql_nulls_not_distinct": false
           },
           "name": "uq_enrollments_order_item_id"
+        }
+      ]
+    },
+    "identity_action_tokens": {
+      "checks": [
+        {
+          "comment": null,
+          "name": "ck_identity_action_tokens_digest_length",
+          "sqltext": "octet_length(secret_digest) = 32"
+        },
+        {
+          "comment": null,
+          "name": "ck_identity_action_tokens_positive_lifetime",
+          "sqltext": "expires_at > created_at"
+        },
+        {
+          "comment": null,
+          "name": "ck_identity_action_tokens_purpose_nonblank",
+          "sqltext": "length(btrim(purpose::text)) > 0"
+        }
+      ],
+      "columns": [
+        {
+          "default": null,
+          "name": "id",
+          "nullable": false,
+          "type": "UUID"
+        },
+        {
+          "default": null,
+          "name": "user_id",
+          "nullable": false,
+          "type": "UUID"
+        },
+        {
+          "default": null,
+          "name": "purpose",
+          "nullable": false,
+          "type": "VARCHAR(48)"
+        },
+        {
+          "default": null,
+          "name": "secret_digest",
+          "nullable": false,
+          "type": "BYTEA"
+        },
+        {
+          "default": null,
+          "name": "target_email",
+          "nullable": true,
+          "type": "VARCHAR(255)"
+        },
+        {
+          "default": "now()",
+          "name": "created_at",
+          "nullable": false,
+          "type": "TIMESTAMP"
+        },
+        {
+          "default": null,
+          "name": "expires_at",
+          "nullable": false,
+          "type": "TIMESTAMP"
+        },
+        {
+          "default": null,
+          "name": "consumed_at",
+          "nullable": true,
+          "type": "TIMESTAMP"
+        },
+        {
+          "default": null,
+          "name": "revoked_at",
+          "nullable": true,
+          "type": "TIMESTAMP"
+        }
+      ],
+      "foreign_keys": [
+        {
+          "comment": null,
+          "constrained_columns": [
+            "user_id"
+          ],
+          "name": "fk_identity_action_tokens_user_id_users",
+          "options": {
+            "ondelete": "RESTRICT"
+          },
+          "referred_columns": [
+            "id"
+          ],
+          "referred_schema": "public",
+          "referred_table": "users"
+        }
+      ],
+      "indexes": [
+        {
+          "column_names": [
+            "user_id",
+            "purpose"
+          ],
+          "dialect_options": {
+            "postgresql_include": []
+          },
+          "name": "ix_identity_action_tokens_user_purpose",
+          "unique": false
+        },
+        {
+          "column_names": [
+            "secret_digest"
+          ],
+          "dialect_options": {
+            "postgresql_include": []
+          },
+          "duplicates_constraint": "uq_identity_action_tokens_secret_digest",
+          "name": "uq_identity_action_tokens_secret_digest",
+          "unique": true
+        }
+      ],
+      "primary_key": {
+        "comment": null,
+        "constrained_columns": [
+          "id"
+        ],
+        "dialect_options": {
+          "postgresql_include": []
+        },
+        "name": "pk_identity_action_tokens"
+      },
+      "unique_constraints": [
+        {
+          "column_names": [
+            "secret_digest"
+          ],
+          "comment": null,
+          "dialect_options": {
+            "postgresql_include": [],
+            "postgresql_nulls_not_distinct": false
+          },
+          "name": "uq_identity_action_tokens_secret_digest"
+        }
+      ]
+    },
+    "identity_credentials": {
+      "checks": [
+        {
+          "comment": null,
+          "name": "ck_identity_credentials_hash_nonblank",
+          "sqltext": "length(btrim(password_hash)) > 0"
+        }
+      ],
+      "columns": [
+        {
+          "default": null,
+          "name": "user_id",
+          "nullable": false,
+          "type": "UUID"
+        },
+        {
+          "default": null,
+          "name": "password_hash",
+          "nullable": false,
+          "type": "TEXT"
+        },
+        {
+          "default": "now()",
+          "name": "created_at",
+          "nullable": false,
+          "type": "TIMESTAMP"
+        },
+        {
+          "default": "now()",
+          "name": "updated_at",
+          "nullable": false,
+          "type": "TIMESTAMP"
+        }
+      ],
+      "foreign_keys": [
+        {
+          "comment": null,
+          "constrained_columns": [
+            "user_id"
+          ],
+          "name": "fk_identity_credentials_user_id_users",
+          "options": {
+            "ondelete": "RESTRICT"
+          },
+          "referred_columns": [
+            "id"
+          ],
+          "referred_schema": "public",
+          "referred_table": "users"
+        }
+      ],
+      "indexes": [],
+      "primary_key": {
+        "comment": null,
+        "constrained_columns": [
+          "user_id"
+        ],
+        "dialect_options": {
+          "postgresql_include": []
+        },
+        "name": "pk_identity_credentials"
+      },
+      "unique_constraints": []
+    },
+    "identity_sessions": {
+      "checks": [
+        {
+          "comment": null,
+          "name": "ck_identity_sessions_digest_length",
+          "sqltext": "octet_length(secret_digest) = 32"
+        },
+        {
+          "comment": null,
+          "name": "ck_identity_sessions_interaction_after_creation",
+          "sqltext": "last_interaction_at >= created_at"
+        },
+        {
+          "comment": null,
+          "name": "ck_identity_sessions_positive_lifetime",
+          "sqltext": "absolute_expires_at > created_at"
+        }
+      ],
+      "columns": [
+        {
+          "default": null,
+          "name": "id",
+          "nullable": false,
+          "type": "UUID"
+        },
+        {
+          "default": null,
+          "name": "user_id",
+          "nullable": false,
+          "type": "UUID"
+        },
+        {
+          "default": null,
+          "name": "secret_digest",
+          "nullable": false,
+          "type": "BYTEA"
+        },
+        {
+          "default": "now()",
+          "name": "created_at",
+          "nullable": false,
+          "type": "TIMESTAMP"
+        },
+        {
+          "default": "now()",
+          "name": "last_interaction_at",
+          "nullable": false,
+          "type": "TIMESTAMP"
+        },
+        {
+          "default": null,
+          "name": "absolute_expires_at",
+          "nullable": false,
+          "type": "TIMESTAMP"
+        },
+        {
+          "default": null,
+          "name": "revoked_at",
+          "nullable": true,
+          "type": "TIMESTAMP"
+        },
+        {
+          "default": null,
+          "name": "password_reauthenticated_at",
+          "nullable": true,
+          "type": "TIMESTAMP"
+        }
+      ],
+      "foreign_keys": [
+        {
+          "comment": null,
+          "constrained_columns": [
+            "user_id"
+          ],
+          "name": "fk_identity_sessions_user_id_users",
+          "options": {
+            "ondelete": "RESTRICT"
+          },
+          "referred_columns": [
+            "id"
+          ],
+          "referred_schema": "public",
+          "referred_table": "users"
+        }
+      ],
+      "indexes": [
+        {
+          "column_names": [
+            "user_id"
+          ],
+          "dialect_options": {
+            "postgresql_include": []
+          },
+          "name": "ix_identity_sessions_user_id",
+          "unique": false
+        },
+        {
+          "column_names": [
+            "secret_digest"
+          ],
+          "dialect_options": {
+            "postgresql_include": []
+          },
+          "duplicates_constraint": "uq_identity_sessions_secret_digest",
+          "name": "uq_identity_sessions_secret_digest",
+          "unique": true
+        }
+      ],
+      "primary_key": {
+        "comment": null,
+        "constrained_columns": [
+          "id"
+        ],
+        "dialect_options": {
+          "postgresql_include": []
+        },
+        "name": "pk_identity_sessions"
+      },
+      "unique_constraints": [
+        {
+          "column_names": [
+            "secret_digest"
+          ],
+          "comment": null,
+          "dialect_options": {
+            "postgresql_include": [],
+            "postgresql_nulls_not_distinct": false
+          },
+          "name": "uq_identity_sessions_secret_digest"
         }
       ]
     },
@@ -3725,7 +4061,7 @@
           "type": "VARCHAR(50)"
         },
         {
-          "default": "'active'::account_status",
+          "default": "'pending'::account_status",
           "name": "status",
           "nullable": false,
           "type": "VARCHAR(7)"

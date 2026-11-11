@@ -1,5 +1,15 @@
 # LMS Python backend
 
+> Merge update (2026-11-10): the current head is `20261110_01`, with 31 domain
+> tables. `20261109_01` adds Identity storage; `20261110_01` adds the incoming
+> pending account status/default without changing applied revisions. Existing
+> users retain their statuses; downgrade refuses pending accounts. This revision
+> replaces the enum under a users-table lock; plan a controlled migration window.
+> Incoming Identity API/service work is partial and is not release-verified.
+> Earlier foundation-only status statements below describe the November 6 baseline.
+> See `docs/architecture/database/schema-contract.md` for the reconciled contract.
+
+
 **Status: initial physical database and development workflow implemented (2026-11-06).** There are 28 owner-local SQLAlchemy tables, immutable baseline plus reviewed successors through `20261106_02`, bounded sync application sessions, isolated PostgreSQL tests, local role-separated development commands, recovery tools and colored diagrams. No FastAPI application, feature services, authentication, jobs or frontend HTTP integration exists. See the [table/column manifest](../docs/architecture/database/schema-contract.md), [database runbook](../docs/architecture/database-migrations.md), and [new verification evidence](../docs/qa/DB-schema-foundation-2026-11-06.md). The [BASE02-B report](../docs/qa/BASE02-B-database-foundation-2026-11-04.md) remains historical.
 
 

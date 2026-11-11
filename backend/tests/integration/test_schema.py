@@ -113,7 +113,7 @@ def test_identity_defaults_multiple_users_and_case_insensitive_keys(
     assert db.scalar(
         select(TABLES["users"].c.roles).where(TABLES["users"].c.id == first)
     ) == ["student"]
-    assert row.status == "active"
+    assert row.status == "pending"
     assert row.email_verified_at is None
     reject(db, "23505", "users", email="student@example.invalid")
     reject(db, "23505", "users", email="other@example.invalid", referral_code="mycode")
@@ -670,7 +670,7 @@ def test_empty_downgrade_reupgrade_and_populated_refusal(
             disposable_database, "downgrade", "5c9789a48cba", success=False
         )
         assert result.returncode != 0
-        assert revision(disposable_database) == "20261106_02"
+        assert revision(disposable_database) == "20261110_01"
         with engine.connect() as connection:
             assert connection.scalar(text("SELECT count(*) FROM users")) == 1
     finally:

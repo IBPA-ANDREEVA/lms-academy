@@ -39,7 +39,7 @@ def test_immutable_baseline_hash() -> None:
 def test_metadata_registration_no_connect_fk_types_and_retention() -> None:
     with patch("psycopg.connect", side_effect=AssertionError("Unexpected connection")):
         metadata = migration_metadata()
-        assert len(metadata.tables) == 28
+        assert len(metadata.tables) == 31
     for table in metadata.tables.values():
         for column in table.columns:
             if isinstance(column.type, DateTime):

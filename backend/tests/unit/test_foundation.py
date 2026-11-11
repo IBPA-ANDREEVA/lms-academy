@@ -224,10 +224,10 @@ def test_postgres_utilities_receive_only_explicit_settings(
 
 def test_one_head_preserves_baseline_and_registers_domains() -> None:
     script = ScriptDirectory.from_config(Config(str(BACKEND / "alembic.ini")))
-    assert script.get_heads() == ["20261106_02"]
+    assert script.get_heads() == ["20261110_01"]
     assert script.get_bases() == [BASELINE]
-    assert len(list(script.walk_revisions())) == 3
-    assert len(migration_metadata().tables) == 28
+    assert len(list(script.walk_revisions())) == 5
+    assert len(migration_metadata().tables) == 31
 
 
 @pytest.mark.parametrize(

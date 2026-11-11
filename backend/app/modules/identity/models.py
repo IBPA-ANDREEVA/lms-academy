@@ -35,8 +35,8 @@ class User(Base):
     email_verified_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
     referral_code: Mapped[str | None] = mapped_column(String(50))
     status: Mapped[str] = mapped_column(
-        Enum("active", "blocked", name="account_status"),
-        server_default=text("'active'"),
+        Enum("active", "blocked", "pending", name="account_status"),
+        server_default=text("'pending'"),
     )
     created_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True), server_default=text("now()")

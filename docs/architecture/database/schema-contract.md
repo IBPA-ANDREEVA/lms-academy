@@ -10,6 +10,44 @@ provider-payment-ID unique constraint found by the first live drift check; the
 applied local revision was preserved. The initial mapping was written **before the
 first schema migration**; this final manifest reflects local verification of both successors.
 
+## Merge reconciliation · 2026-11-10
+
+Head `20261110_01` preserves the applied November 6/9 revisions and carries
+the incoming pending-account status/default in a new transactional revision.
+Existing active/blocked users are preserved; downgrade refuses pending users.
+The enum replacement takes an exclusive users-table lock and requires a controlled
+migration window. All 31 tables remain registered. Token-purpose ORM conversion
+retains the existing VARCHAR(48) physical contract. Database sessions stay UTC.
+Preserved duplicate Python copies use `.py.archive` so migration/test discovery
+does not execute historical copies. These files are archival evidence only.
+
+Incoming Identity routes/services remain unfinished feature work; this merge is
+not authentication release approval or proof of policy/security completeness.
+The generated schema snapshot and diagrams describe the reconciled head.
+
+## Identity storage addendum · 2026-11-09
+
+Head `20261109_01` adds three Identity-owned storage tables, bringing the
+physical total to **31 tables**. The 2026-11-06 manifest below is the historical
+28-table foundation; its statement that credentials/sessions are absent is
+superseded by this addendum. Existing tables and enums are unchanged.
+
+| Owner | Table | Structural guarantees |
+| --- | --- | --- |
+| Identity | identity_credentials | One credential per user (PK/FK), nonblank password hash, creation/update timestamps. |
+| Identity | identity_sessions | User FK, unique 32-byte secret digest, positive absolute lifetime, interaction timestamp no earlier than creation; nullable revocation and reauthentication timestamps. |
+| Identity | identity_action_tokens | User FK, nonblank purpose, unique 32-byte secret digest, positive lifetime; optional target email, consumption and revocation timestamps. |
+
+All user references use RESTRICT. These mappings live in
+`backend/app/modules/identity/auth_models.py` and are explicitly registered.
+Downgrade locks all three tables and refuses to drop any populated authentication
+storage. Session validation, hashing, action-token consumption, email delivery,
+recovery and authorization remain service obligations; these tables establish no
+working authentication flow or resolution of open policies.
+
+The generated snapshot, DBML and rendered diagrams now describe this head.
+See [verification evidence](../../qa/DB-schema-test-update-2026-11-09.md).
+
 ## Table manifest and input mapping
 
 All retained tables keep their original names. UUIDs are application-supplied,

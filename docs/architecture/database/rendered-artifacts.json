@@ -1,14 +1,14 @@
 {
   "lms-overview.png": {
-    "artifact_sha256": "9f2ded130e98f4b198bedf98a6191fd9c5f29733b9b570b68717aa8b5f61036b",
-    "source_sha256": "51ff81faed136ffa0b72c7a65a281eb9433e957a145758cbb214ee9f1dcf16e3"
+    "artifact_sha256": "0885df6f699529f3cabceabf85d9a739fe45941cb4b3976bedbfe3178f1b2466",
+    "source_sha256": "4df0a5873c740b443a44bd6392724fec08f52717af244f31ed795a4e01e73e57"
   },
   "lms-overview.svg": {
-    "artifact_sha256": "941cea324f0deb45f2455f46910594319190c0888dc746efb70ed74af94a670a",
-    "source_sha256": "51ff81faed136ffa0b72c7a65a281eb9433e957a145758cbb214ee9f1dcf16e3"
+    "artifact_sha256": "8a204caa6c185935b63ddac763ff2a7d1f3d16022222356a7d738ff9b525f3a4",
+    "source_sha256": "4df0a5873c740b443a44bd6392724fec08f52717af244f31ed795a4e01e73e57"
   },
   "lms-schema.svg": {
-    "artifact_sha256": "e5c18293cc30b00bca30cf128a1f5a2d94ca97a971ddd85be505a2387823902d",
-    "source_sha256": "afe986e953c6b95e1f9fa38d1bd66be8f7b9c6d7f5fca40aa412a93328a70778"
+    "artifact_sha256": "3039b4b8670af1b764a23c6a56bc8ed505b3e0f0e7aa514519121e612d348448",
+    "source_sha256": "973f718599485d73e1ce7b2066e3602dafc3f216bc7e97eccc27699c654ce06a"
   }
 }
