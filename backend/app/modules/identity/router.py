@@ -1,26 +1,25 @@
-
 from typing import cast
 
 from fastapi import APIRouter, HTTPException, Request, status
 
 from app.db.session import ApplicationDatabase
+from app.modules.identity.exceptions import (
+    EmailAlreadyRegistered,
+    ResendError,
+    ResendWasSentEarlier,
+    TokenAlreadyUsed,
+    TokenError,
+    TokenExpired,
+    TokenInvalid,
+)
 from app.modules.identity.schemas import (
-    RegisterRequest,
     BaseResponse,
-    VerifyEmailRequest,
+    RegisterRequest,
     ResendVerificationRequest,
+    VerifyEmailRequest,
 )
 from app.modules.identity.services.registrations import register_student
-from app.modules.identity.services.verfication import verify_email, resend_verification
-from app.modules.identity.exceptions import (
-  EmailAlreadyRegistered,
-  TokenError,
-  TokenAlreadyUsed,
-  TokenExpired,
-  TokenInvalid,
-  ResendWasSentEarlier,
-  ResendError
-)
+from app.modules.identity.services.verfication import resend_verification, verify_email
 
 router = APIRouter(
     prefix="/auth",
@@ -61,11 +60,9 @@ def register(
         ) from None
 
     return BaseResponse(
-        message=(
-            "Test account created. "
-            "Email verification token created."
-        )
+        message=("Test account created. Email verification token created.")
     )
+
 
 @router.post(
     "/verify-email",
@@ -78,75 +75,63 @@ def verify_email_route(
     request: Request,
 ) -> BaseResponse:
 
-    db = cast(
-        ApplicationDatabase,
-        request.app.state.database
-    )
+    db = cast(ApplicationDatabase, request.app.state.database)
     try:
-      with db.unit_of_work() as session:
-        verify_email(session, body.token)
+        with db.unit_of_work() as session:
+            verify_email(session, body.token)
 
     except TokenInvalid:
-       raise HTTPException(
-        status_code=400,
-        detail="Provided token is invalid",
-      ) 
-    
+        raise HTTPException(
+            status_code=400,
+            detail="Provided token is invalid",
+        )
+
     except TokenExpired:
-       raise HTTPException(
-        status_code=400,
-        detail="Provided token is expired",
-      ) 
-    
+        raise HTTPException(
+            status_code=400,
+            detail="Provided token is expired",
+        )
+
     except TokenAlreadyUsed:
-       raise HTTPException(
-        status_code=400,
-        detail="Provided token has been used",
-      ) 
+        raise HTTPException(
+            status_code=400,
+            detail="Provided token has been used",
+        )
 
     except TokenError as exc:
-      raise HTTPException(
-        status_code=400,
-        detail="Provided token is expired or invalid",
-      ) from exc
+        raise HTTPException(
+            status_code=400,
+            detail="Provided token is expired or invalid",
+        ) from exc
 
-    return BaseResponse(
-        message=(
-            "Test verification successed. "
-        )
-    )
+    return BaseResponse(message=("Test verification successed. "))
+
 
 @router.post(
-   "/resend_verify_email",
-   response_model=BaseResponse,
-   status_code=status.HTTP_201_CREATED,
-   operation_id="IdentityResendVerificaiton",
+    "/resend_verify_email",
+    response_model=BaseResponse,
+    status_code=status.HTTP_201_CREATED,
+    operation_id="IdentityResendVerificaiton",
 )
 def resend_verification_route(
-   body: ResendVerificationRequest,
-   request: Request
+    body: ResendVerificationRequest, request: Request
 ) -> BaseResponse:
-  db = cast(
-      ApplicationDatabase,
-      request.app.state.database
-  )
-  
-  try:
-    with db.unit_of_work() as session:
-      resend_verification(session, body.email)
+    db = cast(ApplicationDatabase, request.app.state.database)
 
-  except ResendWasSentEarlier:
-    raise HTTPException(
-      status_code=400,
-      detail="The resend api has a cooldown of 60s",
-    ) 
-  
-  except ResendError as exc:
-    raise HTTPException(
-      status_code=400,
-      detail="There was an eror while resending verification",
-    ) from exc
-  
-  return BaseResponse(
-    message="Succesfull resend of verification"
-  )
+    try:
+        with db.unit_of_work() as session:
+            resend_verification(session, body.email)
+
+    except ResendWasSentEarlier:
+        raise HTTPException(
+            status_code=400,
+            detail="The resend api has a cooldown of 60s",
+        )
+
+    except ResendError as exc:
+        raise HTTPException(
+            status_code=400,
+            detail="There was an eror while resending verification",
+        ) from exc
+
+    return BaseResponse(message="Succesfull resend of verification")

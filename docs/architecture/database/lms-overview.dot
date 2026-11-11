@@ -1,5 +1,5 @@
 digraph LMS_Overview {
-graph [rankdir=LR, bgcolor="white", label="LMS Academy — 7 owners / 31 physical tables | head 20261109_01", labelloc=t, fontsize=22, pad=0.4, nodesep=0.45, ranksep=0.9];
+graph [rankdir=LR, bgcolor="white", label="LMS Academy — 7 owners / 31 physical tables | head 20261110_01", labelloc=t, fontsize=22, pad=0.4, nodesep=0.45, ranksep=0.9];
 node [shape=plain, fontname="Helvetica"];
 edge [color="#64748B", arrowsize=0.7];
 identity [label=<<TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0" CELLPADDING="7"><TR><TD PORT="header" BGCOLOR="#3B82F6"><FONT COLOR="white"><B>Identity</B></FONT></TD></TR><TR><TD ALIGN="LEFT">identity_action_tokens</TD></TR><TR><TD ALIGN="LEFT">identity_credentials</TD></TR><TR><TD ALIGN="LEFT">identity_sessions</TD></TR><TR><TD ALIGN="LEFT">profiles</TD></TR><TR><TD ALIGN="LEFT">users</TD></TR></TABLE>>];

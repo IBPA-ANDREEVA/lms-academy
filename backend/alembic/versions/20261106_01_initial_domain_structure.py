@@ -25,7 +25,7 @@ depends_on: str | Sequence[str] | None = None
 
 def upgrade() -> None:
     """Upgrade schema."""
-    postgresql.ENUM("active", "blocked", "pending", name="account_status").create(
+    postgresql.ENUM("active", "blocked", name="account_status").create(
         op.get_bind(), checkfirst=False
     )
     postgresql.ENUM("course", "miniCourse", name="course_type").create(

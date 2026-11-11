@@ -1,0 +1,16 @@
+{
+  "results": [
+    "desktop story reverse scrub; featured 120px CSS sticky beat",
+    "1440px: rapid/keyboard switching, stable scroll/height, reduced motion, routes/history/focus, circle preview",
+    "768px: rapid/keyboard switching, stable scroll/height, reduced motion, routes/history/focus, circle preview",
+    "390px: rapid/keyboard switching, stable scroll/height, reduced motion, routes/history/focus, circle preview",
+    "360px: rapid/keyboard switching, stable scroll/height, reduced motion, routes/history/focus, circle preview",
+    "navigation slow: latest intent, bounded cleanup, one overlay",
+    "navigation interrupt: latest intent, bounded cleanup, one overlay",
+    "navigation reduce: latest intent, bounded cleanup, one overlay",
+    "navigation resize: latest intent, bounded cleanup, one overlay",
+    "navigation error: latest intent, bounded cleanup, one overlay",
+    "no-JS homepage, all offer panels and unanimated server content"
+  ],
+  "errors": []
+}

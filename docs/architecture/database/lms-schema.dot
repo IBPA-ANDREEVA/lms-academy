@@ -1,5 +1,5 @@
 digraph LMS {
-graph [rankdir=LR, bgcolor="white", nodesep=0.25, ranksep=1.2, compound=true, label="LMS Academy — physical schema | head 20261109_01 | no feature workflows", labelloc=t, fontsize=22];
+graph [rankdir=LR, bgcolor="white", nodesep=0.25, ranksep=1.2, compound=true, label="LMS Academy — physical schema | head 20261110_01 | no feature workflows", labelloc=t, fontsize=22];
 node [shape=plain, fontname="Helvetica"];
 edge [color="#A8ADB5", arrowsize=0.6, fontsize=9, fontname="Helvetica"];
 subgraph cluster_identity { label="Identity"; color="#3B82F6"; fontname="Helvetica";

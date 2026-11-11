@@ -1,0 +1,642 @@
+{
+  "results": [
+    {
+      "width": 1440,
+      "check": "welcome frame sequence, cleanup, session reload"
+    },
+    {
+      "width": 390,
+      "check": "welcome frame sequence, cleanup, session reload"
+    },
+    {
+      "width": 1920,
+      "route": "/",
+      "check": "normal motion, fast/reverse scroll, visible content, bounds"
+    },
+    {
+      "width": 1920,
+      "route": "/courses",
+      "check": "normal motion, fast/reverse scroll, visible content, bounds"
+    },
+    {
+      "width": 1920,
+      "route": "/mini-courses",
+      "check": "normal motion, fast/reverse scroll, visible content, bounds"
+    },
+    {
+      "width": 1920,
+      "route": "/courses/course-lashes",
+      "check": "normal motion, fast/reverse scroll, visible content, bounds"
+    },
+    {
+      "width": 1920,
+      "route": "/mini-courses/mini-lashes",
+      "check": "normal motion, fast/reverse scroll, visible content, bounds"
+    },
+    {
+      "width": 1920,
+      "route": "/cart",
+      "check": "normal motion, fast/reverse scroll, visible content, bounds"
+    },
+    {
+      "width": 1920,
+      "route": "/checkout",
+      "check": "normal motion, fast/reverse scroll, visible content, bounds"
+    },
+    {
+      "width": 1920,
+      "route": "/preview/components",
+      "check": "normal motion, fast/reverse scroll, visible content, bounds"
+    },
+    {
+      "width": 1920,
+      "check": "disclosure reversal, resize, live reduced motion, immediate menu/auth dismissal"
+    },
+    {
+      "width": 1440,
+      "route": "/",
+      "check": "normal motion, fast/reverse scroll, visible content, bounds"
+    },
+    {
+      "width": 1440,
+      "route": "/courses",
+      "check": "normal motion, fast/reverse scroll, visible content, bounds"
+    },
+    {
+      "width": 1440,
+      "route": "/mini-courses",
+      "check": "normal motion, fast/reverse scroll, visible content, bounds"
+    },
+    {
+      "width": 1440,
+      "route": "/courses/course-lashes",
+      "check": "normal motion, fast/reverse scroll, visible content, bounds"
+    },
+    {
+      "width": 1440,
+      "route": "/mini-courses/mini-lashes",
+      "check": "normal motion, fast/reverse scroll, visible content, bounds"
+    },
+    {
+      "width": 1440,
+      "route": "/cart",
+      "check": "normal motion, fast/reverse scroll, visible content, bounds"
+    },
+    {
+      "width": 1440,
+      "route": "/checkout",
+      "check": "normal motion, fast/reverse scroll, visible content, bounds"
+    },
+    {
+      "width": 1440,
+      "route": "/preview/components",
+      "check": "normal motion, fast/reverse scroll, visible content, bounds"
+    },
+    {
+      "width": 1440,
+      "check": "disclosure reversal, resize, live reduced motion, immediate menu/auth dismissal"
+    },
+    {
+      "width": 1280,
+      "route": "/",
+      "check": "normal motion, fast/reverse scroll, visible content, bounds"
+    },
+    {
+      "width": 1280,
+      "route": "/courses",
+      "check": "normal motion, fast/reverse scroll, visible content, bounds"
+    },
+    {
+      "width": 1280,
+      "route": "/mini-courses",
+      "check": "normal motion, fast/reverse scroll, visible content, bounds"
+    },
+    {
+      "width": 1280,
+      "route": "/courses/course-lashes",
+      "check": "normal motion, fast/reverse scroll, visible content, bounds"
+    },
+    {
+      "width": 1280,
+      "route": "/mini-courses/mini-lashes",
+      "check": "normal motion, fast/reverse scroll, visible content, bounds"
+    },
+    {
+      "width": 1280,
+      "route": "/cart",
+      "check": "normal motion, fast/reverse scroll, visible content, bounds"
+    },
+    {
+      "width": 1280,
+      "route": "/checkout",
+      "check": "normal motion, fast/reverse scroll, visible content, bounds"
+    },
+    {
+      "width": 1280,
+      "route": "/preview/components",
+      "check": "normal motion, fast/reverse scroll, visible content, bounds"
+    },
+    {
+      "width": 1280,
+      "check": "disclosure reversal, resize, live reduced motion, immediate menu/auth dismissal"
+    },
+    {
+      "width": 1024,
+      "route": "/",
+      "check": "normal motion, fast/reverse scroll, visible content, bounds"
+    },
+    {
+      "width": 1024,
+      "route": "/courses",
+      "check": "normal motion, fast/reverse scroll, visible content, bounds"
+    },
+    {
+      "width": 1024,
+      "route": "/mini-courses",
+      "check": "normal motion, fast/reverse scroll, visible content, bounds"
+    },
+    {
+      "width": 1024,
+      "route": "/courses/course-lashes",
+      "check": "normal motion, fast/reverse scroll, visible content, bounds"
+    },
+    {
+      "width": 1024,
+      "route": "/mini-courses/mini-lashes",
+      "check": "normal motion, fast/reverse scroll, visible content, bounds"
+    },
+    {
+      "width": 1024,
+      "route": "/cart",
+      "check": "normal motion, fast/reverse scroll, visible content, bounds"
+    },
+    {
+      "width": 1024,
+      "route": "/checkout",
+      "check": "normal motion, fast/reverse scroll, visible content, bounds"
+    },
+    {
+      "width": 1024,
+      "route": "/preview/components",
+      "check": "normal motion, fast/reverse scroll, visible content, bounds"
+    },
+    {
+      "width": 1024,
+      "check": "disclosure reversal, resize, live reduced motion, immediate menu/auth dismissal"
+    },
+    {
+      "width": 768,
+      "route": "/",
+      "check": "normal motion, fast/reverse scroll, visible content, bounds"
+    },
+    {
+      "width": 768,
+      "route": "/courses",
+      "check": "normal motion, fast/reverse scroll, visible content, bounds"
+    },
+    {
+      "width": 768,
+      "route": "/mini-courses",
+      "check": "normal motion, fast/reverse scroll, visible content, bounds"
+    },
+    {
+      "width": 768,
+      "route": "/courses/course-lashes",
+      "check": "normal motion, fast/reverse scroll, visible content, bounds"
+    },
+    {
+      "width": 768,
+      "route": "/mini-courses/mini-lashes",
+      "check": "normal motion, fast/reverse scroll, visible content, bounds"
+    },
+    {
+      "width": 768,
+      "route": "/cart",
+      "check": "normal motion, fast/reverse scroll, visible content, bounds"
+    },
+    {
+      "width": 768,
+      "route": "/checkout",
+      "check": "normal motion, fast/reverse scroll, visible content, bounds"
+    },
+    {
+      "width": 768,
+      "route": "/preview/components",
+      "check": "normal motion, fast/reverse scroll, visible content, bounds"
+    },
+    {
+      "width": 768,
+      "check": "disclosure reversal, resize, live reduced motion, immediate menu/auth dismissal"
+    },
+    {
+      "width": 430,
+      "route": "/",
+      "check": "normal motion, fast/reverse scroll, visible content, bounds"
+    },
+    {
+      "width": 430,
+      "route": "/courses",
+      "check": "normal motion, fast/reverse scroll, visible content, bounds"
+    },
+    {
+      "width": 430,
+      "route": "/mini-courses",
+      "check": "normal motion, fast/reverse scroll, visible content, bounds"
+    },
+    {
+      "width": 430,
+      "route": "/courses/course-lashes",
+      "check": "normal motion, fast/reverse scroll, visible content, bounds"
+    },
+    {
+      "width": 430,
+      "route": "/mini-courses/mini-lashes",
+      "check": "normal motion, fast/reverse scroll, visible content, bounds"
+    },
+    {
+      "width": 430,
+      "route": "/cart",
+      "check": "normal motion, fast/reverse scroll, visible content, bounds"
+    },
+    {
+      "width": 430,
+      "route": "/checkout",
+      "check": "normal motion, fast/reverse scroll, visible content, bounds"
+    },
+    {
+      "width": 430,
+      "route": "/preview/components",
+      "check": "normal motion, fast/reverse scroll, visible content, bounds"
+    },
+    {
+      "width": 430,
+      "check": "disclosure reversal, resize, live reduced motion, immediate menu/auth dismissal"
+    },
+    {
+      "width": 390,
+      "route": "/",
+      "check": "normal motion, fast/reverse scroll, visible content, bounds"
+    },
+    {
+      "width": 390,
+      "route": "/courses",
+      "check": "normal motion, fast/reverse scroll, visible content, bounds"
+    },
+    {
+      "width": 390,
+      "route": "/mini-courses",
+      "check": "normal motion, fast/reverse scroll, visible content, bounds"
+    },
+    {
+      "width": 390,
+      "route": "/courses/course-lashes",
+      "check": "normal motion, fast/reverse scroll, visible content, bounds"
+    },
+    {
+      "width": 390,
+      "route": "/mini-courses/mini-lashes",
+      "check": "normal motion, fast/reverse scroll, visible content, bounds"
+    },
+    {
+      "width": 390,
+      "route": "/cart",
+      "check": "normal motion, fast/reverse scroll, visible content, bounds"
+    },
+    {
+      "width": 390,
+      "route": "/checkout",
+      "check": "normal motion, fast/reverse scroll, visible content, bounds"
+    },
+    {
+      "width": 390,
+      "route": "/preview/components",
+      "check": "normal motion, fast/reverse scroll, visible content, bounds"
+    },
+    {
+      "width": 390,
+      "check": "disclosure reversal, resize, live reduced motion, immediate menu/auth dismissal"
+    },
+    {
+      "width": 360,
+      "route": "/",
+      "check": "normal motion, fast/reverse scroll, visible content, bounds"
+    },
+    {
+      "width": 360,
+      "route": "/courses",
+      "check": "normal motion, fast/reverse scroll, visible content, bounds"
+    },
+    {
+      "width": 360,
+      "route": "/mini-courses",
+      "check": "normal motion, fast/reverse scroll, visible content, bounds"
+    },
+    {
+      "width": 360,
+      "route": "/courses/course-lashes",
+      "check": "normal motion, fast/reverse scroll, visible content, bounds"
+    },
+    {
+      "width": 360,
+      "route": "/mini-courses/mini-lashes",
+      "check": "normal motion, fast/reverse scroll, visible content, bounds"
+    },
+    {
+      "width": 360,
+      "route": "/cart",
+      "check": "normal motion, fast/reverse scroll, visible content, bounds"
+    },
+    {
+      "width": 360,
+      "route": "/checkout",
+      "check": "normal motion, fast/reverse scroll, visible content, bounds"
+    },
+    {
+      "width": 360,
+      "route": "/preview/components",
+      "check": "normal motion, fast/reverse scroll, visible content, bounds"
+    },
+    {
+      "width": 360,
+      "check": "disclosure reversal, resize, live reduced motion, immediate menu/auth dismissal"
+    },
+    {
+      "width": 320,
+      "route": "/",
+      "check": "normal motion, fast/reverse scroll, visible content, bounds"
+    },
+    {
+      "width": 320,
+      "route": "/courses",
+      "check": "normal motion, fast/reverse scroll, visible content, bounds"
+    },
+    {
+      "width": 320,
+      "route": "/mini-courses",
+      "check": "normal motion, fast/reverse scroll, visible content, bounds"
+    },
+    {
+      "width": 320,
+      "route": "/courses/course-lashes",
+      "check": "normal motion, fast/reverse scroll, visible content, bounds"
+    },
+    {
+      "width": 320,
+      "route": "/mini-courses/mini-lashes",
+      "check": "normal motion, fast/reverse scroll, visible content, bounds"
+    },
+    {
+      "width": 320,
+      "route": "/cart",
+      "check": "normal motion, fast/reverse scroll, visible content, bounds"
+    },
+    {
+      "width": 320,
+      "route": "/checkout",
+      "check": "normal motion, fast/reverse scroll, visible content, bounds"
+    },
+    {
+      "width": 320,
+      "route": "/preview/components",
+      "check": "normal motion, fast/reverse scroll, visible content, bounds"
+    },
+    {
+      "width": 320,
+      "check": "disclosure reversal, resize, live reduced motion, immediate menu/auth dismissal"
+    },
+    {
+      "route": "/",
+      "check": "no-JS main/heading visible, overlay absent"
+    },
+    {
+      "route": "/courses",
+      "check": "no-JS main/heading visible, overlay absent"
+    },
+    {
+      "route": "/mini-courses",
+      "check": "no-JS main/heading visible, overlay absent"
+    },
+    {
+      "route": "/courses/course-lashes",
+      "check": "no-JS loading fallback visible; detail content blocked"
+    },
+    {
+      "route": "/mini-courses/mini-lashes",
+      "check": "no-JS loading fallback visible; detail content blocked"
+    },
+    {
+      "route": "/cart",
+      "check": "no-JS main/heading visible, overlay absent"
+    },
+    {
+      "route": "/checkout",
+      "check": "no-JS main/heading visible, overlay absent"
+    },
+    {
+      "route": "/preview/components",
+      "check": "no-JS main/heading visible, overlay absent"
+    },
+    {
+      "check": "intro reduce"
+    },
+    {
+      "check": "intro resize"
+    },
+    {
+      "check": "intro navigate"
+    }
+  ],
+  "errors": [],
+  "frames": [
+    {
+      "width": 1440,
+      "frame": 0,
+      "elapsed": 0,
+      "path": "docs/qa/evidence/LAND02-motion-2026-11-02/welcome-1440-00.png"
+    },
+    {
+      "width": 1440,
+      "frame": 1,
+      "elapsed": 228,
+      "path": "docs/qa/evidence/LAND02-motion-2026-11-02/welcome-1440-01.png"
+    },
+    {
+      "width": 1440,
+      "frame": 2,
+      "elapsed": 411,
+      "path": "docs/qa/evidence/LAND02-motion-2026-11-02/welcome-1440-02.png"
+    },
+    {
+      "width": 1440,
+      "frame": 3,
+      "elapsed": 590,
+      "path": "docs/qa/evidence/LAND02-motion-2026-11-02/welcome-1440-03.png"
+    },
+    {
+      "width": 1440,
+      "frame": 4,
+      "elapsed": 746,
+      "path": "docs/qa/evidence/LAND02-motion-2026-11-02/welcome-1440-04.png"
+    },
+    {
+      "width": 1440,
+      "frame": 5,
+      "elapsed": 833,
+      "path": "docs/qa/evidence/LAND02-motion-2026-11-02/welcome-1440-05.png"
+    },
+    {
+      "width": 1440,
+      "frame": 6,
+      "elapsed": 920,
+      "path": "docs/qa/evidence/LAND02-motion-2026-11-02/welcome-1440-06.png"
+    },
+    {
+      "width": 1440,
+      "frame": 7,
+      "elapsed": 1003,
+      "path": "docs/qa/evidence/LAND02-motion-2026-11-02/welcome-1440-07.png"
+    },
+    {
+      "width": 1440,
+      "frame": 8,
+      "elapsed": 1112,
+      "path": "docs/qa/evidence/LAND02-motion-2026-11-02/welcome-1440-08.png"
+    },
+    {
+      "width": 1440,
+      "frame": 9,
+      "elapsed": 1252,
+      "path": "docs/qa/evidence/LAND02-motion-2026-11-02/welcome-1440-09.png"
+    },
+    {
+      "width": 1440,
+      "frame": 10,
+      "elapsed": 1411,
+      "path": "docs/qa/evidence/LAND02-motion-2026-11-02/welcome-1440-10.png"
+    },
+    {
+      "width": 1440,
+      "frame": 11,
+      "elapsed": 1579,
+      "path": "docs/qa/evidence/LAND02-motion-2026-11-02/welcome-1440-11.png"
+    },
+    {
+      "width": 1440,
+      "frame": 12,
+      "elapsed": 1735,
+      "path": "docs/qa/evidence/LAND02-motion-2026-11-02/welcome-1440-12.png"
+    },
+    {
+      "width": 1440,
+      "frame": 13,
+      "elapsed": 1883,
+      "path": "docs/qa/evidence/LAND02-motion-2026-11-02/welcome-1440-13.png"
+    },
+    {
+      "width": 1440,
+      "frame": 14,
+      "elapsed": 2034,
+      "path": "docs/qa/evidence/LAND02-motion-2026-11-02/welcome-1440-14.png"
+    },
+    {
+      "width": 390,
+      "frame": 0,
+      "elapsed": 0,
+      "path": "docs/qa/evidence/LAND02-motion-2026-11-02/welcome-390-00.png"
+    },
+    {
+      "width": 390,
+      "frame": 1,
+      "elapsed": 136,
+      "path": "docs/qa/evidence/LAND02-motion-2026-11-02/welcome-390-01.png"
+    },
+    {
+      "width": 390,
+      "frame": 2,
+      "elapsed": 275,
+      "path": "docs/qa/evidence/LAND02-motion-2026-11-02/welcome-390-02.png"
+    },
+    {
+      "width": 390,
+      "frame": 3,
+      "elapsed": 410,
+      "path": "docs/qa/evidence/LAND02-motion-2026-11-02/welcome-390-03.png"
+    },
+    {
+      "width": 390,
+      "frame": 4,
+      "elapsed": 531,
+      "path": "docs/qa/evidence/LAND02-motion-2026-11-02/welcome-390-04.png"
+    },
+    {
+      "width": 390,
+      "frame": 5,
+      "elapsed": 658,
+      "path": "docs/qa/evidence/LAND02-motion-2026-11-02/welcome-390-05.png"
+    },
+    {
+      "width": 390,
+      "frame": 6,
+      "elapsed": 757,
+      "path": "docs/qa/evidence/LAND02-motion-2026-11-02/welcome-390-06.png"
+    },
+    {
+      "width": 390,
+      "frame": 7,
+      "elapsed": 836,
+      "path": "docs/qa/evidence/LAND02-motion-2026-11-02/welcome-390-07.png"
+    },
+    {
+      "width": 390,
+      "frame": 8,
+      "elapsed": 921,
+      "path": "docs/qa/evidence/LAND02-motion-2026-11-02/welcome-390-08.png"
+    },
+    {
+      "width": 390,
+      "frame": 9,
+      "elapsed": 1007,
+      "path": "docs/qa/evidence/LAND02-motion-2026-11-02/welcome-390-09.png"
+    },
+    {
+      "width": 390,
+      "frame": 10,
+      "elapsed": 1098,
+      "path": "docs/qa/evidence/LAND02-motion-2026-11-02/welcome-390-10.png"
+    },
+    {
+      "width": 390,
+      "frame": 11,
+      "elapsed": 1199,
+      "path": "docs/qa/evidence/LAND02-motion-2026-11-02/welcome-390-11.png"
+    },
+    {
+      "width": 390,
+      "frame": 12,
+      "elapsed": 1308,
+      "path": "docs/qa/evidence/LAND02-motion-2026-11-02/welcome-390-12.png"
+    },
+    {
+      "width": 390,
+      "frame": 13,
+      "elapsed": 1406,
+      "path": "docs/qa/evidence/LAND02-motion-2026-11-02/welcome-390-13.png"
+    },
+    {
+      "width": 390,
+      "frame": 14,
+      "elapsed": 1507,
+      "path": "docs/qa/evidence/LAND02-motion-2026-11-02/welcome-390-14.png"
+    }
+  ],
+  "limitations": [
+    {
+      "route": "/courses/course-lashes",
+      "issue": "No-JS detail stays on existing streamed loading fallback; actual detail is in hidden PPR segment."
+    },
+    {
+      "route": "/mini-courses/mini-lashes",
+      "issue": "No-JS detail stays on existing streamed loading fallback; actual detail is in hidden PPR segment."
+    }
+  ]
+}

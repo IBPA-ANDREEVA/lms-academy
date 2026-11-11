@@ -54,7 +54,7 @@ def _configure_connection(
 ) -> None:
     # Fixed technical settings, never user input or ambient PGOPTIONS.
     with connection.cursor() as cursor:
-        cursor.execute("SET TIME ZONE 'America/Los_Angeles'")
+        cursor.execute("SET TIME ZONE 'UTC'")
         cursor.execute("SET statement_timeout = '30s'")
         cursor.execute("SET lock_timeout = '5s'")
         cursor.execute("SET idle_in_transaction_session_timeout = '60s'")

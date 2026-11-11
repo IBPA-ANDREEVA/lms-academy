@@ -6,11 +6,6 @@ from app.db.base import Base
 
 
 def migration_metadata() -> MetaData:
-<<<<<<< Updated upstream
-    # Add explicit imports of implemented app.modules.<owner>.models here.
-    # Do not discover arbitrary files or suppress import failures: missing models
-    # can otherwise make autogeneration propose accidental table drops.
-=======
     # Composition root only: domains must not import each other's private models.
     # Explicit registration prevents missing mappings from proposing table drops.
     from app.modules.assignments import models as assignments
@@ -32,5 +27,4 @@ def migration_metadata() -> MetaData:
         learning,
         notifications,
     )
->>>>>>> Stashed changes
     return Base.metadata

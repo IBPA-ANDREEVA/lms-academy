@@ -5,7 +5,7 @@
 
 ## Implemented presentation versus target domains · 2026-11-02
 
-[ADR-0003](../decisions/0003-python-backend-architecture.md) moves the planned backend to Python without changing the seven ownership boundaries below. `backend/app/modules` contains empty directories only. BASE02-B adds the [database foundation](database-migrations.md); no authoritative authentication, payment, access, media, review or notification service exists.
+[ADR-0003](../decisions/0003-python-backend-architecture.md) moves the planned backend to Python without changing the seven ownership boundaries below. `backend/app/modules/<owner>/models.py` now holds 28 physical tables across the seven owners. The [schema contract](database/schema-contract.md) records retained/added/deferred structures and field changes. BASE02-B and the 2026-11-06 successors provide the [database foundation](database-migrations.md); no authoritative authentication, payment, access, media, review or notification service exists.
 
 Existing presentation owners remain `home`, `catalog`, `course-detail`, `public-shell`, `identity`, `commerce`, `component-preview`. PublicHeader consumes AuthModal/CartPreview; home consumes CourseCard/CategoryNavigation and shared CatalogProvider state; details map preview records into existing DetailProduct presentation. These are frontend dependencies, not domain APIs. Demo data/control requires `TEST_PREVIEW=true`; false/missing stays unavailable. The retired TypeScript Catalog contained only types, checks and an unconnected source. Temporary view types/disconnected handling now live in the Catalog feature; defensive indexability lives under SEO. See [migration evidence](../qa/python-backend-migration-2026-11-03.md).
 
@@ -506,7 +506,7 @@ details, not newly approved routes or a new domain module.
 
 ## Practical folder organization
 
-Follow [ADR-0003](../decisions/0003-python-backend-architecture.md). The [backend tree](../../backend/README.md#directory-conventions) has database plumbing only; domain/API/job directories remain empty. Future placement examples, not files to scaffold:
+Follow [ADR-0003](../decisions/0003-python-backend-architecture.md). The [backend tree](../../backend/README.md#directory-conventions) has database plumbing and owner-local models; API/service/job implementation remains absent. Future placement examples, not mandatory files to scaffold:
 
 ```text
 src/features/learning/

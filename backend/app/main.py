@@ -1,4 +1,3 @@
-
 from collections.abc import AsyncIterator
 from contextlib import asynccontextmanager
 
@@ -13,9 +12,7 @@ from app.db.session import (
 
 @asynccontextmanager
 async def lifespan(app: FastAPI) -> AsyncIterator[None]:
-    db = ApplicationDatabase(
-        ApplicationDatabaseSettings.from_environment()
-    )
+    db = ApplicationDatabase(ApplicationDatabaseSettings.from_environment())
     app.state.database = db
 
     try:

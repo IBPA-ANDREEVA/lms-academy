@@ -1,12 +1,16 @@
 class ApplicationError(Exception):
-  """Base class for expected application errors."""
-  pass
+    """Base class for expected application errors."""
+
+    pass
+
 
 class NotFoundEror(ApplicationError):
-  pass
+    pass
+
 
 class ConflictEror(ApplicationError):
-  pass
+    pass
+
 
 class VerificationEror(ApplicationError):
-  pass
+    pass

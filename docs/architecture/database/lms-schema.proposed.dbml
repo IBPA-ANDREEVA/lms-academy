@@ -1,0 +1,552 @@
+// LMS Academy · Proposed database schema (reviewed from user's DBML, 2026-11-06)
+// This is a DESIGN CONTRACT, not proof of applied migrations.
+// Columns marked via notes as deferred require product decisions before their workflow ships.
+// DBML colors: may require a paid dbdiagram plan; definitions are still valid DBML.
+
+Project LMS_Academy {
+  database_type: 'PostgreSQL'
+  Note: 'Seven-domain modular monolith. Initial proposed logical/physical structure; validate against product decisions and existing migrations.'
+}
+
+Enum user_role {
+  student
+  trainer
+  manager
+  admin
+}
+Enum account_status {
+  active
+  blocked
+}
+Enum locale {
+  ru
+  en
+}
+Enum package_type {
+  "2"
+  "3"
+  "6"
+}
+Enum course_type {
+  course
+  miniCourse
+  startInUsa
+}
+Enum lesson_doc {
+  image
+  pdf
+  document
+  archive
+}
+Enum order_status {
+  draft
+  pending
+  paid
+  failed
+  refunded
+}
+Enum promo_type {
+  fixed
+  percentage
+}
+Enum payment_status {
+  pending
+  paid
+  failed
+  refunded
+}
+Enum payment_event_status {
+  pending
+  processed
+  failed
+}
+Enum refund_status {
+  pending
+  canceled
+  failed
+  processed
+}
+Enum commission_accrual_status {
+  draft
+  pending
+  paid
+  returned
+  failed
+}
+Enum payout_status {
+  pending
+  paid
+  failed
+}
+Enum enrollment_status {
+  granted
+  active
+  paused
+  revoked
+  completed
+}
+Enum request_type {
+  accessPause
+  accessExtension
+  externalRefund
+  curatorPause
+  curatorExtension
+  error_found
+  other
+}
+Enum request_status {
+  pending
+  approved
+  rejected
+  canceled
+}
+Enum message_status {
+  draft
+  sent
+  seen
+  failed
+  deleted
+  edited
+}
+Enum submission_status {
+  pending
+  revision_request
+  accepted
+}
+Enum review_decision {
+  pending
+  accepted
+  revision_request
+}
+Enum certificate_request_status {
+  pending
+  rejected
+  issued
+}
+Enum notification_type {
+  assignment
+  submission
+  enrollment
+  order
+  payment
+  refund
+  system
+}
+Enum notification_channel {
+  web
+  email
+}
+Enum notification_status {
+  pending
+  processing
+  sent
+  failed
+}
+
+// ---------------------------------------------------------------------------
+// 1. IDENTITY · Blue
+// ---------------------------------------------------------------------------
+Table users [headercolor: #3B82F6, note: 'Identity domain. Authentication provider and session strategy remain unselected.'] {
+  id uuid [pk, not null]
+  email varchar(255) [not null, note: 'Case-insensitive uniqueness via unique index on lower(email); email update policy TBD']
+  roles user_role[] [not null, default: `ARRAY['student']::user_role[]`, note: 'A newly registered account receives student; validate allowed/unique array elements at persistence boundary']
+  email_verified_at timestamptz
+  referral_code varchar(50) [note: 'Personal code, unique case-insensitively when present']
+  status account_status [not null, default: 'active', note: 'Email verification remains separate from administrative block state']
+  created_at timestamptz [not null, default: `now()`]
+  updated_at timestamptz [not null, default: `now()`]
+  indexes {
+    `lower(email)` [unique, name: 'uq_users_email_ci']
+    `lower(referral_code)` [unique, name: 'uq_users_referral_code_ci']
+  }
+}
+
+Table profiles [headercolor: #3B82F6] {
+  user_id uuid [pk, ref: - users.id]
+  first_name varchar(100)
+  last_name varchar(100)
+  phone varchar(30)
+  preferred_locale locale [not null, default: 'ru']
+  avatar_key text
+  created_at timestamptz [not null, default: `now()`]
+  updated_at timestamptz [not null, default: `now()`]
+}
+
+// ---------------------------------------------------------------------------
+// 2. CATALOG · Purple
+// ---------------------------------------------------------------------------
+Table categories [headercolor: #9B5DE5] {
+  id uuid [pk]
+  title text [not null, note: 'Localization strategy still needs approval']
+  course_count integer [note: 'Derived/cached only: not authoritative']
+}
+
+Table courses [headercolor: #9B5DE5, note: 'Publication, versioning and pricing approval still require feature-level decisions.'] {
+  id uuid [pk]
+  category_id uuid [ref: > categories.id, note: 'Assumes one primary category; cardinality not yet approved']
+  trainer_id uuid [ref: > users.id, note: 'One current curator per supported course; mini-course support differs']
+  title text [not null]
+  author text [note: 'May be author display/snapshot distinct from current trainer']
+  locales locale[]
+  price_cents bigint [note: 'Approved offer/price history still needs contract']
+  lessons_count integer [note: 'Derived/cached only']
+  bought_total integer [note: 'Derived/cached only']
+  type course_type [not null]
+  created_at timestamptz [not null, default: `now()`]
+  updated_at timestamptz [not null, default: `now()`]
+}
+
+Table modules [headercolor: #9B5DE5, note: 'Course sections; not the standalone Start in USA product.'] {
+  id uuid [pk]
+  course_id uuid [not null, ref: > courses.id]
+  title text [not null]
+  position integer [not null]
+  lesson_count integer [note: 'Derived/cached only']
+  indexes { (course_id, position) [unique] }
+}
+
+Table lessons [headercolor: #9B5DE5] {
+  id uuid [pk]
+  module_id uuid [not null, ref: > modules.id]
+  title text [not null]
+  description text
+  position integer [not null]
+  indexes { (module_id, position) [unique] }
+}
+
+Table lesson_media [headercolor: #9B5DE5, note: 'Private storage references. Processing/versioning need further specification.'] {
+  id uuid [pk]
+  lesson_id uuid [not null, ref: > lessons.id]
+  title text
+  description text
+  storage_key text [not null]
+}
+
+Table lesson_docs [headercolor: #9B5DE5] {
+  id uuid [pk]
+  lesson_id uuid [not null, ref: > lessons.id]
+  title text
+  storage_key text [not null]
+  type lesson_doc [not null]
+}
+
+// Phase 2 packages. Keeping these in proposed ERD does NOT require migrating them now.
+Table packages [headercolor: #9B5DE5, note: 'PHASE 2. Package composition/change rules remain open.'] {
+  id uuid [pk]
+  title text [not null]
+  description text
+  price_cents bigint [not null]
+  type package_type
+}
+
+Table package_courses [headercolor: #9B5DE5, note: 'PHASE 2. Associative table: one package has multiple courses.'] {
+  id uuid [pk]
+  course_id uuid [not null, ref: > courses.id]
+  package_id uuid [not null, ref: > packages.id]
+  indexes { (package_id, course_id) [unique] }
+}
+
+// ---------------------------------------------------------------------------
+// 3. COMMERCE · Orange
+// ---------------------------------------------------------------------------
+Table orders [headercolor: #E39B33, note: 'Consent versions in policy JSONB; immutable approved version ownership unresolved.'] {
+  id uuid [pk]
+  user_id uuid [ref: > users.id, note: 'May be null before guest checkout resolution; policy TBD']
+  subtotal_cents bigint [not null]
+  discount_cents bigint [not null, default: 0]
+  total_cents bigint [not null]
+  currency varchar(3) [not null, default: 'USD']
+  status order_status [not null]
+  promocode_id uuid [ref: > promocodes.id, note: 'PHASE 2']
+  referred_by_user_id uuid [ref: > users.id, note: 'PHASE 2; historic source snapshot policy TBD']
+  attribution_source text [note: 'PHASE 2; was proposed for removal from MVP']
+  policy jsonb [note: 'Record accepted immutable document versions and timestamp; not arbitrary browser data']
+  created_at timestamptz [not null, default: `now()`]
+  updated_at timestamptz [not null, default: `now()`]
+  checks {
+    `subtotal_cents >= 0 AND discount_cents >= 0 AND total_cents >= 0` [name: 'ck_orders_money_nonnegative']
+  }
+}
+
+Table order_items [headercolor: #E39B33, note: 'Exactly one course or package. Preserve purchase terms; package grant can generate multiple enrollments.'] {
+  id uuid [pk]
+  order_id uuid [not null, ref: > orders.id]
+  package_id uuid [ref: > packages.id, note: 'PHASE 2; defer FK or migrate package table before this reference']
+  course_id uuid [ref: > courses.id]
+  title_snapshot text [not null]
+  price_cents bigint [not null]
+  discount_cents bigint [not null, default: 0]
+  total_cents bigint [not null]
+  currency varchar(3) [not null, default: 'USD']
+  // Not storing is_refundable: it depends on current policy, payment time, and activation.
+  checks {
+    `(course_id IS NOT NULL AND package_id IS NULL) OR (course_id IS NULL AND package_id IS NOT NULL)` [name: 'ck_order_items_one_product']
+    `price_cents >= 0 AND discount_cents >= 0 AND total_cents >= 0` [name: 'ck_order_items_money_nonnegative']
+  }
+}
+
+Table payments [headercolor: #E39B33] {
+  id uuid [pk]
+  order_id uuid [not null, ref: > orders.id]
+  provider text [not null, default: 'stripe']
+  provider_payment_id text [note: 'Provider-scoped unique when set']
+  status payment_status [not null]
+  amount_cents bigint [not null]
+  currency varchar(3) [not null, default: 'USD']
+  created_at timestamptz [not null, default: `now()`]
+  confirmed_at timestamptz
+  indexes { (provider, provider_payment_id) [unique] }
+}
+
+Table payment_events [headercolor: #E39B33, note: 'Durable webhook deduplication. Stripe event IDs are text, not UUID.'] {
+  provider_event_id text [pk]
+  payment_id uuid [ref: > payments.id]
+  event_type text [not null]
+  status payment_event_status [not null]
+  received_at timestamptz [not null, default: `now()`]
+  processed_at timestamptz
+}
+
+Table refunds [headercolor: #E39B33] {
+  id uuid [pk]
+  order_id uuid [not null, ref: > orders.id]
+  payment_id uuid [not null, ref: > payments.id]
+  order_item_id uuid [ref: > order_items.id, note: 'Partial/package refund policy TBD']
+  amount_cents bigint [not null]
+  currency varchar(3) [not null, default: 'USD']
+  status refund_status [not null]
+  reason text
+  provider_refund_id text [unique]
+  requested_at timestamptz [not null, default: `now()`]
+  processed_at timestamptz
+  checks { `amount_cents > 0` [name: 'ck_refunds_positive_amount'] }
+}
+
+Table promocodes [headercolor: #E39B33, note: 'PHASE 2. Redemption concurrency/eligibility remains unresolved.'] {
+  id uuid [pk]
+  code text [not null, unique]
+  type promo_type [not null]
+  value integer [not null]
+  max_uses integer
+  starts_at timestamptz
+  expires_at timestamptz
+  is_active boolean [not null, default: true]
+  checks { `value >= 0` [name: 'ck_promocodes_nonnegative_value'] }
+}
+
+Table commission_accruals [headercolor: #E39B33, note: 'PHASE 2 OPTIONAL. Historical earnings, not cash payouts.'] {
+  id uuid [pk]
+  user_id uuid [not null, ref: > users.id]
+  order_item_id uuid [not null, ref: > order_items.id]
+  amount_cents bigint [not null]
+  currency varchar(3) [not null, default: 'USD']
+  status commission_accrual_status [not null]
+  payout_id uuid [ref: > payouts.id]
+  created_at timestamptz [not null, default: `now()`]
+  processed_at timestamptz
+}
+
+Table payouts [headercolor: #E39B33, note: 'PHASE 2. Payouts are distinct financial transfers.'] {
+  id uuid [pk]
+  user_id uuid [not null, ref: > users.id]
+  amount_cents bigint [not null]
+  currency varchar(3) [not null, default: 'USD']
+  status payout_status [not null]
+  created_at timestamptz [not null, default: `now()`]
+  paid_at timestamptz
+}
+
+// ---------------------------------------------------------------------------
+// 4. LEARNING · Teal
+// ---------------------------------------------------------------------------
+Table enrollments [headercolor: #16A085, note: 'A paid order item can grant multiple enrollments for a package. Manual grants need provenance, not fake payments.'] {
+  id uuid [pk]
+  course_id uuid [not null, ref: > courses.id]
+  order_item_id uuid [ref: > order_items.id]
+  user_id uuid [not null, ref: > users.id]
+  granted_by uuid [ref: > users.id, note: 'Admin for manually granted enrollment; authorization/audit required']
+  status enrollment_status [not null]
+  activated_at timestamptz
+  access_expires_at timestamptz
+  support_expires_at timestamptz
+  completed_at timestamptz
+  completion_rate integer [note: 'Derived/cache only; actual rules OQ-021/OQ-042']
+  created_at timestamptz [not null, default: `now()`]
+  checks {
+    `completion_rate IS NULL OR (completion_rate BETWEEN 0 AND 100)` [name: 'ck_enrollments_completion_rate']
+  }
+}
+
+Table lesson_progress [headercolor: #16A085] {
+  id uuid [pk]
+  enrollment_id uuid [not null, ref: > enrollments.id]
+  lesson_id uuid [not null, ref: > lessons.id]
+  video_position_seconds integer [not null, default: 0]
+  is_completed boolean [not null, default: false]
+  completed_at timestamptz
+  indexes { (enrollment_id, lesson_id) [unique] }
+  checks { `video_position_seconds >= 0` [name: 'ck_lesson_progress_nonnegative_position'] }
+}
+
+Table student_requests [headercolor: #16A085, note: 'Refund monetary requests belong to Commerce; this table owns learning/access requests.'] {
+  id uuid [pk]
+  enrollment_id uuid [not null, ref: > enrollments.id]
+  requested_by uuid [not null, ref: > users.id]
+  reviewed_by uuid [ref: > users.id]
+  type request_type [not null]
+  status request_status [not null]
+  description text
+  attachment_key text
+  deadline_extension timestamptz
+  created_at timestamptz [not null, default: `now()`]
+  resolved_at timestamptz
+}
+
+Table course_messages [headercolor: #16A085, note: 'Enrollment-scoped messages. Conversation access after support expiry still needs policy.'] {
+  id uuid [pk]
+  enrollment_id uuid [not null, ref: > enrollments.id]
+  sent_by uuid [not null, ref: > users.id]
+  content text
+  attachment_key text
+  status message_status [not null]
+  created_at timestamptz [not null, default: `now()`]
+}
+
+// ---------------------------------------------------------------------------
+// 5. ASSIGNMENTS · Rose
+// ---------------------------------------------------------------------------
+Table assignments [headercolor: #DF6489] {
+  id uuid [pk]
+  lesson_id uuid [not null, ref: > lessons.id]
+  title text [not null]
+  description text
+  attachments jsonb [note: 'Definition-level attachments only; student uploads belong to submission_attachments']
+  is_required boolean [not null, default: true]
+}
+
+Table submissions [headercolor: #DF6489, note: 'One immutable attempt per resubmission. Review history is separate.'] {
+  id uuid [pk]
+  assignment_id uuid [not null, ref: > assignments.id]
+  enrollment_id uuid [not null, ref: > enrollments.id]
+  previous_submission_id uuid [ref: > submissions.id]
+  message text
+  attempt integer [not null]
+  status submission_status [not null]
+  submitted_at timestamptz
+  review_due_at timestamptz
+  curator_timezone text
+  indexes { (assignment_id, enrollment_id, attempt) [unique] }
+  checks { `attempt > 0` [name: 'ck_submissions_positive_attempt'] }
+}
+
+Table submission_attachments [headercolor: #DF6489, note: 'Added to support independent upload state, previews, recovery and attachment history.'] {
+  id uuid [pk]
+  submission_id uuid [not null, ref: > submissions.id]
+  storage_key text [not null]
+  preview_key text
+  file_type text
+  file_size_bytes bigint
+  processing_status text [not null]
+  created_at timestamptz [not null, default: `now()`]
+  checks { `file_size_bytes IS NULL OR file_size_bytes >= 0` [name: 'ck_submission_attachment_nonnegative_size'] }
+}
+
+Table submission_reviews [headercolor: #DF6489] {
+  id uuid [pk]
+  submission_id uuid [not null, ref: > submissions.id]
+  reviewer_id uuid [not null, ref: > users.id]
+  content text
+  attachments jsonb [note: 'Review-only files or audio; processing mechanics TBD']
+  decision review_decision [not null]
+  created_at timestamptz [not null, default: `now()`]
+}
+
+// ---------------------------------------------------------------------------
+// 6. CERTIFICATES · Indigo
+// ---------------------------------------------------------------------------
+Table certificate_requests [headercolor: #6478E5, note: 'Automated eligibility case awaiting manual admin issuance, not necessarily a student request.'] {
+  id uuid [pk]
+  requested_by uuid [ref: > users.id]
+  reviewed_by uuid [ref: > users.id]
+  enrollment_id uuid [not null, ref: > enrollments.id]
+  status certificate_request_status [not null]
+  review_comment text
+  created_at timestamptz [not null, default: `now()`]
+  reviewed_at timestamptz
+}
+
+Table certificate_templates [headercolor: #6478E5] {
+  id uuid [pk]
+  name text [not null]
+  locale locale [not null]
+  version integer [not null]
+  template_key text [not null]
+  indexes { (name, locale, version) [unique] }
+}
+
+Table certificates [headercolor: #6478E5, note: 'Immutable issue-time snapshot; issuance multiplicity/languages/reissue policy open.'] {
+  id uuid [pk]
+  certificate_number text [not null, unique]
+  request_id uuid [not null, ref: > certificate_requests.id]
+  enrollment_id uuid [not null, ref: > enrollments.id]
+  template_id uuid [not null, ref: > certificate_templates.id]
+  issued_to uuid [not null, ref: > users.id]
+  issued_by uuid [not null, ref: > users.id]
+  student_name text [not null]
+  course_title text [not null]
+  trainer_name text
+  locale locale [not null]
+  pdf_key text [not null]
+  issued_at timestamptz [not null]
+}
+
+// ---------------------------------------------------------------------------
+// 7. NOTIFICATIONS · Slate
+// ---------------------------------------------------------------------------
+Table notification_templates [headercolor: #667588, note: 'OPTIONAL: may instead live as versioned backend files.'] {
+  id uuid [pk]
+  code text [not null]
+  name text [not null]
+  locale locale [not null]
+  channel notification_channel [not null]
+  title text [not null]
+  body text [not null]
+  action_url text
+  indexes { (code, locale, channel) [unique] }
+}
+
+Table notifications [headercolor: #667588, note: 'Single durable notification and retry-state record for MVP; actual worker deferred.'] {
+  id uuid [pk]
+  user_id uuid [not null, ref: > users.id]
+  template_id uuid [ref: > notification_templates.id]
+  type notification_type [not null]
+  channel notification_channel [not null]
+  status notification_status [not null, default: 'pending']
+  title text [not null]
+  content text [not null]
+  action_url text
+  attachments jsonb
+  attempt_count integer [not null, default: 0]
+  deduplication_key text [not null, unique]
+  next_retry_at timestamptz
+  last_error_code text
+  provider_message_id text
+  created_at timestamptz [not null, default: `now()`]
+  sent_at timestamptz
+  read_at timestamptz
+  checks { `attempt_count >= 0` [name: 'ck_notifications_nonnegative_attempts'] }
+}
+
+TableGroup Identity [color: #3B82F6] { users profiles }
+TableGroup Catalog [color: #9B5DE5] { categories courses modules lessons lesson_media lesson_docs packages package_courses }
+TableGroup Commerce [color: #E39B33] { orders order_items payments payment_events refunds promocodes commission_accruals payouts }
+TableGroup Learning [color: #16A085] { enrollments lesson_progress student_requests course_messages }
+TableGroup Assignments [color: #DF6489] { assignments submissions submission_attachments submission_reviews }
+TableGroup Certificates [color: #6478E5] { certificate_requests certificate_templates certificates }
+TableGroup Notifications [color: #667588] { notifications notification_templates }
+
+DiagramView Default {
+  Tables { * }
+  Notes { * }
+}
+

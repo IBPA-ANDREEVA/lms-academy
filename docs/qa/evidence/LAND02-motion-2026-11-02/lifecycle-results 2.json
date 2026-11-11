@@ -1,0 +1,40 @@
+[
+  {
+    "scenario": "cpu",
+    "times": [
+      {
+        "event": "start",
+        "time": 726.7999997138977
+      },
+      {
+        "event": "end",
+        "time": 2213.3999996185303
+      }
+    ],
+    "errors": []
+  },
+  {
+    "scenario": "storage",
+    "times": [
+      {
+        "event": "start",
+        "time": 176.90000009536743
+      },
+      {
+        "event": "end",
+        "time": 1663.5
+      }
+    ],
+    "errors": []
+  },
+  {
+    "scenario": "utility",
+    "times": [],
+    "errors": []
+  },
+  {
+    "scenario": "slow",
+    "times": [],
+    "errors": []
+  }
+]

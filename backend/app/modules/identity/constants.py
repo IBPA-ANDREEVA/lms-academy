@@ -1,5 +1,5 @@
-from enum import StrEnum
 from datetime import timedelta
+from enum import StrEnum
 
 
 class TokenPurpose(StrEnum):

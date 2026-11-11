@@ -17,8 +17,8 @@ from sqlalchemy import (
     Text,
     Uuid,
     func,
-    Enum as SQLEnum
 )
+from sqlalchemy import Enum as SQLEnum
 from sqlalchemy.orm import Mapped, mapped_column
 
 from app.db.base import Base
@@ -85,11 +85,12 @@ class IdentityActionToken(Base):
     )
     # Purpose, duration and eligibility are validated by future Identity services.
     purpose: Mapped[TokenPurpose] = mapped_column(
-      SQLEnum(
-        TokenPurpose,
-        name = "token_purpose",
-        native_enum = False,
-        values_callable=lambda enum: [e.value for e in enum],
+        SQLEnum(
+            TokenPurpose,
+            name="token_purpose",
+            native_enum=False,
+            length=48,
+            values_callable=lambda enum: [e.value for e in enum],
         ),
         nullable=False,
     )

@@ -1,6 +1,6 @@
 # LMS architecture overview
 
-## Current implementation snapshot · 2026-11-04
+## Current implementation snapshot · 2026-11-06
 
 The frontend is implemented; Python has a [database migration foundation](database-migrations.md), not a running application service. Eight App Router page templates cover `/`, two catalogs, two dynamic detail families, `/cart`, `/checkout` and `/preview/components`. Root layout composes CatalogProvider, CartProvider, PublicHeader, PublicMotion and PublicSiteFooter. Catalog leaves return null under their persistent group layout; both detail kinds share ProductRoute/DetailPage. Existing frontend owners and UI remain in place.
 
@@ -8,7 +8,7 @@ Presentation owners are `home`, `catalog`, `course-detail`, `public-shell`, `ide
 
 The former `src/server/catalog/{index,contracts,policy}.ts` contained a disconnected read adapter, DTO types and pure read/purchase checks, with no database. They are retired. Existing disconnected UI handling and temporary view types remain in `src/features/catalog/catalog-source.ts` and `catalog-view-types.ts`; defensive SEO exclusion is in `src/lib/seo/product-indexability.ts`. These are not an authoritative backend or new mock API. See [migration evidence](../qa/python-backend-migration-2026-11-03.md).
 
-`backend/` has Python 3.12/uv, SQLAlchemy/Psycopg, Alembic's empty baseline, shared metadata, no-op seed, recovery utilities and configured checks. Domain models/tables, services, endpoints, auth and workers remain absent. Existing empty `src/db` is a retired placeholder; it must not gain authoritative database access. Empty `src/app/api` is retained only for a future justified thin transport boundary. Empty legacy frontend feature folders are not implemented domains. `src/lib` contains actual frontend environment/SEO utilities.
+`backend/` has Python 3.12/uv, SQLAlchemy/Psycopg, the preserved Alembic baseline plus reviewed successors, 28 owner-local tables, bounded sync units of work, no-op seed, recovery utilities, generated diagrams and configured checks. See the [physical schema contract](database/schema-contract.md). Services, endpoints, auth and workers remain absent. Existing empty `src/db` is a retired placeholder; it must not gain authoritative database access. Empty `src/app/api` is retained only for a future justified thin transport boundary. Empty legacy frontend feature folders are not implemented domains. `src/lib` contains actual frontend environment/SEO utilities.
 
 [Frontend registries](frontend-pages.md) locate real owners/consumers. The dated [LAND01 audit](../qa/LAND01-public-site-audit-2026-11-02.md) and LAND03/04 evidence remain historical, not current backend implementation or visual approval.
 
@@ -144,7 +144,7 @@ Next.js SSR / browser -> versioned FastAPI HTTP API
 
 Workers and provider callbacks invoke the same domain operations through their respective validated entry points. Pydantic v2 validates untrusted inputs; syntactic validation is separate from current-state/business validation. Response schemas expose only approved fields, not ORM models or secrets. Pure policies should remain independent of FastAPI and SQLAlchemy where practical.
 
-Use `router.py` for HTTP mapping, `schemas.py` for Pydantic transport models, `models.py` for owned SQLAlchemy mappings, `service.py` for use cases/transaction coordination and `policies.py` for rules. Optional focused persistence adapters separate nontrivial queries when useful. These are future domain conventions, not mandatory files/layers; domain directories remain empty alongside the implemented database plumbing. See [backend README](../../backend/README.md) and mandatory [backend instructions](../../backend/AGENTS.md).
+Use `router.py` for HTTP mapping, `schemas.py` for Pydantic transport models, `models.py` for owned SQLAlchemy mappings, `service.py` for use cases/transaction coordination and `policies.py` for rules. Optional focused persistence adapters separate nontrivial queries when useful. These are responsibility conventions, not mandatory layers; only owner-local models and technical database plumbing are implemented. See [backend README](../../backend/README.md) and mandatory [backend instructions](../../backend/AGENTS.md).
 
 Application services name the workflow/transaction owner; participating domain commands must not independently commit. Use narrow typed inputs/results instead of ORM objects or query builders across domains. Public Python contracts may accept an explicit transaction context for atomic operations such as enrollment grant/revocation; that context does not permit cross-domain table writes. The exact concrete API follows the selected driver/session design at initialization.
 
@@ -436,7 +436,7 @@ must be resolved before their dependent implementation slice. This is not a glob
 
 | Decision | Why architecture needs it | Product dependencies |
 | --- | --- | --- |
-| PostgreSQL/SQLAlchemy/Alembic foundation and Neon deployment details | BASE02-B implements migration/recovery commands with sync Psycopg 3; application pools, deployment topology and live Neon operational readiness remain separate | OQ-078, OQ-081 |
+| PostgreSQL/SQLAlchemy/Alembic foundation and Neon deployment details | BASE02-B implements migration/recovery commands with sync Psycopg 3; the 2026-11-06 foundation adds bounded sync application pools and domain mappings; deployment topology and live Neon operational readiness remain separate | OQ-078, OQ-081 |
 | Authentication library/provider and session model | Defines account/session storage, verification, blocking, and multi-role actor context | OQ-013, OQ-016, OQ-032 |
 | Stripe entity/settlement/method eligibility verification and authoritative event states | PD-002 selects provider/account/currency; verify launch configuration and resolve payment/refund state rules | OQ-029, OQ-031, OQ-032, OQ-036, OQ-037 |
 | Remaining calendar/overlap and post-expiration rules | PD-004 fixes per-enrollment activation, durations, extensions and pauses; unresolved transitions must not be invented | OQ-048–OQ-049; PD-008 SLA is approved |

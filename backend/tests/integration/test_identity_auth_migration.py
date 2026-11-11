@@ -16,7 +16,7 @@ from app.db.config import database_engine
 pytestmark = pytest.mark.integration
 BACKEND = Path(__file__).resolve().parents[2]
 PREVIOUS_HEAD = "20261106_02"
-AUTH_HEAD = "20261109_01"
+AUTH_HEAD = "20261110_01"
 AUTH_TABLES = {
     "identity_credentials",
     "identity_sessions",
@@ -67,7 +67,9 @@ def test_upgrade_preserves_existing_users_and_profiles(
     try:
         with engine.begin() as connection:
             connection.execute(
-                text("INSERT INTO users (id, email) VALUES (:id, :email)"),
+                text(
+                    "INSERT INTO users (id, email, status) VALUES (:id, :email, 'active')"
+                ),
                 {"id": user_id, "email": "existing-student@example.test"},
             )
             connection.execute(
@@ -94,11 +96,15 @@ def test_constraints_and_multiple_devices(disposable_database: URL) -> None:
     try:
         with engine.begin() as connection:
             connection.execute(
-                text("INSERT INTO users (id, email) VALUES (:id, :email)"),
+                text(
+                    "INSERT INTO users (id, email, status) VALUES (:id, :email, 'active')"
+                ),
                 {"id": user_id, "email": "student@example.test"},
             )
             connection.execute(
-                text("INSERT INTO users (id, email) VALUES (:id, :email)"),
+                text(
+                    "INSERT INTO users (id, email, status) VALUES (:id, :email, 'active')"
+                ),
                 {"id": second_user, "email": "trainer@example.test"},
             )
             connection.execute(
@@ -181,7 +187,9 @@ def test_downgrade_refuses_data_loss_and_empty_roundtrip(
     try:
         with engine.begin() as connection:
             connection.execute(
-                text("INSERT INTO users (id, email) VALUES (:id, :email)"),
+                text(
+                    "INSERT INTO users (id, email, status) VALUES (:id, :email, 'active')"
+                ),
                 {"id": user_id, "email": "preserve@example.test"},
             )
             connection.execute(
@@ -211,5 +219,52 @@ def test_downgrade_refuses_data_loss_and_empty_roundtrip(
             assert connection.scalar(text("SELECT COUNT(*) FROM users")) == 1
         run_alembic(disposable_database, "upgrade", AUTH_HEAD)
         assert AUTH_TABLES <= set(inspect(engine).get_table_names())
+    finally:
+        engine.dispose()
+
+
+def test_pending_default_and_downgrade_preserve_accounts(
+    disposable_database: URL,
+) -> None:
+    run_alembic(disposable_database, "upgrade", "20261109_01")
+    existing_id, pending_id = uuid4(), uuid4()
+    engine = database_engine(disposable_database)
+    try:
+        with engine.begin() as connection:
+            connection.execute(
+                text("INSERT INTO users (id, email) VALUES (:id, :email)"),
+                {"id": existing_id, "email": "existing@example.test"},
+            )
+        run_alembic(disposable_database, "upgrade", AUTH_HEAD)
+        with engine.begin() as connection:
+            assert (
+                connection.scalar(
+                    text("SELECT status::text FROM users WHERE id=:id"),
+                    {"id": existing_id},
+                )
+                == "active"
+            )
+            connection.execute(
+                text("INSERT INTO users (id, email) VALUES (:id, :email)"),
+                {"id": pending_id, "email": "pending@example.test"},
+            )
+            assert (
+                connection.scalar(
+                    text("SELECT status::text FROM users WHERE id=:id"),
+                    {"id": pending_id},
+                )
+                == "pending"
+            )
+        run_alembic(disposable_database, "downgrade", "20261109_01", success=False)
+        assert current_revision(disposable_database) == AUTH_HEAD
+        with engine.begin() as connection:
+            assert connection.scalar(text("SELECT count(*) FROM users")) == 2
+            connection.execute(
+                text("UPDATE users SET status='active' WHERE id=:id"),
+                {"id": pending_id},
+            )
+        run_alembic(disposable_database, "downgrade", "20261109_01")
+        run_alembic(disposable_database, "upgrade", AUTH_HEAD)
+        run_alembic(disposable_database, "check")
     finally:
         engine.dispose()

@@ -3,7 +3,8 @@
     {
       "labels": [
         "active",
-        "blocked"
+        "blocked",
+        "pending"
       ],
       "name": "account_status",
       "schema": "public",
@@ -69,7 +70,7 @@
       "visible": true
     }
   ],
-  "head": "20261109_01",
+  "head": "20261110_01",
   "reviewed_model_checks_sha256": "ae21f1d2311b572ec1d66ca44073f2bf14bd36f2f433ab9cf0f8698b25efc7a2",
   "tables": {
     "assignments": {
@@ -4060,7 +4061,7 @@
           "type": "VARCHAR(50)"
         },
         {
-          "default": "'active'::account_status",
+          "default": "'pending'::account_status",
           "name": "status",
           "nullable": false,
           "type": "VARCHAR(7)"
