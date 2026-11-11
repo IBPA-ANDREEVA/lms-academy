@@ -1,0 +1,98 @@
+name: Frontend CI
+
+on:
+  # Keep a check on every PR so required checks never remain pending after a path skip.
+  pull_request:
+  push:
+    branches: [main]
+    paths:
+      - "src/**"
+      - "public/**"
+      - "tests/**"
+      - "scripts/**"
+      - "package.json"
+      - "pnpm-lock.yaml"
+      - "pnpm-workspace.yaml"
+      - ".npmrc"
+      - ".pnpmfile.cjs"
+      - "patches/**"
+      - "next.config.*"
+      - "next-env.d.ts"
+      - "tsconfig*.json"
+      - "eslint.config.*"
+      - "postcss.config.*"
+      - ".env.example"
+      - ".github/workflows/frontend.yml"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: frontend-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  verify:
+    name: Frontend checks
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    env:
+      NEXT_TELEMETRY_DISABLED: "1"
+      TEST_PREVIEW: "false"
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+          # PR merge commit and its parents; no full history or PR API permission needed.
+          fetch-depth: 2
+      - name: Detect frontend changes
+        id: changes
+        env:
+          EVENT_NAME: ${{ github.event_name }}
+          PR_BASE_SHA: ${{ github.event.pull_request.base.sha }}
+        shell: bash
+        run: |
+          if [[ "$EVENT_NAME" == "push" ]]; then
+            echo "frontend=true" >> "$GITHUB_OUTPUT"
+          else
+            # Keep these pathspecs aligned with push.paths above. A git error fails the step.
+            git diff --no-renames --name-only "$PR_BASE_SHA" HEAD -- \
+              src public tests scripts package.json pnpm-lock.yaml pnpm-workspace.yaml \
+              .npmrc .pnpmfile.cjs patches 'next.config.*' next-env.d.ts \
+              'tsconfig*.json' 'eslint.config.*' 'postcss.config.*' .env.example \
+              .github/workflows/frontend.yml > "$RUNNER_TEMP/frontend-changes"
+            if [[ -s "$RUNNER_TEMP/frontend-changes" ]]; then
+              echo "frontend=true" >> "$GITHUB_OUTPUT"
+            else
+              echo "frontend=false" >> "$GITHUB_OUTPUT"
+              echo "No frontend changes; frontend checks are not applicable." >> "$GITHUB_STEP_SUMMARY"
+            fi
+          fi
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        if: steps.changes.outputs.frontend == 'true'
+        with:
+          node-version: "22"
+          package-manager-cache: false
+      - uses: pnpm/action-setup@73e46992e05b19abd31f2f3c20e0e7370d762115 # v6.1.1
+        if: steps.changes.outputs.frontend == 'true'
+        with:
+          # Reads the exact packageManager version from package.json.
+          cache: true
+      - name: Install locked dependencies
+        if: steps.changes.outputs.frontend == 'true'
+        run: pnpm install --frozen-lockfile
+      - name: ESLint
+        if: steps.changes.outputs.frontend == 'true'
+        run: pnpm lint
+      - name: Frontend unit tests
+        if: steps.changes.outputs.frontend == 'true'
+        run: node --test tests/*.test.mjs
+      - name: Generate Next.js types
+        if: steps.changes.outputs.frontend == 'true'
+        run: pnpm exec next typegen
+      - name: TypeScript
+        if: steps.changes.outputs.frontend == 'true'
+        run: pnpm exec tsc --noEmit
+      - name: Production build
+        if: steps.changes.outputs.frontend == 'true'
+        run: pnpm build
