@@ -3,8 +3,10 @@ import assert from 'node:assert/strict';
 import http from 'node:http';
 import { createRequire } from 'node:module';
 import { mkdir, writeFile } from 'node:fs/promises';
+import { createLoopbackProxyOptions } from './helpers/loopback-proxy.mjs';
 const { chromium }=createRequire(import.meta.url)(process.env.PLAYWRIGHT_MODULE||'playwright');
 const base=process.env.FRONTEND_URL||'http://localhost:3117';
+const proxyOptions=createLoopbackProxyOptions(base);
 const evidence=process.env.FRONTEND_EVIDENCE||'docs/qa/evidence/premium-motion-2026-11-02';
 await mkdir(evidence,{recursive:true});
 // Model a slow server by delivering Next's actual shell/Flight data before
@@ -13,8 +15,9 @@ await mkdir(evidence,{recursive:true});
 // also prevent shell hydration and could never exercise the loading boundary.
 let delay=1500;
 const server=http.createServer((request,response)=>{
- const target=new URL(request.url,base);
- const upstream=http.request(target,{method:request.method,headers:{...request.headers,host:target.host,'accept-encoding':'identity'}},incoming=>{
+ let options;
+ try {options=proxyOptions(request);} catch {response.writeHead(400);response.end('Invalid test proxy request');return;}
+ const upstream=http.request(options,incoming=>{
   const headers={...incoming.headers};delete headers['content-length'];delete headers['transfer-encoding'];
   if(request.url.startsWith('/courses/course-lashes')&&request.headers.accept?.includes('text/html')) {
    const chunks=[];incoming.on('data',chunk=>chunks.push(chunk));incoming.on('end',()=>{
