@@ -222,8 +222,8 @@ def get_me(
     return CurrentUserResponse(
       id=user.id,
       email=user.email,
-      first_name=profile.first_name,
-      last_name=profile.last_name,
+      first_name=profile.first_name if profile else None,
+      last_name=profile.last_name if profile else None,
       roles=user.roles,
       status=user.status,
     )

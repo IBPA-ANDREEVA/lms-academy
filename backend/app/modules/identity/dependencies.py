@@ -22,7 +22,7 @@ def get_current_user(
 
   with db.unit_of_work() as session:
     user = authenticate_session(session, raw_token)
-    if user == None:
+    if user is None:
       raise HTTPException(
         status_code=400,
         detail="Session has expired",

@@ -65,8 +65,11 @@ def authenticate_session(session: Session, raw_token: str) -> User | None:
       IdentitySession.secret_digest == digest,
       IdentitySession.last_interaction_at > now - timedelta(days=7),
       IdentitySession.absolute_expires_at > now,
-      IdentitySession.revoked_at == None,
+      IdentitySession.revoked_at.is_(None),
     )
   )
 
-  return session.get(User, user_id)
+  if user_id is None:
+    return None
+  user = session.get(User, user_id)
+  return user if user is not None and user.status != "blocked" else None
