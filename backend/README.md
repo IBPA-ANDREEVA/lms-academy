@@ -1,5 +1,17 @@
 # LMS Python backend
 
+## Identity implementation update · 2026-11-11
+
+FastAPI now mounts registration, verification/resend, login/logout/current-user,
+owned-session listing/revocation and password recovery. Read the
+[route/function map](../docs/architecture/identity-routes.md) for exact URLs,
+responsibilities, transaction boundaries, generated contracts and development
+limitations. Recovery email delivery remains TODO; existing production FIX items
+are retained. Other domain APIs/workers remain unimplemented. Earlier
+foundation-only statements below are historical. New/edited Identity code uses
+2-space indentation enforced by scoped Ruff configuration.
+
+
 > Merge update (2026-11-10): the current head is `20261110_01`, with 31 domain
 > tables. `20261109_01` adds Identity storage; `20261110_01` adds the incoming
 > pending account status/default without changing applied revisions. Existing
