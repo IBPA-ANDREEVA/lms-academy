@@ -50,3 +50,7 @@ class InvalidCredentials(AuthenticationError):
 
 class AccountBlocked(AuthenticationError):
   pass
+
+
+class SessionNotFound(NotFoundEror):
+  pass
