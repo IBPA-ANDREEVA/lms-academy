@@ -294,3 +294,14 @@ Status: implemented and browser-verified; human visual approval, physical Safari
 Existing public-shell/Identity/preview owners and routes retained. Canonical Cut is simplified; FormControls own regular labels, soft fields, inset eye and icon notices; AuthModal adds visible view titles and spacing; shared scroll lock preserves measured content width. No new primitive or business capability. Props, actual consumers, reference scope, status and missing work are recorded in [the verification note](../qa/public-auth-ui-fixes-2026-11-11.md). Browser checks cover desktop/tablet/two mobile widths and mocked registration states. Login/recovery integration and human visual approval remain pending.
 
 2026-11-11 owner follow-up: FormControls align mixed-error siblings and use circled error icons; AuthModal grows to available viewport height with compact registration spacing. PageWipeTransition (same props/PublicMotion consumer) owns an interruptible three-stroke pending animation. Global scrollbar colors cover the wipe gutter. Canonical paths/consumers remain; [follow-up measurements, reference scope and tests](../qa/public-auth-ui-fixes-2026-11-11.md#owner-follow-up-mixed-validation-and-transition-loading). Small-screen overflow remains when required for reachable controls; human review pending.
+
+### PR 25 registration corrections · 2026-11-11
+
+Existing AuthModal → RegisterForm ownership and props (`onViewChange`) remain.
+`src/features/identity/register-form.tsx` uses the existing FormMessage to report
+account creation and the test-version email-delivery limitation. Consumers remain
+PublicHeader and CheckoutBuyer through AuthModal; no route or shared style changes.
+`src/features/identity/api.ts` now derives registration request/response types from
+generated OpenAPI schemas. Registration is partially integrated; verification-email
+delivery remains MISSING. No new visual reference/direction is introduced.
+See [review-fix verification](../qa/pr25-review-fixes-2026-11-11.md).

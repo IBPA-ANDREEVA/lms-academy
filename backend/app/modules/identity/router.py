@@ -50,6 +50,11 @@ from app.modules.identity.services.verfication import resend_verification, verif
 router = APIRouter(
   prefix="/auth",
   tags=["Identity"],
+  route_class=IdentityRoute,
+  responses={
+    422: {"model": IdentityErrorResponse},
+    500: {"model": IdentityErrorResponse},
+  },
 )
 
 
@@ -269,7 +274,6 @@ def get_me(
 identity_errors: dict[int | str, dict[str, object]] = {
   code: {"model": IdentityErrorResponse} for code in (400, 401, 403, 404, 422, 500)
 }
-router.route_class = IdentityRoute
 session_cookie = APIKeyCookie(name="lms-session", auto_error=False)
 
 

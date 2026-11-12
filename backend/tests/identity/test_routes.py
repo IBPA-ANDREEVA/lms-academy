@@ -21,7 +21,7 @@ from app.modules.identity.auth_models import (
   PasswordCredential,
 )
 from app.modules.identity.constants import TokenPurpose
-from app.modules.identity.models import User
+from app.modules.identity.models import Profile, User
 from app.modules.identity.services.passwords import hash_password, verify_password
 from app.modules.identity.services.sessions import create_auth_session
 from app.modules.identity.services.tokens import hash_token
@@ -261,16 +261,89 @@ def test_concurrent_consumption(db: ApplicationDatabase, client: TestClient) -> 
     assert sorted(executor.map(attempt, range(2))) == [200, 400]
 
 
-def test_validation_does_not_echo_secrets() -> None:
+@pytest.mark.parametrize(
+  ("path", "payload"),
+  [
+    ("/password/reset", {"token": "private-token", "password": "short"}),
+    ("/login", {"email": "private@example.com", "password": "short"}),
+    (
+      "/register",
+      {
+        "first_name": "Test",
+        "last_name": "Student",
+        "email": "private@example.com",
+        "password": "short",
+      },
+    ),
+  ],
+)
+def test_validation_does_not_echo_secrets(
+  path: str,
+  payload: dict[str, str],
+  caplog: pytest.LogCaptureFixture,
+) -> None:
   application = FastAPI()
   application.include_router(api_router)
   client = TestClient(application)
-  response = client.post(
-    "/api/v1/auth/password/reset", json={"token": "private-token", "password": "short"}
-  )
+
+  response = client.post("/api/v1/auth" + path, json=payload)
+
   assert response.status_code == 422
-  assert "private-token" not in response.text and "short" not in response.text
+  assert response.headers["cache-control"] == "no-store"
+  assert response.json()["detail"]["code"] == "invalid_request"
+  assert UUID(response.json()["detail"]["correlation_id"])
+  for value in payload.values():
+    assert value not in response.text
+    assert value not in caplog.text
   assert client.get("/api/v1/auth/sessions?limit=101").status_code == 422
+
+
+@pytest.mark.parametrize("field", ["first_name", "last_name"])
+@pytest.mark.parametrize("length", [101, 128])
+def test_registration_rejects_oversized_names(
+  field: str,
+  length: int,
+) -> None:
+  application = FastAPI()
+  application.include_router(api_router)
+  client = TestClient(application)
+  payload = {
+    "first_name": "Test",
+    "last_name": "Student",
+    "email": "boundary@example.com",
+    "password": "test-password",
+  }
+  payload[field] = "Я" * length
+
+  response = client.post("/api/v1/auth/register", json=payload)
+
+  # No database is configured: rejection must happen before persistence.
+  assert response.status_code == 422
+  assert response.json()["detail"]["code"] == "invalid_request"
+
+
+def test_registration_persists_maximum_length_names(
+  db: ApplicationDatabase,
+  client: TestClient,
+) -> None:
+  response = client.post(
+    "/api/v1/auth/register",
+    json={
+      "first_name": "Я" * 100,
+      "last_name": "Ю" * 100,
+      "email": "boundary@example.com",
+      "password": "test-password",
+    },
+  )
+
+  assert response.status_code == 201
+  with db.unit_of_work() as session:
+    profile = session.scalar(
+      select(Profile).join(User).where(User.email == "boundary@example.com")
+    )
+    assert profile is not None
+    assert profile.first_name == "Я" * 100
+    assert profile.last_name == "Ю" * 100
 
 
 def test_reset_failure_rolls_back_consumption(

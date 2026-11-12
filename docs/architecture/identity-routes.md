@@ -30,8 +30,8 @@ not a new route alias introduced by this task.
 ## Function boundaries
 
 - `router.py`: HTTP status/error mapping, safe response construction and cookie
-  transport. New operations use `http.IdentityRoute` to sanitize validation and
-  unexpected failures without echoing secrets; legacy errors remain unchanged.
+  transport. All Identity routes use `http.IdentityRoute` to sanitize validation and
+  unexpected failures without echoing secrets; explicit legacy HTTP errors remain unchanged.
 - `dependencies.get_current_user`: extract the cookie and resolve a user for the
   existing `/me` flow. `sessions.authenticate_session`: check digest, absolute and
   inactivity deadlines, revocation and current blocked status. Neither refreshes
@@ -99,7 +99,8 @@ or log the user in. Concurrent consumption permits one success only.
 
 New error bodies are `{detail: {code, message, correlation_id}}`, with Russian-first
 messages and separate privacy-safe diagnostics. Responses use `Cache-Control:
-no-store`. Existing route response shapes remain unchanged. The new cookie DELETE
+no-store`. Explicit HTTP error and success shapes remain unchanged. All Identity validation
+failures now use the sanitized 422 envelope, including registration and login. The new cookie DELETE
 uses same-origin protection; the reset secret itself authorizes recovery, independent
 of browser session cookies.
 
@@ -116,8 +117,8 @@ pnpm exec openapi-typescript backend/openapi/identity.json -o src/lib/api/genera
 ```
 
 The committed OpenAPI artifact includes the app's existing health/Identity routes.
-Generated TypeScript is additive and has no runtime/UI behavior. Existing consumers
-are not switched to it here. Review old path/method/schema/operation-ID compatibility
+The registration client in `src/features/identity/api.ts` derives its request
+and base response types from the generated schemas. Review old path/method/schema/operation-ID compatibility
 on export. New cookie operations declare the API-key cookie security scheme.
 
 ## Remaining development limitations
@@ -129,3 +130,9 @@ not silently changed with the new routes. Central legacy error mapping, durable
 email delivery/audit, abuse controls, qualifying-interaction refresh and manual
 administrator recovery remain unfinished. New route failure logs are not durable
 sensitive-action audit evidence. Do not represent this implementation as launch-ready.
+
+## PR 25 review corrections · 2026-11-11
+
+Registration names are limited to 100 characters to match the persisted profile
+columns. No migration is needed. The registration modal explicitly states that
+verification email is not sent in this test version; email delivery remains missing.

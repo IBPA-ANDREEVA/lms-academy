@@ -1,15 +1,9 @@
 import { apiPost } from "@/lib/api/client";
 
-type BaseResponse = {
-  message: string;
-};
+import type { components } from "@/lib/api/generated/schema";
 
-export type RegisterRequest = {
-  first_name: string;
-  last_name: string;
-  email: string;
-  password: string;
-};
+type BaseResponse = components["schemas"]["BaseResponse"];
+export type RegisterRequest = components["schemas"]["RegisterRequest"];
 
 export function registerStudent(
   data: RegisterRequest,

@@ -99,10 +99,22 @@ try {
   await form.getByRole("alert").waitFor();
   await page.screenshot({ path: `${evidence}/register-server-error.png` });
   await page.unroute("**/api/v1/auth/register");
-  await page.route("**/api/v1/auth/register", route => route.fulfill({ status: 200, contentType: "application/json", body: '{"message":"ok"}' }));
+  await page.route("**/api/v1/auth/register", route => route.fulfill({ status: 201, contentType: "application/json", body: '{"message":"ok"}' }));
   await form.getByRole("button", { name: "СОЗДАТЬ АККАУНТ" }).click();
-  await form.getByText("Вы успешно зарегистрированы", { exact: false }).waitFor();
-  await page.screenshot({ path: `${evidence}/register-success.png` });
+  const success = form.getByText("Аккаунт создан. В тестовой версии письма не отправляются — подтверждение почты пока недоступно.", { exact: true });
+  await success.waitFor();
+  for (const width of [1440, 768, 390, 320]) {
+    await page.setViewportSize({ width, height: width <= 390 ? 844 : 900 });
+    await success.scrollIntoViewIfNeeded();
+    assert.ok(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth));
+    assert.ok(await success.evaluate(el => {
+      const range = document.createRange();
+      range.selectNodeContents(el);
+      const bounds = el.getBoundingClientRect();
+      return [...range.getClientRects()].every(rect => rect.left >= bounds.left - 1 && rect.right <= bounds.right + 1);
+    }), "Success copy must wrap without clipped text");
+    await page.screenshot({ path: `${evidence}/register-success-${width}.png` });
+  }
   await page.emulateMedia({ reducedMotion: "reduce" });
   await page.keyboard.press("Escape");
   await page.locator("dialog[open]").waitFor({ state: "detached" });

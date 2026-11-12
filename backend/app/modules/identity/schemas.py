@@ -11,8 +11,8 @@ class BaseResponse(BaseModel):
 class RegisterRequest(BaseModel):
   model_config = ConfigDict(extra="forbid")
 
-  first_name: str = Field(min_length=2, max_length=128)
-  last_name: str = Field(min_length=2, max_length=128)
+  first_name: str = Field(min_length=2, max_length=100)
+  last_name: str = Field(min_length=2, max_length=100)
   email: EmailStr = Field(max_length=255)
   password: str = Field(min_length=8, max_length=255, repr=False)
 
