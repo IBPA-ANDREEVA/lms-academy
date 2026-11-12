@@ -4,7 +4,11 @@ from uuid import UUID
 from sqlalchemy import func, select
 from sqlalchemy.orm import Session
 
-from app.modules.identity.auth_models import IdentityActionToken
+from app.modules.identity.auth_models import(
+    IdentityActionToken, 
+    PasswordCredential, 
+    IdentitySession,
+)
 from app.modules.identity.constants import TokenPurpose
 from app.modules.identity.models import User
 
@@ -62,3 +66,10 @@ def get_last_token_time(
     )
 
     return session.scalar(statement)
+
+def get_password_credentials(
+    session: Session,
+    user_id: UUID
+) -> PasswordCredential | None:
+    
+    return session.get(PasswordCredential, user_id)

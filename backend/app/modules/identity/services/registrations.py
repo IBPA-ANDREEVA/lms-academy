@@ -14,6 +14,8 @@ from app.modules.identity.services.tokens import create_action_token
 
 def register_student(
     db: ApplicationDatabase,
+    first_name: str,
+    last_name: str,
     email: str,
     password: str,
 ) -> None:
@@ -35,7 +37,11 @@ def register_student(
             session.add(user)
             session.flush()
 
-            session.add(Profile(user_id=user_id))
+            session.add(Profile(
+                user_id=user_id,
+                first_name=first_name,
+                last_name=last_name,
+            ))
 
             session.add(
                 PasswordCredential(

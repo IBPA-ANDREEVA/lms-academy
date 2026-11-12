@@ -2,41 +2,46 @@ from app.core.exceptions import ConflictEror, NotFoundEror, VerificationEror
 
 
 class EmailAlreadyRegistered(ConflictEror):
-    pass
+  pass
 
 
 class UserNotFound(NotFoundEror):
-    pass
-
-
-class UserHasLinkedRecords(VerificationEror):
-    pass
+  pass
 
 
 # Token:
 class TokenError(VerificationEror):
-    pass
+  pass
 
 
 class TokenInvalid(TokenError):
-    pass
+  pass
 
 
 class TokenExpired(TokenError):
-    pass
+  pass
 
 
 class TokenAlreadyUsed(TokenError):
-    pass
+  pass
 
 
 class TokenRevoked(TokenError):
-    pass
+  pass
 
-
+#Verification:
 class ResendError(VerificationEror):
-    pass
-
+  pass
 
 class ResendWasSentEarlier(ResendError):
-    pass
+  pass
+
+#Auth:
+class AuthenticationError(VerificationEror):
+  pass
+
+class InvalidCredentials(AuthenticationError):
+  pass
+
+class AccountBlocked(AuthenticationError):
+  pass

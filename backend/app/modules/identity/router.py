@@ -1,6 +1,8 @@
 from typing import cast
 
-from fastapi import APIRouter, HTTPException, Request, status
+from fastapi import APIRouter, HTTPException, Request, Response, Depends, status
+
+from app.modules.identity.models import User, Profile
 
 from app.db.session import ApplicationDatabase
 from app.modules.identity.exceptions import (
@@ -11,15 +13,21 @@ from app.modules.identity.exceptions import (
     TokenError,
     TokenExpired,
     TokenInvalid,
+    AuthenticationError,
 )
 from app.modules.identity.schemas import (
     BaseResponse,
     RegisterRequest,
     ResendVerificationRequest,
     VerifyEmailRequest,
+    LoginRequest,
+    CurrentUserResponse
 )
+from app.modules.identity.services.sessions import create_auth_session, revoke_auth_session
 from app.modules.identity.services.registrations import register_student
+from app.modules.identity.services.authentication import authenticate_user 
 from app.modules.identity.services.verfication import resend_verification, verify_email
+from app.modules.identity.dependencies import get_current_user
 
 router = APIRouter(
     prefix="/auth",
@@ -50,6 +58,8 @@ def register(
     try:
         register_student(
             db=db,
+            first_name=body.first_name,
+            last_name=body.last_name,
             email=str(body.email),
             password=body.password,
         )
@@ -135,3 +145,94 @@ def resend_verification_route(
         ) from exc
 
     return BaseResponse(message="Succesfull resend of verification")
+
+@router.post(
+    "/login",
+    response_model=BaseResponse,
+    status_code=status.HTTP_200_OK,
+    operation_id="IdentityLogin",
+)
+def login(
+  body: LoginRequest,
+  request: Request,
+  response: Response
+) -> BaseResponse:
+    db=cast(ApplicationDatabase, request.app.state.database)
+  
+    try:
+        with db.unit_of_work() as session:
+            user = authenticate_user(session, str(body.email), body.password)
+            raw_token = create_auth_session(session, user.id)
+        
+    except AuthenticationError as exc:
+        raise HTTPException(
+            status_code=401,
+            detail="Invalid email or password",
+        ) from exc
+    
+    #TODO: Fix before production
+    response.set_cookie(
+        key="lms-session",
+        value=raw_token,
+        httponly=True,
+        secure=False,  # Local HTTP development only
+        samesite="lax",
+        path="/",
+        max_age=30 * 24 * 60 * 60,
+    )
+       
+    return BaseResponse(
+       message = "Succesful Login"
+   )
+
+@router.post(
+    "/logout",
+    response_model=BaseResponse,
+    status_code=status.HTTP_200_OK,
+    operation_id="IdentityLogout"
+)
+def logout(
+    request: Request,
+    response: Response
+) -> BaseResponse:
+  
+  raw_token = request.cookies.get("lms-session")
+
+  if raw_token:
+      db = cast(ApplicationDatabase, request.app.state.database)
+
+      with db.unit_of_work() as session:
+          revoke_auth_session(session, raw_token)
+
+  response.delete_cookie(
+      key="lms-session",
+      path="/"
+  )
+
+  return BaseResponse(
+      message = "Successful logout"
+  )
+
+@router.get(
+    "/me",
+    response_model=CurrentUserResponse,
+    status_code=status.HTTP_200_OK,
+    operation_id="IdentityGetCurrentUser"
+)
+def get_me(
+    request: Request,
+    user: User = Depends(get_current_user),
+) -> CurrentUserResponse:
+    db = cast(ApplicationDatabase, request.app.state.database)
+
+    with db.unit_of_work() as session:
+        profile = session.get(Profile, user.id)
+
+        return CurrentUserResponse(
+            id = user.id,
+            email = user.email,
+            first_name = profile.first_name,
+            last_name = profile.last_name,
+            roles = user.roles,
+            status = user.status
+        )

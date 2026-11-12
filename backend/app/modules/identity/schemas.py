@@ -1,4 +1,5 @@
 from pydantic import BaseModel, ConfigDict, EmailStr, Field
+from uuid import UUID
 
 
 class BaseResponse(BaseModel):
@@ -8,6 +9,8 @@ class BaseResponse(BaseModel):
 class RegisterRequest(BaseModel):
     model_config = ConfigDict(extra="forbid")
 
+    first_name: str = Field(min_length=2, max_length=128)
+    last_name: str = Field(min_length=2, max_length=128)
     email: EmailStr = Field(max_length=255)
     password: str = Field(min_length=8, max_length=255, repr=False)
 
@@ -22,3 +25,19 @@ class ResendVerificationRequest(BaseModel):
     model_config = ConfigDict(extra="forbid")
 
     email: EmailStr
+
+class LoginRequest(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+
+    email: EmailStr
+    password: str = Field(min_length=8, max_length=1024, repr=False)
+
+class CurrentUserResponse(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+
+    id: UUID
+    email: EmailStr
+    first_name: str | None
+    last_name: str | None
+    roles: list[str]
+    status: str
