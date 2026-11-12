@@ -31,7 +31,10 @@ def verify_email(
   user.status = "active"
 
 
-def resend_verification(session: Session, email: str) -> tuple[str, str] | None:
+def resend_verification(
+  session: Session,
+  email: str,
+) -> tuple[str, str] | None:
 
   now = datetime.now(UTC)
 

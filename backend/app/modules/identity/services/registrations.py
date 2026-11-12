@@ -60,6 +60,8 @@ def register_student(
       "constraint_name",
       None,
     )
+
     if constraint == "uq_users_email_ci":
       raise EmailAlreadyRegistered() from None
+
     raise

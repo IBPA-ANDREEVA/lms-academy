@@ -61,7 +61,10 @@ def revoke_auth_session(
   session.execute(statement)
 
 
-def authenticate_session(session: Session, raw_token: str) -> User | None:
+def authenticate_session(
+  session: Session,
+  raw_token: str,
+) -> User | None:
 
   digest = hash_token(raw_token)
 
@@ -78,22 +81,31 @@ def authenticate_session(session: Session, raw_token: str) -> User | None:
 
   if user_id is None:
     return None
+
   user = session.get(User, user_id)
+
   return user if user is not None and user.status != "blocked" else None
 
 
-def require_session_owner(session: Session, raw_token: str) -> User:
+def require_session_owner(
+  session: Session,
+  raw_token: str,
+) -> User:
   user = authenticate_session(session, raw_token)
+
   if user is None:
     raise AuthenticationError()
+
   # Serialize with login/recovery, then recheck after acquiring the account lock.
   user = get_user_by_id(session, user.id)
+
   if (
     user is None
     or user.status == "blocked"
     or authenticate_session(session, raw_token) is None
   ):
     raise AuthenticationError()
+
   return user
 
 
@@ -104,8 +116,17 @@ def list_auth_sessions(
   after: UUID | None = None,
 ) -> SessionsResponse:
   user = require_session_owner(session, raw_token)
-  rows = get_active_sessions(session, user.id, datetime.now(UTC), limit + 1, after)
+
+  rows = get_active_sessions(
+    session,
+    user.id,
+    datetime.now(UTC),
+    limit + 1,
+    after,
+  )
+
   digest = hash_token(raw_token)
+
   return SessionsResponse(
     sessions=[
       SessionResponse(
@@ -122,9 +143,13 @@ def list_auth_sessions(
 
 
 def revoke_owned_auth_session(
-  session: Session, raw_token: str, session_id: UUID
+  session: Session,
+  raw_token: str,
+  session_id: UUID,
 ) -> UUID:
   user = require_session_owner(session, raw_token)
+
   if not revoke_owned_session(session, user.id, session_id, datetime.now(UTC)):
     raise SessionNotFound()
+
   return user.id

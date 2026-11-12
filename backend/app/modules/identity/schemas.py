@@ -49,11 +49,13 @@ class CurrentUserResponse(BaseModel):
 
 class ForgotPasswordRequest(BaseModel):
   model_config = ConfigDict(extra="forbid")
+
   email: EmailStr = Field(max_length=255)
 
 
 class ResetPasswordRequest(BaseModel):
   model_config = ConfigDict(extra="forbid")
+
   token: str = Field(min_length=1, max_length=256, repr=False)
   password: str = Field(min_length=8, max_length=255, repr=False)
 

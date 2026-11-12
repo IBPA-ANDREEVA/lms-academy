@@ -26,6 +26,7 @@ from app.db.base import Base
 
 class User(Base):
   __tablename__ = "users"
+
   id: Mapped[UUID] = mapped_column(Uuid, primary_key=True)
   email: Mapped[str] = mapped_column(String(255))
   roles: Mapped[list[str]] = mapped_column(
@@ -44,6 +45,7 @@ class User(Base):
   updated_at: Mapped[datetime] = mapped_column(
     DateTime(timezone=True), server_default=text("now()")
   )
+
   __table_args__ = (
     Index("uq_users_email_ci", func.lower(email), unique=True),
     Index("uq_users_referral_code_ci", func.lower(referral_code), unique=True),
@@ -57,6 +59,7 @@ class User(Base):
 
 class Profile(Base):
   __tablename__ = "profiles"
+
   user_id: Mapped[UUID] = mapped_column(
     Uuid, ForeignKey("users.id", ondelete="RESTRICT"), primary_key=True
   )

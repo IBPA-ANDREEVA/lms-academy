@@ -14,9 +14,15 @@ from fastapi.routing import APIRoute
 logger = logging.getLogger(__name__)
 
 
-def identity_error(status: int, code: str, message: str) -> HTTPException:
+def identity_error(
+  status: int,
+  code: str,
+  message: str,
+) -> HTTPException:
   correlation_id = str(uuid4())
+
   logger.info("identity_request_failed code=%s correlation_id=%s", code, correlation_id)
+
   return HTTPException(
     status,
     detail={
@@ -33,9 +39,12 @@ def require_same_origin(request: Request) -> None:
   # this new cookie mutation; existing development login/logout remain unchanged.
   origin = request.headers.get("origin")
   expected = f"{request.url.scheme}://{request.url.netloc}"
+
   if not origin or origin != expected or urlsplit(origin).path:
     raise identity_error(
-      403, "origin_rejected", "Обновите страницу и повторите попытку."
+      403,
+      "origin_rejected",
+      "Обновите страницу и повторите попытку.",
     )
 
 
@@ -47,24 +56,37 @@ class IdentityRoute(APIRoute):
       try:
         response = await original(request)
         response.headers["Cache-Control"] = "no-store"
+
         return response
+
       except RequestValidationError:
         raise identity_error(
-          422, "invalid_request", "Проверьте введённые данные."
+          422,
+          "invalid_request",
+          "Проверьте введённые данные.",
         ) from None
+
       except HTTPException:
         raise
+
       except Exception as exc:
         # Exception type only: SQL/driver exceptions may include submitted secrets.
         logger.error("identity_unexpected_failure error_type=%s", type(exc).__name__)
+
         raise identity_error(
-          500, "request_failed", "Не удалось выполнить запрос. Попробуйте позже."
+          500,
+          "request_failed",
+          "Не удалось выполнить запрос. Попробуйте позже.",
         ) from None
 
     return handle
 
 
-def record_identity_change(action: str, actor_id: UUID, resource_id: UUID) -> None:
+def record_identity_change(
+  action: str,
+  actor_id: UUID,
+  resource_id: UUID,
+) -> None:
   # Call only after unit-of-work commit. This is an operational diagnostic,
   # not a replacement for future durable sensitive-action audit storage.
   logger.info(

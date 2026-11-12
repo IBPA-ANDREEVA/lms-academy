@@ -13,17 +13,24 @@ from app.modules.identity.constants import TokenPurpose
 from app.modules.identity.models import User
 
 
-def get_user_by_email(session: Session, email: str) -> User | None:
+def get_user_by_email(
+  session: Session,
+  email: str,
+) -> User | None:
 
   statement = (
     select(User)
     .where(func.lower(User.email) == email.strip().lower())
     .with_for_update()
   )
+
   return session.scalar(statement)
 
 
-def get_user_by_id(session: Session, user_id: UUID) -> User | None:
+def get_user_by_id(
+  session: Session,
+  user_id: UUID,
+) -> User | None:
 
   statement = (
     select(User)
@@ -31,6 +38,7 @@ def get_user_by_id(session: Session, user_id: UUID) -> User | None:
     .with_for_update()
     .execution_options(populate_existing=True)
   )
+
   return session.scalar(statement)
 
 
@@ -74,13 +82,17 @@ def get_last_token_time(
 
 
 def get_password_credentials(
-  session: Session, user_id: UUID
+  session: Session,
+  user_id: UUID,
 ) -> PasswordCredential | None:
 
   return session.get(PasswordCredential, user_id)
 
 
-def get_reset_token_owner(session: Session, digest: bytes) -> UUID | None:
+def get_reset_token_owner(
+  session: Session,
+  digest: bytes,
+) -> UUID | None:
   # Read identity first; all recovery writes lock user before token to avoid
   # deadlocks between replacement requests and consumption.
   return session.scalar(
@@ -104,8 +116,10 @@ def get_active_sessions(
     IdentitySession.absolute_expires_at > now,
     IdentitySession.last_interaction_at > now - timedelta(days=7),
   )
+
   if after is not None:
     statement = statement.where(IdentitySession.id > after)
+
   return list(session.scalars(statement.order_by(IdentitySession.id).limit(limit)))
 
 
@@ -123,14 +137,21 @@ def revoke_owned_session(
     )
     .with_for_update()
   )
+
   if owned is None:
     return False
+
   if owned.revoked_at is None:
     owned.revoked_at = now
+
   return True
 
 
-def revoke_all_sessions(session: Session, user_id: UUID, now: datetime) -> None:
+def revoke_all_sessions(
+  session: Session,
+  user_id: UUID,
+  now: datetime,
+) -> None:
   session.execute(
     update(IdentitySession)
     .where(

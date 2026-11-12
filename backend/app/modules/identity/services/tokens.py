@@ -28,7 +28,11 @@ def generate_token() -> tuple[str, bytes]:
   return raw_token, digest
 
 
-def create_action_token(session: Session, user_id: UUID, purpose: TokenPurpose) -> str:
+def create_action_token(
+  session: Session,
+  user_id: UUID,
+  purpose: TokenPurpose,
+) -> str:
 
   raw_token, digest = generate_token()
   now = datetime.now(UTC)
