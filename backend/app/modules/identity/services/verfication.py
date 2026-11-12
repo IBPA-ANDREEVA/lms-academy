@@ -51,7 +51,12 @@ def resend_verification(
 
   purpose = TokenPurpose.EMAIL_VERIFICATION
 
-  if user is None or user.status != "pending" or "admin" in user.roles:
+  if (
+    user is None
+    or user.status == "blocked"
+    or user.email_verified_at is not None
+    or "admin" in user.roles
+  ):
     return None
 
   last_verification_time = get_last_token_time(session, user.id, purpose)

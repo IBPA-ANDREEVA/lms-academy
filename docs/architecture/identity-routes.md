@@ -23,7 +23,7 @@ UI integration is described below. No schema migration is included.
 | POST `/password/reset` | `reset_password_route` | `resets.reset_password` → owner lookup/lock, consume token, hash password, revoke sessions/reset tokens | Handler; one atomic transaction |
 
 The existing misspelled `verfication.py`, resend URL and operation IDs are retained
-for compatibility. The frontend now uses the implemented underscore URL; no compatibility alias was added.
+for compatibility. Resend also supports legacy active accounts without `email_verified_at`; an active status alone is not verification evidence. The frontend now uses the implemented underscore URL; no compatibility alias was added.
 
 ## Function boundaries
 

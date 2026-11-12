@@ -507,3 +507,43 @@ def test_repeated_logout_preserves_original_revocation_time(
   with db.unit_of_work() as session:
     row = session.get(IdentitySession, session_id)
     assert row and row.revoked_at == revoked_at
+
+
+def test_active_but_unverified_account_can_request_verification(
+  db: ApplicationDatabase,
+  client: TestClient,
+) -> None:
+  user_id, _, _ = account(db)
+  response = client.post(
+    "/api/v1/auth/resend_verify_email",
+    json={"email": f"{user_id}@example.com"},
+  )
+  assert response.status_code == 201
+  with db.unit_of_work() as session:
+    tokens = list(
+      session.scalars(
+        select(IdentityActionToken).where(IdentityActionToken.user_id == user_id)
+      )
+    )
+    assert len(tokens) == 1
+    assert tokens[0].purpose == TokenPurpose.EMAIL_VERIFICATION
+    user = session.get(User, user_id)
+    assert user
+    user.email_verified_at = datetime.now(UTC)
+  assert (
+    client.post(
+      "/api/v1/auth/resend_verify_email", json={"email": f"{user_id}@example.com"}
+    ).status_code
+    == 201
+  )
+  with db.unit_of_work() as session:
+    assert (
+      len(
+        list(
+          session.scalars(
+            select(IdentityActionToken).where(IdentityActionToken.user_id == user_id)
+          )
+        )
+      )
+      == 1
+    )
