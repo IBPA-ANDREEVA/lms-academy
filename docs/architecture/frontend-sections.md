@@ -11,7 +11,7 @@ Current owners below supersede historical implementation notes. Paths are reposi
 
 | Route / order | Actual implementation / API | Local components | Shared consumers / data / status |
 | --- | --- | --- | --- |
-| All / HOME-01 | `src/features/public-shell/public-header.tsx`, PublicHeaderProps | Private NavigationLinks in same file | PageContainer, NavigationEntry, Button/Link, CartPreview, AuthModal. `navigation.ts` supplies links. WORKING mechanics, DEMO auth/cart. Full overlay at home top; filled inset header after scroll; catalog overlay filled; two-row rail ≤760px. |
+| All / HOME-01 | `src/features/public-shell/public-header.tsx`, PublicHeaderProps | Private NavigationLinks in same file | PageContainer, NavigationEntry, Button/Link, CartPreview, AuthModal. `navigation.ts` supplies links. WORKING mechanics and development Identity integration; DEMO cart. Full overlay at home top; filled inset header after scroll; catalog overlay filled; two-row rail ≤760px. |
 | `/` / HOME-02 | `home/sections/02-hero/hero-section.tsx`, no props | `components/hero-heading.tsx`, `hero-cta.tsx` | PageContainer, ButtonLink; owner-supplied static copy + original photo. CTA currently `/#catalog-status` (same-page discovery). MVP presentation, no playable video. |
 | `/` / HOME-03 | `home/sections/03-about/about-section.tsx`, no props | `components/academy-benefits.tsx` (six static benefits) | PageContainer(reveal), photo; no founder CTA. Owner-supplied RU copy/claims per refinement note; no data service. MVP narrative; claims need launch substantiation. |
 | `/` / HOME-04 | `home/sections/04-founder/founder-section.tsx`, no props | `components/founder-story.tsx` (`children`), `founder-milestones.tsx` (four) | PageContainer(reveal), original portrait, supplied static biography. Animated disclosure, inert closed story; WORKING local UI; no credentials verification service. |
@@ -329,3 +329,14 @@ PublicHeader and CheckoutBuyer through AuthModal; no route or shared style chang
 generated OpenAPI schemas. Registration is partially integrated; verification-email
 delivery remains MISSING. No new visual reference/direction is introduced.
 See [review-fix verification](../qa/pr25-review-fixes-2026-11-11.md).
+
+## Auth integration · 2026-11-12
+
+| Target | Section owner / props | Internal components / reuse | Status / missing |
+| --- | --- | --- | --- |
+| `/login`, `/register`, `/forgot-password`, `/verify-email`, `/reset-password` | `identity/identity-page.tsx` (`view`) → `identity/sections/identity-section.tsx` (`view`) | `AuthContent`, existing Login/Register/ForgotForm, new VerificationForm/ResetForm/AccountPanel/SessionsPanel; canonical Button/FormControls | Real API integration; token fragment capture/scrub, explicit submit, noindex. Delivery/production TODOs preserved. |
+| PublicHeader + CheckoutBuyer + `/preview/components` | Existing `identity/auth-modal.tsx` (`open,onClose`) | Same AuthContent/forms; account view derives current user, original GSAP/focus/scroll ownership retained | Live Identity API; disabled social actions remain later scope. |
+
+[References, states, route matrix and evidence](../qa/auth-audit-2026-11-12.md).
+
+CheckoutBuyer keeps its existing Commerce owner and fields; its auth trigger/status reflect the current user, without copying account email or inferring purchase ownership.

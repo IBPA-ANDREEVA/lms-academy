@@ -94,3 +94,30 @@
 @media (prefers-reduced-motion: reduce) {
   .dialog::backdrop { backdrop-filter: none; }
 }
+
+/* Focused identity pages extend the existing auth frame, fields and tokens. */
+.page { min-height: 70dvh; padding: 64px 20px 72px; display: grid; align-items: start; justify-items: center; }
+.pagePanel { width: min(100%, 540px); padding: 2px; background: var(--text); clip-path: polygon(24px 0, 100% 0, 100% calc(100% - 24px), calc(100% - 24px) 100%, 0 100%, 0 24px); }
+.pagePanel[data-view="register"] { width: min(100%, 650px); }
+.accountEmail { margin: 0; font-weight: 600; overflow-wrap: anywhere; }
+.caption { color: var(--muted); font-size: 14px; line-height: 1.6; }
+.sessions { min-width: 0; border-top: 1px solid var(--border); padding-top: 20px; }
+.sessions h3 { margin: 0; font-size: 18px; }
+.sessionList { list-style: none; padding: 0; margin: 20px 0; }
+.sessionList > li { padding: 18px 0; border-bottom: 1px solid var(--border); }
+.sessionList dl { display: grid; gap: 8px; margin: 12px 0; font-size: 13px; }
+.sessionList dl > div { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+.sessionList dt { color: var(--muted); }
+.sessionList dd { margin: 0; }
+.sessionActions { display: flex; flex-wrap: wrap; gap: 8px; }
+.textAction { min-height: 44px; padding: 8px 0; border: 0; background: none; color: var(--brand); font-weight: 700; text-align: left; cursor: pointer; text-decoration: underline; text-underline-offset: 4px; }
+.textAction:hover { color: var(--brand-hover); }
+.textAction:disabled { opacity: .5; cursor: not-allowed; }
+.form > *, .sessionList > li { min-width: 0; }
+.pagePanel [data-auth-view][hidden] { display: none; }
+@media (max-width: 600px) {
+  .page { padding: 40px 15px 48px; }
+  .pagePanel .frame { padding: 30px 22px; }
+  .sessionActions > button { flex: 1 1 auto; }
+}
+.forgotLink:disabled, .switchView button:disabled { opacity: .5; cursor: not-allowed; }
