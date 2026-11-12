@@ -89,10 +89,11 @@ def record_identity_change(
 ) -> None:
   # Call only after unit-of-work commit. This is an operational diagnostic,
   # not a replacement for future durable sensitive-action audit storage.
+  # Do not log raw identifiers for security/privacy-sensitive identity actions.
   logger.info(
-    "identity_change action=%s actor_id=%s resource_id=%s time=%s outcome=success",
+    "identity_change action=%s actor_present=%s resource_present=%s time=%s outcome=success",
     action,
-    actor_id,
-    resource_id,
+    actor_id is not None,
+    resource_id is not None,
     datetime.now(UTC).isoformat(),
   )
