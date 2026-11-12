@@ -1,7 +1,7 @@
 .dialog {
   width: min(540px, calc(100vw - 32px));
   max-width: none;
-  max-height: min(90dvh, 820px);
+  max-height: calc(100dvh - 24px);
   margin: auto;
   padding: 2px;
   border: 0;
@@ -13,12 +13,15 @@
   box-shadow: 0 28px 80px rgb(0 0 0 / 25%);
 }
 .dialog[data-view="register"] { width: min(650px, calc(100vw - 32px)); }
-.dialog[data-view="register"] .frame { padding-block: 30px 26px; }
-.dialog[data-view="register"] .heading { margin-bottom: 24px; }
-.dialog[data-view="register"] .form { gap: 20px; }
+.dialog[data-view="register"] .frame { padding-block: 22px; }
+.dialog[data-view="register"] .heading { margin-bottom: 12px; }
+.dialog[data-view="register"] .title { margin-bottom: 20px; }
+.dialog[data-view="register"] .form { gap: 14px; }
 .dialog[data-view="register"] .form :global(input) { min-height: 48px; }
 .dialog[data-view="register"] .switchView { padding-top: 14px; }
-.dialog[data-view="register"] .socialBlock + .switchView { margin-top: 6px; }
+.dialog[data-view="register"] .socialBlock + .switchView { margin-top: 0; }
+.dialog[data-view="register"] .socialBlock { gap: 8px; }
+.dialog[data-view="register"] .primaryAction { margin-block: 0; }
 .dialog::backdrop { background: rgb(20 18 21 / 64%); backdrop-filter: blur(4px); }
 .frame {
   position: relative;
@@ -50,7 +53,7 @@
 /* Shared fields own states and password-toggle geometry. */
 .form :global(input) { min-height: 52px; padding-inline: 14px; }
 
-.nameFields { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.nameFields { display: grid; grid-template-columns: 1fr 1fr; align-items: start; gap: 16px; }
 .forgotLink, .switchView button {
   width: fit-content;
   padding: 0;

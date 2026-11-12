@@ -160,7 +160,8 @@ html { background: var(--scrollbar-track); }
 ::-webkit-scrollbar-button { display: none; width: 0; height: 0; }
 /* Keep the reserved gutter but merge its chrome with the first full-screen cover. */
 @media (prefers-reduced-motion: no-preference) {
-  html:has([data-splash-loader]:not([hidden])) {
+  html:has([data-splash-loader]:not([hidden])),
+  html:has([data-page-wipe]:not([hidden])) {
     --scrollbar-thumb: var(--brand);
     --scrollbar-track: var(--brand);
     --scrollbar-hover: var(--brand);

@@ -3,8 +3,11 @@
 .wipe { margin: 0; padding: 0; border: 0; width: 100%; height: 100%; max-width: none; max-height: none; position: fixed; inset: 0; z-index: 80; pointer-events: none; background: var(--brand); }
 .wipe { display: grid; place-items: center; color: var(--on-brand); }
 .wipe[hidden] { display: none; }
-.wipe span { opacity: 0; font-size: 14px; }
-.wipe[data-waiting] span { opacity: 1; }
+.waitingIndicator { display: grid; justify-items: center; gap: 24px; visibility: hidden; }
+.wipe[data-waiting] .waitingIndicator { visibility: visible; }
+.loadingMark { display: flex; gap: 10px; height: 52px; align-items: center; }
+.loadingMark span { display: block; width: 10px; height: 36px; background: currentColor; transform: skewX(-22deg); }
+.loadingCaption { font-size: 14px; }
 
 
 .loading { min-height: 65svh; padding-block: 180px 80px; }
