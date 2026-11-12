@@ -1,6 +1,7 @@
 # Shared frontend components
 
 Cleanup, 2026-11-11: obsolete numbered source copies and `.archive` files were removed at the owner’s request. Canonical owners, paths, props, consumers and product behavior below are unchanged. Earlier archive references describe historical files available in Git history.
+Repository cleanup, 2026-11-10: removed unreferenced numbered source copies; canonical implementation paths, props, consumers, route composition and product backlog are unchanged. Historical `.archive` sources remain preserved. See the [cleanup verification](../qa/repository-cleanup-2026-11-10.md).
 
 ## CI source archival · 2026-11-10
 

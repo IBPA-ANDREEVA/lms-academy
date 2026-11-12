@@ -1,6 +1,7 @@
 # Frontend sections and reuse audit
 
 Cleanup, 2026-11-11: obsolete numbered source copies and `.archive` files were removed at the owner’s request. Canonical owners, paths, props, consumers and product behavior below are unchanged. Earlier archive references describe historical files available in Git history.
+Repository cleanup, 2026-11-10: removed unreferenced numbered source copies; canonical implementation paths, props, consumers, route composition and product backlog are unchanged. Historical `.archive` sources remain preserved. See the [cleanup verification](../qa/repository-cleanup-2026-11-10.md).
 
 CI follow-up, 2026-11-10: the unreferenced D-020 copies `home/composition/academy-story 2.tsx` and `home/sections/06-courses/components/use-featured-course-scroll 2.ts` are preserved byte-for-byte with `.archive` suffixes. HOME-03/04 continues to use `home/composition/academy-story.tsx` (`about,founder,seam`; HomePage); HOME-06 continues without a course-only scroll hook, per D-021 below. No section behavior, active source path or props changed. [Verification](../qa/ci-security-followup-2026-11-10.md).
 

@@ -1,6 +1,7 @@
 # Frontend implementation and integration backlog
 
 Cleanup, 2026-11-11: obsolete numbered source copies and `.archive` files were removed at the owner’s request. Canonical owners, paths, props, consumers and product behavior below are unchanged. Earlier archive references describe historical files available in Git history.
+Repository cleanup, 2026-11-10: removed unreferenced numbered source copies; canonical implementation paths, props, consumers, route composition and product backlog are unchanged. Historical `.archive` sources remain preserved. See the [cleanup verification](../qa/repository-cleanup-2026-11-10.md).
 
 This is a prioritized backlog, not authorization to build speculative primitives or later-phase features. The separately requested `/preview/components` review route is implemented. Start from an actual page request and its supplied reference. Existing components: [registry](frontend-components.md); page-local candidates: [section audit](frontend-sections.md).
 
