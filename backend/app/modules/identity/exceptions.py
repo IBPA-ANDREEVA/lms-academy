@@ -29,19 +29,24 @@ class TokenAlreadyUsed(TokenError):
 class TokenRevoked(TokenError):
   pass
 
-#Verification:
+
+# Verification:
 class ResendError(VerificationEror):
   pass
+
 
 class ResendWasSentEarlier(ResendError):
   pass
 
-#Auth:
+
+# Auth:
 class AuthenticationError(VerificationEror):
   pass
 
+
 class InvalidCredentials(AuthenticationError):
   pass
+
 
 class AccountBlocked(AuthenticationError):
   pass
