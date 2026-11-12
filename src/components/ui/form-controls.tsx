@@ -1,7 +1,6 @@
 "use client";
 
 import { useId, useState, type ComponentProps, type ReactNode } from "react";
-import { Button } from "./button";
 import styles from "./form-controls.module.css";
 
 type Feedback = {
@@ -26,11 +25,13 @@ function FieldFeedback({
       {hint && <p id={`${id}-hint`}>{hint}</p>}
       {error ? (
         <p id={`${id}-message`} className={styles.error} role="alert">
-          {error}
+          <span aria-hidden="true" className={`${styles.statusIcon} ${styles.errorIcon}`} />
+          <span>{error}</span>
         </p>
       ) : success ? (
         <p id={`${id}-message`} className={styles.success} role="status">
-          {success}
+          <span aria-hidden="true" className={`${styles.statusIcon} ${styles.successIcon}`} />
+          <span>{success}</span>
         </p>
       ) : null}
     </div>
@@ -69,7 +70,7 @@ export function TextField({
         {...props}
         id={id}
         type={type}
-        className={`${styles.input} ${className}`}
+        className={`${styles.input} ${success && !error ? styles.valid : ""} ${className}`}
         aria-invalid={error ? true : props["aria-invalid"]}
         aria-describedby={describedBy(
           id,
@@ -103,7 +104,7 @@ export function PasswordField({
           {...props}
           id={id}
           type={visible ? "text" : "password"}
-          className={`${styles.input} ${className}`}
+          className={`${styles.input} ${success && !error ? styles.valid : ""} ${className}`}
           aria-invalid={error ? true : props["aria-invalid"]}
           aria-describedby={describedBy(
             id,
@@ -112,17 +113,17 @@ export function PasswordField({
             props["aria-describedby"],
           )}
         />
-        <Button
-          size="sm"
-          intent="secondary"
+        <button
+          type="button"
+          className={styles.passwordToggle}
           disabled={props.disabled}
           onClick={() => setVisible(!visible)}
           aria-controls={id}
           aria-pressed={visible}
           aria-label={visible ? "Скрыть пароль" : "Показать пароль"}
         >
-          {visible ? "Скрыть" : "Показать"}
-        </Button>
+          <span aria-hidden="true" className={styles.eye} />
+        </button>
       </div>
       <FieldFeedback id={id} hint={hint} error={error} success={success} />
     </div>
@@ -186,7 +187,7 @@ export function SelectField({
       <select
         {...props}
         id={id}
-        className={`${styles.input} ${className}`}
+        className={`${styles.input} ${success && !error ? styles.valid : ""} ${className}`}
         aria-invalid={error ? true : props["aria-invalid"]}
         aria-describedby={describedBy(
           id,
@@ -214,7 +215,8 @@ export function FormMessage({
       className={`${styles.message} ${styles[tone]}`}
       role={tone === "error" ? "alert" : "status"}
     >
-      {children}
+      <span aria-hidden="true" className={`${styles.statusIcon} ${(tone === "success" ? styles.successIcon : tone === "error" ? styles.errorIcon : "")}`} />
+      <span>{children}</span>
     </p>
   );
 }

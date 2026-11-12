@@ -1,0 +1,15 @@
+import { createRequire } from "node:module";
+import { mkdir } from "node:fs/promises";
+const require = createRequire(import.meta.url);
+const { chromium } = require(process.env.PLAYWRIGHT_MODULE || "playwright");
+const base = process.env.FRONTEND_URL || "http://localhost:3100";
+const evidence = process.env.FRONTEND_EVIDENCE || "/tmp/lms-ui-qa";
+await mkdir(evidence, { recursive: true });
+const assert=require('node:assert/strict');
+(async()=>{const browser=await chromium.launch({channel:'chrome',headless:true}); const page=await browser.newPage({viewport:{width:1440,height:900}}); const errors=[];page.on('pageerror',e=>errors.push(e.message));
+await page.route('**/*.js',r=>r.abort());await page.goto(base,{waitUntil:'domcontentloaded'});await page.screenshot({path:`${evidence}/splash-1440.png`});assert.equal(await page.evaluate(()=>getComputedStyle(document.documentElement).getPropertyValue('--scrollbar-track').trim()),'#782858');await page.unroute('**/*.js');
+await page.goto(base);await page.waitForTimeout(1500);await page.evaluate(()=>scrollTo(0,450));await page.waitForTimeout(400);const before=await page.evaluate(()=>({width:document.body.getBoundingClientRect().width,y:scrollY}));await page.getByRole('button',{name:'Войти',exact:true}).click();await page.waitForTimeout(300);assert.equal(await page.evaluate(()=>document.body.getBoundingClientRect().width),before.width);const eye=page.getByRole('button',{name:'Показать пароль'});await eye.hover();await page.waitForTimeout(350);await page.screenshot({path:`${evidence}/eye-hover.png`});await page.keyboard.press('Escape');await page.waitForTimeout(300);assert.equal(await page.evaluate(()=>scrollY),before.y);assert.equal(await page.evaluate(()=>document.body.getBoundingClientRect().width),before.width);
+await page.goto(`${base}/preview/components`);await page.waitForTimeout(700);const cut=page.locator('[data-cut-example="default"]').first();await cut.scrollIntoViewIfNeeded();await cut.hover();await page.waitForTimeout(400);await page.screenshot({path:`${evidence}/cut-hover-1440.png`});await page.emulateMedia({reducedMotion:'reduce'});assert.equal(await cut.locator('[class*="arrow"]').evaluate(el=>getComputedStyle(el).transform),'matrix(1, 0, 0, 1, 0, 0)');await page.emulateMedia({reducedMotion:'no-preference'});
+for(const width of [1440,768,390,320]){await page.setViewportSize({width,height:width<400?844:900});await page.goto(`${base}/preview/components#form-controls`);await page.waitForTimeout(500);await page.screenshot({path:`${evidence}/fields-preview-${width}.png`});assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth));}
+for(const route of ['/courses','/mini-courses','/courses/qa-missing','/cart','/checkout']){await page.goto(base+route);await page.waitForTimeout(250);assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),route);}
+assert.deepEqual(errors,[]);console.log('PASS: splash rail, scrolled lock/restore, eye hover, Cut/reduced motion, preview 1440/768/390/320, catalog/detail/cart/checkout smoke; no page errors');await browser.close()})().catch(e=>{console.error(e);process.exit(1)});

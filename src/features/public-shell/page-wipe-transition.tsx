@@ -33,6 +33,9 @@ export function PageWipeTransition({ content, pathname, loading, onActive }: {
     history.replaceState({ ...history.state, [historyKey]: index }, "");
     let navigation: Navigation | null = null;
     let timeline: gsap.core.Timeline | undefined;
+    let loaderTween: gsap.core.Tween | undefined;
+    const strokes = cover.querySelectorAll("[data-loading-stroke]");
+    const stopLoader = () => { loaderTween?.kill(); loaderTween = undefined; };
     let targets: HTMLElement[] = [];
     let timeout: ReturnType<typeof setTimeout> | undefined;
     let waiting: ReturnType<typeof setTimeout> | undefined;
@@ -44,6 +47,7 @@ export function PageWipeTransition({ content, pathname, loading, onActive }: {
     };
     const endNavigation = () => window.dispatchEvent(new Event(navigationEndEvent));
     const hideCover = () => {
+      stopLoader();
       if (cover.matches(":popover-open")) cover.hidePopover();
       cover.hidden = true;
     };
@@ -104,6 +108,7 @@ export function PageWipeTransition({ content, pathname, loading, onActive }: {
       revealed = true;
       clearTimeout(timeout); clearTimeout(waiting);
       delete cover.dataset.waiting;
+      stopLoader();
       timeline?.kill(); clearTargets();
       releaseMotionCover(cover);
       if (preference.matches || request.instant) { finish(); focusDestination(request); return; }
@@ -137,7 +142,14 @@ export function PageWipeTransition({ content, pathname, loading, onActive }: {
       // Prefetch runs alongside the outgoing animation, using Next's own cache.
       // Commit is requested at the covered frame; no invented loading dwell.
       if (!request.history) router.prefetch(request.href);
-      waiting = setTimeout(() => { if (navigation === request) cover.dataset.waiting = "true"; }, 700);
+      waiting = setTimeout(contextSafe(() => {
+        if (navigation !== request || preference.matches || request.instant || cover.hidden) return;
+        cover.dataset.waiting = "true";
+        loaderTween = gsap.fromTo(strokes, { y: 7, opacity: .25 }, {
+          y: -7, opacity: 1, duration: .55, stagger: .14,
+          repeat: -1, yoyo: true, ease: "sine.inOut",
+        });
+      }), 700);
       timeout = setTimeout(() => {
         if (navigation !== request) return;
         console.warn({ event: "public_motion_timeout", phase: "navigation", path: request.path });
@@ -229,5 +241,8 @@ export function PageWipeTransition({ content, pathname, loading, onActive }: {
   // contextSafe callback in another useGSAP context would make that context
   // revert the entire navigation controller on every pathname update.
   useLayoutEffect(() => { controls.current?.committed(pathname); }, [pathname, loading]);
-  return <div ref={panel} popover="manual" hidden className={styles.wipe} data-page-wipe aria-hidden="true"><span>Загружаем страницу…</span></div>;
+  return <div ref={panel} popover="manual" hidden className={styles.wipe} data-page-wipe aria-hidden="true"><div className={styles.waitingIndicator}>
+    <div className={styles.loadingMark}><span data-loading-stroke /><span data-loading-stroke /><span data-loading-stroke /></div>
+    <span className={styles.loadingCaption}>Загружаем страницу</span>
+  </div></div>;
 }

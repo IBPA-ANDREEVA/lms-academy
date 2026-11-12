@@ -1,7 +1,7 @@
 .dialog {
   width: min(540px, calc(100vw - 32px));
   max-width: none;
-  max-height: min(90dvh, 820px);
+  max-height: calc(100dvh - 24px);
   margin: auto;
   padding: 2px;
   border: 0;
@@ -13,12 +13,15 @@
   box-shadow: 0 28px 80px rgb(0 0 0 / 25%);
 }
 .dialog[data-view="register"] { width: min(650px, calc(100vw - 32px)); }
-.dialog[data-view="register"] .frame { padding-block: 30px 26px; }
-.dialog[data-view="register"] .heading { margin-bottom: 24px; }
-.dialog[data-view="register"] .form { gap: 9px; }
+.dialog[data-view="register"] .frame { padding-block: 22px; }
+.dialog[data-view="register"] .heading { margin-bottom: 12px; }
+.dialog[data-view="register"] .title { margin-bottom: 20px; }
+.dialog[data-view="register"] .form { gap: 14px; }
 .dialog[data-view="register"] .form :global(input) { min-height: 48px; }
 .dialog[data-view="register"] .switchView { padding-top: 14px; }
-.dialog[data-view="register"] .socialBlock + .switchView { margin-top: 6px; }
+.dialog[data-view="register"] .socialBlock + .switchView { margin-top: 0; }
+.dialog[data-view="register"] .socialBlock { gap: 8px; }
+.dialog[data-view="register"] .primaryAction { margin-block: 0; }
 .dialog::backdrop { background: rgb(20 18 21 / 64%); backdrop-filter: blur(4px); }
 .frame {
   position: relative;
@@ -36,50 +39,21 @@
   height: 5px;
   background: var(--brand);
 }
-.heading { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 38px; }
+.heading { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 24px; }
 .brand { font-size: 24px; line-height: 1; letter-spacing: -.055em; white-space: nowrap; }
 .brand strong { margin-right: 3px; font-weight: 900; letter-spacing: -.07em; }
-.visuallyHidden { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+.title { margin: 0 0 28px; font-size: clamp(22px, 4vw, 28px); font-weight: 600; line-height: 1.25; }
 .close { width: 44px; min-height: 44px; padding: 0; border: 0; background: transparent; color: var(--text); }
 .close:hover { background: var(--soft); }
 .closeIcon { display: block; width: 22px; height: 22px; background: currentColor; mask: url("/icons/line/cancel.svg") center / contain no-repeat; }
-.form { display: grid; gap: 14px; }
+.form { display: grid; gap: 20px; }
 .form > div > div:last-child:empty,
 .nameFields > div > div:last-child:empty { display: none; }
-.form :global(label) { font-size: 13px; font-weight: 800; }
-.form :global(input) {
-  min-height: 54px;
-  padding-inline: 15px;
-  border: 1px solid var(--muted);
-  border-radius: 0;
-  background: linear-gradient(225deg, transparent 9px, var(--muted) 9px 10px, var(--surface) 10px);
-  clip-path: polygon(0 0, calc(100% - 13px) 0, 100% 13px, 100% 100%, 0 100%);
-  color: var(--text);
-}
-.form :global(input)::placeholder { color: #9a939b; opacity: 1; }
-.form :global(input):focus-visible { outline-offset: -4px; }
-.form :global(input[type="password"]), .form :global(input[name="confirm-password"]), .form :global(input[name="new-password"]) { padding-right: 88px; }
-.form :global(button[aria-controls]) {
-  width: 42px;
-  min-width: 42px;
-  height: 42px;
-  min-height: 42px;
-  padding: 0;
-  margin: 6px 5px 0 -53px;
-  border: 0;
-  background: transparent;
-  color: var(--muted);
-  font-size: 0;
-}
-.form :global(button[aria-controls])::after {
-  content: "";
-  width: 20px;
-  height: 20px;
-  background: currentColor;
-  mask: url("/icons/line/eye.svg") center / contain no-repeat;
-}
-.form :global(button[aria-controls][aria-pressed="true"])::after { opacity: .5; }
-.nameFields { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.form :global(label) { font-size: 14px; font-weight: 400; }
+/* Shared fields own states and password-toggle geometry. */
+.form :global(input) { min-height: 52px; padding-inline: 14px; }
+
+.nameFields { display: grid; grid-template-columns: 1fr 1fr; align-items: start; gap: 16px; }
 .forgotLink, .switchView button {
   width: fit-content;
   padding: 0;
@@ -113,7 +87,7 @@
   .heading { margin-bottom: 34px; }
   .brand { font-size: 21px; }
   .nameFields { grid-template-columns: 1fr; gap: 14px; }
-  .form { gap: 12px; }
+  .form { gap: 20px; }
   .form :global(input) { min-height: 50px; }
   .socialButtons { gap: 8px; }
 }

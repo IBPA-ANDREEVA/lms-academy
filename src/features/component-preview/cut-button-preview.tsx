@@ -8,7 +8,7 @@ export function CutButtonPreview() {
   const recordPress = () => setPresses(value => value + 1);
   return <div className={styles.cutReview} aria-label="Cut: два варианта">
     <h3>Cut · Линия и мягкий акцент</h3>
-    <p className={styles.note}>Общие кнопки по двум выбранным референсам. Проверьте наведение, нажатие и фокус с клавиатуры.</p>
+    <p className={styles.note}>Упрощённые общие кнопки: контур, мягкая заливка и движение стрелки. Проверьте наведение, нажатие и фокус с клавиатуры.</p>
     {(["line", "soft"] as const).map(variant => <section key={variant} data-cut-preview={variant} aria-label={variant === "line" ? "Линейный минимализм" : "Тихий акцент"}>
       <h4>{variant === "line" ? "Линейный минимализм" : "Тихий акцент"}</h4>
       <div className={styles.cutStates}>
@@ -16,7 +16,7 @@ export function CutButtonPreview() {
         <div><p>Наведение</p><Button onClick={recordPress} appearance="cut" cutVariant={variant} data-cut-state="hover">К ЗАДАНИЮ →</Button></div>
         <div><p>Фокус</p><Button onClick={recordPress} appearance="cut" cutVariant={variant} data-cut-state="focus">К ЗАДАНИЮ →</Button></div>
         <div><p>Недоступно</p><Button appearance="cut" cutVariant={variant} disabled>К ЗАДАНИЮ →</Button></div>
-        <div><p>Загрузка</p><Button appearance="cut" cutVariant={variant} loading>К ЗАДАНИЮ →</Button></div>
+        <div><p>Загрузка</p><Button appearance="cut" cutVariant={variant} disabled loading>К ЗАДАНИЮ →</Button></div>
         <div data-cut-reduced-motion><p>Без движения</p><Button onClick={recordPress} appearance="cut" cutVariant={variant} data-cut-state="hover">К ЗАДАНИЮ →</Button></div>
       </div>
       <div className={styles.cutInverse}>

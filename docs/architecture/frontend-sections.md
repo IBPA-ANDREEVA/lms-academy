@@ -1,5 +1,6 @@
 # Frontend sections and reuse audit
 
+Cleanup, 2026-11-11: obsolete numbered source copies and `.archive` files were removed at the owner’s request. Canonical owners, paths, props, consumers and product behavior below are unchanged. Earlier archive references describe historical files available in Git history.
 Repository cleanup, 2026-11-10: removed unreferenced numbered source copies; canonical implementation paths, props, consumers, route composition and product backlog are unchanged. Historical `.archive` sources remain preserved. See the [cleanup verification](../qa/repository-cleanup-2026-11-10.md).
 
 CI follow-up, 2026-11-10: the unreferenced D-020 copies `home/composition/academy-story 2.tsx` and `home/sections/06-courses/components/use-featured-course-scroll 2.ts` are preserved byte-for-byte with `.archive` suffixes. HOME-03/04 continues to use `home/composition/academy-story.tsx` (`about,founder,seam`; HomePage); HOME-06 continues without a course-only scroll hook, per D-021 below. No section behavior, active source path or props changed. [Verification](../qa/ci-security-followup-2026-11-10.md).
@@ -310,3 +311,21 @@ Status: implemented and browser-verified; human visual approval, physical Safari
 ## Catalog switcher flash correction · 2026-11-04
 
 `CatalogExperience` (`src/features/catalog/components/catalog-experience.tsx`, no props; persistent CatalogPage consumer on `/courses` and `/mini-courses`) replaces the overlapping transparent panel transition with two opaque adjacent surfaces driven by one progress tween. The scoped GSAP controller persists across kind updates; a plain layout effect redirects it, preserving current position on rapid reversal instead of reverting/rebuilding DOM tweens. Duration remains 360ms, with coordinated power2.inOut translation/height. CSS ownership remains `catalog-experience.module.css`; no new shared component or route. Optimistic selection, URL/filter/history ownership, inert panels and natural settled height remain. Resize/live reduced motion settle; observers/listeners/tween/styles clean up on unmount. Status: verified in optimized browser builds; human visual review and physical Safari remain unverified. [Cause and frame regression evidence](../qa/catalog-switcher-flash-2026-11-04.md).
+
+
+## Public controls and auth fixes · 2026-11-11
+
+Existing public-shell/Identity/preview owners and routes retained. Canonical Cut is simplified; FormControls own regular labels, soft fields, inset eye and icon notices; AuthModal adds visible view titles and spacing; shared scroll lock preserves measured content width. No new primitive or business capability. Props, actual consumers, reference scope, status and missing work are recorded in [the verification note](../qa/public-auth-ui-fixes-2026-11-11.md). Browser checks cover desktop/tablet/two mobile widths and mocked registration states. Login/recovery integration and human visual approval remain pending.
+
+2026-11-11 owner follow-up: FormControls align mixed-error siblings and use circled error icons; AuthModal grows to available viewport height with compact registration spacing. PageWipeTransition (same props/PublicMotion consumer) owns an interruptible three-stroke pending animation. Global scrollbar colors cover the wipe gutter. Canonical paths/consumers remain; [follow-up measurements, reference scope and tests](../qa/public-auth-ui-fixes-2026-11-11.md#owner-follow-up-mixed-validation-and-transition-loading). Small-screen overflow remains when required for reachable controls; human review pending.
+
+### PR 25 registration corrections · 2026-11-11
+
+Existing AuthModal → RegisterForm ownership and props (`onViewChange`) remain.
+`src/features/identity/register-form.tsx` uses the existing FormMessage to report
+account creation and the test-version email-delivery limitation. Consumers remain
+PublicHeader and CheckoutBuyer through AuthModal; no route or shared style changes.
+`src/features/identity/api.ts` now derives registration request/response types from
+generated OpenAPI schemas. Registration is partially integrated; verification-email
+delivery remains MISSING. No new visual reference/direction is introduced.
+See [review-fix verification](../qa/pr25-review-fixes-2026-11-11.md).
