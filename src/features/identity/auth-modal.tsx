@@ -20,9 +20,9 @@ type Props = {
 };
 
 const viewTitles: Record<AuthView, string> = {
-  login: "Войти в LMS Academy",
-  register: "Создать аккаунт LMS Academy",
-  forgot: "Восстановить пароль LMS Academy",
+  login: "Вход",
+  register: "Регистрация",
+  forgot: "Восстановление пароля",
 };
 
 export function AuthModal({ open, onClose }: Props) {
@@ -88,11 +88,11 @@ export function AuthModal({ open, onClose }: Props) {
       <div className={styles.frame}>
         <div className={styles.heading}>
           <span className={styles.brand}><strong>LMS</strong> ACADEMY</span>
-          <h2 id={titleId} className={styles.visuallyHidden}>{viewTitles[view]}</h2>
           <Button intent="secondary" className={styles.close} aria-label="Закрыть окно" onClick={closeAnimated}>
             <span aria-hidden="true" className={styles.closeIcon} />
           </Button>
         </div>
+        <h2 id={titleId} className={styles.title}>{viewTitles[view]}</h2>
         <div key={sessionKey}>
           <div data-auth-view="login" hidden={view !== "login"}><LoginForm onViewChange={changeView} /></div>
           <div data-auth-view="register" hidden={view !== "register"}><RegisterForm onViewChange={changeView} /></div>

@@ -50,3 +50,8 @@ Owner clarification removes homepage filters at every width. Course/mini discove
 2026-11-04 owner visibility follow-up: homepage reveals start inside the viewport (85% desktop / 90% mobile), with longer, less front-loaded motion. Starting-state preparation and explicit loader handoff remain. Existing layouts and shared controls are unchanged. [Timing and verification](docs/qa/homepage-motion-visibility-2026-11-04.md).
 
 2026-11-04 latest controls follow-up: the two supplied line/soft Cut references supersede Double Cut + Panel. Existing tokens, inverse plum variants and shared API are retained. Menu closes on navigation completion; catalog switches immediately; HOME-08 uses one responsive toolbar without the certificate label. [Scope and evidence](docs/qa/public-controls-followup-2026-11-04.md).
+
+
+## Public controls and auth refinement · 2026-11-11
+
+Owner requests simpler Cut controls, complete scrollbar chrome, stable modal width and clearer auth forms. Existing tokens flow from SYSTEM.md through globals.css into shared CSS modules. Cut removes the persistent underline/side accent and uses 6px arrow travel, preserving inverse/soft variants and still reduced-motion states. Shared forms use normal-weight labels, softly filled controls, inset eye buttons and tinted icon notices following the supplied field/notice crops. Auth retains its frame and gains visible Russian titles. [Scope and verification](docs/qa/public-auth-ui-fixes-2026-11-11.md). This supersedes earlier affected Cut/field descriptions only; no new product policy or human implementation approval.

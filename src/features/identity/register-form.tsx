@@ -32,6 +32,7 @@ export function RegisterForm({
 }) {
   const { register, pending, error, success } = useRegister();
 
+  const [emailSuccess, setEmailSuccess] = useState(false);
   const [fieldErrors, setFieldErrors] = useState<FieldErrors>({});
 
   function clearFieldError(field: FieldName) {
@@ -91,7 +92,12 @@ export function RegisterForm({
 
     setFieldErrors(errors);
 
-    if (Object.keys(errors).length > 0) return;
+    if (Object.keys(errors).length > 0) {
+      const names: Record<FieldName, string> = { firstName: "first-name", lastName: "last-name", email: "email", password: "new-password", confirmation: "confirm-password" };
+      const first = Object.keys(errors)[0] as FieldName;
+      event.currentTarget.querySelector<HTMLInputElement>(`[name="${names[first]}"]`)?.focus();
+      return;
+    }
 
     void register(first_name, last_name, email, password);
   }
@@ -128,7 +134,9 @@ export function RegisterForm({
         autoComplete="email"
         placeholder="example@email.com"
         error={fieldErrors.email}
-        onChange={() => clearFieldError("email")}
+        success={emailSuccess ? "Формат адреса проверен" : undefined}
+        onChange={() => { clearFieldError("email"); setEmailSuccess(false); }}
+        onBlur={(event) => setEmailSuccess(/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(event.currentTarget.value.trim()))}
         required
       />
 
@@ -155,7 +163,7 @@ export function RegisterForm({
       <Button
         type="submit"
         appearance="cut"
-        disabled={pending}
+        loading={pending}
         intent="secondary"
         fullWidth
         className={styles.primaryAction}

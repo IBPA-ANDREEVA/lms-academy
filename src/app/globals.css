@@ -146,9 +146,24 @@ html::-webkit-scrollbar-thumb { border-width: 3px; }
 /* Chromium/WebKit use the authored track/thumb geometry; Firefox keeps the
    standards-based plum baseline above. Explicit swipe-rail exceptions still win. */
 @supports selector(::-webkit-scrollbar) {
-  html, body, body * { scrollbar-color: auto; }
+  html, body, body * { scrollbar-color: auto; scrollbar-width: auto; }
 }
 @media (forced-colors: active) {
   ::-webkit-scrollbar-track { background: Canvas; }
   ::-webkit-scrollbar-thumb { background: ButtonText; border-color: Canvas; }
+}
+
+/* Author the entire native rail, including its gutter, corner and button slots. */
+html { background: var(--scrollbar-track); }
+::-webkit-scrollbar { background: var(--scrollbar-track); }
+::-webkit-scrollbar-corner { background: var(--scrollbar-track); }
+::-webkit-scrollbar-button { display: none; width: 0; height: 0; }
+/* Keep the reserved gutter but merge its chrome with the first full-screen cover. */
+@media (prefers-reduced-motion: no-preference) {
+  html:has([data-splash-loader]:not([hidden])) {
+    --scrollbar-thumb: var(--brand);
+    --scrollbar-track: var(--brand);
+    --scrollbar-hover: var(--brand);
+    --scrollbar-active: var(--brand);
+  }
 }
