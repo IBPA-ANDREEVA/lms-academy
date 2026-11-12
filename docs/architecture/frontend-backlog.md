@@ -41,7 +41,7 @@ This table describes missing integration or future consumers, not absence of exi
 | P0 | Published shell content / public-shell | Four legal links and approved disclaimer across public and focused pages; actual brand/contact data | Approved legal copy, identity, implemented routes |
 | P0 | Catalog results feedback / catalog | Both catalogs need loading, no inventory, no matches/reset and error/retry | Real server query/state contract; existing result sections must be extended |
 | P0 | Authoritative Commerce summary integration / commerce | Cart/checkout reuse OrderSummary; result is missing; all need authoritative quote data | Server money/offer contracts; never compute eligibility or price in generic UI |
-| P1 | Auth route and service composition / identity | UI-only modal now shares login/register/recovery presentation | Standalone sitemap routes, verification/reset, PA-05 and identity/continuation policy; connect real server flows later |
+| P1 | Auth route and service composition / identity | UI-only modal now shares login/register/recovery presentation | Standalone auth routes, verification/reset and existing server integration delivered 2026-11-12; delivery/production hardening and PA-05/continuation policy remain |
 | P1 | Published course-detail data / course-detail | Shared detail anatomy, preview fallback and curriculum accordion now serve both dynamic routes | PD-009 business-selected ready inventory (no engineering minimum count), approved trainer/media, access/support/refund terms and real commerce interface |
 | P1 | Breadcrumb navigation / public-shell | Detail and legal contexts need actual parent destinations | Implemented routes; no universal speculative shell |
 | P1 | Accessible confirmation / generic UI | PD-010 requires consequence-explaining confirmations across sensitive admin actions; extract when implementing actual consumers | Admin action/permission contracts and reviewed screen references; retired editor modal is not retained |
@@ -172,3 +172,18 @@ PublicHeader and CheckoutBuyer through AuthModal; no route or shared style chang
 generated OpenAPI schemas. Registration is partially integrated; verification-email
 delivery remains MISSING. No new visual reference/direction is introduced.
 See [review-fix verification](../qa/pr25-review-fixes-2026-11-11.md).
+
+## Auth follow-up · 2026-11-12
+
+Implemented: login/logout/current-account, registration contract alignment,
+verification/resend, recovery/reset and owned sessions UI; five focused auth pages,
+generated types/constraints, real same-origin API integration. Existing modal,
+page/section/component owners preserved. [Route audit](../qa/auth-audit-2026-11-12.md)
+supersedes earlier blanket “UI-only auth” descriptions.
+
+Still missing by intent: durable verification/recovery delivery, production cookie
+FIX/debug-token removal, abuse/timing controls, durable audit, approved genuine
+interaction refresh, manual admin provisioning/recovery, recent reauthentication
+scope/window, verified-email enforcement in future resource APIs, purchase claiming
+and resource/multi-role policy handoff. Social login remains later scope. Human
+visual review and physical-device coverage are pending; fixtures are not delivery.

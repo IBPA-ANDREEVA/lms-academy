@@ -57,3 +57,10 @@ Owner clarification removes homepage filters at every width. Course/mini discove
 Owner requests simpler Cut controls, complete scrollbar chrome, stable modal width and clearer auth forms. Existing tokens flow from SYSTEM.md through globals.css into shared CSS modules. Cut removes the persistent underline/side accent and uses 6px arrow travel, preserving inverse/soft variants and still reduced-motion states. Shared forms use normal-weight labels, softly filled controls, inset eye buttons and tinted icon notices following the supplied field/notice crops. Auth retains its frame and gains visible Russian titles. [Scope and verification](docs/qa/public-auth-ui-fixes-2026-11-11.md). This supersedes earlier affected Cut/field descriptions only; no new product policy or human implementation approval.
 
 2026-11-11 follow-up: auth height follows available viewport instead of a fixed 820px cap; mixed-error fields align at the top and errors use a circled exclamation. The existing plum page wipe gains three gently staggered strokes only during actual pending navigation and blends the scrollbar rail into its cover. Existing tokens and routing timings remain. [Reference scope and verification](docs/qa/public-auth-ui-fixes-2026-11-11.md#owner-follow-up-mixed-validation-and-transition-loading).
+
+
+2026-11-12 auth integration: focused identity pages and account/session panels reuse
+the existing auth frame, Manrope functional type, canonical fields/buttons and
+SYSTEM → globals.css tokens. No new aesthetic or token decision.
+[Bounded reference proposal](docs/design/auth/REFERENCE.md) and
+[implementation verification](docs/qa/auth-audit-2026-11-12.md); human review pending.

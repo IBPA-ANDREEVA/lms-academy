@@ -1,10 +1,10 @@
 # Identity routes and function ownership
 
-Updated 2026-11-11. This is the current development implementation, not production
+Updated 2026-11-12. This is the current development implementation, not production
 approval. All URLs below are relative to `/api/v1/auth`. `app/main.py` creates
 FastAPI and the database lifespan; `app/api/router.py` mounts the Identity router
 under `/api/v1`. Synchronous handlers use the existing synchronous unit of work.
-No new UI or schema migration is included.
+UI integration is described below. No schema migration is included.
 
 ## Route map
 
@@ -16,24 +16,20 @@ No new UI or schema migration is included.
 | POST `/resend_verify_email` | `resend_verification_route` | `verfication.resend_verification`: lookup, cooldown, revoke/replace verification token | Handler |
 | POST `/login` | `login` | `authentication.authenticate_user` → repository/password verification; `sessions.create_auth_session`; handler sets cookie | Handler |
 | POST `/logout` | `logout` | `sessions.revoke_auth_session` by cookie digest; handler clears cookie | Handler |
-| GET `/me` | `get_me` | `dependencies.get_current_user` → `sessions.authenticate_session`; handler projects profile | Dependency authenticates in one unit; handler reads profile in another (existing structure) |
+| GET `/me` | `get_me` | `dependencies.get_current_user` → `sessions.authenticate_session`; handler projects profile | Dependency rechecks session/account and projects profile in one transaction |
 | GET `/sessions` | `list_sessions_route` | `sessions.list_auth_sessions` → `require_session_owner`, `repository.get_active_sessions` | Handler; actor rechecked inside transaction |
 | DELETE `/sessions/{id}` | `revoke_session_route` | `sessions.revoke_owned_auth_session` → `require_session_owner`, `repository.revoke_owned_session` | Handler; owner-scoped update |
 | POST `/password/forgot` | `forgot_password_route` | `resets.request_password_reset` → user/credential lookup, replacement reset token | Handler |
 | POST `/password/reset` | `reset_password_route` | `resets.reset_password` → owner lookup/lock, consume token, hash password, revoke sessions/reset tokens | Handler; one atomic transaction |
 
 The existing misspelled `verfication.py`, resend URL and operation IDs are retained
-for compatibility. The frontend's existing `/resend-verification` call does not
-match the implemented underscore URL; repairing that consumer is a follow-up,
-not a new route alias introduced by this task.
+for compatibility. Resend also supports legacy active accounts without `email_verified_at`; an active status alone is not verification evidence. The frontend now uses the implemented underscore URL; no compatibility alias was added.
 
 ## Function boundaries
 
 - `router.py`: HTTP status/error mapping, safe response construction and cookie
-  transport. All Identity routes use `http.IdentityRoute` to sanitize validation and
-  unexpected failures without echoing secrets; explicit legacy HTTP errors remain unchanged.
-- `dependencies.get_current_user`: extract the cookie and resolve a user for the
-  existing `/me` flow. `sessions.authenticate_session`: check digest, absolute and
+  transport. All Identity routes use `http.IdentityRoute` to sanitize failures without echoing secrets; explicit errors use the same Russian envelope.
+- `dependencies.get_current_user`: extract the cookie, recheck current session ownership, and return a safe profile DTO for `/me` within one transaction. `sessions.authenticate_session`: check digest, absolute and
   inactivity deadlines, revocation and current blocked status. Neither refreshes
   inactivity on polling. `require_session_owner`: lock the account and recheck the
   session inside new protected operations, including after waiting for recovery.
@@ -57,7 +53,7 @@ not a new route alias introduced by this task.
   issuance, consumption and revocation. Recovery uses the random/digest and
   consumption helpers but stores its token without the legacy debug print.
 - `constants.py`: purposes/lifetimes. Password reset is 30 minutes per PD-014.
-  The existing verification lifetime remains unchanged in this bounded task.
+  Email verification is 48 hours per PD-014; it records `email_verified_at`, rejects blocked/admin accounts, and locks account before token like resend/recovery.
 - `models.py` / `auth_models.py`: owned storage mappings, no new schema.
 - `http.py`: new endpoint error envelope, privacy-safe failure diagnostics,
   non-cacheable responses and same-origin browser mutation protection.
@@ -74,9 +70,7 @@ next_cursor}`. Only owned, nonrevoked, unexpired sessions are listed. `limit` is
 ascending UUID. Reads do not extend inactivity. No device/IP/user-agent metadata
 exists in the current schema; do not invent device labels.
 
-`DELETE /sessions/{id}` requires the cookie and an `Origin` exactly matching the
-request scheme/authority. Cross-origin and missing origins return 403. Deployment
-must preserve the public origin through its trusted proxy configuration. Ownership
+`DELETE /sessions/{id}` requires the cookie and an `Origin` exactly matching operator-configured `IDENTITY_PUBLIC_ORIGIN` (or request scheme/authority when unset). Login and logout use the same protection. Cross-origin and missing origins return 403. Next.js rewrites preserve the browser Origin; configure the exact public origin, including port and without trailing slash, on FastAPI. Never trust browser-supplied forwarded headers. Ownership
 is enforced in the service; missing and foreign IDs both return 404. Revoking an
 already-revoked owned session is idempotent while the caller remains authenticated.
 Revoking the current session takes effect immediately; its stale cookie confers no
@@ -99,9 +93,8 @@ or log the user in. Concurrent consumption permits one success only.
 
 New error bodies are `{detail: {code, message, correlation_id}}`, with Russian-first
 messages and separate privacy-safe diagnostics. Responses use `Cache-Control:
-no-store`. Explicit HTTP error and success shapes remain unchanged. All Identity validation
-failures now use the sanitized 422 envelope, including registration and login. The new cookie DELETE
-uses same-origin protection; the reset secret itself authorizes recovery, independent
+no-store`. Success bodies retain `{message}`; legacy errors now use the documented envelope. All Identity validation
+failures now use the sanitized 422 envelope, including registration and login. Cookie DELETE, login and logout use same-origin protection; the reset secret itself authorizes recovery, independent
 of browser session cookies.
 
 ## Formatting and contracts
@@ -123,13 +116,46 @@ on export. New cookie operations declare the API-key cookie security scheme.
 
 ## Remaining development limitations
 
-Existing production cookie FIX and verification-token debug print are deliberately
-unchanged. Existing verification duration is 24 hours versus approved 48; verification
-also does not set `email_verified_at`. These are recorded for a focused follow-up,
-not silently changed with the new routes. Central legacy error mapping, durable
-email delivery/audit, abuse controls, qualifying-interaction refresh and manual
-administrator recovery remain unfinished. New route failure logs are not durable
-sensitive-action audit evidence. Do not represent this implementation as launch-ready.
+Existing production cookie FIX and verification-token debug print remain deliberately
+unchanged at the owner's request to preserve explicit TODOs. They are production
+blockers. Durable email delivery/audit, abuse controls, qualifying-interaction
+refresh and manual administrator setup/recovery remain unfinished. Recovery and
+resend responses/UI explicitly disclose that no email is sent. Failure/change logs
+are diagnostics, not durable sensitive-action audit evidence. This is not launch-ready.
+
+## Frontend integration · 2026-11-12
+
+The existing same-origin Next.js rewrite forwards requests to FastAPI; no duplicate
+auth authority or database access was introduced. `IdentityProvider` reads `/me` on
+mount/focus/visibility and after mutations, never refreshes session activity, and
+keeps only safe profile data in memory. AuthModal (header, checkout, component
+preview) connects login, registration, recovery request, resend, account, owned
+session pagination/revocation and logout. `/login`, `/register`, `/forgot-password`,
+`/verify-email`, `/reset-password` reuse feature-owned forms. `/login` shows account
+controls after sign-in; the unresolved protected workspace namespace is not selected.
+
+Email-link proposal: `/verify-email#token=…` and `/reset-password#token=…` keep secrets
+out of HTTP GETs. The client captures the fragment after hydration and immediately
+removes it from history. Tokens remain only in component memory; explicit button
+submission performs the POST. Reload after capture requires reopening the original
+link. Query-string tokens are not supported. Delivery must adopt this contract when
+implemented. Pages are noindex/nofollow, no-referrer, without canonical or sitemap
+entries. Authentication never claims paid access or activates course timers.
+
+Generated contracts: export OpenAPI, run `openapi-typescript`, then
+`node scripts/generate-identity-constraints.mjs` at the root. The generated numeric
+constraints drive client validation (names 2–100, registration/reset passwords
+8–255); login retains its existing 8–1024 request limit. The owner's pre-existing
+8-character frontend correction is preserved. Python remains authoritative.
+
+Compatibility: route names/methods/operation IDs are retained, including legacy
+spellings. `/me` adds nullable `email_verified_at`; expired sessions now return 401
+instead of 400. Resend cooldown uses 429 instead of 400. Legacy errors adopt the
+structured envelope and all failures are non-cacheable. New origin enforcement on
+login/logout requires browser origin configuration; non-browser callers must send
+that exact Origin. Deploy these coordinated development consumers together.
+
+[Route audit, references and verification](../qa/auth-audit-2026-11-12.md).
 
 ## PR 25 review corrections · 2026-11-11
 

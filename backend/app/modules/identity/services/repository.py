@@ -103,6 +103,18 @@ def get_reset_token_owner(
   )
 
 
+def get_verification_token_owner(
+  session: Session,
+  digest: bytes,
+) -> UUID | None:
+  return session.scalar(
+    select(IdentityActionToken.user_id).where(
+      IdentityActionToken.secret_digest == digest,
+      IdentityActionToken.purpose == TokenPurpose.EMAIL_VERIFICATION,
+    )
+  )
+
+
 def get_active_sessions(
   session: Session,
   user_id: UUID,

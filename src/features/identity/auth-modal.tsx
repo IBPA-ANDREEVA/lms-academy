@@ -5,29 +5,32 @@ import { gsap } from "gsap";
 import { useGSAP } from "@gsap/react";
 import { useScrollLock } from "@/lib/use-scroll-lock";
 import { Button } from "@/components/ui/button";
-import { LoginForm } from "./login-form";
-import { RegisterForm } from "./register-form";
-import { ForgotForm } from "./forgot-form";
+import { AuthContent } from "./auth-content";
+import { useIdentity } from "./identity-provider";
 import styles from "./auth-modal.module.css";
 
 gsap.registerPlugin(useGSAP);
 
-export type AuthView = "login" | "register" | "forgot";
+export type AuthView = "login" | "register" | "forgot" | "verify" | "account";
 
 type Props = {
   open: boolean;
   onClose: () => void;
 };
 
-const viewTitles: Record<AuthView, string> = {
+export const viewTitles: Record<AuthView, string> = {
   login: "Вход",
+  account: "Мой аккаунт",
+  verify: "Подтверждение почты",
   register: "Регистрация",
   forgot: "Восстановление пароля",
 };
 
 export function AuthModal({ open, onClose }: Props) {
   const dialog = useRef<HTMLDialogElement>(null);
-  const [view, setView] = useState<AuthView>("login");
+  const [selectedView, setView] = useState<AuthView>("login");
+  const { user } = useIdentity();
+  const view = selectedView === "login" && user ? "account" : selectedView;
   const [sessionKey, setSessionKey] = useState(0);
   const titleId = useId();
   const closing = useRef(false);
@@ -59,9 +62,9 @@ export function AuthModal({ open, onClose }: Props) {
     if (open && !element.open) element.showModal();
     if (!open && element.open) element.close();
     if (open) {
-      element.querySelector<HTMLInputElement>('[data-auth-view]:not([hidden]) [data-auth-first]')?.focus({ preventScroll: true });
+      element.querySelector<HTMLElement>('[data-auth-view]:not([hidden]) [data-auth-first]')?.focus({ preventScroll: true });
     }
-  }, [open, view]);
+  }, [open, view, user?.id]);
 
   useScrollLock(open);
 
@@ -93,11 +96,7 @@ export function AuthModal({ open, onClose }: Props) {
           </Button>
         </div>
         <h2 id={titleId} className={styles.title}>{viewTitles[view]}</h2>
-        <div key={sessionKey}>
-          <div data-auth-view="login" hidden={view !== "login"}><LoginForm onViewChange={changeView} /></div>
-          <div data-auth-view="register" hidden={view !== "register"}><RegisterForm onViewChange={changeView} /></div>
-          <div data-auth-view="forgot" hidden={view !== "forgot"}><ForgotForm onViewChange={changeView} /></div>
-        </div>
+        {open && <AuthContent key={sessionKey} view={view} onViewChange={changeView} />}
       </div>
     </dialog>
   );

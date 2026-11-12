@@ -1,6 +1,6 @@
 # Frontend behavior contract
 
-Scope: shared public shell and reusable frontend controls. Sources: [requirements](docs/product/requirements.md), [release scope](docs/product/mvp.md), [sitemap](docs/architecture/public-sitemap.md), [open questions](docs/product/open-questions.md). No working auth, checkout, protected data or destructive production operations exist yet.
+Scope: shared public shell and reusable frontend controls. Sources: [requirements](docs/product/requirements.md), [release scope](docs/product/mvp.md), [sitemap](docs/architecture/public-sitemap.md), [open questions](docs/product/open-questions.md). Identity development integration is now tracked in docs/architecture/identity-routes.md; no production-ready checkout, protected data or destructive production operations exist yet.
 
 | Capability | Canonical owner | Contract |
 | --- | --- | --- |
@@ -38,3 +38,17 @@ Scope: user-authorized interactive commerce UI; authoritative business sources r
 ## Current audit evidence · 2026-11-02
 
 [LAND01 report](docs/qa/LAND01-public-site-audit-2026-11-02.md) distinguishes verified local mechanics from missing production workflows. Current source/consumer registries supersede historical presentation claims; zero document overflow is insufficient when ancestors clip content. Authentication, public legal versions, authoritative checkout, payment and server diagnostics remain missing. No new product/permission decision is made here.
+
+## Identity behavior · 2026-11-12
+
+Business sources: PD-014, identity-access-policy.md, identity-routes.md. Canonical
+controls remain Button/FormControls/AuthModal; Identity-local forms are reused on
+the five focused auth pages. Successful login stays in the caller's modal or shows
+account controls on `/login`; no role dashboard is guessed. Closing discards secrets;
+view switches retain drafts and are disabled during submission. Cookie state is
+server-owned. Provider reads never extend inactivity. Session-end confirmation names
+the consequence, including logout in the current browser. Errors stay inline and
+preserve safe input. Dates use viewer-local Russian formatting. Fragment tokens are
+scrubbed before explicit consumption and never stored persistently. Delivery TODOs
+are disclosed; no success text claims a sent email. UI/schema evidence is in the
+auth audit; human visual approval is separate.

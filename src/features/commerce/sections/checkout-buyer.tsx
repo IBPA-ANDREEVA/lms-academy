@@ -2,10 +2,12 @@
 
 import { useRef, useState } from "react";
 import { TextField } from "@/components/ui/form-controls";
+import { useIdentity } from "@/features/identity/identity-provider";
 import { AuthModal } from "@/features/identity";
 import styles from "../commerce.module.css";
 
 export function CheckoutBuyer() {
+  const { user } = useIdentity();
   const [authOpen, setAuthOpen] = useState(false);
   const [email, setEmail] = useState("");
   const [touched, setTouched] = useState(false);
@@ -14,11 +16,11 @@ export function CheckoutBuyer() {
   return <>
     <section className={styles.formSection} aria-labelledby="buyer-heading">
       <div className={styles.sectionHeading}><h2 id="buyer-heading">Контактные данные</h2>
-        <button ref={login} type="button" className={styles.textButton} onClick={() => setAuthOpen(true)}>Уже есть аккаунт? Войти</button></div>
+        <button ref={login} type="button" className={styles.textButton} onClick={() => setAuthOpen(true)}>{user ? "Мой аккаунт" : "Уже есть аккаунт? Войти"}</button></div>
       <form noValidate onSubmit={event => { event.preventDefault(); setTouched(true); }}>
         <TextField label="Электронная почта" type="email" autoComplete="email" name="email" required value={email} onChange={event => setEmail(event.target.value)} onBlur={() => setTouched(true)} error={error || undefined} hint="Для подтверждения покупки и получения доступа. " />
       </form>
-      <p className={styles.caption}>Можно продолжить как гость — вход необязателен.</p>
+      <p className={styles.caption}>{user ? "Вы вошли в аккаунт. Проверьте почту для покупки." : "Можно продолжить как гость — вход необязателен."}</p>
     </section>
     <section className={styles.formSection} aria-labelledby="buyer-details-heading">
       <h2 id="buyer-details-heading">Данные покупателя</h2>

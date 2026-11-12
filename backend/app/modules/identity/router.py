@@ -1,21 +1,17 @@
 from typing import cast
 from uuid import UUID
 
-from fastapi import APIRouter, Depends, HTTPException, Query, Request, Response, status
-from fastapi.security import APIKeyCookie
+from fastapi import APIRouter, Depends, Query, Request, Response, status
 
 from app.db.session import ApplicationDatabase
-from app.modules.identity.dependencies import get_current_user
+from app.modules.identity.dependencies import get_current_user, session_cookie
 from app.modules.identity.exceptions import (
   AuthenticationError,
   EmailAlreadyRegistered,
   ResendError,
   ResendWasSentEarlier,
   SessionNotFound,
-  TokenAlreadyUsed,
   TokenError,
-  TokenExpired,
-  TokenInvalid,
 )
 from app.modules.identity.http import (
   IdentityRoute,
@@ -23,7 +19,6 @@ from app.modules.identity.http import (
   record_identity_change,
   require_same_origin,
 )
-from app.modules.identity.models import Profile, User
 from app.modules.identity.schemas import (
   BaseResponse,
   CurrentUserResponse,
@@ -47,14 +42,16 @@ from app.modules.identity.services.sessions import (
 )
 from app.modules.identity.services.verfication import resend_verification, verify_email
 
+identity_errors: dict[int | str, dict[str, object]] = {
+  code: {"model": IdentityErrorResponse}
+  for code in (400, 401, 403, 404, 409, 422, 429, 500)
+}
+
 router = APIRouter(
   prefix="/auth",
   tags=["Identity"],
   route_class=IdentityRoute,
-  responses={
-    422: {"model": IdentityErrorResponse},
-    500: {"model": IdentityErrorResponse},
-  },
+  responses=identity_errors,
 )
 
 
@@ -88,13 +85,14 @@ def register(
     )
 
   except EmailAlreadyRegistered:
-    raise HTTPException(
-      status_code=409,
-      detail="This email is already registered, try log in.",
+    raise identity_error(
+      409,
+      "registration_unavailable",
+      "Не удалось зарегистрировать этот адрес. Попробуйте войти или восстановить пароль.",
     ) from None
 
   return BaseResponse(
-    message=("Test account created. Email verification token created."),
+    message="Аккаунт создан. В тестовой версии письма не отправляются.",
   )
 
 
@@ -115,32 +113,15 @@ def verify_email_route(
     with db.unit_of_work() as session:
       verify_email(session, body.token)
 
-  except TokenInvalid:
-    raise HTTPException(
-      status_code=400,
-      detail="Provided token is invalid",
-    )
-
-  except TokenExpired:
-    raise HTTPException(
-      status_code=400,
-      detail="Provided token is expired",
-    )
-
-  except TokenAlreadyUsed:
-    raise HTTPException(
-      status_code=400,
-      detail="Provided token has been used",
-    )
-
-  except TokenError as exc:
-    raise HTTPException(
-      status_code=400,
-      detail="Provided token is expired or invalid",
-    ) from exc
+  except TokenError:
+    raise identity_error(
+      400,
+      "invalid_verification_link",
+      "Ссылка недействительна или устарела. Запросите новую.",
+    ) from None
 
   return BaseResponse(
-    message=("Test verification successed. "),
+    message="Электронная почта подтверждена.",
   )
 
 
@@ -161,19 +142,21 @@ def resend_verification_route(
       resend_verification(session, body.email)
 
   except ResendWasSentEarlier:
-    raise HTTPException(
-      status_code=400,
-      detail="The resend api has a cooldown of 60s",
-    )
+    raise identity_error(
+      429,
+      "verification_cooldown",
+      "Подождите минуту перед повторным запросом.",
+    ) from None
 
   except ResendError as exc:
-    raise HTTPException(
-      status_code=400,
-      detail="There was an eror while resending verification",
+    raise identity_error(
+      400,
+      "verification_unavailable",
+      "Не удалось обработать запрос. Попробуйте позже.",
     ) from exc
 
   return BaseResponse(
-    message="Succesfull resend of verification",
+    message="Запрос принят. В тестовой версии письма не отправляются.",
   )
 
 
@@ -188,6 +171,7 @@ def login(
   request: Request,
   response: Response,
 ) -> BaseResponse:
+  require_same_origin(request)
   db = cast(ApplicationDatabase, request.app.state.database)
 
   try:
@@ -196,9 +180,10 @@ def login(
       raw_token = create_auth_session(session, user.id)
 
   except AuthenticationError as exc:
-    raise HTTPException(
-      status_code=401,
-      detail="Invalid email or password",
+    raise identity_error(
+      401,
+      "invalid_credentials",
+      "Не удалось войти. Проверьте почту и пароль.",
     ) from exc
 
   # TODO: Fix before production
@@ -213,7 +198,7 @@ def login(
   )
 
   return BaseResponse(
-    message="Succesful Login",
+    message="Вы вошли в аккаунт.",
   )
 
 
@@ -228,6 +213,7 @@ def logout(
   response: Response,
 ) -> BaseResponse:
 
+  require_same_origin(request)
   raw_token = request.cookies.get("lms-session")
 
   if raw_token:
@@ -242,7 +228,7 @@ def logout(
   )
 
   return BaseResponse(
-    message="Successful logout",
+    message="Вы вышли из аккаунта.",
   )
 
 
@@ -253,28 +239,9 @@ def logout(
   operation_id="IdentityGetCurrentUser",
 )
 def get_me(
-  request: Request,
-  user: User = Depends(get_current_user),
+  user: CurrentUserResponse = Depends(get_current_user),
 ) -> CurrentUserResponse:
-  db = cast(ApplicationDatabase, request.app.state.database)
-
-  with db.unit_of_work() as session:
-    profile = session.get(Profile, user.id)
-
-    return CurrentUserResponse(
-      id=user.id,
-      email=user.email,
-      first_name=profile.first_name if profile else None,
-      last_name=profile.last_name if profile else None,
-      roles=user.roles,
-      status=user.status,
-    )
-
-
-identity_errors: dict[int | str, dict[str, object]] = {
-  code: {"model": IdentityErrorResponse} for code in (400, 401, 403, 404, 422, 500)
-}
-session_cookie = APIKeyCookie(name="lms-session", auto_error=False)
+  return user
 
 
 @router.get(
@@ -365,7 +332,7 @@ def forgot_password_route(
     request_password_reset(session, str(body.email))
 
   return BaseResponse(
-    message="Запрос принят. Если восстановление доступно, вы получите письмо с инструкциями.",
+    message="Запрос принят. В тестовой версии письма не отправляются.",
   )
 
 
