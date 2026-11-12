@@ -81,6 +81,7 @@ def register(
       email=str(body.email),
       password=body.password,
     )
+
   except EmailAlreadyRegistered:
     raise HTTPException(
       status_code=409,
@@ -88,7 +89,7 @@ def register(
     ) from None
 
   return BaseResponse(
-    message=("Test account created. Email verification token created.")
+    message=("Test account created. Email verification token created."),
   )
 
 
@@ -104,6 +105,7 @@ def verify_email_route(
 ) -> BaseResponse:
 
   db = cast(ApplicationDatabase, request.app.state.database)
+
   try:
     with db.unit_of_work() as session:
       verify_email(session, body.token)
@@ -132,7 +134,9 @@ def verify_email_route(
       detail="Provided token is expired or invalid",
     ) from exc
 
-  return BaseResponse(message=("Test verification successed. "))
+  return BaseResponse(
+    message=("Test verification successed. "),
+  )
 
 
 @router.post(
@@ -142,7 +146,8 @@ def verify_email_route(
   operation_id="IdentityResendVerificaiton",
 )
 def resend_verification_route(
-  body: ResendVerificationRequest, request: Request
+  body: ResendVerificationRequest,
+  request: Request,
 ) -> BaseResponse:
   db = cast(ApplicationDatabase, request.app.state.database)
 
@@ -162,7 +167,9 @@ def resend_verification_route(
       detail="There was an eror while resending verification",
     ) from exc
 
-  return BaseResponse(message="Succesfull resend of verification")
+  return BaseResponse(
+    message="Succesfull resend of verification",
+  )
 
 
 @router.post(
@@ -171,7 +178,11 @@ def resend_verification_route(
   status_code=status.HTTP_200_OK,
   operation_id="IdentityLogin",
 )
-def login(body: LoginRequest, request: Request, response: Response) -> BaseResponse:
+def login(
+  body: LoginRequest,
+  request: Request,
+  response: Response,
+) -> BaseResponse:
   db = cast(ApplicationDatabase, request.app.state.database)
 
   try:
@@ -196,7 +207,9 @@ def login(body: LoginRequest, request: Request, response: Response) -> BaseRespo
     max_age=30 * 24 * 60 * 60,
   )
 
-  return BaseResponse(message="Succesful Login")
+  return BaseResponse(
+    message="Succesful Login",
+  )
 
 
 @router.post(
@@ -205,7 +218,10 @@ def login(body: LoginRequest, request: Request, response: Response) -> BaseRespo
   status_code=status.HTTP_200_OK,
   operation_id="IdentityLogout",
 )
-def logout(request: Request, response: Response) -> BaseResponse:
+def logout(
+  request: Request,
+  response: Response,
+) -> BaseResponse:
 
   raw_token = request.cookies.get("lms-session")
 
@@ -215,9 +231,14 @@ def logout(request: Request, response: Response) -> BaseResponse:
     with db.unit_of_work() as session:
       revoke_auth_session(session, raw_token)
 
-  response.delete_cookie(key="lms-session", path="/")
+  response.delete_cookie(
+    key="lms-session",
+    path="/",
+  )
 
-  return BaseResponse(message="Successful logout")
+  return BaseResponse(
+    message="Successful logout",
+  )
 
 
 @router.get(
@@ -267,11 +288,17 @@ def list_sessions_route(
 ) -> SessionsResponse:
   db = cast(ApplicationDatabase, request.app.state.database)
   response.headers["Cache-Control"] = "no-store"
+
   try:
     with db.unit_of_work() as session:
       return list_auth_sessions(session, credential or "", limit, after)
+
   except AuthenticationError:
-    raise identity_error(401, "authentication_required", "Войдите в аккаунт.") from None
+    raise identity_error(
+      401,
+      "authentication_required",
+      "Войдите в аккаунт.",
+    ) from None
 
 
 @router.delete(
@@ -287,17 +314,33 @@ def revoke_session_route(
   credential: str | None = Depends(session_cookie),
 ) -> BaseResponse:
   require_same_origin(request)
+
   db = cast(ApplicationDatabase, request.app.state.database)
   response.headers["Cache-Control"] = "no-store"
+
   try:
     with db.unit_of_work() as session:
       actor_id = revoke_owned_auth_session(session, credential or "", id)
+
   except AuthenticationError:
-    raise identity_error(401, "authentication_required", "Войдите в аккаунт.") from None
+    raise identity_error(
+      401,
+      "authentication_required",
+      "Войдите в аккаунт.",
+    ) from None
+
   except SessionNotFound:
-    raise identity_error(404, "session_not_found", "Сеанс не найден.") from None
+    raise identity_error(
+      404,
+      "session_not_found",
+      "Сеанс не найден.",
+    ) from None
+
   record_identity_change("revoke_session", actor_id, id)
-  return BaseResponse(message="Сеанс завершён.")
+
+  return BaseResponse(
+    message="Сеанс завершён.",
+  )
 
 
 @router.post(
@@ -307,14 +350,18 @@ def revoke_session_route(
   responses=identity_errors,
 )
 def forgot_password_route(
-  body: ForgotPasswordRequest, request: Request, response: Response
+  body: ForgotPasswordRequest,
+  request: Request,
+  response: Response,
 ) -> BaseResponse:
   db = cast(ApplicationDatabase, request.app.state.database)
   response.headers["Cache-Control"] = "no-store"
+
   with db.unit_of_work() as session:
     request_password_reset(session, str(body.email))
+
   return BaseResponse(
-    message="Запрос принят. Если восстановление доступно, вы получите письмо с инструкциями."
+    message="Запрос принят. Если восстановление доступно, вы получите письмо с инструкциями.",
   )
 
 
@@ -325,18 +372,26 @@ def forgot_password_route(
   responses=identity_errors,
 )
 def reset_password_route(
-  body: ResetPasswordRequest, request: Request, response: Response
+  body: ResetPasswordRequest,
+  request: Request,
+  response: Response,
 ) -> BaseResponse:
   db = cast(ApplicationDatabase, request.app.state.database)
   response.headers["Cache-Control"] = "no-store"
+
   try:
     with db.unit_of_work() as session:
       actor_id = reset_password(session, body.token, body.password)
+
   except TokenError:
     raise identity_error(
       400,
       "invalid_recovery_link",
       "Ссылка недействительна или устарела. Запросите новую.",
     ) from None
+
   record_identity_change("reset_password", actor_id, actor_id)
-  return BaseResponse(message="Пароль изменён. Войдите с новым паролем.")
+
+  return BaseResponse(
+    message="Пароль изменён. Войдите с новым паролем.",
+  )
