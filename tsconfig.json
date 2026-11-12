@@ -34,19 +34,9 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     ".next/dev/types/**/*.ts",
-    "**/*.mts",
-    ".next-land03-preview/types/**/*.ts",
-    ".next-land03-preview/dev/types/**/*.ts",
-    ".next-land03-real/types/**/*.ts",
-    ".next-land03-real/dev/types/**/*.ts",
-    ".next-land03-build-real/types/**/*.ts",
-    ".next-land03-build-real/dev/types/**/*.ts",
-    ".next-land03-build-preview/types/**/*.ts",
-    ".next-land03-build-preview/dev/types/**/*.ts"
+    "**/*.mts"
   ],
   "exclude": [
-    "node_modules",
-    ".next-auth-check",
-    ".next*/**/* *.ts"
+    "node_modules"
   ]
 }

@@ -1,5 +1,7 @@
 # Frontend CI and CodeQL
 
+Cleanup, 2026-11-11: the owner authorized deleting obsolete numbered source/test copies and archives. Paths in the historical findings below refer to prior revisions; canonical checks and implementations remain unchanged.
+
 Follow-up, 2026-11-10: all six initial TypeScript errors are resolved by preserving unreferenced retired motion copies as `.archive` files; application behavior is unchanged. Frontend type/build checks and the full 156-test isolated PostgreSQL suite pass. The three CodeQL findings have been triaged and fixed locally without dismissals; complete local default suites returned zero findings across 87 JavaScript/TypeScript and 43 Python rules. See the [follow-up evidence](../qa/ci-security-followup-2026-11-10.md) for current results and the pending remote rescan. The initial verification below is retained as historical evidence.
 
 ## Frontend checks

@@ -18,8 +18,10 @@ Existing active/blocked users are preserved; downgrade refuses pending users.
 The enum replacement takes an exclusive users-table lock and requires a controlled
 migration window. All 31 tables remain registered. Token-purpose ORM conversion
 retains the existing VARCHAR(48) physical contract. Database sessions stay UTC.
-Preserved duplicate Python copies use `.py.archive` so migration/test discovery
-does not execute historical copies. These files are archival evidence only.
+Duplicate Python copies were initially renamed to `.py.archive` to exclude them
+from migration/test discovery. The owner-authorized 2026-11-11 cleanup removed
+these obsolete copies; their historical bytes remain in Git. Canonical applied
+migrations, models and the current generated schema artifacts are unchanged.
 
 Incoming Identity routes/services remain unfinished feature work; this merge is
 not authentication release approval or proof of policy/security completeness.

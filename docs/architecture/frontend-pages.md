@@ -1,5 +1,7 @@
 # Frontend pages
 
+Cleanup, 2026-11-11: obsolete numbered source copies and `.archive` files were removed at the owner’s request. Canonical owners, paths, props, consumers and product behavior below are unchanged. Earlier archive references describe historical files available in Git history.
+
 Source-verified inventory, 2026-11-02; branch `refactor/landing`, HEAD `eb3665d1d6ec7441c462ba9ad7d20b6944d506f1`. Read this with [sections](frontend-sections.md), [shared components](frontend-components.md), and [backlog](frontend-backlog.md) before UI work. Eight route templates exist, resolving fourteen concrete page URLs with the current fixture data. Six are discovery/commerce templates, two are the homepage and review utility; production business integrations remain missing. Planned URL spellings remain subject to the sitemap and PA-02/PA-03; this registry does not approve routes or release policy. `—` means no implementation file exists, not an invitation to create a placeholder route.
 
 | Route / proposal | Page / purpose | Implementation path | Status / phase |

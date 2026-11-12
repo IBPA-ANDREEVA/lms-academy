@@ -71,3 +71,6 @@ __pycache__/
 htmlcov/
 *.dump
 *.backup
+
+# Generated DBML diagnostics
+/dbml-error.log
