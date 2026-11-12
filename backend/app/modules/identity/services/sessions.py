@@ -54,6 +54,7 @@ def revoke_auth_session(
     update(IdentitySession)
     .where(
       IdentitySession.secret_digest == digest,
+      IdentitySession.revoked_at.is_(None),
     )
     .values(revoked_at=now)
   )

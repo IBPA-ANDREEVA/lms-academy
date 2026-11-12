@@ -86,8 +86,10 @@ def revoke_token(
   session: Session,
   user_id: UUID,
   purpose: TokenPurpose = TokenPurpose.EMAIL_VERIFICATION,
-  now: datetime = datetime.now(UTC),
+  now: datetime | None = None,
 ) -> None:
+
+  now = now if now is not None else datetime.now(UTC)
 
   statement = (
     update(IdentityActionToken)

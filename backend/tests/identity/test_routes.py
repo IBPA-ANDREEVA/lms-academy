@@ -384,3 +384,126 @@ def test_me_handles_absent_optional_profile(
   assert response.json()["id"] == str(user_id)
   assert response.json()["first_name"] is None
   assert response.json()["last_name"] is None
+
+
+@pytest.mark.parametrize("origin", [None, "https://foreign.example", "null"])
+@pytest.mark.parametrize("path", ["login", "logout"])
+def test_session_mutations_reject_untrusted_origin(
+  client: TestClient,
+  origin: str | None,
+  path: str,
+) -> None:
+  response = client.post(
+    f"/api/v1/auth/{path}",
+    headers={"Origin": origin} if origin else {},
+    json={"email": "test@example.com", "password": "test-password"},
+  )
+  assert response.status_code == 403
+  assert response.headers["cache-control"] == "no-store"
+
+
+def test_login_me_logout_through_configured_origin(
+  db: ApplicationDatabase,
+  client: TestClient,
+  monkeypatch: pytest.MonkeyPatch,
+) -> None:
+  user_id, _, _ = account(db)
+  monkeypatch.setenv("IDENTITY_PUBLIC_ORIGIN", "http://localhost:3000")
+  headers = {"Origin": "http://localhost:3000"}
+  response = client.post(
+    "/api/v1/auth/login",
+    headers=headers,
+    json={"email": f"{user_id}@example.com", "password": "old-password"},
+  )
+  assert response.status_code == 200
+  assert "HttpOnly" in response.headers["set-cookie"]
+  assert client.get("/api/v1/auth/me").status_code == 200
+  assert client.post("/api/v1/auth/logout", headers=headers).status_code == 200
+  assert client.get("/api/v1/auth/me").status_code == 401
+
+
+def test_verification_records_email_and_cannot_unblock(
+  db: ApplicationDatabase,
+  client: TestClient,
+) -> None:
+  user_id, _, _ = account(db)
+  raw = recovery_token(db, user_id, purpose=TokenPurpose.EMAIL_VERIFICATION)
+  with db.unit_of_work() as session:
+    user = session.get(User, user_id)
+    assert user
+    user.status = "blocked"
+  response = client.post("/api/v1/auth/verify-email", json={"token": raw})
+  assert response.status_code == 400
+  with db.unit_of_work() as session:
+    user = session.get(User, user_id)
+    assert user and user.status == "blocked" and user.email_verified_at is None
+    user.status = "pending"
+  assert (
+    client.post("/api/v1/auth/verify-email", json={"token": raw}).status_code == 200
+  )
+  with db.unit_of_work() as session:
+    user = session.get(User, user_id)
+    assert user and user.status == "active" and user.email_verified_at is not None
+  assert (
+    client.post("/api/v1/auth/verify-email", json={"token": raw}).status_code == 400
+  )
+
+
+def test_registration_normalizes_names_and_issues_48_hour_verification(
+  db: ApplicationDatabase,
+  client: TestClient,
+) -> None:
+  response = client.post(
+    "/api/v1/auth/register",
+    json={
+      "first_name": "  Тест  ",
+      "last_name": "  Студент  ",
+      "email": "New@example.com",
+      "password": "12345678",
+    },
+  )
+  assert response.status_code == 201
+  with db.unit_of_work() as session:
+    user = session.scalar(select(User).where(User.email == "new@example.com"))
+    assert user
+    profile = session.get(Profile, user.id)
+    token = session.scalar(
+      select(IdentityActionToken).where(IdentityActionToken.user_id == user.id)
+    )
+    assert profile and profile.first_name == "Тест" and profile.last_name == "Студент"
+    assert token and token.expires_at - token.created_at == timedelta(hours=48)
+
+
+def test_verification_concurrent_single_use(
+  db: ApplicationDatabase,
+  client: TestClient,
+) -> None:
+  user_id, _, _ = account(db)
+  raw = recovery_token(db, user_id, purpose=TokenPurpose.EMAIL_VERIFICATION)
+
+  def attempt(_: int) -> int:
+    return int(
+      client.post("/api/v1/auth/verify-email", json={"token": raw}).status_code
+    )
+
+  with ThreadPoolExecutor(max_workers=2) as executor:
+    assert sorted(executor.map(attempt, range(2))) == [200, 400]
+
+
+def test_repeated_logout_preserves_original_revocation_time(
+  db: ApplicationDatabase,
+  client: TestClient,
+) -> None:
+  _, raw, session_id = account(db)
+  headers = {"Origin": "http://testserver"}
+  client.cookies.set("lms-session", raw)
+  assert client.post("/api/v1/auth/logout", headers=headers).status_code == 200
+  with db.unit_of_work() as session:
+    row = session.get(IdentitySession, session_id)
+    assert row and row.revoked_at
+    revoked_at = row.revoked_at
+  client.cookies.set("lms-session", raw)
+  assert client.post("/api/v1/auth/logout", headers=headers).status_code == 200
+  with db.unit_of_work() as session:
+    row = session.get(IdentitySession, session_id)
+    assert row and row.revoked_at == revoked_at
