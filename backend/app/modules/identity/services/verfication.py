@@ -23,10 +23,9 @@ def verify_email(
   raw_token: str,
 ) -> None:
 
+  # Lock account before token, matching resend and recovery lock ordering.
   user_id = get_action_token_owner(
-    session,
-    hash_token(raw_token),
-    TokenPurpose.EMAIL_VERIFICATION,
+    session, hash_token(raw_token), TokenPurpose.EMAIL_VERIFICATION
   )
 
   if user_id is None:
@@ -34,13 +33,13 @@ def verify_email(
 
   user = get_user_by_id(session, user_id)
 
-  if user is None or user.status != "pending":
+  if user is None or user.status == "blocked" or "admin" in user.roles:
     raise TokenInvalid()
 
   consume_action_token(session, raw_token, TokenPurpose.EMAIL_VERIFICATION)
 
+  user.email_verified_at = user.email_verified_at or datetime.now(UTC)
   user.status = "active"
-  user.email_verified_at = datetime.now(UTC)
 
 
 def resend_verification(
@@ -54,7 +53,12 @@ def resend_verification(
 
   purpose = TokenPurpose.EMAIL_VERIFICATION
 
-  if user is None or user.status != "pending":
+  if (
+    user is None
+    or user.status == "blocked"
+    or user.email_verified_at is not None
+    or "admin" in user.roles
+  ):
     return None
 
   last_verification_time = get_last_token_time(session, user.id, purpose)

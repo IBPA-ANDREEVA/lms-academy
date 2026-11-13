@@ -12,6 +12,7 @@ import {
 
 import { Button } from "@/components/ui/button";
 import { SocialActions } from "./social-actions";
+import { emailError, nameError, passwordError } from "./form-validation";
 import { useRegister } from "./hooks/use-register";
 
 import type { AuthView } from "./auth-modal";
@@ -57,31 +58,10 @@ export function RegisterForm({
 
     const errors: FieldErrors = {};
 
-    // First name
-    if (!first_name) {
-      errors.firstName = "Введите имя";
-    }
-
-    // Last name
-    if (!last_name) {
-      errors.lastName = "Введите фамилию";
-    }
-
-    // Email
-    if (!email) {
-      errors.email = "Введите электронную почту";
-    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-      errors.email = "Некорректный адрес электронной почты";
-    }
-
-    // Password
-    if (!password) {
-      errors.password = "Введите пароль";
-    } else if (Array.from(password).length < 12) {
-      errors.password = "Пароль должен содержать минимум 12 символов";
-    } else if (Array.from(password).length > 128) {
-      errors.password = "Пароль не может превышать 128 символов";
-    }
+    errors.firstName = nameError(first_name, "имя");
+    errors.lastName = nameError(last_name, "фамилию");
+    errors.email = emailError(email);
+    errors.password = passwordError(password);
 
     // Password confirmation
     if (!confirmation) {
@@ -92,10 +72,20 @@ export function RegisterForm({
 
     setFieldErrors(errors);
 
-    if (Object.keys(errors).length > 0) {
-      const names: Record<FieldName, string> = { firstName: "first-name", lastName: "last-name", email: "email", password: "new-password", confirmation: "confirm-password" };
-      const first = Object.keys(errors)[0] as FieldName;
-      event.currentTarget.querySelector<HTMLInputElement>(`[name="${names[first]}"]`)?.focus();
+    if (Object.values(errors).some(Boolean)) {
+      const names: Record<FieldName, string> = {
+        firstName: "first-name",
+        lastName: "last-name",
+        email: "email",
+        password: "new-password",
+        confirmation: "confirm-password",
+      };
+      const first = (Object.keys(errors) as FieldName[]).find(
+        (key) => errors[key],
+      )!;
+      event.currentTarget
+        .querySelector<HTMLInputElement>(`[name="${names[first]}"]`)
+        ?.focus();
       return;
     }
 
@@ -103,9 +93,15 @@ export function RegisterForm({
   }
 
   return (
-    <form className={styles.form} noValidate onSubmit={handleSubmit}>
+    <form
+      className={styles.form}
+      noValidate
+      onSubmit={handleSubmit}
+      aria-busy={pending}
+    >
       <div className={styles.nameFields}>
         <TextField
+          disabled={pending}
           label="Имя"
           name="first-name"
           autoComplete="given-name"
@@ -117,6 +113,7 @@ export function RegisterForm({
         />
 
         <TextField
+          disabled={pending}
           label="Фамилия"
           name="last-name"
           autoComplete="family-name"
@@ -128,6 +125,7 @@ export function RegisterForm({
       </div>
 
       <TextField
+        disabled={pending}
         label="Электронная почта"
         type="email"
         name="email"
@@ -135,12 +133,20 @@ export function RegisterForm({
         placeholder="example@email.com"
         error={fieldErrors.email}
         success={emailSuccess ? "Формат адреса проверен" : undefined}
-        onChange={() => { clearFieldError("email"); setEmailSuccess(false); }}
-        onBlur={(event) => setEmailSuccess(/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(event.currentTarget.value.trim()))}
+        onChange={() => {
+          clearFieldError("email");
+          setEmailSuccess(false);
+        }}
+        onBlur={(event) =>
+          setEmailSuccess(
+            /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(event.currentTarget.value.trim()),
+          )
+        }
         required
       />
 
       <PasswordField
+        disabled={pending}
         label="Пароль"
         name="new-password"
         autoComplete="new-password"
@@ -151,6 +157,7 @@ export function RegisterForm({
       />
 
       <PasswordField
+        disabled={pending}
         label="Подтвердите пароль"
         name="confirm-password"
         autoComplete="new-password"
@@ -171,15 +178,12 @@ export function RegisterForm({
         {pending ? "СОЗДАНИЕ..." : "СОЗДАТЬ АККАУНТ"}
       </Button>
 
-      {error && (
-        <FormMessage tone="error">
-          {error}
-        </FormMessage>
-      )}
+      {error && <FormMessage tone="error">{error}</FormMessage>}
 
       {success && (
         <FormMessage tone="success">
-          Аккаунт создан. В тестовой версии письма не отправляются — подтверждение почты пока недоступно.
+          Аккаунт создан. В тестовой версии письма не отправляются —
+          подтверждение почты пока недоступно.
         </FormMessage>
       )}
 
@@ -187,7 +191,11 @@ export function RegisterForm({
 
       <div className={styles.switchView}>
         Уже есть аккаунт?{" "}
-        <button type="button" onClick={() => onViewChange("login")}>
+        <button
+          type="button"
+          disabled={pending}
+          onClick={() => onViewChange("login")}
+        >
           Войти ↗
         </button>
       </div>

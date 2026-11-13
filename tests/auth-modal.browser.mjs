@@ -6,6 +6,7 @@ const require = createRequire(import.meta.url);
 const { chromium } = require(process.env.PLAYWRIGHT_MODULE || "playwright");
 const browser = await chromium.launch({ headless: true, channel: "chrome" });
 const page = await browser.newPage();
+await page.route("**/api/v1/auth/me", route => route.fulfill({ status: 401, contentType: "application/json", body: "{}" }));
 const errors = [];
 page.on("pageerror", (error) => errors.push(error.message));
 const evidence = process.env.FRONTEND_EVIDENCE || ".auth-evidence";
@@ -37,7 +38,7 @@ try {
     await dialog.getByRole("button", { name: "Показать пароль" }).click();
     assert.equal(await dialog.locator('[data-auth-view="login"] input[name="password"]').getAttribute("type"), "text");
     await dialog.getByRole("button", { name: "ВОЙТИ", exact: false }).click();
-    assert.ok(await dialog.getByText("Вход пока недоступен.").isVisible());
+    assert.ok(await dialog.getByText("Введите пароль", { exact: true }).isVisible());
     await dialog.getByRole("button", { name: "Зарегистрироваться" }).click();
     const register = page.getByRole("dialog", { name: "Регистрация" });
     assert.equal(await register.getByLabel("Дата рождения").count(), 0);
@@ -51,7 +52,7 @@ try {
     await createAccount.click();
     await register.locator('[name="first-name"]').focus();
     assert.ok(await register.getByText("Введите имя", { exact: true }).isVisible());
-    assert.equal(await register.locator('[aria-invalid="true"]').count(), 5);
+    assert.equal(await register.locator('[data-auth-view="register"] [aria-invalid="true"]').count(), 5);
     if (width === 1440 || width === 390) await page.screenshot({ path: `${evidence}/register-errors-${width}.png` });
     await register.getByRole("button", { name: "Войти ↗" }).click();
     assert.equal(await page.getByRole("dialog", { name: "Вход" }).getByRole("textbox", { name: "Электронная почта" }).inputValue(), "example@email.com");
@@ -60,8 +61,8 @@ try {
     assert.ok(await forgot.getByRole("textbox", { name: "Электронная почта" }).isVisible());
     await page.waitForFunction(() => document.activeElement?.hasAttribute("data-auth-first"));
     if (width === 1440 || width === 390) await page.screenshot({ path: `${evidence}/forgot-${width}.png` });
-    await forgot.getByRole("button", { name: "ОТПРАВИТЬ ССЫЛКУ" }).click();
-    assert.ok(await forgot.getByText("Отправка ссылки пока недоступна.").isVisible());
+    await forgot.getByRole("button", { name: "ЗАПРОСИТЬ ВОССТАНОВЛЕНИЕ" }).click();
+    assert.ok(await forgot.locator('[data-auth-view="forgot"]').getByText("Введите электронную почту", { exact: true }).isVisible());
     await page.keyboard.press("Escape");
     await page.locator("dialog[open]").waitFor({ state: "detached", timeout: 1000 });
     assert.equal(await page.locator("dialog[open]").count(), 0);

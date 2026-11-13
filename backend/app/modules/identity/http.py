@@ -1,6 +1,7 @@
 """Transport helpers scoped to the new Identity endpoints."""
 
 import logging
+import os
 from collections.abc import Callable, Coroutine
 from datetime import UTC, datetime
 from typing import Any
@@ -36,9 +37,12 @@ def identity_error(
 
 def require_same_origin(request: Request) -> None:
   # Browser Origin cannot be forged by cross-origin page scripts. Require it for
-  # cookie mutations, including login/logout. Proxy headers must be trusted explicitly.
+  # cookie mutations, including login CSRF. Trust only operator configuration.
   origin = request.headers.get("origin")
-  expected = f"{request.url.scheme}://{request.url.netloc}"
+  expected = (
+    os.environ.get("IDENTITY_PUBLIC_ORIGIN")
+    or f"{request.url.scheme}://{request.url.netloc}"
+  )
 
   if not origin or origin != expected or urlsplit(origin).path:
     raise identity_error(
@@ -66,7 +70,8 @@ class IdentityRoute(APIRoute):
           "Проверьте введённые данные.",
         ) from None
 
-      except HTTPException:
+      except HTTPException as exc:
+        exc.headers = {**(exc.headers or {}), "Cache-Control": "no-store"}
         raise
 
       except Exception as exc:

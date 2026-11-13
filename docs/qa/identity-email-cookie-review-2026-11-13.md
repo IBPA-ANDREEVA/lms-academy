@@ -17,10 +17,11 @@ UI, deployment, production database or live mailbox changes.
   removed method and a fixed recipient. Interfaces are typed and the script now
   requires an explicit operator-controlled destination.
 - Templates misstated reset expiry and used English-first copy. They now use
-  Russian text, escaped links, 30-minute reset and 48-hour verification lifetimes.
+  Russian text, escaped fragment-token links compatible with the merged frontend, 30-minute reset and 48-hour verification lifetimes.
   Base URLs are validated; trailing slashes and reserved token characters are handled.
 - Verification omitted `email_verified_at` and could reactivate blocked accounts.
-  Activation now requires pending status, persists the timestamp atomically and
+  Activation rejects blocked/admin users, preserves legacy active-account recovery,
+  persists the timestamp atomically and
   uses account-before-token locking shared with resend/reset. Revocation timestamps
   are evaluated per call, and raw-token debug printing is removed.
 - Login created a non-Secure cookie and login/logout lacked origin validation.
@@ -37,7 +38,7 @@ Passed from `backend/`:
 - `uv run ruff format --check .`
 - `uv run mypy`
 - `POSTGRES_BIN=/opt/homebrew/opt/postgresql@18/bin uv run python scripts/verify_postgres.py`
-  — **203 passed**, including full isolated PostgreSQL migration, schema,
+  — **203 passed** before upstream reconciliation, including full isolated PostgreSQL migration, schema,
   persistence, recovery, concurrency and transport tests. One existing Starlette
   warning recommends migrating the TestClient transport from httpx to httpx2.
 
@@ -64,8 +65,9 @@ change only adds documented 503 responses. No live provider/inbox test was run.
 Synchronous delivery is not durable: process death after commit can lose delivery,
 and provider timeout can leave an ambiguous outcome. Durable intents/worker retry,
 rate limiting, provider/domain validation and audit correlation remain follow-ups.
-Frontend verification/reset pages are absent; the existing resend API path and
-registration test-mode copy still need integration work. Cookie security requires
+The latest main already supplies verification/reset pages and the corrected
+resend API path; these are preserved, and emails now use their fragment-token
+contract. Stale frontend test-mode copy still needs integration work. Cookie security requires
 same-origin HTTPS and correctly restricted proxy forwarding. The development-only
 database deployment guard is intentionally retained. This review is not approval
 for production launch or evidence of actual inbox delivery.
@@ -73,3 +75,22 @@ for production launch or evidence of actual inbox delivery.
 References: [OWASP session management](https://cheatsheetseries.owasp.org/cheatsheets/Session_Management_Cheat_Sheet.html),
 installed Resend 2.53.2 request/client/send implementation, and the repository's
 PD-014 and Identity/access policy.
+
+## Upstream reconciliation
+
+The PR base advanced to `f65a79a` while this branch was under review. Reconciled
+PR #26 without replacing its frontend/auth work: preserve configured public origin,
+sanitary error envelopes, safe `/me` projections, administrator exclusions and
+legacy active-but-unverified account recovery. Consolidate token-owner lookup by
+purpose and adapt email links to the frontend's `#token=` contract. The cookie
+integration test now uses HTTPS; production Secure cookies are never disabled.
+
+Revalidated combined state: **215 passed, 1 skipped** with the isolated PostgreSQL
+harness. The skipped test is the opt-in full browser integration; backend transport
+and persistence coverage ran. Ruff, format, strict mypy, OpenAPI/client/constraint
+generation, frontend lint, type generation, TypeScript and build also passed.
+
+The combined frontend typecheck initially found a stale duplicate generated file,
+`.next/types/routes.d 2.ts`, containing the older route list. Preserved that generated
+file in a system temporary directory outside the source tree, then regenerated
+route types; TypeScript and the production build passed. No source file was removed.

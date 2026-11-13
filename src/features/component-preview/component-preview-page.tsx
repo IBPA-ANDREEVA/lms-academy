@@ -1,4 +1,5 @@
 "use client";
+import { AuthPreview } from "./auth-preview";
 import { CutButtonPreview } from "./cut-button-preview";
 import { CatalogStatesPreview } from "./catalog-states-preview";
 import { MotionPreview } from "./motion-preview";
@@ -32,6 +33,7 @@ const components = [
   ["commerce", "CartItems / OrderSummary"],
   ["button", "Button"],
   ["form-controls", "FormControls"],
+  ["identity", "AuthModal"],
   ["course-card", "CourseCard"],
   ["catalog-states", "CatalogState"],
   ["category-navigation", "CategoryNavigation"],
@@ -258,6 +260,9 @@ export function ComponentPreviewPage() {
         </p>
       </PreviewSection>
 
+      <PreviewSection id="identity" name="AuthModal" description="Настоящие формы аккаунта: запросы выполняются через подключённый API. Это не демонстрационные аккаунты. Отправка писем пока не реализована.">
+        <AuthPreview />
+      </PreviewSection>
       <PreviewSection
         id="form-controls"
         name="FormControls"

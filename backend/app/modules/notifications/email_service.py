@@ -48,7 +48,7 @@ class EmailService:
     path: str,
     token: str,
   ) -> str:
-    return f"{self.app_base_url}{path}?{urlencode({'token': token})}"
+    return f"{self.app_base_url}{path}#{urlencode({'token': token})}"
 
   def _send(
     self,

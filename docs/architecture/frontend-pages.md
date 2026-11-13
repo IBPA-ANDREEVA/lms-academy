@@ -31,10 +31,10 @@ Source-verified inventory, 2026-11-02; branch `refactor/landing`, HEAD `eb3665d1
 | `/checkout` | Buyer/agreements/payment availability | `src/app/checkout/page.tsx` → `src/features/commerce/checkout-page.tsx` → `sections/checkout-section.tsx` | DEMO: empty by default; development fixtures expose buyer/summary/three disabled acknowledgments/payment-unavailable UI. PD-006 fourth acknowledgment is missing. Payment/order/identity/legal integrations missing. MVP. |
 | `/courses/[slug]` | Main-course detail | `src/app/(details)/courses/[slug]/page.tsx` → `src/features/course-detail/detail-page.tsx` | DEMO: four allowlisted example slugs; five sections render because trainer is absent. Curriculum component exists but receives no modules. Two disabled PurchasePanels; no price, purchase action or video. Unknown slug renders not-found UI. MVP content/integration missing. |
 | `/courses` | Main-course catalog | `src/app/(catalog)/courses/page.tsx` (metadata, returns null); `(catalog)/layout.tsx` → `src/features/catalog/catalog-page.tsx` | DEMO: four fixture cards; working URL filtering/reset/history and detail navigation. `publishedCourses` is empty. Visible fixture badges have been removed by the recorded owner follow-up. MVP integration missing. |
-| `/forgot-password` | forgot-password — Получить безопасную ссылку. | — | Standalone route not implemented; UI-only recovery view exists in the shared header modal; MVP backend pending |
+| `/forgot-password` | Identity — email/password account access; MVP | `src/app/(identity)/forgot-password/page.tsx` → `src/features/identity/identity-page.tsx` → `sections/identity-section.tsx` | Connected development API; shared forms, noindex/no canonical. Delivery and production hardening remain TODO; see auth audit. |
 | `/` | home — Discover the academy and learning formats | `src/app/page.tsx` → `src/features/home/home-page.tsx` | DEMO content and learning/offers interactions; working navigation/disclosure/carousel mechanics. HOME-02–11 order below. Packages Phase 2; reviews Phase 3; Start in USA release unresolved. Contact delivery missing. |
 | `/license-disclaimer` | license-disclaimer — Прочесть действующую утверждённую версию. | — | Not implemented; MVP |
-| `/login` | login — Войти и продолжить разрешённый сценарий. | — | Standalone route not implemented; UI-only login view exists in `src/features/identity/auth-modal.tsx`, opened by PublicHeader; MVP backend pending |
+| `/login` | Identity — email/password account access; MVP | `src/app/(identity)/login/page.tsx` → `src/features/identity/identity-page.tsx` → `sections/identity-section.tsx` | Connected development API; shared forms, noindex/no canonical. Delivery and production hardening remain TODO; see auth audit. |
 | `None` | partner-statement — Existing account finance section; Commerce attribution/ledger contracts; Full; pending references. | — | Planned only; supersedes manager-commission under PD-011; no implementation or new URL |
 | `None` | admin-manual-sale — Admin commercial operations; separate authorized evidence workflow; Full; OQ-038/039. | — | Planned only; supersedes manager-enrollment under PD-011; no implementation or new URL |
 | `None` | admin-leads — Admin/explicitly authorized operations; consent-gated records; Full; OQ-065/066/067. | — | Planned only; supersedes manager-leads under PD-011; no implementation or new URL |
@@ -48,8 +48,8 @@ Source-verified inventory, 2026-11-02; branch `refactor/landing`, HEAD `eb3665d1
 | `/packages` | packages — Сравнить разрешённые наборы без предположений о произвольной сборке. | — | Not implemented; Phase 2 |
 | `/privacy` | privacy — Прочесть действующую утверждённую версию. | — | Not implemented; MVP |
 | `/refunds` | refunds — Прочесть действующую утверждённую версию. | — | Not implemented; MVP |
-| `/register` | register — Создать аккаунт без автоматического платного доступа. | — | Standalone route not implemented; UI-only registration view exists in the shared header modal; MVP backend pending |
-| `/reset-password` | reset-password — Восстановить учётные данные. | — | Not implemented; MVP |
+| `/register` | Identity — email/password account access; MVP | `src/app/(identity)/register/page.tsx` → `src/features/identity/identity-page.tsx` → `sections/identity-section.tsx` | Connected development API; shared forms, noindex/no canonical. Delivery and production hardening remain TODO; see auth audit. |
+| `/reset-password` | Identity — email/password account access; MVP | `src/app/(identity)/reset-password/page.tsx` → `src/features/identity/identity-page.tsx` → `sections/identity-section.tsx` | Connected development API; shared forms, noindex/no canonical. Delivery and production hardening remain TODO; see auth audit. |
 | `None` | role-context — Выбрать разрешённый рабочий контекст без нового аккаунта. | — | Not implemented; MVP |
 | `/start-in-usa` | start-usa — Объяснить модуль, сохранив открытый вопрос публикации и продажи. | — | Not implemented; Unresolved |
 | `None` | student-assignment — Отправить или исправить работу и прочесть отзыв. | — | Not implemented; MVP |
@@ -67,7 +67,7 @@ Source-verified inventory, 2026-11-02; branch `refactor/landing`, HEAD `eb3665d1
 | `None` | trainer-messages — Ответить назначенному ученику внутри платформы. | — | Not implemented; Phase 2 |
 | `None` | trainer-queue — Найти назначенную работу для проверки. | — | Not implemented; MVP |
 | `None` | trainer-review — Изучить работу и дать безопасное решение. | — | Not implemented; MVP |
-| `/verify-email` | verify-email — Подтвердить владение адресом. | — | Not implemented; MVP |
+| `/verify-email` | Identity — email/password account access; MVP | `src/app/(identity)/verify-email/page.tsx` → `src/features/identity/identity-page.tsx` → `sections/identity-section.tsx` | Connected development API; shared forms, noindex/no canonical. Delivery and production hardening remain TODO; see auth audit. |
 
 Public navigation is maintained in `src/features/public-shell/navigation.ts`. Auth modal and commerce presentation exist; authentication/payment services, protected workspaces and legal document routes do not exist. Do not link to their proposed URLs until implemented and released. The existing project name is a working identity, not a final logo approval.
 
@@ -242,3 +242,11 @@ PublicHeader and CheckoutBuyer through AuthModal; no route or shared style chang
 generated OpenAPI schemas. Registration is partially integrated; verification-email
 delivery remains MISSING. No new visual reference/direction is introduced.
 See [review-fix verification](../qa/pr25-review-fixes-2026-11-11.md).
+
+## Auth integration · 2026-11-12
+
+All five identity pages use the existing public shell and a focused auth panel.
+`/login` displays account/session controls after authentication, without selecting
+an `/account` workspace or role-combination policy. Email links use scrubbed
+fragments and explicit POST consumption. Header/checkout modals retain their
+original continuation (no cart merging). [Audit and reference scope](../qa/auth-audit-2026-11-12.md).

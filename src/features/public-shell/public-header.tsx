@@ -6,6 +6,7 @@ import { useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
 import { useGSAP } from "@gsap/react";
 import { Button, ButtonLink } from "@/components/ui/button";
+import { useIdentity } from "@/features/identity/identity-provider";
 import { AuthModal } from "@/features/identity";
 import { CartPreview } from "@/features/commerce";
 import { MobileNavigation } from "./mobile-navigation";
@@ -54,6 +55,7 @@ export function PublicHeader({
   showCartPreview = false,
 }: PublicHeaderProps) {
   const pathname = usePathname();
+  const { user } = useIdentity();
   const root = useRef<HTMLElement>(null);
   const [homeScrolled, setHomeScrolled] = useState(false);
   const [authOpen, setAuthOpen] = useState(false);
@@ -190,13 +192,13 @@ export function PublicHeader({
             {showAuth ? (
               <Button ref={authButton} className={styles.signIn} onMouseDown={event => { event.preventDefault(); event.currentTarget.focus({ preventScroll: true }); }} onClick={() => {
                 setAuthOpen(true);
-              }}>Войти</Button>
+              }}>{user ? "Аккаунт" : "Войти"}</Button>
             ) : account && (
               <ButtonLink href={account.href} className={styles.signIn}>
                 {account.label}
               </ButtonLink>
             )}
-            <MobileNavigation navigation={navigation} brand={brand} account={account} showAuth={showAuth} onAuth={() => setAuthOpen(true)} />
+            <MobileNavigation navigation={navigation} brand={brand} account={account} showAuth={showAuth} authLabel={user ? "Мой аккаунт" : "Войти в кабинет"} onAuth={() => setAuthOpen(true)} />
           </div>
         </div>
       </PageContainer>

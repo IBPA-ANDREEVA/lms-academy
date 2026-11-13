@@ -405,7 +405,7 @@ def test_email_delivery_after_commit_and_verification(
 
   def send(**kwargs: str) -> str:
     url = kwargs["text"].splitlines()[0].split(": ", 1)[1]
-    token = parse_qs(urlsplit(url).query)["token"][0]
+    token = parse_qs(urlsplit(url).fragment)["token"][0]
     # A separate connection sees the token only once the request has committed.
     with db.unit_of_work() as session:
       row = session.scalar(
@@ -615,4 +615,168 @@ def test_commit_failure_does_not_send_email(
   with db.unit_of_work() as session:
     assert (
       session.scalar(select(User).where(User.email == "rollback@example.com")) is None
+    )
+
+
+@pytest.mark.parametrize("origin", [None, "https://foreign.example", "null"])
+@pytest.mark.parametrize("path", ["login", "logout"])
+def test_session_mutations_reject_untrusted_origin(
+  client: TestClient,
+  origin: str | None,
+  path: str,
+) -> None:
+  response = client.post(
+    f"/api/v1/auth/{path}",
+    headers={"Origin": origin} if origin else {},
+    json={"email": "test@example.com", "password": "test-password"},
+  )
+  assert response.status_code == 403
+  assert response.headers["cache-control"] == "no-store"
+
+
+def test_login_me_logout_through_configured_origin(
+  db: ApplicationDatabase,
+  client: TestClient,
+  monkeypatch: pytest.MonkeyPatch,
+) -> None:
+  user_id, _, _ = account(db)
+  client.base_url = "https://testserver"
+  monkeypatch.setenv("IDENTITY_PUBLIC_ORIGIN", "https://localhost:3000")
+  headers = {"Origin": "https://localhost:3000"}
+  response = client.post(
+    "/api/v1/auth/login",
+    headers=headers,
+    json={"email": f"{user_id}@example.com", "password": "old-password"},
+  )
+  assert response.status_code == 200
+  assert "HttpOnly" in response.headers["set-cookie"]
+  assert client.get("/api/v1/auth/me").status_code == 200
+  assert client.post("/api/v1/auth/logout", headers=headers).status_code == 200
+  assert client.get("/api/v1/auth/me").status_code == 401
+
+
+def test_verification_records_email_and_cannot_unblock(
+  db: ApplicationDatabase,
+  client: TestClient,
+) -> None:
+  user_id, _, _ = account(db)
+  raw = recovery_token(db, user_id, purpose=TokenPurpose.EMAIL_VERIFICATION)
+  with db.unit_of_work() as session:
+    user = session.get(User, user_id)
+    assert user
+    user.status = "blocked"
+  response = client.post("/api/v1/auth/verify-email", json={"token": raw})
+  assert response.status_code == 400
+  with db.unit_of_work() as session:
+    user = session.get(User, user_id)
+    assert user and user.status == "blocked" and user.email_verified_at is None
+    user.status = "pending"
+  assert (
+    client.post("/api/v1/auth/verify-email", json={"token": raw}).status_code == 200
+  )
+  with db.unit_of_work() as session:
+    user = session.get(User, user_id)
+    assert user and user.status == "active" and user.email_verified_at is not None
+  assert (
+    client.post("/api/v1/auth/verify-email", json={"token": raw}).status_code == 400
+  )
+
+
+def test_registration_normalizes_names_and_issues_48_hour_verification(
+  db: ApplicationDatabase,
+  client: TestClient,
+) -> None:
+  response = client.post(
+    "/api/v1/auth/register",
+    json={
+      "first_name": "  Тест  ",
+      "last_name": "  Студент  ",
+      "email": "New@example.com",
+      "password": "12345678",
+    },
+  )
+  assert response.status_code == 201
+  with db.unit_of_work() as session:
+    user = session.scalar(select(User).where(User.email == "new@example.com"))
+    assert user
+    profile = session.get(Profile, user.id)
+    token = session.scalar(
+      select(IdentityActionToken).where(IdentityActionToken.user_id == user.id)
+    )
+    assert profile and profile.first_name == "Тест" and profile.last_name == "Студент"
+    assert token and token.expires_at - token.created_at == timedelta(hours=48)
+
+
+def test_verification_concurrent_single_use(
+  db: ApplicationDatabase,
+  client: TestClient,
+) -> None:
+  user_id, _, _ = account(db)
+  raw = recovery_token(db, user_id, purpose=TokenPurpose.EMAIL_VERIFICATION)
+
+  def attempt(_: int) -> int:
+    return int(
+      client.post("/api/v1/auth/verify-email", json={"token": raw}).status_code
+    )
+
+  with ThreadPoolExecutor(max_workers=2) as executor:
+    assert sorted(executor.map(attempt, range(2))) == [200, 400]
+
+
+def test_repeated_logout_preserves_original_revocation_time(
+  db: ApplicationDatabase,
+  client: TestClient,
+) -> None:
+  _, raw, session_id = account(db)
+  headers = {"Origin": "http://testserver"}
+  client.cookies.set("lms-session", raw)
+  assert client.post("/api/v1/auth/logout", headers=headers).status_code == 200
+  with db.unit_of_work() as session:
+    row = session.get(IdentitySession, session_id)
+    assert row and row.revoked_at
+    revoked_at = row.revoked_at
+  client.cookies.set("lms-session", raw)
+  assert client.post("/api/v1/auth/logout", headers=headers).status_code == 200
+  with db.unit_of_work() as session:
+    row = session.get(IdentitySession, session_id)
+    assert row and row.revoked_at == revoked_at
+
+
+def test_active_but_unverified_account_can_request_verification(
+  db: ApplicationDatabase,
+  client: TestClient,
+) -> None:
+  user_id, _, _ = account(db)
+  response = client.post(
+    "/api/v1/auth/resend_verify_email",
+    json={"email": f"{user_id}@example.com"},
+  )
+  assert response.status_code == 201
+  with db.unit_of_work() as session:
+    tokens = list(
+      session.scalars(
+        select(IdentityActionToken).where(IdentityActionToken.user_id == user_id)
+      )
+    )
+    assert len(tokens) == 1
+    assert tokens[0].purpose == TokenPurpose.EMAIL_VERIFICATION
+    user = session.get(User, user_id)
+    assert user
+    user.email_verified_at = datetime.now(UTC)
+  assert (
+    client.post(
+      "/api/v1/auth/resend_verify_email", json={"email": f"{user_id}@example.com"}
+    ).status_code
+    == 201
+  )
+  with db.unit_of_work() as session:
+    assert (
+      len(
+        list(
+          session.scalars(
+            select(IdentityActionToken).where(IdentityActionToken.user_id == user_id)
+          )
+        )
+      )
+      == 1
     )

@@ -23,7 +23,7 @@ def test_email_links_content_and_disabled_delivery() -> None:
   text = sender.send.call_args.kwargs["text"]
   url = text.splitlines()[0].split(": ", 1)[1]
   assert urlsplit(url).path == "/reset-password"
-  assert parse_qs(urlsplit(url).query) == {"token": ["a&b?#"]}
+  assert parse_qs(urlsplit(url).fragment) == {"token": ["a&b?#"]}
   assert "30 минут" in text
   service.send_verification_email(to="test@example.com", raw_token="verification")
   assert "48 часов" in sender.send.call_args.kwargs["text"]
