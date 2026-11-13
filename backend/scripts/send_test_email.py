@@ -1,27 +1,17 @@
+"""Explicit operator-only smoke test; never run automatically."""
 
-import os
+import argparse
 
-import resend
-
-from app.integrations.resend_email import ResendEmailSender
-from app.modules.notifications.email_service import EmailService
+from app.main import configure_email
 
 
 def main() -> None:
-    resend.api_key = os.environ["RESEND_API_KEY"]
-
-    sender = ResendEmailSender(from_address=os.environ["EMAIL_FROM"])
-
-    email_service = EmailService(sender=sender)
-
-    email_id = email_service.send(
-        to="dev@ibpassocitations.org",
-        subject="TEST SUBJECT",
-        html="<p> TEST EMAIL </p>",
-        text="TEST EMAIL"
-    )
-
-    print(f"Email accepted by Resend: {email_id}")
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--to", required=True, help="Operator-controlled test mailbox")
+    args = parser.parse_args()
+    service = configure_email()
+    service.send_verification_email(to=args.to, raw_token="nonfunctional-smoke-test")
+    print("Test email accepted by provider (not proof of inbox delivery).")
 
 
 if __name__ == "__main__":

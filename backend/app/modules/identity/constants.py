@@ -8,6 +8,6 @@ class TokenPurpose(StrEnum):
 
 
 TOKEN_LIFETIMES = {
-  TokenPurpose.EMAIL_VERIFICATION: timedelta(hours=24),
+  TokenPurpose.EMAIL_VERIFICATION: timedelta(hours=48),
   TokenPurpose.PASSWORD_RESET: timedelta(minutes=30),
 }

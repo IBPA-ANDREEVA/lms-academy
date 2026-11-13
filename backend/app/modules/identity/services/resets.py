@@ -10,8 +10,8 @@ from app.modules.identity.constants import TOKEN_LIFETIMES, TokenPurpose
 from app.modules.identity.exceptions import TokenInvalid
 from app.modules.identity.services.passwords import hash_password
 from app.modules.identity.services.repository import (
+  get_action_token_owner,
   get_password_credentials,
-  get_reset_token_owner,
   get_user_by_email,
   get_user_by_id,
   revoke_all_sessions,
@@ -27,14 +27,14 @@ from app.modules.identity.services.tokens import (
 def request_password_reset(
   session: Session,
   email: str,
-) -> None:
+) -> tuple[str, str] | None:
   user = get_user_by_email(session, email)
 
   if user is None or user.status == "blocked" or "admin" in user.roles:
-    return
+    return None
 
   if get_password_credentials(session, user.id) is None:
-    return
+    return None
 
   now = datetime.now(UTC)
   revoke_token(session, user.id, TokenPurpose.PASSWORD_RESET, now)
@@ -52,9 +52,7 @@ def request_password_reset(
     )
   )
 
-  # TODO: Add email sending through a durable delivery intent before production.
-  # Never log or return the raw secret. Delivery is deliberately not implemented.
-  del raw_token
+  return user.email, raw_token
 
 
 def reset_password(
@@ -62,7 +60,9 @@ def reset_password(
   raw_token: str,
   password: str,
 ) -> UUID:
-  user_id = get_reset_token_owner(session, hash_token(raw_token))
+  user_id = get_action_token_owner(
+    session, hash_token(raw_token), TokenPurpose.PASSWORD_RESET
+  )
 
   if user_id is None:
     raise TokenInvalid()

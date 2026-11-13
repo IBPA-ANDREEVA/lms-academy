@@ -1,6 +1,6 @@
 # Identity routes and function ownership
 
-Updated 2026-11-11. This is the current development implementation, not production
+Updated 2026-11-13. This is the current development implementation, not production
 approval. All URLs below are relative to `/api/v1/auth`. `app/main.py` creates
 FastAPI and the database lifespan; `app/api/router.py` mounts the Identity router
 under `/api/v1`. Synchronous handlers use the existing synchronous unit of work.
@@ -48,16 +48,16 @@ not a new route alias introduced by this task.
   credential/session changes. Administrator memberships use manual recovery.
 - `services/repository.py`: private Identity queries, row locks and writes, never
   commits. `get_user_by_email`/`get_user_by_id` lock the account;
-  `get_reset_token_owner` locates an owner without locking the token first;
+  `get_action_token_owner` locates an owner without locking the token first;
   `get_token_by_digest` locks the purpose-bound token. Account-before-token lock
   order serializes replacement, reset and login. The user-by-ID lock refreshes
   an already-loaded ORM instance after waiting.
 - `services/passwords.py`: existing pwdlib Argon2 hashing/verification adapter.
 - `services/tokens.py`: random secret generation, SHA-256 digests, purpose-bound
   issuance, consumption and revocation. Recovery uses the random/digest and
-  consumption helpers but stores its token without the legacy debug print.
+  consumption helpers. No raw action token is printed or returned in HTTP responses.
 - `constants.py`: purposes/lifetimes. Password reset is 30 minutes per PD-014.
-  The existing verification lifetime remains unchanged in this bounded task.
+  Verification is 48 hours and sets `email_verified_at` atomically with activation.
 - `models.py` / `auth_models.py`: owned storage mappings, no new schema.
 - `http.py`: new endpoint error envelope, privacy-safe failure diagnostics,
   non-cacheable responses and same-origin browser mutation protection.
@@ -86,8 +86,9 @@ access. No session rows are deleted.
 30-minute reset token while earlier unused reset tokens are revoked. Unknown,
 blocked, administrator and credential-less accounts get the identical 200 body.
 This is response-body resistance, not a claim of timing/rate-limit protection.
-**Email sending is TODO**: no raw token is returned/logged and no email is actually
-sent. The flow cannot be completed by an end user until delivery is implemented.
+Email delivery is attempted synchronously after commit when explicitly enabled.
+Provider failure retains the same generic response and emits a sanitized diagnostic.
+No raw token is returned/logged. This is not durable delivery or inbox confirmation.
 
 `POST /password/reset` accepts `{token, password}` (8–255 characters, matching
 registration). It rejects expired, consumed, revoked, wrong-purpose and unknown
@@ -123,11 +124,8 @@ on export. New cookie operations declare the API-key cookie security scheme.
 
 ## Remaining development limitations
 
-Existing production cookie FIX and verification-token debug print are deliberately
-unchanged. Existing verification duration is 24 hours versus approved 48; verification
-also does not set `email_verified_at`. These are recorded for a focused follow-up,
-not silently changed with the new routes. Central legacy error mapping, durable
-email delivery/audit, abuse controls, qualifying-interaction refresh and manual
+Central legacy error mapping, durable email delivery/audit, abuse controls,
+qualifying-interaction refresh and manual
 administrator recovery remain unfinished. New route failure logs are not durable
 sensitive-action audit evidence. Do not represent this implementation as launch-ready.
 
@@ -135,4 +133,36 @@ sensitive-action audit evidence. Do not represent this implementation as launch-
 
 Registration names are limited to 100 characters to match the persisted profile
 columns. No migration is needed. The registration modal explicitly states that
-verification email is not sent in this test version; email delivery remains missing.
+verification email is not sent in this test version. That UI copy remains a frontend
+integration follow-up now that optional backend delivery exists.
+
+## Email service review · 2026-11-13
+
+Registration, resend and recovery return an internal `(normalized_email, raw_token)`
+intent to the route. Ineligible resend/recovery returns `None`; no provider call
+occurs. All email calls happen after a successful commit, outside database locks,
+in FastAPI's synchronous handler thread pool. The existing Notifications dependency
+supplies the public `EmailService`; Identity owns tokens and Notifications owns
+rendering/delivery. Verification and recovery lock the user before the token,
+matching resend/replacement lock order. Verification refuses non-pending accounts.
+
+`EMAIL_ENABLED` defaults to `false`. Enabling it requires `RESEND_API_KEY`,
+`EMAIL_FROM` and `APP_BASE_URL`. Startup validates configuration before creating
+the database pool. The URL must be an HTTPS origin, with HTTP permitted only for
+loopback development. The Resend client has a 10-second network timeout; there
+is no automatic retry of an ambiguous provider outcome. Templates are Russian-first,
+HTML-escaped and URL-encoded, with 48-hour verification / 30-minute recovery copy.
+The operator-only smoke script requires an explicit `--to`; it is not run by tests.
+
+Registration delivery failure returns a sanitized 503 explaining that the account
+exists and a new email can be requested. Resend failure also returns 503; the
+existing 60-second cooldown still applies. Recovery failures remain a generic 200
+to avoid a new account-existence signal. Provider messages, addresses and tokens
+are excluded from diagnostics. Correlation IDs identify delivery failures.
+
+Remaining release work: durable delivery intent/worker/retries and correlated audit,
+provider-domain and real inbox verification, abuse/rate limiting, frontend
+`/verify-email` and `/reset-password` pages, the existing resend client path mismatch
+and stale test-mode registration copy. A crash between commit and send can lose
+an email; a new request supersedes its token. This change does not claim otherwise.
+No real email was sent during automated verification.

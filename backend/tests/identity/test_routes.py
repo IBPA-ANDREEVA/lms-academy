@@ -3,6 +3,8 @@
 from collections.abc import Iterator
 from concurrent.futures import ThreadPoolExecutor
 from datetime import UTC, datetime, timedelta
+from typing import cast
+from unittest.mock import Mock
 from uuid import UUID, uuid4
 
 import pytest
@@ -15,6 +17,7 @@ from sqlalchemy.engine import URL
 
 from app.api.router import api_router
 from app.db.session import ApplicationDatabase, ApplicationDatabaseSettings
+from app.integrations.resend_email import ResendEmailSender
 from app.modules.identity.auth_models import (
   IdentityActionToken,
   IdentitySession,
@@ -25,6 +28,7 @@ from app.modules.identity.models import Profile, User
 from app.modules.identity.services.passwords import hash_password, verify_password
 from app.modules.identity.services.sessions import create_auth_session
 from app.modules.identity.services.tokens import hash_token
+from app.modules.notifications.email_service import EmailService
 
 
 @pytest.fixture
@@ -45,6 +49,10 @@ def db(
 def client(db: ApplicationDatabase) -> TestClient:
   application = FastAPI()
   application.state.database = db
+  application.state.email_service = EmailService(
+    sender=Mock(spec=ResendEmailSender),
+    app_base_url="https://academy.example",
+  )
   application.include_router(api_router)
   return TestClient(application)
 
@@ -384,3 +392,195 @@ def test_me_handles_absent_optional_profile(
   assert response.json()["id"] == str(user_id)
   assert response.json()["first_name"] is None
   assert response.json()["last_name"] is None
+
+
+def test_email_delivery_after_commit_and_verification(
+  db: ApplicationDatabase,
+  client: TestClient,
+) -> None:
+  from urllib.parse import parse_qs, urlsplit
+
+  sender = Mock(spec=ResendEmailSender)
+  delivered: list[str] = []
+
+  def send(**kwargs: str) -> str:
+    url = kwargs["text"].splitlines()[0].split(": ", 1)[1]
+    token = parse_qs(urlsplit(url).query)["token"][0]
+    # A separate connection sees the token only once the request has committed.
+    with db.unit_of_work() as session:
+      row = session.scalar(
+        select(IdentityActionToken).where(
+          IdentityActionToken.secret_digest == hash_token(token),
+        )
+      )
+      assert row is not None
+      if row.purpose == TokenPurpose.EMAIL_VERIFICATION:
+        assert row.expires_at - row.created_at == timedelta(hours=48)
+    delivered.append(token)
+    return "synthetic-provider-id"
+
+  sender.send.side_effect = send
+  cast(FastAPI, client.app).state.email_service = EmailService(
+    sender, "https://academy.example"
+  )
+  payload = {
+    "first_name": "Test",
+    "last_name": "Student",
+    "email": "delivery@example.com",
+    "password": "test-password",
+  }
+  assert client.post("/api/v1/auth/register", json=payload).status_code == 201
+  with db.unit_of_work() as session:
+    row = session.scalar(
+      select(IdentityActionToken).where(
+        IdentityActionToken.secret_digest == hash_token(delivered[0]),
+      )
+    )
+    assert row is not None
+    row.created_at -= timedelta(minutes=2)
+  assert (
+    client.post(
+      "/api/v1/auth/resend_verify_email", json={"email": payload["email"]}
+    ).status_code
+    == 201
+  )
+  assert (
+    client.post("/api/v1/auth/verify-email", json={"token": delivered[-1]}).status_code
+    == 200
+  )
+  with db.unit_of_work() as session:
+    user = session.scalar(select(User).where(User.email == payload["email"]))
+    assert user and user.status == "active" and user.email_verified_at is not None
+  assert (
+    client.post(
+      "/api/v1/auth/password/forgot", json={"email": payload["email"]}
+    ).status_code
+    == 200
+  )
+  assert len(delivered) == 3
+  assert (
+    client.post(
+      "/api/v1/auth/password/reset",
+      json={"token": delivered[-1], "password": "new-password"},
+    ).status_code
+    == 200
+  )
+  assert (
+    client.post(
+      "/api/v1/auth/resend_verify_email", json={"email": "unknown@example.com"}
+    ).status_code
+    == 201
+  )
+  assert len(delivered) == 3
+
+
+def test_delivery_failure_preserves_generic_recovery_response(
+  db: ApplicationDatabase,
+  client: TestClient,
+) -> None:
+  from app.integrations.resend_email import EmailDeliveryError
+
+  sender = Mock(spec=ResendEmailSender)
+  sender.send.side_effect = EmailDeliveryError()
+  cast(FastAPI, client.app).state.email_service = EmailService(
+    sender, "https://academy.example"
+  )
+  user_id, _, _ = account(db)
+  known = client.post(
+    "/api/v1/auth/password/forgot", json={"email": f"{user_id}@example.com"}
+  )
+  unknown = client.post(
+    "/api/v1/auth/password/forgot", json={"email": "unknown@example.com"}
+  )
+  assert known.status_code == unknown.status_code == 200
+  assert known.json() == unknown.json()
+  response = client.post(
+    "/api/v1/auth/register",
+    json={
+      "first_name": "Test",
+      "last_name": "Student",
+      "email": "failed-delivery@example.com",
+      "password": "test-password",
+    },
+  )
+  assert response.status_code == 503
+  assert response.json()["detail"]["code"] == "verification_delivery_failed"
+  with db.unit_of_work() as session:
+    assert (
+      session.scalar(select(User).where(User.email == "failed-delivery@example.com"))
+      is not None
+    )
+
+
+def test_concurrent_verification_and_resend(
+  db: ApplicationDatabase,
+  client: TestClient,
+) -> None:
+  from app.modules.identity.services.tokens import create_action_token
+
+  user_id, _, _ = account(db)
+  with db.unit_of_work() as session:
+    user = session.get(User, user_id)
+    assert user is not None
+    user.status = "pending"
+    token = create_action_token(session, user_id, TokenPurpose.EMAIL_VERIFICATION)
+    session.flush()
+    row = session.scalar(
+      select(IdentityActionToken).where(
+        IdentityActionToken.secret_digest == hash_token(token),
+      )
+    )
+    assert row is not None
+    row.created_at -= timedelta(minutes=2)
+
+  def attempt(index: int) -> int:
+    if index == 0:
+      return int(
+        client.post("/api/v1/auth/verify-email", json={"token": token}).status_code
+      )
+    return int(
+      client.post(
+        "/api/v1/auth/resend_verify_email", json={"email": f"{user_id}@example.com"}
+      ).status_code
+    )
+
+  with ThreadPoolExecutor(max_workers=2) as executor:
+    verification, resend = list(executor.map(attempt, range(2)))
+  assert verification in {200, 400}
+  assert resend == 201
+
+
+def test_commit_failure_does_not_send_email(
+  db: ApplicationDatabase,
+  client: TestClient,
+) -> None:
+  from sqlalchemy import event
+  from sqlalchemy.orm import Session
+
+  sender = Mock(spec=ResendEmailSender)
+  cast(FastAPI, client.app).state.email_service = EmailService(
+    sender, "https://academy.example"
+  )
+
+  def fail_commit(session: Session) -> None:
+    raise RuntimeError("synthetic commit failure")
+
+  event.listen(db.sessions, "before_commit", fail_commit)
+  try:
+    response = client.post(
+      "/api/v1/auth/register",
+      json={
+        "first_name": "Test",
+        "last_name": "Student",
+        "email": "rollback@example.com",
+        "password": "test-password",
+      },
+    )
+  finally:
+    event.remove(db.sessions, "before_commit", fail_commit)
+  assert response.status_code == 500
+  sender.send.assert_not_called()
+  with db.unit_of_work() as session:
+    assert (
+      session.scalar(select(User).where(User.email == "rollback@example.com")) is None
+    )

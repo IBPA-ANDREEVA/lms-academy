@@ -3,8 +3,9 @@ from datetime import UTC, datetime, timedelta
 from sqlalchemy.orm import Session
 
 from app.modules.identity.constants import TokenPurpose
-from app.modules.identity.exceptions import ResendWasSentEarlier, UserNotFound
+from app.modules.identity.exceptions import ResendWasSentEarlier, TokenInvalid
 from app.modules.identity.services.repository import (
+  get_action_token_owner,
   get_last_token_time,
   get_user_by_email,
   get_user_by_id,
@@ -12,6 +13,7 @@ from app.modules.identity.services.repository import (
 from app.modules.identity.services.tokens import (
   consume_action_token,
   create_action_token,
+  hash_token,
   revoke_token,
 )
 
@@ -21,14 +23,24 @@ def verify_email(
   raw_token: str,
 ) -> None:
 
-  user_id = consume_action_token(session, raw_token, TokenPurpose.EMAIL_VERIFICATION)
+  user_id = get_action_token_owner(
+    session,
+    hash_token(raw_token),
+    TokenPurpose.EMAIL_VERIFICATION,
+  )
+
+  if user_id is None:
+    raise TokenInvalid()
 
   user = get_user_by_id(session, user_id)
 
-  if user is None:
-    raise UserNotFound()
+  if user is None or user.status != "pending":
+    raise TokenInvalid()
+
+  consume_action_token(session, raw_token, TokenPurpose.EMAIL_VERIFICATION)
 
   user.status = "active"
+  user.email_verified_at = datetime.now(UTC)
 
 
 def resend_verification(
@@ -57,4 +69,4 @@ def resend_verification(
 
   raw_token = create_action_token(session, user.id, purpose)
 
-  return email, raw_token
+  return user.email, raw_token

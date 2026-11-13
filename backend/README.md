@@ -6,7 +6,8 @@ FastAPI now mounts registration, verification/resend, login/logout/current-user,
 owned-session listing/revocation and password recovery. Read the
 [route/function map](../docs/architecture/identity-routes.md) for exact URLs,
 responsibilities, transaction boundaries, generated contracts and development
-limitations. Recovery email delivery remains TODO; existing production FIX items
+limitations. Optional Resend delivery now runs after commit; see the route map for
+configuration and remaining delivery/UI gaps. Existing unrelated production FIX items
 are retained. Other domain APIs/workers remain unimplemented. Earlier
 foundation-only statements below are historical. New/edited Identity code uses
 2-space indentation enforced by scoped Ruff configuration.

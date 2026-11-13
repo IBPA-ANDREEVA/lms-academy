@@ -4,15 +4,19 @@ from app.modules.notifications.constants import EmailContent
 
 
 def verification_template(url: str) -> EmailContent:
-    safe_url = escape(url, quote=True)
+  safe_url = escape(url, quote=True)
 
-    return EmailContent(
-        subject="Verify your email - LMS Academy",
-        html=f"""
-            <h2>Welcome to LMS Academy!</h2>
-            <p>Please verify your email address.</p>
-            <a href="{safe_url}">Verify email</a>
-            <p>This link expires in 24 hours.</p>
-        """,
-        text=f"Verify your email: {url}",
-    )
+  return EmailContent(
+    subject="Подтвердите адрес электронной почты — LMS Academy",
+    html=f"""
+      <h2>Подтверждение адреса электронной почты</h2>
+      <p>Чтобы подтвердить адрес, перейдите по ссылке ниже.</p>
+      <a href="{safe_url}">Подтвердить адрес</a>
+      <p>Ссылка действует 48 часов.</p>
+      <p>Если вы не создавали аккаунт, проигнорируйте это письмо.</p>
+    """,
+    text=(
+      f"Подтвердить адрес: {url}\nСсылка действует 48 часов.\n"
+      "Если вы не создавали аккаунт, проигнорируйте это письмо."
+    ),
+  )
