@@ -512,6 +512,38 @@ def test_delivery_failure_preserves_generic_recovery_response(
     )
 
 
+def test_secure_cookie_login_logout(
+  db: ApplicationDatabase,
+  client: TestClient,
+) -> None:
+  client.base_url = "https://testserver"
+  user_id, _, _ = account(db)
+  headers = {"Origin": "https://testserver"}
+  response = client.post(
+    "/api/v1/auth/login",
+    headers=headers,
+    json={
+      "email": f"{user_id}@example.com",
+      "password": "old-password",
+    },
+  )
+  assert response.status_code == 200
+  cookie = response.headers["set-cookie"]
+  for attribute in ("Secure", "HttpOnly", "SameSite=lax", "Path=/", "Max-Age=2592000"):
+    assert attribute in cookie
+  assert "Domain=" not in cookie
+  assert client.get("/api/v1/auth/me").status_code == 200
+  raw = client.cookies.get("lms-session")
+  response = client.post("/api/v1/auth/logout", headers=headers)
+  assert response.status_code == 200
+  assert "Max-Age=0" in response.headers["set-cookie"]
+  for attribute in ("Secure", "HttpOnly", "SameSite=lax"):
+    assert attribute in response.headers["set-cookie"]
+  assert raw is not None
+  client.cookies.set("lms-session", raw)
+  assert client.get("/api/v1/auth/sessions").status_code == 401
+
+
 def test_concurrent_verification_and_resend(
   db: ApplicationDatabase,
   client: TestClient,

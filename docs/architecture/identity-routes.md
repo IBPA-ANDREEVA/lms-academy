@@ -166,3 +166,23 @@ provider-domain and real inbox verification, abuse/rate limiting, frontend
 and stale test-mode registration copy. A crash between commit and send can lose
 an email; a new request supersedes its token. This change does not claim otherwise.
 No real email was sent during automated verification.
+
+## Secure session-cookie transport · 2026-11-13
+
+`lms-session` remains an opaque credential; only its digest is stored server-side.
+Login now always sets `Secure`, `HttpOnly`, `SameSite=Lax`, `Path=/`, no Domain,
+and a 30-day Max-Age. Logout expires the same cookie with matching attributes
+and revokes its database session. There is no production-insecure configuration
+switch; local browser authentication requires HTTPS. The server still enforces
+absolute/inactivity deadlines independently of cookie persistence.
+
+Login, logout and session DELETE require an exact same-origin `Origin`, including
+scheme/host/port; missing, null and foreign origins are rejected before mutation.
+SameSite is defense in depth, not the sole CSRF control. Deploy under a same-origin
+HTTPS ingress with trusted proxy forwarding of the external scheme/authority;
+never trust arbitrary client-supplied forwarding headers. Cross-origin frontend
+hosting is not enabled by this change. The existing database guard still allows
+only explicitly isolated development/test targets; production deployment is not
+unlocked here.
+
+Security reference: [OWASP session guidance](https://cheatsheetseries.owasp.org/cheatsheets/Session_Management_Cheat_Sheet.html).

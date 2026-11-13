@@ -36,7 +36,7 @@ def identity_error(
 
 def require_same_origin(request: Request) -> None:
   # Browser Origin cannot be forged by cross-origin page scripts. Require it for
-  # this new cookie mutation; existing development login/logout remain unchanged.
+  # cookie mutations, including login/logout. Proxy headers must be trusted explicitly.
   origin = request.headers.get("origin")
   expected = f"{request.url.scheme}://{request.url.netloc}"
 

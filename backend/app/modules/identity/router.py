@@ -217,6 +217,8 @@ def login(
   request: Request,
   response: Response,
 ) -> BaseResponse:
+  require_same_origin(request)
+
   db = cast(ApplicationDatabase, request.app.state.database)
 
   try:
@@ -230,12 +232,11 @@ def login(
       detail="Invalid email or password",
     ) from exc
 
-  # TODO: Fix before production
   response.set_cookie(
     key="lms-session",
     value=raw_token,
     httponly=True,
-    secure=False,  # Local HTTP development only
+    secure=True,
     samesite="lax",
     path="/",
     max_age=30 * 24 * 60 * 60,
@@ -257,6 +258,8 @@ def logout(
   response: Response,
 ) -> BaseResponse:
 
+  require_same_origin(request)
+
   raw_token = request.cookies.get("lms-session")
 
   if raw_token:
@@ -268,6 +271,9 @@ def logout(
   response.delete_cookie(
     key="lms-session",
     path="/",
+    secure=True,
+    httponly=True,
+    samesite="lax",
   )
 
   return BaseResponse(
