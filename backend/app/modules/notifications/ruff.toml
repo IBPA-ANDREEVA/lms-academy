@@ -1,0 +1,8 @@
+extend = "../../../pyproject.toml"
+indent-width = 2
+
+[format]
+exclude = ["models.py", "dependencies.py"]
+
+[lint.isort]
+known-first-party = ["app"]

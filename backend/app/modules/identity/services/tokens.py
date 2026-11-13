@@ -48,9 +48,6 @@ def create_action_token(
     )
   )
 
-  # TODO:REMOVE BEFORE PROD FOR TESTING ONLY
-  print(f"Token created: {raw_token}")
-
   return raw_token
 
 
@@ -89,7 +86,7 @@ def revoke_token(
   now: datetime | None = None,
 ) -> None:
 
-  now = now if now is not None else datetime.now(UTC)
+  now = now or datetime.now(UTC)
 
   statement = (
     update(IdentityActionToken)

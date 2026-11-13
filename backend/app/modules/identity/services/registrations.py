@@ -18,7 +18,7 @@ def register_student(
   last_name: str,
   email: str,
   password: str,
-) -> None:
+) -> tuple[str, str]:
 
   try:
     with db.unit_of_work() as session:
@@ -52,7 +52,9 @@ def register_student(
         )
       )
 
-      create_action_token(session, user_id, TokenPurpose.EMAIL_VERIFICATION)
+      return user.email, create_action_token(
+        session, user_id, TokenPurpose.EMAIL_VERIFICATION
+      )
 
   except IntegrityError as exc:
     constraint = getattr(

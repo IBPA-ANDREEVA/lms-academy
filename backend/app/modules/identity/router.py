@@ -41,6 +41,8 @@ from app.modules.identity.services.sessions import (
   revoke_owned_auth_session,
 )
 from app.modules.identity.services.verfication import resend_verification, verify_email
+from app.modules.notifications.dependencies import get_email_service
+from app.modules.notifications.email_service import EmailDeliveryError, EmailService
 
 identity_errors: dict[int | str, dict[str, object]] = {
   code: {"model": IdentityErrorResponse}
@@ -64,11 +66,13 @@ def ping() -> dict[str, str]:
   "/register",
   response_model=BaseResponse,
   status_code=status.HTTP_201_CREATED,
+  responses={503: {"model": IdentityErrorResponse}},
   operation_id="identityRegister",
 )
 def register(
   body: RegisterRequest,
   request: Request,
+  email_service: EmailService = Depends(get_email_service),
 ) -> BaseResponse:
   db = cast(
     ApplicationDatabase,
@@ -76,7 +80,7 @@ def register(
   )
 
   try:
-    register_student(
+    email, token = register_student(
       db=db,
       first_name=body.first_name,
       last_name=body.last_name,
@@ -91,8 +95,18 @@ def register(
       "Не удалось зарегистрировать этот адрес. Попробуйте войти или восстановить пароль.",
     ) from None
 
+  try:
+    email_service.send_verification_email(to=email, raw_token=token)
+
+  except EmailDeliveryError:
+    raise identity_error(
+      503,
+      "verification_delivery_failed",
+      "Аккаунт создан, но письмо не удалось отправить. Запросите письмо повторно чуть позже.",
+    ) from None
+
   return BaseResponse(
-    message="Аккаунт создан. В тестовой версии письма не отправляются.",
+    message="Аккаунт создан. Проверьте почту для подтверждения адреса.",
   )
 
 
@@ -129,17 +143,19 @@ def verify_email_route(
   "/resend_verify_email",
   response_model=BaseResponse,
   status_code=status.HTTP_201_CREATED,
+  responses={503: {"model": IdentityErrorResponse}},
   operation_id="IdentityResendVerificaiton",
 )
 def resend_verification_route(
   body: ResendVerificationRequest,
   request: Request,
+  email_service: EmailService = Depends(get_email_service),
 ) -> BaseResponse:
   db = cast(ApplicationDatabase, request.app.state.database)
 
   try:
     with db.unit_of_work() as session:
-      resend_verification(session, body.email)
+      delivery = resend_verification(session, str(body.email))
 
   except ResendWasSentEarlier:
     raise identity_error(
@@ -155,8 +171,21 @@ def resend_verification_route(
       "Не удалось обработать запрос. Попробуйте позже.",
     ) from exc
 
+  if delivery is not None:
+    email, token = delivery
+
+    try:
+      email_service.send_verification_email(to=email, raw_token=token)
+
+    except EmailDeliveryError:
+      raise identity_error(
+        503,
+        "verification_delivery_failed",
+        "Не удалось отправить письмо. Запросите его повторно чуть позже.",
+      ) from None
+
   return BaseResponse(
-    message="Запрос принят. В тестовой версии письма не отправляются.",
+    message="Если подтверждение доступно, вы получите письмо с инструкциями.",
   )
 
 
@@ -186,12 +215,11 @@ def login(
       "Не удалось войти. Проверьте почту и пароль.",
     ) from exc
 
-  # TODO: Fix before production
   response.set_cookie(
     key="lms-session",
     value=raw_token,
     httponly=True,
-    secure=False,  # Local HTTP development only
+    secure=True,
     samesite="lax",
     path="/",
     max_age=30 * 24 * 60 * 60,
@@ -225,6 +253,9 @@ def logout(
   response.delete_cookie(
     key="lms-session",
     path="/",
+    secure=True,
+    httponly=True,
+    samesite="lax",
   )
 
   return BaseResponse(
@@ -324,15 +355,27 @@ def forgot_password_route(
   body: ForgotPasswordRequest,
   request: Request,
   response: Response,
+  email_service: EmailService = Depends(get_email_service),
 ) -> BaseResponse:
   db = cast(ApplicationDatabase, request.app.state.database)
   response.headers["Cache-Control"] = "no-store"
 
   with db.unit_of_work() as session:
-    request_password_reset(session, str(body.email))
+    delivery = request_password_reset(session, str(body.email))
+
+  if delivery is not None:
+    email, token = delivery
+
+    try:
+      email_service.send_password_reset_email(to=email, raw_token=token)
+
+    except EmailDeliveryError:
+      # Preserve the same public outcome for ineligible accounts and outages.
+      # EmailService records a sanitized diagnostic; no provider details escape.
+      pass
 
   return BaseResponse(
-    message="Запрос принят. В тестовой версии письма не отправляются.",
+    message="Запрос принят. Если восстановление доступно, вы получите письмо с инструкциями.",
   )
 
 

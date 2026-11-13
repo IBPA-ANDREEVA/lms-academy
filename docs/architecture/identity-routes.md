@@ -80,8 +80,8 @@ access. No session rows are deleted.
 30-minute reset token while earlier unused reset tokens are revoked. Unknown,
 blocked, administrator and credential-less accounts get the identical 200 body.
 This is response-body resistance, not a claim of timing/rate-limit protection.
-**Email sending is TODO**: no raw token is returned/logged and no email is actually
-sent. The flow cannot be completed by an end user until delivery is implemented.
+Optional email delivery now runs after commit. Provider failure retains the generic
+recovery response and emits sanitized diagnostics; no raw token is returned/logged.
 
 `POST /password/reset` accepts `{token, password}` (8–255 characters, matching
 registration). It rejects expired, consumed, revoked, wrong-purpose and unknown
@@ -116,11 +116,9 @@ on export. New cookie operations declare the API-key cookie security scheme.
 
 ## Remaining development limitations
 
-Existing production cookie FIX and verification-token debug print remain deliberately
-unchanged at the owner's request to preserve explicit TODOs. They are production
-blockers. Durable email delivery/audit, abuse controls, qualifying-interaction
-refresh and manual administrator setup/recovery remain unfinished. Recovery and
-resend responses/UI explicitly disclose that no email is sent. Failure/change logs
+The email/cookie review below removes the insecure cookie configuration and token
+debug print. Durable email delivery/audit, abuse controls, qualifying-interaction
+refresh and manual administrator setup/recovery remain unfinished. Backend delivery is optional; the frontend still has stale test-mode messaging. Failure/change logs
 are diagnostics, not durable sensitive-action audit evidence. This is not launch-ready.
 
 ## Frontend integration · 2026-11-12
@@ -161,4 +159,57 @@ that exact Origin. Deploy these coordinated development consumers together.
 
 Registration names are limited to 100 characters to match the persisted profile
 columns. No migration is needed. The registration modal explicitly states that
-verification email is not sent in this test version; email delivery remains missing.
+verification email is not sent in this test version. This is historical UI copy;
+optional backend delivery is implemented by the review below.
+
+## Email service review · 2026-11-13
+
+Registration, resend and recovery return an internal `(normalized_email, raw_token)`
+intent to the route. Ineligible resend/recovery returns `None`; no provider call
+occurs. All email calls happen after a successful commit, outside database locks,
+in FastAPI's synchronous handler thread pool. The existing Notifications dependency
+supplies the public `EmailService`; Identity owns tokens and Notifications owns
+rendering/delivery. Verification and recovery lock the user before the token,
+matching resend/replacement lock order. Verification preserves the merged
+legacy-active recovery path while refusing blocked/admin accounts.
+
+`EMAIL_ENABLED` defaults to `false`. Enabling it requires `RESEND_API_KEY`,
+`EMAIL_FROM` and `APP_BASE_URL`. Startup validates configuration before creating
+the database pool. The URL must be an HTTPS origin, with HTTP permitted only for
+loopback development. The Resend client has a 10-second network timeout; there
+is no automatic retry of an ambiguous provider outcome. Templates are Russian-first,
+HTML-escaped and fragment-encoded, with 48-hour verification / 30-minute recovery copy.
+The operator-only smoke script requires an explicit `--to`; it is not run by tests.
+
+Registration delivery failure returns a sanitized 503 explaining that the account
+exists and a new email can be requested. Resend failure also returns 503; the
+existing 60-second cooldown still applies. Recovery failures remain a generic 200
+to avoid a new account-existence signal. Provider messages, addresses and tokens
+are excluded from diagnostics. Correlation IDs identify delivery failures.
+
+Remaining release work: durable delivery intent/worker/retries and correlated audit,
+provider-domain and real inbox verification, abuse/rate limiting and frontend
+test-mode messaging. The merged frontend verification/reset pages and corrected
+resend path are preserved. A crash between commit and send can lose
+an email; a new request supersedes its token. This change does not claim otherwise.
+No real email was sent during automated verification.
+
+## Secure session-cookie transport · 2026-11-13
+
+`lms-session` remains an opaque credential; only its digest is stored server-side.
+Login now always sets `Secure`, `HttpOnly`, `SameSite=Lax`, `Path=/`, no Domain,
+and a 30-day Max-Age. Logout expires the same cookie with matching attributes
+and revokes its database session. There is no production-insecure configuration
+switch; use HTTPS for browser authentication (some browsers exempt localhost). The server still enforces
+absolute/inactivity deadlines independently of cookie persistence.
+
+Login, logout and session DELETE require an exact `Origin` matching
+`IDENTITY_PUBLIC_ORIGIN` (or request origin if unset), including scheme/host/port; missing, null and foreign origins are rejected before mutation.
+SameSite is defense in depth, not the sole CSRF control. Deploy under a same-origin
+HTTPS ingress with trusted proxy forwarding of the external scheme/authority;
+never trust arbitrary client-supplied forwarding headers. Cross-origin frontend
+hosting is not enabled by this change. The existing database guard still allows
+only explicitly isolated development/test targets; production deployment is not
+unlocked here.
+
+Security reference: [OWASP session guidance](https://cheatsheetseries.owasp.org/cheatsheets/Session_Management_Cheat_Sheet.html).

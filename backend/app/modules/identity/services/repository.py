@@ -89,28 +89,17 @@ def get_password_credentials(
   return session.get(PasswordCredential, user_id)
 
 
-def get_reset_token_owner(
+def get_action_token_owner(
   session: Session,
   digest: bytes,
+  purpose: TokenPurpose,
 ) -> UUID | None:
-  # Read identity first; all recovery writes lock user before token to avoid
+  # Read identity first; all action-token writes lock user before token to avoid
   # deadlocks between replacement requests and consumption.
   return session.scalar(
     select(IdentityActionToken.user_id).where(
       IdentityActionToken.secret_digest == digest,
-      IdentityActionToken.purpose == TokenPurpose.PASSWORD_RESET,
-    )
-  )
-
-
-def get_verification_token_owner(
-  session: Session,
-  digest: bytes,
-) -> UUID | None:
-  return session.scalar(
-    select(IdentityActionToken.user_id).where(
-      IdentityActionToken.secret_digest == digest,
-      IdentityActionToken.purpose == TokenPurpose.EMAIL_VERIFICATION,
+      IdentityActionToken.purpose == purpose,
     )
   )
 

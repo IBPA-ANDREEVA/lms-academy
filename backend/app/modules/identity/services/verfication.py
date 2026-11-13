@@ -5,10 +5,10 @@ from sqlalchemy.orm import Session
 from app.modules.identity.constants import TokenPurpose
 from app.modules.identity.exceptions import ResendWasSentEarlier, TokenInvalid
 from app.modules.identity.services.repository import (
+  get_action_token_owner,
   get_last_token_time,
   get_user_by_email,
   get_user_by_id,
-  get_verification_token_owner,
 )
 from app.modules.identity.services.tokens import (
   consume_action_token,
@@ -24,7 +24,9 @@ def verify_email(
 ) -> None:
 
   # Lock account before token, matching resend and recovery lock ordering.
-  user_id = get_verification_token_owner(session, hash_token(raw_token))
+  user_id = get_action_token_owner(
+    session, hash_token(raw_token), TokenPurpose.EMAIL_VERIFICATION
+  )
 
   if user_id is None:
     raise TokenInvalid()
@@ -71,4 +73,4 @@ def resend_verification(
 
   raw_token = create_action_token(session, user.id, purpose)
 
-  return email, raw_token
+  return user.email, raw_token
